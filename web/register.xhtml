@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h1>Register Form</h1>
+
+        <h:form id="registerForm">
+            <h:outputLabel value="Name: " for="name"/>
+            <h:inputText id="name" value="#{registerBean.name}" required="true" requiredMessage="Name is required!">
+                <f:validateLength minimum="3" maximum="100" />
+            </h:inputText>
+            <br />
+            <h:outputLabel value="Username: " for="username"/>
+            <h:inputText id="username" value="#{registerBean.username}" required="true" requiredMessage="Username is required!">
+                <f:validator validatorId="uniqueUsername" />
+            </h:inputText>
+            <br />
+            <h:outputLabel value="Email: " for="email"/>
+            <h:inputText id="email" value="#{registerBean.email}" required="true" requiredMessage="Email is required!">
+                <f:validator validatorId="uniqueEmail" />
+                <f:validator validatorId="validEmail"/>
+            </h:inputText>
+            <br />
+            <h:outputLabel value="Password: " for="password"/>
+            <h:inputSecret id="password" value="#{registerBean.password}" required="true" requiredMessage="Password is required!" />
+            <br />
+            <h:outputLabel value="Password Confirm: " for="password_confirmation"/>
+            <h:inputSecret id="password_confirmation" binding="#{password_confirmation}" required="true" requiredMessage="Password confirm is required!">
+                <f:validator validatorId="passwordConfirmationMatch"/>
+            </h:inputSecret>
+            <br />
+            <h:outputLabel value="Contact Details: " for="contact_details"/>
+            <h:inputTextarea id="contact_details" value="#{registerBean.contact_details}" />
+            <br />
+            <h:outputLabel value="Address: " for="address" />
+            <h:inputText id="address" value="#{registerBean.address}" />
+            <br/>
+            <h:outputLabel value="Company Name: " for="company_name" />
+            <h:inputText id="company_name" value="#{registerBean.company_name}" />
+            <br />
+            <h:commandButton value="Sign Up" action="#{registerBean.register}"/>
+            <h:messages />
+        </h:form>
+    </h:body>
+</html>
+
