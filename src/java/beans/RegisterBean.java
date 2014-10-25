@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import models.ClientModel;
@@ -26,6 +27,8 @@ import models.ClientModel;
 @ManagedBean
 @RequestScoped
 public class RegisterBean {
+    @EJB
+    private ClientModel clientModel;
 
     String name;
     String username;
@@ -60,8 +63,8 @@ public class RegisterBean {
         }
         client.setCreateAt(PersistenceHelper.getCurrentTime());
         //save client to db
-        ClientModel cm = new ClientModel();
-        boolean result = cm.register(client);
+        
+        boolean result = clientModel.register(client);
 
         return "register.xhtml";
     }

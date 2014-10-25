@@ -7,6 +7,7 @@ package beans.client;
 
 import entities.Products;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import models.ProductModel;
@@ -19,17 +20,14 @@ import models.ProductModel;
 @RequestScoped
 public class ProductBean {
 
-    ProductModel pm;
+    @EJB
+    private ProductModel productModel;
 
-    /**
-     * Creates a new instance of ProductBean
-     */
     public ProductBean() {
     }
 
-    public List<Products> listAllProduct() {
-        pm = new ProductModel();
-        return pm.fetchAll();
+    public List<Products> getAllProduct() {
+        return productModel.getAll();
     }
 
 }

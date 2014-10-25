@@ -6,56 +6,38 @@
 package models;
 
 import entities.Products;
-import helpers.PersistenceHelper;
-import java.io.Serializable;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author Cu Beo
  */
-public class ProductModel implements Serializable {
+@Stateless
+public class ProductModel {
 
+    @PersistenceContext
     EntityManager em;
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 
-    public ProductModel() {
-    }
-
-    public List<Products> fetchAll() {
-        em = PersistenceHelper.getEntityManager();
-        List<Products> products = null;
-        try {
-            products = (List<Products>) em.createNamedQuery("Products.findAll").getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public List<Products> getAll() {
+        List<Products> products = em.createNamedQuery("Products.findAll").getResultList();
         return products;
     }
 
-    public List<Products> fetchAllSelectBox() {
-        em = PersistenceHelper.getEntityManager();
-        List<Products> products = null;
-        try {
-            products = (List<Products>) em.createNamedQuery("Products.getForSelectBox").getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public List<Products> getAllForSelectBox() {
+        List<Products> products = em.createNamedQuery("Products.getForSelectBox").getResultList();
         return products;
     }
 
-    public Products fetchOnce(int pid) {
-        em = PersistenceHelper.getEntityManager();
-        try {
-            List<Products> p = (List<Products>) em.createNamedQuery("Products.findByPid").setParameter("pid", pid).getResultList();
-            if (p.size() > 0) {
-                return p.get(0);
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public Products getById(int pid) {
+        List<Products> products = em.createNamedQuery("Products.findByPid").setParameter("pid", pid).getResultList();
+        if (products.size() > 0) {
+            return products.get(0);
         }
         return null;
     }

@@ -13,6 +13,7 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -21,10 +22,13 @@ import javax.persistence.EntityManager;
 @FacesValidator("uniqueUsername")
 public class UniqueUsernameValidator implements Validator {
 
+    @PersistenceContext
+    EntityManager em;
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String username = value.toString();
-        EntityManager em = PersistenceHelper.getEntityManager();
+
         long result = (long) em.createNamedQuery("Clients.uniqueUsername").setParameter("username", username).getSingleResult();
         if (result == 1) {
             FacesMessage msg = new FacesMessage("Username exists! Please enter another!");

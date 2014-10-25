@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.persistence.NoResultException;
 import models.ProductModel;
 
 /**
@@ -24,8 +25,10 @@ import models.ProductModel;
 @ViewScoped
 public class OrderBean implements Serializable {
 
+    @EJB
+    private ProductModel productModel;
+
     int pid;
-    ProductModel pm;
     Products currentProduct;
 
     /**
@@ -35,15 +38,12 @@ public class OrderBean implements Serializable {
     }
 
     public List<Products> getListProductSelectBox() {
-        pm = new ProductModel();
-        List<Products> products = pm.fetchAllSelectBox();
-
+        List<Products> products = productModel.getAllForSelectBox();
         return products;
     }
 
     public void getProduct(AjaxBehaviorEvent ev) {
-        pm = new ProductModel();
-        currentProduct = pm.fetchOnce(pid);
+        currentProduct = productModel.getById(pid);
     }
 
     public int getPid() {

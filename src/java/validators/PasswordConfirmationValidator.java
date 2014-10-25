@@ -19,7 +19,7 @@ import javax.faces.validator.ValidatorException;
  */
 @FacesValidator("passwordConfirmationMatch")
 public class PasswordConfirmationValidator implements Validator {
-
+    
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String password_confirmation = value.toString();

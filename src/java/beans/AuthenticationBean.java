@@ -5,6 +5,7 @@
  */
 package beans;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -18,6 +19,8 @@ import models.ClientModel;
 @ManagedBean
 @RequestScoped
 public class AuthenticationBean {
+    @EJB
+    private ClientModel clientModel;
     
     String username;
     String password;
@@ -26,8 +29,7 @@ public class AuthenticationBean {
     }
     
     public String authenticate() {
-        ClientModel cm = new ClientModel();
-        boolean result = cm.authenticate(username, password);
+        boolean result = clientModel.authenticate(username, password);
         FacesMessage msg = null;
         if (result) {
             msg = new FacesMessage("Login Successfully!");
