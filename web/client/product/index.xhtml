@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/client/layout.xhtml">
+        <ui:define name="title">List Products</ui:define>
+        <ui:define name="content">
+            <!-- Page title -->
+            <div class="page-title">
+                <h1>Portfolio</h1>
+
+                <!-- BREADCRUMBS -->
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a><span class="divider"></span></li>
+                    <li class="active">Portfolio</li>
+                </ul>
+            </div>
+            <!-- //Page title -->							
+
+
+            <!-- Project area -->
+            <section class="project">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-wrapper">
+                                <ul id="filter">
+                                    <li><a class="active btn btn-primary" href="#" data-group="all">All</a></li>
+                                    <li><a href="#" data-group="red" class="btn btn-primary">Home</a></li>
+                                    <li><a href="#" data-group="green" class="btn btn-primary">Office</a></li>
+                                    <li><a href="#" data-group="blue" class="btn btn-primary">Interior</a></li>
+                                    <li><a href="#" data-group="numbers" class="btn btn-primary">Design</a></li>
+                                    <li><a href="#" data-group="letters" class="btn btn-primary">Illusion</a></li>
+                                    <li><a href="#" data-group="square" class="btn btn-primary">Idea</a></li>
+                                    <li><a href="#" data-group="circle" class="btn btn-primary">Creative</a></li>
+                                </ul>
+
+                                <div id="grid">
+                                    <ui:repeat var="product" value="#{productBean.listAllProduct()}" varStatus="status">
+                                        <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
+                                            <div class="project-item">
+                                                <div class="post-thumbnail element">
+                                                    <h:graphicImage name="img/products.jpg" library="client" alt="#{product.name}" />
+                                                    <div class="element-overly">Overly</div>
+
+                                                    <a data-rel="prettyPhoto" href="#{resource['client/img/products.jpg']}" class="element-lightbox" ><i class="fa fa-search-plus"></i></a>
+
+                                                    <a class="element-link" href="#" title=""><i class="fa fa-link"></i></a>
+                                                </div>
+
+                                                <div class="project-details">
+                                                    <h2><a href="#"><h:outputText value="#{product.name}" /></a></h2>
+                                                    <p><h:outputText value="#{product.infomations}"/></p>
+
+                                                    <div class="readmore"> <a href="#">Read More</a>&nbsp;&nbsp;<a href="#">Make Order</a></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>    
+                                </div> <!-- /grid -->	
+                            </div> <!-- /box-wrapper -->
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -111,3 +111,13 @@ create table projects(
 	start_at date,
 	end_at date,
 )
+
+insert into categories values('cylindrical')
+insert into categories values('Rectangular')
+
+insert into products values('EVE1', 'Elevator 1', 1, 'fast and stable', 123, null, GETDATE())
+insert into products values('EVE2', 'Elevator 2', 1, 'fast and stable', 312, null, GETDATE())
+insert into products values('EVE3', 'Elevator 3', 1, 'fast and stable', 234, null, GETDATE())
+insert into products values('EVE4', 'Elevator 4', 2, 'fast and stable', 432, null, GETDATE())
+insert into products values('EVE5', 'Elevator 5', 2, 'fast and stable', 345, null, GETDATE())
+insert into products values('EVE6', 'Elevator 6', 2, 'fast and stable', 543, null, GETDATE())

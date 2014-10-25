@@ -42,8 +42,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name"),
     @NamedQuery(name = "Products.findByPrice", query = "SELECT p FROM Products p WHERE p.price = :price"),
     @NamedQuery(name = "Products.findByImagePath", query = "SELECT p FROM Products p WHERE p.imagePath = :imagePath"),
-    @NamedQuery(name = "Products.findByCreateAt", query = "SELECT p FROM Products p WHERE p.createAt = :createAt")})
+    @NamedQuery(name = "Products.findByCreateAt", query = "SELECT p FROM Products p WHERE p.createAt = :createAt"),
+    @NamedQuery(name = "Products.exists", query = "SELECT COUNT(p.pid) FROM Products p WHERE p.pid = :pid"),
+    @NamedQuery(name = "Products.getForSelectBox", query = "SELECT p.pid,p.name FROM Products p")
+})
 public class Products implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -189,5 +193,5 @@ public class Products implements Serializable {
     public String toString() {
         return "entities.Products[ pid=" + pid + " ]";
     }
-    
+
 }

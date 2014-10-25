@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/client/layout.xhtml">
+        <!--        <f:metadata>
+                    <f:viewParam name="pid" value="#{orderBean.pid}" converterMessage="Wrong product id!" validatorMessage="Wrong product id!">
+                        <f:convertNumber integerOnly="true" />
+                        <f:validateLongRange minimum="1" />
+                        <f:validator validatorId="productExists" />
+                    </f:viewParam>
+                </f:metadata>-->
+        <ui:define name="title">New Order</ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h:messages />
+                    <c:if test="${facesContext.getMessageList().size() == 0}">
+                        <h:form id="newOrder">
+                            <h:selectOneMenu value="#{orderBean.pid}" id="sb_products">
+                                <f:selectItem itemLabel="Select Product" itemValue="0" />
+                                <f:selectItems value="#{orderBean.getListProductSelectBox()}" var="p" itemLabel="#{p[1]}" itemValue="#{p[0]}" />
+                                <f:ajax event="change" render="output" listener="#{orderBean.getProduct}" />
+                            </h:selectOneMenu>
+                            
+                        </h:form>
+                        <!--                        <h:form id="showProduct">-->
+                                <h:outputText id="output" value="#{orderBean.currentProduct.name}"/>
+                        <!--                        </h:form>-->
+                    </c:if>
+                </div>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+</html>
+
