@@ -1,18 +1,85 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-        <br />
-        <h:outputLink value="register.xhtml">Register</h:outputLink>
-        <br />
-        <h:outputLink value="login.xhtml">Login</h:outputLink>
-        <br />
-        <h:messages />
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/client/layout.xhtml">
+        <ui:define name="title">Index</ui:define>
+        <ui:define name="content">
+            <section class="portfolio-content">
+                <div class="lead-title">
+                    <h2>Our Recent Project</h2>
+                </div>
+
+                <div class="grid-block">
+                    <figure class="effect-layla">
+                        <img src="img/project-thumb/project-1.jpg" alt="img01"/>
+                        <figcaption>
+                            <h2>Home <span>Design</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                            <a href="#">View more</a>
+                        </figcaption>			
+                    </figure>
+                    <figure class="effect-layla">
+                        <img src="img/project-thumb/project-2.jpg" alt="img01"/>
+                        <figcaption>
+                            <h2>Office <span>Design</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                            <a href="#">View more</a>
+                        </figcaption>			
+                    </figure>
+                    <figure class="effect-layla">
+                        <img src="img/project-thumb/project-3.jpg" alt="img01"/>
+                        <figcaption>
+                            <h2>Outdoor <span>Design</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                            <a href="#">View more</a>
+                        </figcaption>			
+                    </figure>
+                    <figure class="effect-layla">
+                        <img src="img/project-thumb/project-4.jpg" alt="img01"/>
+                        <figcaption>
+                            <h2>Interior <span>Design</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                            <a href="#">View more</a>
+                        </figcaption>			
+                    </figure>
+                    <figure class="effect-layla">
+                        <img src="img/project-thumb/project-5.jpg" alt="img01"/>
+                        <figcaption>
+                            <h2>Pool <span>Design</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                            <a href="#">View more</a>
+                        </figcaption>			
+                    </figure>
+                    <figure class="effect-layla">
+                        <img src="img/project-thumb/project-6.jpg" alt="img01"/>
+                        <figcaption>
+                            <h2>Dinning<span>Design</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                            <a href="#">View more</a>
+                        </figcaption>			
+                    </figure>
+                    <figure class="effect-layla">
+                        <img src="img/project-thumb/project-7.jpg" alt="img01"/>
+                        <figcaption>
+                            <h2>Living <span>Design</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                            <a href="#">View more</a>
+                        </figcaption>			
+                    </figure>
+                    <figure class="effect-layla">
+                        <img src="img/project-thumb/project-8.jpg" alt="img01"/>
+                        <figcaption>
+                            <h2>Garden <span>Design</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                            <a href="#">View more</a>
+                        </figcaption>			
+                    </figure>
+
+                </div>
+            </section>
+        </ui:define>
+    </ui:composition>
 </html>
 
