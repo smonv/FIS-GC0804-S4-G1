@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title><ui:insert name="title"></ui:insert></title>
+        <!--Font-->
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic' rel='stylesheet' type='text/css' />
+        <h:outputStylesheet name="css/font-awesome.min.css" library="client" />
+        <h:outputStylesheet name="css/icostyle.css" library="client" />
+        <!-- Normalize CSS -->
+        <h:outputStylesheet name="css/normalize.css" library="client" />
+        <!-- Owl Carousel CSS -->
+        <h:outputStylesheet name="css/owl.carousel.css" library="client" />
+        <!-- REVOLUTION BANNER CSS SETTINGS -->
+        <h:outputStylesheet name="rs-plugin/css/settings.css" library="client" />
+        <!--CSS-->
+        <h:outputStylesheet name="css/bootstrap.min.css" library="client" />
+        <h:outputStylesheet name="css/prettyPhoto.css" library="client" />
+        <h:outputStylesheet name="css/offcanvas.css" library="client" />
+        <h:outputStylesheet name="css/style.css" library="client" />
+        <h:outputStylesheet name="css/responsive.css" library="client" />
+
+    </h:head>
+    <h:body>
+        <!-- wrapper -->
+        <div class="wrapper offcanvas-container" id="offcanvas-container">
+
+            <!-- inner-wrapper -->
+            <div class="inner-wrapper offcanvas-pusher">
+                <!-- container -->
+                <div class="container">
+
+                    <!--header-wrapper-->
+                    <ui:insert name="header">
+                        <ui:include src="header.xhtml" />
+                    </ui:insert>
+
+                    <!-- MAIN SLIDER WRAPPER -->
+                    <ui:insert name="slider">
+                        <ui:include src="slider.xhtml" />
+                    </ui:insert>
+
+                    <ui:insert name="content">
+
+                    </ui:insert>
+
+                </div><!-- /container -->
+
+
+                <ui:insert name="footer">
+                    <ui:include src="footer.xhtml" />
+                </ui:insert>
+
+            </div> <!-- /inner-wrapper -->
+
+
+
+
+            <!-- offcanvas-menu -->
+            <div class="offcanvas-menu offcanvas-effect">
+                <button type="button" class="close" aria-hidden="true"  data-toggle="offcanvas" id="off-canvas-close-btn" >&times;</button>
+
+                <h2>Sidebar Menu</h2>
+                <ul>
+                    <li><a href="#">Home</a>
+                        <ul>
+                            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+                            <li><a href="index2.html"><i class="fa fa-home"></i> Home Style Tow</a></li>
+                            <li><a href="index3.html"><i class="fa fa-home"></i> Home Style Three</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#">Pages</a>
+                        <ul>
+                            <li><a href="about.html"><i class="fa fa-user"></i> About Us</a></li>
+                            <li><a href="about2.html"><i class="fa fa-user"></i> About Us 2</a></li>
+                            <li><a href="services.html"><i class="fa fa-coffee"></i> Service</a></li>
+                            <li><a href="services2.html"><i class="fa fa-coffee"></i> Service 2</a></li>
+                            <li><a href="project.html"><i class="fa fa-magic"></i> Project</a></li>
+                            <li><a href="project2.html"><i class="fa fa-glass"></i> Project 2</a></li>
+                            <li><a href="404.html"><i class="fa fa-bell-o"></i> 404 Page</a></li>
+                            <li><a href="pricing.html"><i class="fa fa-puzzle-piece"></i> Pricing</a></li>
+                            <li><a href="pricing2.html"><i class="fa fa-puzzle-piece"></i> Pricing Two</a></li>
+                            <li><a href="single-project.html"><i class="fa fa-folder-open-o"></i> Single Project</a></li>
+                            <li><a href="single-project-2col.html"><i class="fa fa-thumbs-o-up"></i>  Single Project Two</a></li>
+                            <li><a href="single-project-fullwidth.html"><i class="fa fa-thumbs-o-up"></i>  Single FullWidth</a></li>
+                            <li><a href="faq.html"><i class="fa fa-laptop"></i> FAQ Page</a></li>
+                            <li><a href="faq2.html"><i class="fa fa-laptop"></i> FAQ Page Two</a></li>
+
+                        </ul>
+                    </li>
+
+
+                    <li><a href="#" >Portfolio</a>
+                        <ul>
+                            <li><a href="grid-portfolio.html"><i class="fa fa-magic"></i> Grid View</a></li>
+                            <li><a href="portfolio.html"><i class="fa fa-magic"></i> Four Column</a></li>
+                            <li><a href="portfolio3.html"><i class="fa fa-magic"></i> Three Column</a></li>
+                            <li><a href="portfolio2.html"><i class="fa fa-magic"></i> Two Column</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#">Blog</a>
+                        <ul>
+                            <li><a href="blog.html"><i class="fa fa-pencil-square-o"></i> Blog Standard</a></li>
+                            <li><a href="blog-single.html"><i class="fa fa-pencil-square-o"></i> Blog single post</a></li>
+                        </ul>	
+                    </li>
+
+                    <li><a href="#">Contact</a>
+                        <ul>
+                            <li><a href="contact.html"><i class="fa fa-envelope-o"></i> Contact</a></li>
+                            <li><a href="contact2.html"><i class="fa fa-envelope-o"></i> Contact Two</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div> <!-- /offcanvas-menu -->
+
+        </div> <!-- /wrapper -->
+    </h:body>
+    <!--JAVASCRIPT-->
+    <h:outputScript name="js/jquery.min.js" library="client" />
+    <h:outputScript name="js/bootstrap.min.js" library="client" />
+    <!-- REVOLUTION Slider  -->
+    <h:outputScript name="rs-plugin/js/jquery.themepunch.plugins.min.js" library="client" />
+    <h:outputScript name="rs-plugin/js/jquery.themepunch.revolution.min.js" library="client" />
+
+
+    <h:outputScript name="js/jquery.prettyPhoto.js" library="client" />
+    <h:outputScript name="js/jquery.donutchart.js" library="client" />
+    <h:outputScript name="js/owl.carousel.min.js" library="client" />
+    <h:outputScript name="js/sidebarEffects.js" library="client" />
+    <h:outputScript name="js/classie.js" library="client" />
+    <h:outputScript name="js/smoothscroll.min.js" library="client" />
+    <h:outputScript name="js/script.js" library="client" />
+</html>
+
