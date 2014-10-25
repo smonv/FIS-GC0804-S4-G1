@@ -43,7 +43,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clients.findByClientAddress", query = "SELECT c FROM Clients c WHERE c.clientAddress = :clientAddress"),
     @NamedQuery(name = "Clients.findByCompanyName", query = "SELECT c FROM Clients c WHERE c.companyName = :companyName"),
     @NamedQuery(name = "Clients.findByCreateAt", query = "SELECT c FROM Clients c WHERE c.createAt = :createAt"),
-    @NamedQuery(name = "Clients.findByUpdateAt", query = "SELECT c FROM Clients c WHERE c.updateAt = :updateAt")})
+    @NamedQuery(name = "Clients.findByUpdateAt", query = "SELECT c FROM Clients c WHERE c.updateAt = :updateAt"),
+    @NamedQuery(name = "Clients.uniqueUsername", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.username = :username"),
+    @NamedQuery(name = "Clients.uniqueEmail", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.email = :email")
+
+})
 public class Clients implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,7 +57,7 @@ public class Clients implements Serializable {
     private Integer cid;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 4, max = 100,message = "Length 4 and 100 character!")
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
