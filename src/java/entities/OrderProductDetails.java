@@ -34,8 +34,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OrderProductDetails.findAll", query = "SELECT o FROM OrderProductDetails o"),
     @NamedQuery(name = "OrderProductDetails.findByOpdid", query = "SELECT o FROM OrderProductDetails o WHERE o.opdid = :opdid"),
     @NamedQuery(name = "OrderProductDetails.findByQuantity", query = "SELECT o FROM OrderProductDetails o WHERE o.quantity = :quantity"),
-    @NamedQuery(name = "OrderProductDetails.findByCreateAt", query = "SELECT o FROM OrderProductDetails o WHERE o.createAt = :createAt")})
+    @NamedQuery(name = "OrderProductDetails.findByCreateAt", query = "SELECT o FROM OrderProductDetails o WHERE o.createAt = :createAt"),
+    @NamedQuery(name = "OrderProductDetails.findByOrderId", query = "SELECT o FROM OrderProductDetails o WHERE o.orderId = :orderId")
+})
 public class OrderProductDetails implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -126,5 +129,5 @@ public class OrderProductDetails implements Serializable {
     public String toString() {
         return "entities.OrderProductDetails[ opdid=" + opdid + " ]";
     }
-    
+
 }

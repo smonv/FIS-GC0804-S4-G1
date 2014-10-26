@@ -19,24 +19,20 @@ import models.ClientModel;
 @ManagedBean
 @RequestScoped
 public class AuthenticationBean {
+
     @EJB
     private ClientModel clientModel;
-    
+
     String username;
     String password;
     boolean status;
-    
+
     public AuthenticationBean() {
     }
-    
-<<<<<<< HEAD
+
     public String authenticate() {
         boolean result = clientModel.authenticate(username, password);
-=======
-    public void authenticate() {
-        ClientModel cm = new ClientModel();
-        boolean result = cm.authenticate(username, password);
->>>>>>> 72de8ee0c440b8c72b3dbf7974c0ff178aa0cb21
+
         FacesMessage msg = null;
         if (result) {
             msg = new FacesMessage("Login Successfully!");
@@ -48,20 +44,21 @@ public class AuthenticationBean {
             FacesContext.getCurrentInstance().addMessage(null, msg);
             setStatus(false);
         }
+        return "index.html";
     }
-    
+
     public String getUsername() {
         return username;
     }
-    
+
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     public String getPassword() {
         return password;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -73,5 +70,5 @@ public class AuthenticationBean {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
+
 }

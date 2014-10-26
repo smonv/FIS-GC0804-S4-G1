@@ -53,12 +53,12 @@
                                                     <h2><a href="#"><h:outputText value="#{product.name}" /></a></h2>
                                                     <p><h:outputText value="#{product.infomations}"/></p>
 
-                                                    <div class="readmore"> <a href="#">Read More</a>&nbsp;&nbsp;<a href="#">Make Order</a></div>
+                                                    <div class="readmore"><h:link value="Read Me" outcome="/client/product/show.xhtml?pid=#{product.pid}" /></div>
 
                                                 </div>
                                             </div>
                                         </div>
-                                    </ui:repeat>    
+                                    </ui:repeat>
                                 </div> <!-- /grid -->	
                             </div> <!-- /box-wrapper -->
 

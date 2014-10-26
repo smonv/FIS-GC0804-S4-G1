@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <h:outputLabel value="Location Address: " for="location_address" />
-                            <h:inputText id="location_address" value="#{orderBean.location_address}" rendered="true" requiredMessage="Location Address is required!" styleClass="form-control"/>
+                            <h:inputText id="location_address" value="#{orderBean.location_address}" required="true" requiredMessage="Location Address is required!" styleClass="form-control"/>
                         </div>
                         <div class="form-group">
                             <h:outputLabel value="Payment Type: " />
@@ -48,16 +48,10 @@
                                 <f:selectItems value="#{orderBean.getListPaymentType()}" var="pt" itemLabel="#{pt.name}" itemValue="#{pt.ptid}" />
                             </h:selectOneMenu>
                         </div>
+
                         <div class="form-group">
-                            <h:outputLabel value="Add Product: " />
-                            <h:selectOneMenu value="#{orderBean.pid}" id="sb_products">
-                                <f:selectItem itemLabel="Select Product" itemValue="0" />
-                                <f:selectItems value="#{orderBean.getListProductSelectBox()}" var="p" itemLabel="#{p[1]}" itemValue="#{p[0]}" />
-                                <f:ajax event="change" render="showProduct" listener="#{orderBean.getProduct}" />
-                            </h:selectOneMenu>
-                        </div>
-                        <div class="form-group">
-                            <h:commandButton value="Create Order" styleClass="btn btn-primary" />
+                            <h:link value="Back" outcome="/client/order/selected_products.xhtml"  styleClass="btn btn-primary"/>&nbsp;&nbsp;
+                            <h:commandButton value="Create Order" styleClass="btn btn-primary" action="#{orderBean.newOrder()}"/>
                         </div>
 
                    
