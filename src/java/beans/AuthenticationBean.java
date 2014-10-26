@@ -26,7 +26,7 @@ public class AuthenticationBean {
     public AuthenticationBean() {
     }
     
-    public void authenticate() {
+    public String authenticate() {
         ClientModel cm = new ClientModel();
         boolean result = cm.authenticate(username, password);
         FacesMessage msg = null;
@@ -34,12 +34,15 @@ public class AuthenticationBean {
             msg = new FacesMessage("Login Successfully!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             setStatus(true);
+            return "index.xhtml";
         } else {
             msg = new FacesMessage("Wrong username/password!");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             FacesContext.getCurrentInstance().addMessage(null, msg);
             setStatus(false);
+            return "login.xhtml";
         }
+        
     }
     
     public String getUsername() {
