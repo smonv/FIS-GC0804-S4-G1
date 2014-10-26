@@ -29,25 +29,23 @@ public class AuthenticationBean {
     public AuthenticationBean() {
     }
     
-<<<<<<< HEAD
     public String authenticate() {
         boolean result = clientModel.authenticate(username, password);
-=======
-    public void authenticate() {
-        ClientModel cm = new ClientModel();
-        boolean result = cm.authenticate(username, password);
->>>>>>> 72de8ee0c440b8c72b3dbf7974c0ff178aa0cb21
+
         FacesMessage msg = null;
         if (result) {
             msg = new FacesMessage("Login Successfully!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             setStatus(true);
+            return "index.xhtml";
         } else {
             msg = new FacesMessage("Wrong username/password!");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             FacesContext.getCurrentInstance().addMessage(null, msg);
             setStatus(false);
+            return "login.xhtml";
         }
+        
     }
     
     public String getUsername() {
