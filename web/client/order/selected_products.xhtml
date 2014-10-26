@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/client/layout.xhtml">
+        <ui:define name="title">Selected Product</ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <h:form>
+                    <h:dataTable value="#{orderBean.getSelectedProducts()}" var="opd" binding="#{orderBean.selected_products}">
+                        <h:column>
+                            <f:facet name="header">Image</f:facet>
+                            <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{orderBean.getProduct(opd.productId.pid).name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            <h:outputText value="#{orderBean.getProduct(opd.productId.pid).price}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Quantity</f:facet>
+                            <h:inputText value="#{opd.quantity}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Command</f:facet>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+
