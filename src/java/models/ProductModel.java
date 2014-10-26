@@ -42,4 +42,19 @@ public class ProductModel {
         return null;
     }
 
+    public boolean productExists(int pid) {
+        int result = (int) em.createNamedQuery("Products.exists").setParameter("pid", pid).getSingleResult();
+        return result > 0;
+    }
+
+    public long getProductPriceById(int pid) {
+        try {
+            long price = (long) em.createNamedQuery("Products.getProductPrice").setParameter("pid", pid).getSingleResult();
+            return price;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

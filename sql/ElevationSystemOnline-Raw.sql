@@ -124,3 +124,7 @@ insert into products values('EVE6', 'Elevator 6', 2, 'fast and stable', 543, nul
 
 insert into payment_types values('Cash')
 insert into payment_types values('Bank Transfer')
+
+insert into list_status values('Pending')
+insert into list_status values('Proccess')
+insert into list_status values('Completed')

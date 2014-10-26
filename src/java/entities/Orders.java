@@ -41,8 +41,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.findByLocationName", query = "SELECT o FROM Orders o WHERE o.locationName = :locationName"),
     @NamedQuery(name = "Orders.findByLocationAddress", query = "SELECT o FROM Orders o WHERE o.locationAddress = :locationAddress"),
     @NamedQuery(name = "Orders.findByCreateAt", query = "SELECT o FROM Orders o WHERE o.createAt = :createAt"),
-    @NamedQuery(name = "Orders.findByUpdateAt", query = "SELECT o FROM Orders o WHERE o.updateAt = :updateAt")})
+    @NamedQuery(name = "Orders.findByUpdateAt", query = "SELECT o FROM Orders o WHERE o.updateAt = :updateAt"),
+    @NamedQuery(name = "Orders.orderExists", query = "SELECT COUNT(o.oid) FROM Orders o WHERE o.oid = :oid ")
+})
 public class Orders implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -213,5 +216,5 @@ public class Orders implements Serializable {
     public String toString() {
         return "entities.Orders[ oid=" + oid + " ]";
     }
-    
+
 }

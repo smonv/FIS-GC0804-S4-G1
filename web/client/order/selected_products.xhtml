@@ -24,13 +24,29 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Quantity</f:facet>
-                            <h:inputText value="#{opd.quantity}" />
+                            <h:inputText value="#{opd.quantity}" size="5" label="Quantity" validatorMessage="Max 10 and Min 1">
+                                <f:validateLongRange maximum="10" minimum="1" />
+                            </h:inputText>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Command</f:facet>
+                            <h:commandButton value="Update" action="#{orderBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary"/>
+                            &nbsp;&nbsp;
+                            <h:commandButton value="Remove" action="#{orderBean.removeSelectedProduct()}" styleClass="btn btn-primary" />
                         </h:column>
                     </h:dataTable>
+                    Total: <h:outputText value="#{orderBean.getTotalSelectedProducts()}" />
+                    <br />
+                    Total Price: <h:outputText value="#{orderBean.getTotalSelectedProductsPrice()}" />
                 </h:form>
+            </div>
+            <div class="row">
+                <h:link value="Select more" outcome="/client/product/index.xhtml" styleClass="btn btn-primary"/>
+                &nbsp;&nbsp;
+                <h:link value="Apply order" outcome="/client/order/new.xhtml" styleClass="btn btn-primary" />
+            </div>
+            <div class="row">
+                <h:messages />
             </div>
         </ui:define>
     </ui:composition>

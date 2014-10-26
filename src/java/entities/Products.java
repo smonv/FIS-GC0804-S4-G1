@@ -44,7 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Products.findByImagePath", query = "SELECT p FROM Products p WHERE p.imagePath = :imagePath"),
     @NamedQuery(name = "Products.findByCreateAt", query = "SELECT p FROM Products p WHERE p.createAt = :createAt"),
     @NamedQuery(name = "Products.exists", query = "SELECT COUNT(p.pid) FROM Products p WHERE p.pid = :pid"),
-    @NamedQuery(name = "Products.getForSelectBox", query = "SELECT p.pid,p.name FROM Products p")
+    @NamedQuery(name = "Products.getForSelectBox", query = "SELECT p.pid,p.name FROM Products p"),
+    @NamedQuery(name = "Products.getProductPrice", query = "SELECT p.price FROM Products p WHERE p.pid = :pid")
 })
 public class Products implements Serializable {
 

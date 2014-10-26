@@ -5,10 +5,16 @@
  */
 package beans.client;
 
+import entities.Clients;
+import entities.ListStatus;
 import entities.OrderProductDetails;
+import entities.Orders;
 import entities.PaymentTypes;
 import entities.Products;
+import helpers.ApplicationHelper;
+import helpers.PersistenceHelper;
 import helpers.SessionHelper;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +25,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.NoResultException;
+import models.OrderModel;
+import models.OrderProductDetailModel;
 import models.PaymentTypeModel;
 import models.ProductModel;
 
@@ -32,6 +41,12 @@ import models.ProductModel;
 @ManagedBean
 @RequestScoped
 public class OrderBean implements Serializable {
+
+    @EJB
+    private OrderProductDetailModel orderProductDetailModel;
+
+    @EJB
+    private OrderModel orderModel;
 
     @EJB
     private PaymentTypeModel paymentTypeModel;
@@ -47,6 +62,9 @@ public class OrderBean implements Serializable {
     Products currentProduct;
     Map<String, Object> session;
     private HtmlDataTable selected_products;
+    private OrderProductDetails dataItem;
+    private String stringQuantity;
+
     /**
      * Creates a new instance of OrderBean
      */
@@ -83,8 +101,22 @@ public class OrderBean implements Serializable {
         }
     }
 
-    public void addProduct(AjaxBehaviorEvent event) {
-        System.out.println("here");
+    public void addProduct(int pid) throws IOException {
+        boolean valid = false;
+        ExternalContext ec = ApplicationHelper.getExternalContext();
+        if (ApplicationHelper.isInteger(stringQuantity)) {
+            quantity = Integer.parseInt(stringQuantity);
+            if (0 < quantity && quantity <= 10) {
+                valid = true;
+            }
+        }
+
+        if (!valid) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Quantity between 1 and 10"));
+            ec.getFlash().setKeepMessages(true);
+            ec.redirect(ec.getRequestContextPath() + "/client/product/show.xhtml?pid=" + pid);
+        }
+
         session = SessionHelper.getSessionMap();
         if (session.get("order_product_details") == null) {
             List<OrderProductDetails> opds = new ArrayList<>();
@@ -93,7 +125,6 @@ public class OrderBean implements Serializable {
             opd.setQuantity(quantity);
             opds.add(opd);
             session.put("order_product_details", opds);
-            System.out.println(opds.size());
         } else {
             boolean exists = false;
             List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("order_product_details");
@@ -111,23 +142,96 @@ public class OrderBean implements Serializable {
                 opd.setQuantity(quantity);
                 opds.add(opd);
             }
-            System.out.println(opds.size());
+
+            session.put("order_product_details", opds);
         }
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product added!"));
+        ec.redirect(ec.getRequestContextPath() + "/client/order/selected_products.xhtml");
     }
 
-    public int checkSession() {
-        int size = 0;
-        Map<String, Object> session = SessionHelper.getSessionMap();
-        if (session.get("order_product.details") != null) {
-            List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("order_product_details");
-            size = opds.size();
+    public String updateSelectdProductQuantity() {
+        OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
+        List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+        for (OrderProductDetails o : opds) {
+            if (o.getProductId().getPid() == opd.getProductId().getPid()) {
+                o.setQuantity(opd.getQuantity());
+            }
+        }
+        return "selected_products.xhtml";
+    }
+
+    public String removeSelectedProduct() {
+        int index = -1;
+        OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
+        List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+        for (OrderProductDetails o : opds) {
+            if (o.getProductId().getPid() == opd.getProductId().getPid()) {
+                index = opds.indexOf(o);
+            }
         }
 
-        return size;
+        if (index >= 0) {
+            opds.remove(index);
+        }
+        return "selected_products.xhtml";
     }
 
+    public int getTotalSelectedProducts() {
+        int total = 0;
+        List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+        total = opds.size();
+        return total;
+    }
+
+    public long getTotalSelectedProductsPrice() {
+        long totalPrice = 0;
+        List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+        List<Products> products = productModel.getAll();
+        for (OrderProductDetails opd : opds) {
+            for (Products p : products) {
+                if (opd.getProductId().getPid() == p.getPid()) {
+                    totalPrice += opd.getQuantity() * p.getPrice();
+                }
+            }
+        }
+
+        return totalPrice;
+    }
+
+    public void newOrder() throws IOException {
+        List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+        if (opds.isEmpty()) {
+            ApplicationHelper.addMessage("Please select product to make order");
+            ApplicationHelper.redirect("/client/order/new.xhtml", true);
+        }
+
+        Orders order = new Orders();
+        order.setCid(new Clients(8));
+        order.setNumber(ApplicationHelper.secureRandomString(16));
+        order.setPaymentType(new PaymentTypes(paymentTypeId));
+        order.setLocationName(location_name);
+        order.setLocationAddress(location_address);
+        order.setOrderStatus(new ListStatus(1));
+        order.setCreateAt(PersistenceHelper.getCurrentTime());
+        int oid = orderModel.createOrder(order);
+
+        boolean result = false;
+        if (oid > 0) {
+            result = orderProductDetailModel.createListOrderProductDetails(opds, oid);
+        }
+
+        if (result) {
+            ApplicationHelper.addMessage("Order created!");
+            ApplicationHelper.redirect("/client/order/new_order_details.xhtml?oid=" + oid, true);
+        } else {
+            orderModel.removeOrder(oid);
+            ApplicationHelper.addMessage("Failed to create new order!");
+            ApplicationHelper.redirect("/client/order/new.xhtml", true);
+        }
+    }
+
+    //////////////////////////////
     public int getPid() {
         return pid;
     }
@@ -191,5 +295,21 @@ public class OrderBean implements Serializable {
     public void setSelected_products(HtmlDataTable selected_products) {
         this.selected_products = selected_products;
     }
-    
+
+    public OrderProductDetails getDataItem() {
+        return dataItem;
+    }
+
+    public void setDataItem(OrderProductDetails dataItem) {
+        this.dataItem = dataItem;
+    }
+
+    public String getStringQuantity() {
+        return stringQuantity;
+    }
+
+    public void setStringQuantity(String stringQuantity) {
+        this.stringQuantity = stringQuantity;
+    }
+
 }
