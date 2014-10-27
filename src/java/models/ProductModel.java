@@ -28,6 +28,10 @@ public class ProductModel {
         List<Products> products = em.createNamedQuery("Products.findAll").getResultList();
         return products;
     }
+    public List<Products> getTop12() {
+        List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(0).setMaxResults(12).getResultList();
+        return products;
+    }
 
     public List<Products> getAllForSelectBox() {
         List<Products> products = em.createNamedQuery("Products.getForSelectBox").getResultList();

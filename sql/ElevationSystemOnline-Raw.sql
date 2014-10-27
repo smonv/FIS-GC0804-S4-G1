@@ -121,7 +121,12 @@ insert into products values('EVE3', 'Elevator 3', 1, 'fast and stable', 234, nul
 insert into products values('EVE4', 'Elevator 4', 2, 'fast and stable', 432, null, GETDATE())
 insert into products values('EVE5', 'Elevator 5', 2, 'fast and stable', 345, null, GETDATE())
 insert into products values('EVE6', 'Elevator 6', 2, 'fast and stable', 543, null, GETDATE())
-
+insert into products values('EVE12', 'Elevator 1', 1, 'fast and stable', 123, null, GETDATE())
+insert into products values('EVE25', 'Elevator 2', 1, 'fast and stable', 312, null, GETDATE())
+insert into products values('EVE34', 'Elevator 3', 1, 'fast and stable', 234, null, GETDATE())
+insert into products values('EVE48', 'Elevator 4', 2, 'fast and stable', 432, null, GETDATE())
+insert into products values('EVE59', 'Elevator 5', 2, 'fast and stable', 345, null, GETDATE())
+insert into products values('EVE67', 'Elevator 6', 2, 'fast and stable', 543, null, GETDATE())
 insert into payment_types values('Cash')
 insert into payment_types values('Bank Transfer')
 

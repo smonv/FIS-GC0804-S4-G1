@@ -52,7 +52,9 @@ public class ProductBean {
     public List<Products> getAllProduct() {
         return productModel.getAll();
     }
-    
+    public List<Products> getTop12Product() {
+        return productModel.getTop12();
+    }
     public int getPid() {
         return pid;
     }
