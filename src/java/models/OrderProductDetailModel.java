@@ -47,7 +47,7 @@ public class OrderProductDetailModel {
     }
     public OrderProductDetails getSingeByOrderId(Orders order){
         try {
-       OrderProductDetails detail=em.createNamedQuery("OrderProductDetails.findByOpdid", OrderProductDetails.class).setParameter("opdid", order.getOid()).getSingleResult();
+         OrderProductDetails detail=em.createNamedQuery("OrderProductDetails.findByOpdid", OrderProductDetails.class).setParameter("opdid", order.getOid()).getSingleResult();
         return detail;
         } catch (Exception e) {
             e.printStackTrace();

@@ -5,6 +5,7 @@
  */
 package beans;
 
+import helpers.SessionHelper;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -37,7 +38,7 @@ public class AuthenticationBean {
         if (result) {
             msg = new FacesMessage("Login Successfully!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
+            SessionHelper.getSessionMap().put("username", username);
             setStatus(true);
             return "index.xhtml";
         } else {

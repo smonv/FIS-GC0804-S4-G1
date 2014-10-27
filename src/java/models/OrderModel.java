@@ -67,8 +67,6 @@ public class OrderModel {
     
     public List<Orders> getListOrder(String username){
         try {
-              em=PersistenceHelper.getEntityManager();
-       
         Clients cl= em.createNamedQuery("Clients.findByUsername", Clients.class).setParameter("username", username).getSingleResult();
         List<Orders> orders=cl.getOrdersList();
         return orders;
