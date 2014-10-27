@@ -7,7 +7,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/templates/client/layout.xhtml">
         <!--        <f:metadata>
-                    <f:viewParam name="pid" value="#{orderBean.pid}" converterMessage="Wrong product id!" validatorMessage="Wrong product id!">
+                    <f:viewParam name="pid" value="#{orderCreateBean.pid}" converterMessage="Wrong product id!" validatorMessage="Wrong product id!">
                         <f:convertNumber integerOnly="true" />
                         <f:validateLongRange minimum="1" />
                         <f:validator validatorId="productExists" />
@@ -36,22 +36,22 @@
                     
                         <div class="form-group">
                             <h:outputLabel value="Location Name: " for="location_name"/>
-                            <h:inputText id="location_name" value="#{orderBean.location_name}" required="true" requiredMessage="Location Name is required!" styleClass="form-control"/>
+                            <h:inputText id="location_name" value="#{orderCreateBean.location_name}" required="true" requiredMessage="Location Name is required!" styleClass="form-control"/>
                         </div>
                         <div class="form-group">
                             <h:outputLabel value="Location Address: " for="location_address" />
-                            <h:inputText id="location_address" value="#{orderBean.location_address}" required="true" requiredMessage="Location Address is required!" styleClass="form-control"/>
+                            <h:inputText id="location_address" value="#{orderCreateBean.location_address}" required="true" requiredMessage="Location Address is required!" styleClass="form-control"/>
                         </div>
                         <div class="form-group">
                             <h:outputLabel value="Payment Type: " />
-                            <h:selectOneMenu value="#{orderBean.paymentTypeId}">
-                                <f:selectItems value="#{orderBean.getListPaymentType()}" var="pt" itemLabel="#{pt.name}" itemValue="#{pt.ptid}" />
+                            <h:selectOneMenu value="#{orderCreateBean.paymentTypeId}">
+                                <f:selectItems value="#{orderCreateBean.getListPaymentType()}" var="pt" itemLabel="#{pt.name}" itemValue="#{pt.ptid}" />
                             </h:selectOneMenu>
                         </div>
 
                         <div class="form-group">
                             <h:link value="Back" outcome="/client/order/selected_products.xhtml"  styleClass="btn btn-primary"/>&nbsp;&nbsp;
-                            <h:commandButton value="Create Order" styleClass="btn btn-primary" action="#{orderBean.newOrder()}"/>
+                            <h:commandButton value="Create Order" styleClass="btn btn-primary" action="#{orderCreateBean.newOrder()}"/>
                         </div>
 
                    

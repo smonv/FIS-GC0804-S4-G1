@@ -64,16 +64,15 @@ public class OrderModel {
         long result = (long) em.createNamedQuery("Orders.orderExists").setParameter("oid", order_id).getSingleResult();
         return result > 0;
     }
-    
-    public List<Orders> getListOrder(String username){
+
+    public List<Orders> getListOrder(int clientId) {
         try {
-        Clients cl= em.createNamedQuery("Clients.findByUsername", Clients.class).setParameter("username", username).getSingleResult();
-        List<Orders> orders=cl.getOrdersList();
-        return orders;
+            List<Orders> orders = em.createNamedQuery("Orders.findByClientId").setParameter("cid", new Clients(clientId)).getResultList();
+            return orders;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        
+
     }
 }
