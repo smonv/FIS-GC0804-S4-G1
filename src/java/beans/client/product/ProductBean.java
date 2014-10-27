@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans.client;
+package beans.client.product;
 
 import entities.OrderProductDetails;
 import entities.Products;
@@ -44,7 +44,7 @@ public class ProductBean {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             ExternalContext ec = ApplicationHelper.getExternalContext();
             if (pid == 0 && !productModel.productExists(pid)) {
-                ec.redirect(ec.getRequestContextPath() + "/client/404.xhtml");
+                ApplicationHelper.redirect("/404.xhtml", false);
             }
         }
     }

@@ -6,19 +6,19 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/client/layout.xhtml">
         <f:metadata>
-            <f:viewParam name="oid" value="#{orderDetailsBean.oid}" />
-            <f:viewAction action="#{orderDetailsBean.init()}" />
+            <f:viewParam name="oid" value="#{orderNewDetailsBean.oid}" />
+            <f:viewAction action="#{orderNewDetailsBean.init()}" />
         </f:metadata>
         <ui:define name="title">New Order Details</ui:define>
         <ui:define name="content">
             <div class="row">
-                Order Number: <h:outputText value="#{orderDetailsBean.order.number}" />
+                Order Number: <h:outputText value="#{orderNewDetailsBean.order.number}" />
                 <br />
-                Order Cost: <h:outputText value="#{orderDetailsBean.getTotalOrderCost()}"/>
+                Order Cost: <h:outputText value="#{orderNewDetailsBean.getTotalOrderCost()}"/>
                 <br />
-                Order Status: <h:outputText value="#{orderDetailsBean.order.orderStatus.name}" />
+                Order Status: <h:outputText value="#{orderNewDetailsBean.order.orderStatus.name}" />
                 <br />
-                Order Payment: <h:outputText value="#{orderDetailsBean.order.paymentType.name}" />
+                Order Payment: <h:outputText value="#{orderNewDetailsBean.order.paymentType.name}" />
             </div>
         </ui:define>
     </ui:composition>

@@ -9,18 +9,18 @@
         <ui:define name="content">
             <div class="row">
                 <h:form>
-                    <h:dataTable value="#{orderBean.getSelectedProducts()}" var="opd" binding="#{orderBean.selected_products}">
+                    <h:dataTable value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
                         <h:column>
                             <f:facet name="header">Image</f:facet>
                             <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Name</f:facet>
-                            <h:outputText value="#{orderBean.getProduct(opd.productId.pid).name}" />
+                            <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Price</f:facet>
-                            <h:outputText value="#{orderBean.getProduct(opd.productId.pid).price}" />
+                            <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).price}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Quantity</f:facet>
@@ -30,14 +30,14 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Command</f:facet>
-                            <h:commandButton value="Update" action="#{orderBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary"/>
+                            <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary"/>
                             &nbsp;&nbsp;
-                            <h:commandButton value="Remove" action="#{orderBean.removeSelectedProduct()}" styleClass="btn btn-primary" />
+                            <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" />
                         </h:column>
                     </h:dataTable>
-                    Total: <h:outputText value="#{orderBean.getTotalSelectedProducts()}" />
+                    Total: <h:outputText value="#{orderCreateBean.getTotalSelectedProducts()}" />
                     <br />
-                    Total Price: <h:outputText value="#{orderBean.getTotalSelectedProductsPrice()}" />
+                    Total Price: <h:outputText value="#{orderCreateBean.getTotalSelectedProductsPrice()}" />
                 </h:form>
             </div>
             <div class="row">

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans.client;
+package beans.client.order;
 
 import entities.OrderProductDetails;
 import entities.Orders;
@@ -25,7 +25,7 @@ import models.ProductModel;
  */
 @ManagedBean
 @RequestScoped
-public class OrderDetailsBean {
+public class OrderNewDetailsBean {
 
     @EJB
     private ProductModel productModel;
@@ -42,14 +42,14 @@ public class OrderDetailsBean {
     /**
      * Creates a new instance of OrderDetailsBean
      */
-    public OrderDetailsBean() {
+    public OrderNewDetailsBean() {
     }
 
     public void init() throws IOException {
         if (!FacesContext.getCurrentInstance().isPostback()) {
 
             if (oid == 0 && !orderModel.orderExists(oid)) {
-                ApplicationHelper.redirect("/client/404.xhtml", false);
+                ApplicationHelper.redirect("/404.xhtml", false);
             }
             if (order == null) {
                 order = orderModel.getById(oid);

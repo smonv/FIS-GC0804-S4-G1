@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans.client;
+package beans.client.order;
 
 import entities.Clients;
 import entities.ListStatus;
@@ -40,7 +40,7 @@ import models.ProductModel;
  */
 @ManagedBean
 @RequestScoped
-public class OrderBean implements Serializable {
+public class OrderCreateBean implements Serializable {
 
     @EJB
     private OrderProductDetailModel orderProductDetailModel;
@@ -54,7 +54,6 @@ public class OrderBean implements Serializable {
     @EJB
     private ProductModel productModel;
 
-    
     private int pid;
     private int quantity;
     private String location_name;
@@ -65,11 +64,11 @@ public class OrderBean implements Serializable {
     private HtmlDataTable selected_products;
     private OrderProductDetails dataItem;
     private String stringQuantity;
-
+    private List<Orders> orders;
     /**
      * Creates a new instance of OrderBean
      */
-    public OrderBean() {
+    public OrderCreateBean() {
     }
 
     public List<Products> getListProductSelectBox() {
@@ -232,13 +231,14 @@ public class OrderBean implements Serializable {
         }
     }
 
-    public List<Orders> getListOrders(){//phan show list 
-        //String  username="qxqqxq";//test
-        String username=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
-        return orderModel.getListOrder(username);
-        
+    public List<Orders> getListOrders() {//phan show list 
+
+        return orderModel.getListOrder(8);
+
     }
+
     //////////////////////////////
+
     public int getPid() {
         return pid;
     }
@@ -318,5 +318,18 @@ public class OrderBean implements Serializable {
     public void setStringQuantity(String stringQuantity) {
         this.stringQuantity = stringQuantity;
     }
+
+    public List<Orders> getOrders() {
+        if(orders == null){
+            orders = orderModel.getListOrder(8); // get list order
+        }
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }
+    
+    
 
 }
