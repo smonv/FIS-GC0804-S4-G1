@@ -37,6 +37,7 @@ public class AuthenticationBean {
         if (result) {
             msg = new FacesMessage("Login Successfully!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", username);
             setStatus(true);
             return "index.xhtml";
         } else {

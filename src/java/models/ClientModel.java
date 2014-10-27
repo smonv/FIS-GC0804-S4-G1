@@ -6,7 +6,9 @@
 package models;
 
 import entities.Clients;
+import entities.Orders;
 import helpers.PasswordHelper;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -44,4 +46,5 @@ public class ClientModel {
         }
 
     }
+    
 }

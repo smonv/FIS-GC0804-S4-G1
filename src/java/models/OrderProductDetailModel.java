@@ -45,4 +45,14 @@ public class OrderProductDetailModel {
             return null;
         }
     }
+    public OrderProductDetails getSingeByOrderId(Orders order){
+        try {
+       OrderProductDetails detail=em.createNamedQuery("OrderProductDetails.findByOpdid", OrderProductDetails.class).setParameter("opdid", order.getOid()).getSingleResult();
+        return detail;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
 }

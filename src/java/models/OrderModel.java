@@ -5,7 +5,10 @@
  */
 package models;
 
+import entities.Clients;
 import entities.Orders;
+import helpers.PersistenceHelper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -60,5 +63,19 @@ public class OrderModel {
     public boolean orderExists(int order_id) {
         long result = (long) em.createNamedQuery("Orders.orderExists").setParameter("oid", order_id).getSingleResult();
         return result > 0;
+    }
+    
+    public List<Orders> getListOrder(String username){
+        try {
+              em=PersistenceHelper.getEntityManager();
+       
+        Clients cl= em.createNamedQuery("Clients.findByUsername", Clients.class).setParameter("username", username).getSingleResult();
+        List<Orders> orders=cl.getOrdersList();
+        return orders;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
     }
 }

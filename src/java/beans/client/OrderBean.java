@@ -54,6 +54,7 @@ public class OrderBean implements Serializable {
     @EJB
     private ProductModel productModel;
 
+    
     private int pid;
     private int quantity;
     private String location_name;
@@ -231,6 +232,12 @@ public class OrderBean implements Serializable {
         }
     }
 
+    public List<Orders> getListOrders(){//phan show list 
+        //String  username="qxqqxq";//test
+        String username=(String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        return orderModel.getListOrder(username);
+        
+    }
     //////////////////////////////
     public int getPid() {
         return pid;

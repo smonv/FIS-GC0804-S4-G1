@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import models.OrderModel;
 import models.OrderProductDetailModel;
@@ -35,6 +36,8 @@ public class OrderDetailsBean {
     private int oid;
     private Orders order;
     private List<OrderProductDetails> opds;
+    private OrderProductDetails detail;
+    private HtmlDataTable ordertable;
 
     /**
      * Creates a new instance of OrderDetailsBean
@@ -68,6 +71,19 @@ public class OrderDetailsBean {
         return totalCost;
     }
 
+    public String showdetail(){//phan show list order
+        try {
+        Orders o=(Orders)ordertable.getRowData();
+        detail= orderProductDetailModel.getSingeByOrderId(o);
+        return "showdetail";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        return null;
+    }
+    
     public int getOid() {
         return oid;
     }
@@ -82,6 +98,22 @@ public class OrderDetailsBean {
 
     public void setOrder(Orders order) {
         this.order = order;
+    }
+
+    public OrderProductDetails getDetail() {
+        return detail;
+    }
+
+    public void setDetail(OrderProductDetails detail) {
+        this.detail = detail;
+    }
+
+    public HtmlDataTable getOrdertable() {
+        return ordertable;
+    }
+
+    public void setOrdertable(HtmlDataTable ordertable) {
+        this.ordertable = ordertable;
     }
 
 }
