@@ -218,7 +218,8 @@ public class Clients implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Clients[ cid=" + cid + " ]";
+        //return "entities.Clients[ cid=" + cid + " ]";
+        return this.username;
     }
     
 }

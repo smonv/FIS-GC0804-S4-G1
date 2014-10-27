@@ -130,7 +130,8 @@ public class ListStatus implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.ListStatus[ lsid=" + lsid + " ]";
+        
+            return this.name;
     }
     
 }

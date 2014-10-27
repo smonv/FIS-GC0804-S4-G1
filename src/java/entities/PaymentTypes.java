@@ -108,7 +108,8 @@ public class PaymentTypes implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.PaymentTypes[ ptid=" + ptid + " ]";
+        
+        return this.name;
     }
     
 }
