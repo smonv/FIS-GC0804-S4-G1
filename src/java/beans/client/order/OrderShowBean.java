@@ -40,18 +40,17 @@ public class OrderShowBean {
 
     private Products product;
 
-    /**
-     * Creates a new instance of OrderShowBean
-     */
+    private String number;
+            
     public OrderShowBean() {
     }
 
-    public void init() throws IOException {
+    public void init(){
         if (!FacesContext.getCurrentInstance().isPostback()) {
-            if (!orderModel.orderExists(oid)) {
+            if (!orderModel.orderExists(number)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
-            getOrder();
+            order = orderModel.getByNumber(number);
         }
     }
 
@@ -94,9 +93,6 @@ public class OrderShowBean {
     }
 
     public Orders getOrder() {
-        if (order == null) {
-            order = orderModel.getById(oid);
-        }
         return order;
     }
 
@@ -112,4 +108,14 @@ public class OrderShowBean {
         this.product = product;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    
+    
 }

@@ -51,6 +51,11 @@ public class OrderModel {
         }
     }
 
+    public Orders getByNumber(String number) {
+        List<Orders> orders = em.createNamedQuery("Orders.findByNumber").setParameter("number", number).getResultList();
+        return orders.size() > 0 ? orders.get(0) : null;
+    }
+
     public boolean removeOrder(int order_id) {
         try {
             em.remove(order_id);
@@ -65,6 +70,11 @@ public class OrderModel {
         return result > 0;
     }
 
+    public boolean orderExists(String number) {
+        long result = (long) em.createNamedQuery("Orders.orderNumberExists").setParameter("number", number).getSingleResult();
+        return result > 0;
+    }
+
     public List<Orders> getListOrder(int clientId) {
         try {
             List<Orders> orders = em.createNamedQuery("Orders.findByClientId").setParameter("cid", new Clients(clientId)).getResultList();
@@ -74,5 +84,18 @@ public class OrderModel {
             return null;
         }
 
+    }
+
+    public boolean update(Orders order) {
+        try {
+            if (em.find(Orders.class, order.getOid()) != null) {
+                em.merge(order);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

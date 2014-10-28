@@ -25,10 +25,14 @@ public class ApplicationHelper {
         return FacesContext.getCurrentInstance().getExternalContext();
     }
 
-    public static void redirect(String externalPath, boolean keepMessage) throws IOException {
-        ExternalContext ec = getExternalContext();
-        ec.getFlash().setKeepMessages(keepMessage);
-        ec.redirect(ec.getRequestContextPath() + externalPath);
+    public static void redirect(String externalPath, boolean keepMessage) {
+        try {
+            ExternalContext ec = getExternalContext();
+            ec.getFlash().setKeepMessages(keepMessage);
+            ec.redirect(ec.getRequestContextPath() + externalPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void addMessage(String message) {

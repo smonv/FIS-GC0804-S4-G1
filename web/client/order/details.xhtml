@@ -6,11 +6,14 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/client/layout.xhtml">
         <f:metadata>
-            <f:viewParam name="oid" value="#{orderShowBean.oid}" />
+            <f:viewParam name="number" value="#{orderShowBean.number}" />
             <f:viewAction action="#{orderShowBean.init()}" />
         </f:metadata>
         <ui:define name="title">Order Details</ui:define>
         <ui:define name="content">
+            <div class="row">
+                <h:messages />
+            </div>
             <div class="row">
                 <div class="col-lg-6">
                     Order Number: <h:outputText value="#{orderShowBean.order.number}" />
@@ -22,6 +25,8 @@
                     Status: <h:outputText value="#{orderShowBean.order.orderStatus.name}" />
                     <br />
                     Payment: <h:outputText value="#{orderShowBean.order.paymentType.name}" />
+                    <br />
+                    <h:link value="Edit Infomation" outcome="/client/order/edit_info.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary"/>  
                 </div>
                 <div class="col-lg-6">
                     List products: <br />
@@ -31,6 +36,7 @@
                             <p>Quantity: <h:outputText value="#{opd.quantity}" /></p>
                         </div>
                     </ui:repeat>
+                    <h:link value="Edit Products" outcome="/client/order/edit_products.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary"/>
                 </div>
             </div>
         </ui:define>
