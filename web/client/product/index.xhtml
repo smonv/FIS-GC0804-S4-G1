@@ -46,14 +46,15 @@
 
                                                     <a data-rel="prettyPhoto" href="#{resource['client/img/products/demo.jpg']}" class="element-lightbox" ><i class="fa fa-search-plus"></i></a>
 
-                                                    <a class="element-link" href="#" title=""><i class="fa fa-link"></i></a>
+                                                    
+                                                    <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{product.pid}"><i class="fa fa-link"></i></h:link>
                                                 </div>
 
                                                 <div class="project-details">
                                                     <h2><a href="#"><h:outputText value="#{product.name}" /></a></h2>
                                                     <p><h:outputText value="#{product.infomations}"/></p>
 
-                                                    <div class="readmore"><h:link value="Read Me" outcome="/client/product/show.xhtml?pid=#{product.pid}" /></div>
+                                                    <div class="readmore"><h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}" /></div>
 
                                                 </div>
                                             </div>

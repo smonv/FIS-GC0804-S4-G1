@@ -4073,3 +4073,6 @@ KEY FRAME
             -webkit-background-size: 152px 18px;
             background-size: 152px 18px;
         }
+        .messages{
+            color: red;
+        }

@@ -27,13 +27,14 @@
          
                         <ul>
                             <li>
-                                <a href="login.xhtml" class="btn btn--primary" style="height: 30px; border-radius: 0px; ">Log In</a>
+                            
+                                <h:link outcome="/login.xhtml" styleClass="btn btn-primary" style="height: 30px; border-radius: 0px; ">Log In</h:link>
                             </li>
 
                             <li>
-                                <a href="register.xhtml">
+                                 <h:link outcome="/register.xhtml">
                             <i class="glyph--cancel"></i><span>Register</span>
-                        </a>
+                                 </h:link>
                             </li>
 
         
@@ -66,23 +67,23 @@
 
                                 <!-- Home Style -->
 
-                                <li class="active"><a href="index.xhtml" >Home</a></li> <!-- /Home Style -->
+                                <li class="active"><h:link value="Home" outcome="/index.xhtml"></h:link></li> <!-- /Home Style -->
 
                                 <!--Product-->
-                                <li><a href="client/product/index.xhtml">Products</a></li>											
-
+                                <li><h:link value="products" outcome="/client/product/index.xhtml"/></li>											
+                           
                                 <!-- Pages -->
-                                <li><a href="#" >Order</a></li> <!-- /Pages -->
+                                <li><h:link value="orders" outcome="/index.xhtml"></h:link></li> <!-- /Pages -->
 
                                 <!-- Portfolio Pages -->
-                                <li><a href="#">Complaint</a></li> <!-- /Portfolio Pages -->
+                                <li><h:link value="Complaint" outcome="/index.xhtml"></h:link></li> <!-- /Portfolio Pages -->
 
                                 <!-- Blog Pages -->
-                                <li><a href="feedback.xhtml">Feedback</a></li> <!-- /Blog Pages -->
+                                <li><h:link value="feedback" outcome="/feedback.xhtml"></h:link></li> <!-- /Blog Pages -->
 
                                 <!-- Contact Pages -->
-                                <li><a href="about.xhtml">About</a></li> <!-- /Contact Pages -->
-
+                                <li><h:link value="about" outcome="/about.xhtml"></h:link></li> <!-- /Contact Pages -->
+                             
                             </ul> <!-- /navbar-nav -->
                         </div> <!-- /navbar-collapse -->
                     </div> <!-- /navbar -->
