@@ -2,11 +2,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/client/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="oid" value="#{orderShowBean.oid}" />
+            <f:viewAction action="#{orderShowBean.init()}" />
+        </f:metadata>
         <ui:define name="title">Order Details</ui:define>
         <ui:define name="content">
-
+            <div class="row">
+                <div class="col-lg-6">
+                    Order Number: <h:outputText value="#{orderShowBean.order.number}" />
+                    <br />
+                    Location Name: <h:outputText value="#{orderShowBean.order.locationName}" />
+                    <br />
+                    Location Address: <h:outputText value="#{orderShowBean.order.locationAddress}" />
+                    <br />
+                    Status: <h:outputText value="#{orderShowBean.order.orderStatus.name}" />
+                    <br />
+                    Payment: <h:outputText value="#{orderShowBean.order.paymentType.name}" />
+                </div>
+                <div class="col-lg-6">
+                    List products: <br />
+                    <ui:repeat value="#{orderShowBean.order.orderProductDetailsList}" var="opd">
+                        <div class="row">
+                            <h3>Name: <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}"/></h3>
+                            <p>Quantity: <h:outputText value="#{opd.quantity}" /></p>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </div>
         </ui:define>
     </ui:composition>
 </html>
