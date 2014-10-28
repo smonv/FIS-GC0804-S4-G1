@@ -48,12 +48,10 @@ public class OrderNewDetailsBean {
     public void init() throws IOException {
         if (!FacesContext.getCurrentInstance().isPostback()) {
 
-            if (oid == 0 && !orderModel.orderExists(oid)) {
+            if (!orderModel.orderExists(oid)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
-            if (order == null) {
                 order = orderModel.getById(oid);
-            }
         }
     }
 

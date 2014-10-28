@@ -47,7 +47,7 @@ public class ProductModel {
     }
 
     public boolean productExists(int pid) {
-        int result = (int) em.createNamedQuery("Products.exists").setParameter("pid", pid).getSingleResult();
+        long result = (long) em.createNamedQuery("Products.exists").setParameter("pid", pid).getSingleResult();
         return result > 0;
     }
 

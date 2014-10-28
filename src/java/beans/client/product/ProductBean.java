@@ -42,10 +42,10 @@ public class ProductBean {
     
     public void init() throws IOException {
         if (!FacesContext.getCurrentInstance().isPostback()) {
-            ExternalContext ec = ApplicationHelper.getExternalContext();
-            if (pid == 0 && !productModel.productExists(pid)) {
+            if (!productModel.productExists(pid)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
+            currentProduct = productModel.getById(pid);
         }
     }
     
@@ -64,9 +64,6 @@ public class ProductBean {
     }
     
     public Products getCurrentProduct() {
-        if (currentProduct == null) {
-            currentProduct = productModel.getById(pid);
-        }
         return currentProduct;
     }
     
