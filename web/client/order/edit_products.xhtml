@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/client/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="number" value="#{orderEditBean.number}" />
+            <f:viewAction action="#{orderEditBean.init()}" />
+        </f:metadata>
+        <ui:define name="title">Edit Order Products</ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <h:messages class="messages"/>
+            </div>
+            <div class="row">
+                <h:form>
+                    <h:inputHidden value="#{orderEditBean.number}" />
+                    <h:dataTable value="#{orderEditBean.getListOrderProducts()}" var="opd" binding="#{orderEditBean.edit_products}">
+                        <h:column>
+                            <f:facet name="header">Image</f:facet>
+                            <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).price}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Quantity</f:facet>
+                            <h:inputText value="#{opd.quantity}" size="5" label="Quantity" 
+                                         required="true" requiredMessage="Quantity is required"
+                                         validatorMessage="Quantity min 1 and max 10"
+                                         converterMessage="Quantity only integer"
+                                         >
+                                <f:validateLongRange minimum="1" maximum="10" />
+                                <f:convertNumber integerOnly="true" />
+                            </h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Total</f:facet>
+                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).price*opd.quantity}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Command</f:facet>
+                            <h:commandButton value="Update" action="#{orderEditBean.updateSelectedProduct()}" styleClass="btn btn-primary">
+                                <f:ajax execute="@form" render="@all" />
+                            </h:commandButton>
+                            &nbsp;&nbsp;
+                            <h:commandButton value="Remove" action="#{orderEditBean.removeSelectedProduct()}" styleClass="btn btn-primary">
+                                <f:ajax execute="@form" render="@all" />
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+                    Total: <h:outputText value="#{orderEditBean.getTotalSelectedProducts()}" />
+                    <br />
+                    Total Price: <h:outputText value="#{orderEditBean.getTotalSelectedProductsPrice()}" />
+                    <div class="form-group">
+                        <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> &nbsp;&nbsp; 
+                        <h:commandButton value="Update" action="#{orderEditBean.updateProducts()}" class="btn btn-primary"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

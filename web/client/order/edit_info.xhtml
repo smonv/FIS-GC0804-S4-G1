@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/client/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="number" value="#{orderEditBean.number}" />
+            <f:viewAction action="#{orderEditBean.init()}" />
+        </f:metadata>
+        <ui:define name="title">Edit Order Information</ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h:form>
+                        <div class="form-group">
+                            <h:outputLabel value="Location Name" for="location_name" />
+                            <h:inputText id="location_name" value="#{orderEditBean.locationName}" styleClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Location Address" for="location_address" />
+                            <h:inputText id="location_address" value="#{orderEditBean.locationAddress}" styleClass="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Payment Type" />
+                            <h:selectOneMenu value="#{orderEditBean.paymentId}" styleClass="form-control">
+                                <f:selectItems value="#{orderEditBean.getListPaymentTypes()}" var="pt" itemLabel="#{pt.name}" itemValue="#{pt.ptid}" />
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="form-group">
+                            <h:commandButton value="Update" action="#{orderEditBean.updateInfo()}" class="btn btn-primary" />
+                        </div>
+                    </h:form>
+                </div>
+                <div class="col-lg-6">
+                    <h:messages />
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+
