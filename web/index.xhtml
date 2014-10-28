@@ -21,9 +21,9 @@
                                 <div class="tp-banner" >
                                     <ul>
                                         <!-- SLIDE  -->
-                                        <li data-transition="random" data-slotamount="7" data-masterspeed="300" data-thumb="../resources/client/img/products/demo.jpg" data-delay="5000"  data-saveperformance="off"  data-title="Our Workplace">
+                                        <li data-transition="random" data-slotamount="7" data-masterspeed="300" data-thumb="resources/client/img/products/demo.jpg" data-delay="5000"  data-saveperformance="off"  data-title="Our Workplace">
                                             <!-- MAIN IMAGE -->
-                                            <img src="../resources/client/img/products/demo.jpg"  alt="" data-bgposition="center center" data-kenburns="on" data-duration="9000" data-ease="Linear.easeNone" data-bgfit="100" data-bgfitend="150" data-bgpositionend="right center" />
+                                            <img src="resources/client/img/products/demo.jpg"  alt="" data-bgposition="center center" data-kenburns="on" data-duration="9000" data-ease="Linear.easeNone" data-bgfit="100" data-bgfitend="150" data-bgpositionend="right center" />
                                             <!-- LAYERS -->
 
                                             <!-- LAYER NR. 1 -->
@@ -59,9 +59,9 @@
 
 
                                         <!-- SLIDE  -->
-                                        <li data-transition="zoomin" data-slotamount="7" data-masterspeed="300" data-thumb="../resources/client/img/products/demo.jpg" data-delay="5000"  data-saveperformance="off"  data-title="New York City">
+                                        <li data-transition="zoomin" data-slotamount="7" data-masterspeed="300" data-thumb="resources/client/img/products/demo.jpg" data-delay="5000"  data-saveperformance="off"  data-title="New York City">
                                             <!-- MAIN IMAGE -->
-                                            <img src="../resources/client/img/products/demo.jpg"  alt="" data-bgposition="center center" data-kenburns="on" data-duration="9000" data-ease="Linear.easeNone" data-bgfit="100" data-bgfitend="150" data-bgpositionend="center center" />
+                                            <img src="resources/client/img/products/demo.jpg"  alt="" data-bgposition="center center" data-kenburns="on" data-duration="9000" data-ease="Linear.easeNone" data-bgfit="100" data-bgfitend="150" data-bgpositionend="center center" />
                                             <!-- LAYERS -->
 
                                             <!-- LAYER NR. 1 -->
@@ -98,9 +98,9 @@
 
 
                                         <!-- SLIDE  -->
-                                        <li data-transition="zoomout" data-slotamount="7" data-masterspeed="300" data-thumb="../resources/client/img/products/demo.jpg" data-delay="5000"  data-saveperformance="off"  data-title="Nerd Wisdom">
+                                        <li data-transition="zoomout" data-slotamount="7" data-masterspeed="300" data-thumb="resources/client/img/products/demo.jpg" data-delay="5000"  data-saveperformance="off"  data-title="Nerd Wisdom">
                                             <!-- MAIN IMAGE -->
-                                            <img src="../resources/client/img/products/demo.jpg"  alt="" data-bgposition="center center" data-kenburns="on" data-duration="9000" data-ease="Linear.easeNone" data-bgfit="100" data-bgfitend="150" data-bgpositionend="right center" />
+                                            <img src="resources/client/img/products/demo.jpg"  alt="" data-bgposition="center center" data-kenburns="on" data-duration="9000" data-ease="Linear.easeNone" data-bgfit="100" data-bgfitend="150" data-bgpositionend="right center" />
                                             <!-- LAYERS -->
 
                                             <!-- LAYER NR. 1 -->
@@ -218,7 +218,7 @@
                 <div class="grid-block">
                     <ui:repeat var="product" value="#{productBean.getTop12Product()}" varStatus="status">
                         <figure class="effect-layla">
-                            <img src="../resources/client/img/products/demo.jpg" alt="img01"/>
+                            <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
                             <figcaption>
                                 <h2><h:outputText value="#{product.name}" /></h2>
                                 <p><h:outputText value="#{product.infomations}"/></p>

@@ -15,7 +15,7 @@
 
                     <!-- Logo -->
                     <div class="logo">
-                        <a title="Decor" href="index.html">
+                        <a title="Decor" href="index.xhtml">
                             <h:graphicImage name="img/logo.png" library="client" alt="Decor" />
                         </a>
                     </div>
@@ -24,42 +24,19 @@
 
                     <!-- Top Social Icon -->
                     <div class="social-icon hidden-xs clearfix">
+         
                         <ul>
                             <li>
-                                <!-- facebook -->
-                                <a href="#" title="Facebook"  target="_blank"><i class="fa fa-facebook"> </i></a>
-                                <!-- /facebook -->
+                                <a href="login.xhtml" class="btn btn--primary" style="height: 30px; border-radius: 0px; ">Log In</a>
                             </li>
 
                             <li>
-                                <!-- twitter -->
-                                <a href="#" title="Twitter" target="_blank"><i class="fa fa-twitter"></i></a>
-                                <!-- /twitter -->
+                                <a href="register.xhtml">
+                            <i class="glyph--cancel"></i><span>Register</span>
+                        </a>
                             </li>
 
-                            <li>
-                                <!-- google-plus -->
-                                <a href="#" title="Google plus" target="_blank"><i class="fa fa-google-plus"></i></a>
-                                <!-- /google-plus -->
-                            </li>
-
-                            <li>
-                                <!-- youtube -->
-                                <a href="#" title="YouTube" target="_blank"><i class="fa fa-youtube"></i></a>
-                                <!-- /youtube-play -->
-                            </li>
-
-                            <li>
-                                <!-- linkedin -->
-                                <a href="#" title="Linkedin" target="_blank"><i class="fa fa-linkedin"></i></a>
-                                <!-- /linkedin -->
-                            </li>
-
-                            <li>
-                                <!-- flickr -->
-                                <a href="#" title="Flickr" target="_blank"><i class="fa fa-flickr"></i></a>
-                                <!-- /flickr -->
-                            </li>
+        
                         </ul>
                     </div><!-- end of Top Social Icon -->
 
@@ -101,252 +78,11 @@
                                 <li><a href="#">Complaint</a></li> <!-- /Portfolio Pages -->
 
                                 <!-- Blog Pages -->
-                                <li><a href="#">Feedback</a></li> <!-- /Blog Pages -->
+                                <li><a href="feedback.xhtml">Feedback</a></li> <!-- /Blog Pages -->
 
                                 <!-- Contact Pages -->
-                                <li><a href="#">About</a></li> <!-- /Contact Pages -->
-                                
-                                <!-- MEGA MENU -->
-                                <c:if test="${authenticationBean.status == false}">
-                                    <li class="dropdown mega-fw has-megamenu"><a href="#" data-toggle="dropdown" class="dropdown-toggle" style="color: red">Log In<b class="caret"></b></a>
-                                        <!-- megamenu-wrapper -->
-                                        <div class="submenu-wrapper submenu-wrapper-topbottom megamenu-wrapper">
-                                            <div class="submenu-inner  submenu-inner-topbottom megamenu-inner">
+                                <li><a href="about.xhtml">About</a></li> <!-- /Contact Pages -->
 
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <div class="mega-content">
-                                                            <div class="row">
-
-                                                                <h:form id="registerForm">
-                                                                    <div class="col-sm-3">
-                                                                        <h:outputLabel value="Name: " for="name"/>
-                                                                        <h:inputText class="form-control" id="name" value="#{registerBean.name}" required="true" requiredMessage="Name is required!">
-                                                                            <f:validateLength minimum="3" maximum="100" />
-                                                                        </h:inputText>
-
-                                                                        <h:outputLabel value="Username: " for="username"/>
-                                                                        <h:inputText class="form-control" id="username" value="#{registerBean.username}" required="true" requiredMessage="Username is required!">
-                                                                            <f:validator validatorId="uniqueUsername" />
-                                                                        </h:inputText>
-
-                                                                        <h:outputLabel value="Email: " for="email"/>
-                                                                        <h:inputText class="form-control" id="email" value="#{registerBean.email}" required="true" requiredMessage="Email is required!">
-                                                                            <f:validator validatorId="uniqueEmail" />
-                                                                            <f:validator validatorId="validEmail"/>
-                                                                        </h:inputText>
-
-                                                                        <h:outputLabel value="Password: " for="password"/>
-                                                                        <h:inputSecret class="form-control" id="password" value="#{registerBean.password}" required="true" requiredMessage="Password is required!" />
-
-                                                                        <h:outputLabel value="Password Confirm: " for="password_confirmation"/>
-                                                                        <h:inputSecret class="form-control" id="password_confirmation" binding="#{password_confirmation}" required="true" requiredMessage="Password confirm is required!">
-                                                                            <f:validator validatorId="passwordConfirmationMatch"/>
-                                                                        </h:inputSecret>
-
-                                                                    </div>
-
-
-                                                                    <div class="col-sm-3">
-                                                                        <h:outputLabel value="Contact Details: " for="contact_details"/>
-                                                                        <h:inputTextarea class="form-control" id="contact_details" value="#{registerBean.contact_details}" />
-
-                                                                        <h:outputLabel value="Address: " for="address" />
-                                                                        <h:inputText class="form-control" id="address" value="#{registerBean.address}" />
-
-                                                                        <h:outputLabel value="Company Name: " for="company_name" />
-                                                                        <h:inputText class="form-control" id="company_name" value="#{registerBean.company_name}" />
-                                                                        <br />
-                                                                        <h:commandButton class="btn btn-primary btn-mega btn-block" value="Sign Up" action="#{registerBean.register}"/>
-                                                                        <h:messages />
-                                                                    </div>
-                                                                </h:form>
-                                                                <div class="col-sm-3">
-                                                                    <ul class="menu-carousel">
-                                                                        <li class="dropdown-header">Latest Design</li>
-
-                                                                        <li><div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                                                                <div class="carousel-inner">
-                                                                                    <div class="item active">
-                                                                                        <a href="#"><h:graphicImage name="img/single-promo2.jpg" library="client" alt="product" /></a>
-                                                                                        <h4><small>Office Decoration</small></h4>                                        
-                                                                                        <button class="btn btn-primary btn-mega" type="button">49,99 €</button> <button  class="btn btn-primary btn-mega" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>       
-                                                                                    </div><!-- End Item -->
-
-                                                                                    <div class="item">
-                                                                                        <a href="#"><h:graphicImage name="img/single-promo2.jpg" library="client" alt="product" /></a>
-                                                                                        <h4><small>Home Decoration</small></h4>                                        
-                                                                                        <button class="btn btn-primary btn-mega" type="button">9,99 €</button> <button class="btn btn-primary btn-mega" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>        
-                                                                                    </div><!-- End Item -->
-
-                                                                                    <div class="item">
-                                                                                        <a href="#"><h:graphicImage name="img/single-promo2.jpg" library="client" alt="product" /></a>
-                                                                                        <h4><small>Bedroom decoration</small></h4>                                        
-                                                                                        <button class="btn btn-primary btn-mega" type="button">49,99 €</button> <button  class="btn btn-primary btn-mega" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>      
-                                                                                    </div><!-- End Item -->                                
-                                                                                </div><!-- End Carousel Inner -->
-
-                                                                                <!-- Controls -->
-                                                                                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                                                                    <i class="fa fa-chevron-left"></i>
-                                                                                </a>
-
-                                                                                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                                                                    <i class="fa fa-chevron-right"></i>
-                                                                                </a>
-                                                                            </div></li><!-- /.carousel -->
-
-                                                                        <li class="mega-carousel-more"><a href="#">View all Decoration <i class="fa fa-angle-right"></i></a></li>
-
-                                                                    </ul>
-                                                                </div>
-
-
-                                                                <div class="col-sm-3">
-                                                                    <ul class="menu-form">
-                                                                        <li>
-                                                                            <h:form id="loginForm">
-                                                                                <h:outputLabel for="username" value="Username: "/>
-                                                                                <h:inputText class="form-control" id="username" value="#{authenticationBean.username}" />
-                                                                                <h:outputLabel for="password" value="Password: "/>
-                                                                                <h:inputSecret class="form-control" id="password" value="#{authenticationBean.password}" />
-                                                                                <h:selectBooleanCheckbox></h:selectBooleanCheckbox><span>Remember me!</span><br />
-                                                                                <h:commandLink >I can't access my account </h:commandLink>
-                                                                                <h:commandButton class="btn btn-primary btn-mega btn-block" action="#{authenticationBean.authenticate}" value="Login" />
-                                                                                <c:if test="${authenticationBean.status == false}">
-                                                                                    <h:messages />
-                                                                                </c:if>
-                                                                            </h:form>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>								
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div> <!-- /megamenu-wrapper -->
-                                    </li> <!-- /MEGA MENU -->		                                  
-                                </c:if>
-                                <c:if test="${authenticationBean.status == true}">
-
-                                    <!-- MEGA MENU -->
-                                    <li class="dropdown mega-fw has-megamenu"><a href="#" data-toggle="dropdown" style="color: red" class="dropdown-toggle">My profile<b class="caret"></b></a>
-                                        <!-- megamenu-wrapper -->
-                                        <div class="submenu-wrapper submenu-wrapper-topbottom megamenu-wrapper">
-                                            <div class="submenu-inner  submenu-inner-topbottom megamenu-inner">
-
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <div class="mega-content">
-                                                            <div class="row">
-
-                                                                <div class="col-sm-3">
-                                                                    <ul class="menu-carousel">
-                                                                        <li class="dropdown-header">Latest Design</li>
-
-                                                                        <li><div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                                                                <div class="carousel-inner">
-                                                                                    <div class="item active">
-                                                                                        <a href="#"><img src="img/single-promo.jpg" alt="product" /></a>
-                                                                                        <h4><small>Office Decoration</small></h4>                                        
-                                                                                        <button class="btn btn-primary btn-mega" type="button">49,99 €</button> <button  class="btn btn-primary btn-mega" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>       
-                                                                                    </div><!-- End Item -->
-
-                                                                                    <div class="item">
-                                                                                        <a href="#"><img src="img/single-promo2.jpg" class="img-responsive" alt="product 2"/></a>
-                                                                                        <h4><small>Home Decoration</small></h4>                                        
-                                                                                        <button class="btn btn-primary btn-mega" type="button">9,99 €</button> <button class="btn btn-primary btn-mega" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>        
-                                                                                    </div><!-- End Item -->
-
-                                                                                    <div class="item">
-                                                                                        <a href="#"><img src="img/single-promo.jpg" class="img-responsive" alt="product 3"/></a>
-                                                                                        <h4><small>Bedroom decoration</small></h4>                                        
-                                                                                        <button class="btn btn-primary btn-mega" type="button">49,99 €</button> <button  class="btn btn-primary btn-mega" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>      
-                                                                                    </div><!-- End Item -->                                
-                                                                                </div><!-- End Carousel Inner -->
-
-                                                                                <!-- Controls -->
-                                                                                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                                                                    <i class="fa fa-chevron-left"></i>
-                                                                                </a>
-
-                                                                                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                                                                    <i class="fa fa-chevron-right"></i>
-                                                                                </a>
-                                                                            </div></li><!-- /.carousel -->
-
-                                                                        <li class="mega-carousel-more"><a href="#">View all Decoration <i class="fa fa-angle-right"></i></a></li>
-
-                                                                    </ul>
-                                                                </div>
-
-
-                                                                <div class="col-sm-3">
-                                                                    <ul>
-                                                                        <li class="dropdown-header">Features</li>
-
-                                                                        <li><a href="#">100% Responsive</a></li>
-                                                                        <li><a href="#">Mega Menu</a></li>
-                                                                        <li><a href="#">Free Supports And Update</a></li>
-
-                                                                        <li class="dropdown-header">Home Variation</li>
-
-                                                                        <li><a href="index.html">Home style One</a></li>
-                                                                        <li><a href="index2.html">Home style Two</a></li>
-                                                                        <li><a href="index3.html">Home style Three</a></li>
-                                                                    </ul>
-                                                                </div>
-
-
-                                                                <div class="col-sm-3">
-                                                                    <ul>
-                                                                        <li class="dropdown-header">Blog Pages</li>
-
-                                                                        <li><a href="blog.html">Blog Standard</a></li>
-                                                                        <li><a href="blog-single.html">Blog Single Post</a></li>
-
-                                                                        <li class="dropdown-header">Pages</li>
-
-                                                                        <li><a href="about.html">About Us</a></li>
-                                                                        <li><a href="services.html">Services</a></li>
-                                                                        <li><a href="pricing.html">Pricing</a></li>
-                                                                        <li><a href="faq.html">FAQ Page</a></li>
-                                                                    </ul>
-                                                                </div>
-
-
-                                                                <div class="col-sm-3">
-                                                                    <ul class="menu-form">
-                                                                        <li class="dropdown-header">Bonus Pages</li>
-                                                                        <li><a href="project.html">Project</a></li>
-                                                                        <li><a href="404.html">404 Page</a></li>
-                                                                        <li><a href="single-project.html">Single Project</a></li>
-                                                                        <li><a href="faq2.html">FAQ Page Two</a></li>
-
-                                                                        <li class="dropdown-header">Newsletter</li>
-                                                                        <li>
-                                                                            <form role="form">
-                                                                                <div class="form-group">
-                                                                                    <label class="sr-only" for="email">Email address</label>
-                                                                                    <input type="email" class="form-control" id="email" placeholder="Enter email"/>                 
-                                                                                </div>
-                                                                                <button type="submit" class="btn btn-primary btn-mega btn-block">Sign in</button>
-                                                                            </form>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>								
-
-
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div> <!-- /megamenu-wrapper -->
-                                    </li> <!-- /MEGA MENU -->												
-
-                                </c:if>
                             </ul> <!-- /navbar-nav -->
                         </div> <!-- /navbar-collapse -->
                     </div> <!-- /navbar -->
