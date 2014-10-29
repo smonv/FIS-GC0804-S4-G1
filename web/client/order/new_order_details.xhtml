@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/client/layout.xhtml">
         <f:metadata>
             <f:viewParam name="oid" value="#{orderNewDetailsBean.oid}" />
@@ -12,6 +12,7 @@
         <ui:define name="title">New Order Details</ui:define>
         <ui:define name="content">
             <div class="row">
+                <div class="col-lg-6">
                 Order Number: <h:outputText value="#{orderNewDetailsBean.order.number}" />
                 <br />
                 Order Cost: <h:outputText value="#{orderNewDetailsBean.getTotalOrderCost()}"/>
@@ -19,6 +20,10 @@
                 Order Status: <h:outputText value="#{orderNewDetailsBean.order.orderStatus.name}" />
                 <br />
                 Order Payment: <h:outputText value="#{orderNewDetailsBean.order.paymentType.name}" />
+                </div>
+                <div class="col-lg-6">
+                    <h:messages />
+                </div>
             </div>
         </ui:define>
     </ui:composition>
