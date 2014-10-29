@@ -40,6 +40,8 @@ public class OrderShowBean {
     private Products product;
 
     private String number;
+    
+    private String search;
 
     public OrderShowBean() {
     }
@@ -70,6 +72,18 @@ public class OrderShowBean {
     public List<Orders> getOrders() {
         orders = orderModel.getListOrder(1);
         return orders;
+    }
+    
+    public List<Orders> getListSearch(){
+        search="dwqdqwd1";
+        List<Orders> orderSeach=orderModel.getListOrderbylocaladdress(search, 1);
+        if(orderSeach.size()>0){
+            return orderSeach;
+        }
+        else{
+            orderSeach=orderModel.getListOrderbylocalname(search, 1);
+            return orderSeach;
+        }
     }
 
     public Products getCurrentProduct(int pid) {
@@ -113,4 +127,13 @@ public class OrderShowBean {
         this.number = number;
     }
 
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+    
+    
 }

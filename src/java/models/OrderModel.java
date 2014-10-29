@@ -85,7 +85,17 @@ public class OrderModel {
         }
 
     }
+    
+    public List<Orders> getListOrderbylocalname(String Name,int Id){
+        List<Orders> orders = em.createNamedQuery("Orders.findByLocationName").setParameter("locationName", Name).setParameter("cid", new Clients(Id)).getResultList();
+            return orders;
+    }
 
+    public List<Orders> getListOrderbylocaladdress(String Address,int Id){
+        List<Orders> orders = em.createNamedQuery("Orders.findByLocationAddress").setParameter("locationAddress", Address).setParameter("cid", new Clients(Id)).getResultList();
+            return orders;
+    }
+    
     public boolean update(Orders order) {
         try {
             if (em.find(Orders.class, order.getOid()) != null) {
