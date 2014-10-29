@@ -58,7 +58,7 @@ public class OrderCreateBean implements Serializable {
     private String location_address;
     private int paymentTypeId;
     Products currentProduct;
-    Map<String, Object> session;
+    Map<String, Object> session = SessionHelper.getSessionMap();
     private HtmlDataTable selected_products;
     private OrderProductDetails dataItem;
     private String stringQuantity;
@@ -153,7 +153,7 @@ public class OrderCreateBean implements Serializable {
         OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         for (OrderProductDetails o : opds) {
-            if (o.getProductId().getPid() == opd.getProductId().getPid()) {
+            if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
                 o.setQuantity(opd.getQuantity());
             }
         }
@@ -221,6 +221,7 @@ public class OrderCreateBean implements Serializable {
         }
 
         if (result) {
+            session.remove("order_product_details");
             ApplicationHelper.addMessage("Order created!");
             ApplicationHelper.redirect("/client/order/new_order_details.xhtml?oid=" + oid, true);
         } else {
