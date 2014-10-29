@@ -10,7 +10,6 @@ import entities.OrderProductDetails;
 import entities.Orders;
 import entities.Products;
 import helpers.ApplicationHelper;
-import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -43,7 +42,9 @@ public class OrderShowBean {
 
     private String number;
 
+
     private String search;
+
 
     public OrderShowBean() {
     }
@@ -75,6 +76,7 @@ public class OrderShowBean {
         if (orders == null) {
             orders = orderModel.getListOrder(2);//test=id truc tiep
         }
+        orders = orderModel.getListOrder(1);
         return orders;
     }
 
@@ -132,6 +134,7 @@ public class OrderShowBean {
     public void setNumber(String number) {
         this.number = number;
     }
+
 
     public String getSearch() {
         return search;

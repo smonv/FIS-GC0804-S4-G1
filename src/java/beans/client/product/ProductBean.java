@@ -35,13 +35,14 @@ public class ProductBean {
     public ProductBean() {
     }
 
-    public void init() throws IOException {
+    public void init(){
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!productModel.productExists(pid)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
-            currentProduct = productModel.getById(pid);
+            
         }
+        currentProduct = productModel.getById(pid);
     }
     
     public List<Products> getAllProduct() {

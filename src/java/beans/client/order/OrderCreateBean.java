@@ -58,11 +58,12 @@ public class OrderCreateBean implements Serializable {
     private String location_address;
     private int paymentTypeId;
     Products currentProduct;
-    Map<String, Object> session;
+    Map<String, Object> session = SessionHelper.getSessionMap();
     private HtmlDataTable selected_products;
     private OrderProductDetails dataItem;
     private String stringQuantity;
     private List<Orders> orders;
+
     /**
      * Creates a new instance of OrderBean
      */
@@ -110,9 +111,9 @@ public class OrderCreateBean implements Serializable {
         }
 
         if (!valid) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Quantity between 1 and 10"));
-            ec.getFlash().setKeepMessages(true);
-            ec.redirect(ec.getRequestContextPath() + "/client/product/show.xhtml?pid=" + pid);
+            ApplicationHelper.addMessage("Quantity between 1 and 10");
+            ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid, true);
+            return;
         }
 
         session = SessionHelper.getSessionMap();
@@ -144,15 +145,15 @@ public class OrderCreateBean implements Serializable {
             session.put("order_product_details", opds);
         }
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product added!"));
-        ec.redirect(ec.getRequestContextPath() + "/client/order/selected_products.xhtml");
+        ApplicationHelper.addMessage("Product added!");
+        ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
     }
 
     public String updateSelectdProductQuantity() {
         OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         for (OrderProductDetails o : opds) {
-            if (o.getProductId().getPid() == opd.getProductId().getPid()) {
+            if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
                 o.setQuantity(opd.getQuantity());
             }
         }
@@ -188,7 +189,7 @@ public class OrderCreateBean implements Serializable {
         List<Products> products = productModel.getAll();
         for (OrderProductDetails opd : opds) {
             for (Products p : products) {
-                if (opd.getProductId().getPid() == p.getPid()) {
+                if (Objects.equals(opd.getProductId().getPid(), p.getPid())) {
                     totalPrice += opd.getQuantity() * p.getPrice();
                 }
             }
@@ -206,6 +207,7 @@ public class OrderCreateBean implements Serializable {
 
         Orders order = new Orders();
         order.setCid(new Clients(2));
+        order.setCid(new Clients(1));
         order.setNumber(ApplicationHelper.secureRandomString(16));
         order.setPaymentType(new PaymentTypes(paymentTypeId));
         order.setLocationName(location_name);
@@ -220,6 +222,7 @@ public class OrderCreateBean implements Serializable {
         }
 
         if (result) {
+            session.remove("order_product_details");
             ApplicationHelper.addMessage("Order created!");
             ApplicationHelper.redirect("/client/order/new_order_details.xhtml?oid=" + oid, true);
         } else {
@@ -236,7 +239,6 @@ public class OrderCreateBean implements Serializable {
     }
 
     //////////////////////////////
-
     public int getPid() {
         return pid;
     }
@@ -318,7 +320,7 @@ public class OrderCreateBean implements Serializable {
     }
 
     public List<Orders> getOrders() {
-        if(orders == null){
+        if (orders == null) {
             orders = orderModel.getListOrder(8); // get list order
         }
         return orders;
@@ -327,7 +329,5 @@ public class OrderCreateBean implements Serializable {
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
-    
-    
 
 }
