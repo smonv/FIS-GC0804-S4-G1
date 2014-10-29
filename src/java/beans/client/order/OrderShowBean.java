@@ -5,6 +5,7 @@
  */
 package beans.client.order;
 
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import entities.OrderProductDetails;
 import entities.Orders;
 import entities.Products;
@@ -41,11 +42,13 @@ public class OrderShowBean {
     private Products product;
 
     private String number;
-            
+
+    private String search;
+
     public OrderShowBean() {
     }
 
-    public void init(){
+    public void init() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!orderModel.orderExists(number)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
@@ -70,9 +73,23 @@ public class OrderShowBean {
 
     public List<Orders> getOrders() {
         if (orders == null) {
-            orders = orderModel.getListOrder(1);//test=id truc tiep
+            orders = orderModel.getListOrder(2);//test=id truc tiep
         }
         return orders;
+    }
+
+    public List<Orders> getListOrder() {
+        search = "dwqdqwd1";
+        List<Orders> orderseach;
+         orderseach = orderModel.getOrderByLocalAddress(search, 1);
+        if (orderseach.size()>0) {
+            return orderseach;
+        } else {
+
+            orderseach = orderModel.getOrderByLocalName(search, 1);
+            return orderseach;
+        }
+
     }
 
     public Products getCurrentProduct(int pid) {
@@ -116,6 +133,12 @@ public class OrderShowBean {
         this.number = number;
     }
 
-    
-    
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -84,6 +85,22 @@ public class OrderModel {
             return null;
         }
 
+    }
+
+    public List<Orders> getOrderByLocalName(String LocalName, int id) {
+        List<Orders> orders = em.createNamedQuery("Orders.findByLocationName")
+                .setParameter("locationName", LocalName)
+                .setParameter("cid", new Clients(id))
+                .getResultList();
+        return orders;
+    }
+
+    public List<Orders> getOrderByLocalAddress(String Localaddress, int id) {
+        List<Orders> orders = em.createNamedQuery("Orders.findByLocationAddress")
+                .setParameter("locationAddress", Localaddress)
+                .setParameter("cid", new Clients(id))
+                .getResultList();
+        return orders;
     }
 
     public boolean update(Orders order) {
