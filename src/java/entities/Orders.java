@@ -43,7 +43,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.findByCreateAt", query = "SELECT o FROM Orders o WHERE o.createAt = :createAt"),
     @NamedQuery(name = "Orders.findByUpdateAt", query = "SELECT o FROM Orders o WHERE o.updateAt = :updateAt"),
     @NamedQuery(name = "Orders.orderExists", query = "SELECT COUNT(o.oid) FROM Orders o WHERE o.oid = :oid "),
-    @NamedQuery(name = "Orders.findByClientId", query = "SELECT o FROM Orders o WHERE o.cid = :cid")
+    @NamedQuery(name = "Orders.findByClientId", query = "SELECT o FROM Orders o WHERE o.cid = :cid"),
+    @NamedQuery(name = "Orders.orderNumberExists", query = "SELECT COUNT(o.oid) FROM Orders o WHERE o.number = :number")
 })
 public class Orders implements Serializable {
 

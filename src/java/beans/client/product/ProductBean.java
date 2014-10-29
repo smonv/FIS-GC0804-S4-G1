@@ -5,20 +5,14 @@
  */
 package beans.client.product;
 
-import entities.OrderProductDetails;
 import entities.Products;
 import helpers.ApplicationHelper;
-import helpers.SessionHelper;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import models.ProductModel;
 
