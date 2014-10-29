@@ -7,36 +7,48 @@
     <ui:composition template="/templates/client/layout.xhtml">
         <ui:define name="title">List Orders</ui:define>
         <ui:define name="content">
-            <h:dataTable value="#{orderShowBean.listSearch}" var="o">
-                <h:column>
-                    <f:facet name="header">Order Number</f:facet>
-                    <h:outputText value="#{o.number}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Total Product</f:facet>
-                    <h:outputText value="#{orderShowBean.getTotalOrderProduct(o)}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Total Cost</f:facet>
-                    <h:outputText value="#{orderShowBean.getTotalOrderCost(o)}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Status</f:facet>
-                    <h:outputText value="#{o.orderStatus.name}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Payment</f:facet>
-                    <h:outputText value="#{o.paymentType.name}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Create At</f:facet>
-                    <h:outputText value="#{o.createAt}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Command</f:facet>
-                    <h:link value="View Details" outcome="/client/order/details.xhtml?number=#{o.number}" styleClass="btn btn-primary"/>
-                </h:column>
-            </h:dataTable>
+            <h:form>
+                <h:inputText value="#{orderShowBean.search}"/>
+                <h:selectOneMenu value="#{orderShowBean.statusid}" converter="javax.faces.Integer">
+
+                    <f:selectItem itemValue="0" itemLabel="Select status"/>
+                    <f:selectItem itemValue="1" itemLabel="Pending" />
+                    <f:selectItem itemValue="2" itemLabel="Proccess"/>
+                    <f:selectItem itemValue="3" itemLabel="Completed"/>
+                </h:selectOneMenu>
+
+                <h:commandButton value="search" action="#{orderShowBean.search()}" styleClass="btn btn-primary"/>
+                <h:dataTable value="#{orderShowBean.listSearch}" var="o">
+                    <h:column>
+                        <f:facet name="header">Order Number</f:facet>
+                        <h:outputText value="#{o.number}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Total Product</f:facet>
+                        <h:outputText value="#{orderShowBean.getTotalOrderProduct(o)}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Total Cost</f:facet>
+                        <h:outputText value="#{orderShowBean.getTotalOrderCost(o)}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Status</f:facet>
+                        <h:outputText value="#{o.orderStatus.name}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Payment</f:facet>
+                        <h:outputText value="#{o.paymentType.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Create At</f:facet>
+                        <h:outputText value="#{o.createAt}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Command</f:facet>
+                        <h:link value="View Details" outcome="/client/order/details.xhtml?number=#{o.number}" styleClass="btn btn-primary"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

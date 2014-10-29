@@ -35,12 +35,14 @@ public class OrderShowBean {
 
     private int oid;
 
+    private int statusid;
+
     private Orders order;
 
     private Products product;
 
     private String number;
-    
+
     private String search;
 
     public OrderShowBean() {
@@ -73,17 +75,25 @@ public class OrderShowBean {
         orders = orderModel.getListOrder(1);
         return orders;
     }
-    
-    public List<Orders> getListSearch(){
-        search="dwqdqwd1";
-        List<Orders> orderSeach=orderModel.getListOrderbylocaladdress(search, 1);
-        if(orderSeach.size()>0){
+
+    public String search() {
+        return "listSearch";
+    }
+
+    public List<Orders> getListSearch() {
+        //  search="dwqdqwd1";
+        List<Orders> orderSeach = orderModel.getListOrderbylocaladdress(search, 1);
+        if (statusid > 0) {
+            orderSeach = orderModel.getListOrderByStatus(1, statusid);
             return orderSeach;
         }
-        else{
-            orderSeach=orderModel.getListOrderbylocalname(search, 1);
+        if (orderSeach.size() > 0) {
+            return orderSeach;
+        } else {
+            orderSeach = orderModel.getListOrderbylocalname(search, 1);
             return orderSeach;
         }
+
     }
 
     public Products getCurrentProduct(int pid) {
@@ -134,6 +144,13 @@ public class OrderShowBean {
     public void setSearch(String search) {
         this.search = search;
     }
-    
-    
+
+    public int getStatusid() {
+        return statusid;
+    }
+
+    public void setStatusid(int statusid) {
+        this.statusid = statusid;
+    }
+
 }

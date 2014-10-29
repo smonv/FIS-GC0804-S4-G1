@@ -6,6 +6,7 @@
 package models;
 
 import entities.Clients;
+import entities.ListStatus;
 import entities.Orders;
 import helpers.PersistenceHelper;
 import java.util.ArrayList;
@@ -85,17 +86,28 @@ public class OrderModel {
         }
 
     }
-    
-    public List<Orders> getListOrderbylocalname(String Name,int Id){
+
+    public List<Orders> getListOrderbylocalname(String Name, int Id) {
         List<Orders> orders = em.createNamedQuery("Orders.findByLocationName").setParameter("locationName", Name).setParameter("cid", new Clients(Id)).getResultList();
-            return orders;
+        return orders;
     }
 
-    public List<Orders> getListOrderbylocaladdress(String Address,int Id){
-        List<Orders> orders = em.createNamedQuery("Orders.findByLocationAddress").setParameter("locationAddress", Address).setParameter("cid", new Clients(Id)).getResultList();
-            return orders;
+    public List<Orders> getListOrderbylocaladdress(String Address, int Id) {
+        List<Orders> orders = em.createNamedQuery("Orders.findByLocationAddress")
+                .setParameter("locationAddress", Address)
+                .setParameter("cid", new Clients(Id))
+                .getResultList();
+        return orders;
     }
-    
+
+    public List<Orders> getListOrderByStatus(int clientId, int statusId) {
+        List<Orders> orders = em.createNamedQuery("Orders.findByClientIdAndStatus")
+                .setParameter("cid", new Clients(clientId))
+                .setParameter("orderStatus", new ListStatus(statusId))
+                .getResultList();
+        return orders;
+    }
+
     public boolean update(Orders order) {
         try {
             if (em.find(Orders.class, order.getOid()) != null) {
