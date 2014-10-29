@@ -6,7 +6,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/templates/client/layout_login.xhtml">
         <ui:define name="title">Log in</ui:define>
-       <ui:define name="content">  <section class="slider-wrapper">
+        <ui:define name="content">  <section class="slider-wrapper">
                 <!-- row -->
                 <div class="row">
                     <!-- col-md-8 -->
@@ -14,28 +14,28 @@
                         <!-- left-slider -->
                         <div class="left-slider mb-30">
                             <!-- tp-banner-container --><div class="col-sm-3">
- <div id="showcase-content2">
-                            <div class="custom feature-blue feature">
-                                <div>
-                                    <span class="b-light-text">ONe Call Can</span> 
-                                    <span class="s-light-text">make your home Unique</span> 
-                                    <span class="m-bold-text">+800 456 12 54</span>
-                                </div>
-                            </div>
+                                <div id="showcase-content2">
+                                    <div class="custom feature-blue feature">
+                                        <div>
+                                            <span class="b-light-text">ONe Call Can</span> 
+                                            <span class="s-light-text">make your home Unique</span> 
+                                            <span class="m-bold-text">+800 456 12 54</span>
+                                        </div>
+                                    </div>
 
-                        </div></div>
+                                </div></div>
                             <!-- tp-banner --><div class="col-sm-3">
-                               <h:form>
-                                                                                <h:outputLabel for="username" value="Username: "/>
-                                                                                <h:inputText class="form-control" id="username" value="#{authenticationBean.username}" />
-                                                                                <h:outputLabel for="password" value="Password: "/>
-                                                                                <h:inputSecret class="form-control" id="password" value="#{authenticationBean.password}" />
-                                                                                <h:selectBooleanCheckbox></h:selectBooleanCheckbox><span>Remember me!</span><br />
-                                                                                <h:commandLink >I can't access my account </h:commandLink>
-                                                                                <h:commandButton class="btn btn-primary btn-mega btn-block" action="#{authenticationBean.authenticate}" value="Login" />
-                                                                                  <h:messages class="messages"/>
-                                                                               
-                                                                            </h:form>
+                                <h:form id="loginForm">
+                                    <h:outputLabel for="username" value="Username: "/>
+                                    <h:inputText class="form-control" id="username" value="#{authenticationBean.username}" />
+                                    <h:outputLabel for="password" value="Password: "/>
+                                    <h:inputSecret class="form-control" id="password" value="#{authenticationBean.password}" />
+                                    <h:selectBooleanCheckbox></h:selectBooleanCheckbox><span>Remember me!</span><br />
+                                    <h:commandLink >I can't access my account </h:commandLink>
+                                    <h:commandButton class="btn btn-primary btn-mega btn-block" action="#{authenticationBean.authenticate}" value="Login" />
+                                    <h:messages class="messages"/>
+
+                                </h:form>
 
                             </div>
                         </div> <!-- /left-slider -->
@@ -76,7 +76,7 @@
 
             </section>
         </ui:define>
-        
+
     </ui:composition>
 </html>
 

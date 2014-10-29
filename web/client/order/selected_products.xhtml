@@ -7,46 +7,269 @@
     <ui:composition template="/templates/client/layout.xhtml">
         <ui:define name="title">Selected Product</ui:define>
         <ui:define name="content">
-            <div class="row">
-                <h:form>
-                    <h:dataTable value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
-                        <h:column>
-                            <f:facet name="header">Image</f:facet>
-                            <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Name</f:facet>
-                            <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Price</f:facet>
-                            <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).price}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Quantity</f:facet>
-                            <h:inputText value="#{opd.quantity}" size="5" label="Quantity" validatorMessage="Max 10 and Min 1">
-                                <f:validateLongRange maximum="10" minimum="1" />
-                            </h:inputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Command</f:facet>
-                            <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary"/>
-                            &nbsp;&nbsp;
-                            <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" />
-                        </h:column>
-                    </h:dataTable>
-                    Total: <h:outputText value="#{orderCreateBean.getTotalSelectedProducts()}" />
-                    <br />
-                    Total Price: <h:outputText value="#{orderCreateBean.getTotalSelectedProductsPrice()}" />
-                </h:form>
+            <div class="lead-title">
+                <h2>SHOPPING CART</h2>
             </div>
             <div class="row">
-                <h:link value="Select more" outcome="/client/product/index.xhtml" styleClass="btn btn-primary"/>
-                &nbsp;&nbsp;
-                <h:link value="Apply order" outcome="/client/order/new.xhtml" styleClass="btn btn-primary" />
-            </div>
-            <div class="row">
-                <h:messages class="messages" />
+                <div class="container">
+
+                    <h:form>
+                        <h:dataTable class="idCart" value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
+                            <h:column>
+                                <f:facet name="header">Item</f:facet>
+                                <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{opd.productId.pid}" style="color: black">
+                                    <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}" /></h:link><br />
+                                <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Quantity</f:facet>
+                                <h:inputText value="#{opd.quantity}" size="5" label="Quantity" validatorMessage="Max 10 and Min 1">
+                                    <f:validateLongRange maximum="10" minimum="1" />
+                                </h:inputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Price</f:facet>
+                                <h:outputText value="Today: USD " style="font-weight: normal;"/><br/>
+                                <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).price}$" style="font-weight: normal;"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Total</f:facet>
+                                <h:outputText value="Today: USD " /><br/>
+                                <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).price*opd.quantity}$" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header"></f:facet>
+                                <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary"/>
+                                &nbsp;&nbsp;
+                                <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" />
+                            </h:column>
+                        </h:dataTable>
+                        <h:messages class="messages" />
+                        <div id="cartCompletion" class="grid-5" style="float: right">
+
+                            <div id="totalsWrap">
+
+                                <div id="totalsTop"></div>
+                                <div id="totalsContent" class="grid-container" style="border-bottom-style: none">
+                                    <div class="grid-container line-item-totals" style="border-bottom-style: none">
+                                        <div id="grandTotal" class="grid-container" style="border-bottom-style: none">
+                                            <div class="grid-12 hrztl-line"></div>
+                                            <div class="grid-3" style="font-size: 24px; font-weight: bold">
+                                                Total
+                                            </div>
+                                            <div class="grid-9 line-total" data-total-type="Total" style="border-bottom-style: none"><h:outputText value="USA #{orderCreateBean.getTotalSelectedProductsPrice()}" style="font-size: 24px; font-weight: bold" /></div>
+                                            <div class="grid-12 hrztl-line"></div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                                <div id="totalsBottom"></div>
+                            </div>
+                            <div id="checkoutBtns" class="grid-container" style="border-bottom-style: none;float: right; width: 100%">
+
+                                <h:link value="Select more" outcome="/client/product/index.xhtml" styleClass="btn btn-primary" style="margin-left: 0px; width: 48%"/>
+                                &nbsp;&nbsp;
+                                <h:link value="Order Now" outcome="/client/order/new.xhtml" styleClass="btn btn-primary" style="float: right;width: 48%;margin-right:  0px;"/>
+
+
+
+
+
+                            </div>
+                        </div> <div class="row">
+                           
+                        </div>
+                         <br/><br/><br/>
+                    </h:form>
+
+
+
+                   
+
+
+                </div>
+
+
+                <style>
+                    #cartCompletion {
+                        display: block;
+                        float: left;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        height: 172px;
+                        margin-top: 10px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        text-align: left;
+                        width: 390.828125px;
+                    }
+                    #totalsWrap #totalsTop {
+                        background: url("http://i819.photobucket.com/albums/zz116/phamtheloi1/totals-top_zpsd864e72e.jpg") left top repeat-x;
+                        height: 4px;
+                    }
+                    #totalsWrap #totalsBottom {
+                        background: url("http://i819.photobucket.com/albums/zz116/phamtheloi1/totals-bottom_zps3c728aa9.jpg") left top repeat-x;
+                        height: 8px;
+                    }           
+                    #totalsWrap #totalsContent {
+                        padding: 15px;
+                        font-size: 116.667%;
+                    }     
+                    #totalsWrap {
+                        margin-left: 5px;
+                        background-color: #e4e1d6;
+                        margin-bottom: 10px;
+                    }
+
+                    .hrztl-line {
+
+                        background-attachment: scroll;
+                        background-clip: border-box;
+                        background-color: rgba(0, 0, 0, 0);
+                        background-image: url(http://ak1.ostkcdn.com/img/mxc/20120816_dot_space.png);
+                        background-origin: padding-box;
+                        background-size: auto;
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 24px;
+                        font-weight: bold;
+                        height: 1px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        width: 355.828125px;
+                    }
+
+
+
+                    #cartItems, .idCart {
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        margin-bottom: 10px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+                        text-align: left;
+                        width: 100%;
+
+                    }
+                    .idCart > thead, tbody{
+                        min-width: 928px;
+                        width: 100%;
+                    }
+                    #itemsHead, .idCart > thead>tr {
+                        -webkit-background-clip: border-box;
+                        -webkit-background-origin: padding-box;
+                        -webkit-background-size: auto;
+                        background-attachment: scroll;
+                        background-clip: border-box;
+                        background-color: rgb(239, 239, 230);
+                        background-image: none;
+                        background-origin: padding-box;
+                        background-size: auto;
+                        clear: both;
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        font-weight: bold;
+                        height: 14px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+                        padding-bottom: 25px;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        padding-top: 5px;
+                        text-align: left;
+                        width: 100%;
+                        min-width: 1154px;
+                        bottom: 10px;
+                    }
+                    .grid-3, .grid-2, .grid-4, .idCart > thead>tr>th, .idCart > tbody>tr>td{
+                        display: block;
+                        float: left;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        font-weight: bold;
+                        height: 14px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        text-align: left;
+                        width: 20%;
+                    }
+                    .idCart > tbody>tr{
+                        height: 182px;
+                        border-bottom: 1px solid #999;
+                    }
+                    .idCart > tbody>tr>td>img{
+                        height: auto;
+                        max-height: 120px;
+                        width: auto;
+                        max-width: 150px;
+                    }
+                    .cart-item {
+                        padding: 5px;
+                        border-bottom: 1px solid #999;
+                    }
+                    .grid-container {
+                        clear: both;
+                        //overflow: hidden;
+                        border-bottom-color: rgb(153, 153, 153);
+                        border-bottom-style: solid;
+                        border-bottom-width: 1px;
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+                        padding-bottom: 5px;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        padding-top: 5px;
+                        text-align: left;
+                        width: 928px;
+                        margin-top:  10px;
+                        height:auto
+                    }
+                    .cart-item-qty {
+                        padding-bottom: 5px;
+                        border-bottom: 1px solid #999;
+                        margin: 0 15px 10px 0;
+                    }
+                    .grid-content {
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        height: 172px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        padding-bottom: 5px;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        padding-top: 5px;
+                        text-align: left;
+                        width: 222px;
+                    }
+
+                    .grid-container {
+                        clear: both;
+                        overflow: hidden;
+                    }
+                </style>
             </div>
         </ui:define>
     </ui:composition>
