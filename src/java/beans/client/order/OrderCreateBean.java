@@ -189,7 +189,7 @@ public class OrderCreateBean implements Serializable {
         List<Products> products = productModel.getAll();
         for (OrderProductDetails opd : opds) {
             for (Products p : products) {
-                if (opd.getProductId().getPid() == p.getPid()) {
+                if (Objects.equals(opd.getProductId().getPid(), p.getPid())) {
                     totalPrice += opd.getQuantity() * p.getPrice();
                 }
             }

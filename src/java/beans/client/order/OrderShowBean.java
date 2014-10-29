@@ -9,7 +9,6 @@ import entities.OrderProductDetails;
 import entities.Orders;
 import entities.Products;
 import helpers.ApplicationHelper;
-import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -41,11 +40,11 @@ public class OrderShowBean {
     private Products product;
 
     private String number;
-            
+
     public OrderShowBean() {
     }
 
-    public void init(){
+    public void init() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!orderModel.orderExists(number)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
@@ -69,9 +68,7 @@ public class OrderShowBean {
     }
 
     public List<Orders> getOrders() {
-        if (orders == null) {
-            orders = orderModel.getListOrder(8);
-        }
+        orders = orderModel.getListOrder(1);
         return orders;
     }
 
@@ -116,6 +113,4 @@ public class OrderShowBean {
         this.number = number;
     }
 
-    
-    
 }

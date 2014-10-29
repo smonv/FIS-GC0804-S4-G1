@@ -69,6 +69,8 @@ public class OrderEditBean {
             paymentId = order.getPaymentType().getPtid();
             if (session.get("edit_products") == null) {
                 session.put("edit_products", order.getOrderProductDetailsList());
+            } else if (!Objects.equals(((List<OrderProductDetails>) session.get("edit_products")).get(0).getOrderId().getOid(), order.getOid())) {
+                session.put("edit_products", order.getOrderProductDetailsList());
             }
         }
     }
