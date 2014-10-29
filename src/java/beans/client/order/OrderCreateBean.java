@@ -206,6 +206,7 @@ public class OrderCreateBean implements Serializable {
         }
 
         Orders order = new Orders();
+        order.setCid(new Clients(2));
         order.setCid(new Clients(1));
         order.setNumber(ApplicationHelper.secureRandomString(16));
         order.setPaymentType(new PaymentTypes(paymentTypeId));
@@ -233,7 +234,7 @@ public class OrderCreateBean implements Serializable {
 
     public List<Orders> getListOrders() {//phan show list 
 
-        return orderModel.getListOrder(8);
+        return orderModel.getListOrder(2);
 
     }
 

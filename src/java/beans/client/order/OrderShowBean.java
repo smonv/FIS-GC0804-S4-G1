@@ -5,6 +5,7 @@
  */
 package beans.client.order;
 
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import entities.OrderProductDetails;
 import entities.Orders;
 import entities.Products;
@@ -72,6 +73,9 @@ public class OrderShowBean {
     }
 
     public List<Orders> getOrders() {
+        if (orders == null) {
+            orders = orderModel.getListOrder(2);//test=id truc tiep
+        }
         orders = orderModel.getListOrder(1);
         return orders;
     }
