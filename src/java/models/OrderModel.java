@@ -107,6 +107,14 @@ public class OrderModel {
                 .getResultList();
         return orders;
     }
+    
+    public List<Orders> getListOrderByNumber(String number ,int clientId) {
+        List<Orders> orders = em.createNamedQuery("Orders.searchByNumber")
+                .setParameter("number","%"+ number+"%")
+                .setParameter("cid", new Clients(clientId))              
+                .getResultList();
+        return orders;
+    }
 
     public boolean update(Orders order) {
         try {

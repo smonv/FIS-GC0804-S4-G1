@@ -102,10 +102,15 @@ public class OrderShowBean {
             return "lists.xhtml";
         } else {
             orders = orderModel.getListOrderbylocalname(search, 1);
+            if(orders.isEmpty()){
+                orders=orderModel.getListOrderByNumber(search, 1);
+            }
             statusid=0;
             search="";
             return "lists.xhtml";
         }
+           
+        
 
     }
 
