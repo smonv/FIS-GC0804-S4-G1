@@ -7,7 +7,8 @@
     <ui:composition template="/templates/client/layout.xhtml">
         <f:metadata>
             <f:viewParam name="pid" value="#{productBean.pid}" />
-            <f:viewAction action="#{productBean.init()}" />
+            <f:viewParam name="mode" value="#{productBean.mode}" />
+            <f:viewAction action="#{productBean.init()}" onPostback="true"/>
         </f:metadata>
         <ui:define name="title">Product Information</ui:define>
         <ui:define name="content">
@@ -22,7 +23,7 @@
                     <ul class="breadcrumb">
                         <li><h:link outcome="/index.xhtml">Home</h:link><span class="divider"></span></li>
                         <li class="active"><h:link value="Products" outcome="/client/product/index.xhml">
-                                <f:param name="mode" value="#{productBean.mode}" rendered="#{productBean.mode != null}" />
+
                             </h:link></li>
                         <li class="active">Details</li>
                     </ul>
@@ -85,11 +86,13 @@
                                 <h:form style="border-top: solid 1px #DBDBDB">
                                     <div class="form-group" style="width: 112px; float: left">
                                         Quantity:&nbsp;<h:messages class="messages"/>
-                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px"/>
-
-
-                                        <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct(productBean.pid)}" styleClass="btn btn-primary" />
-
+                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px" rendered="#{productBean.mode == null}" />
+                                        <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct(productBean.pid)}" styleClass="btn btn-primary" rendered="#{productBean.mode == null}"/>
+                                       
+                                        <h:inputText value="#{orderEditBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px" rendered="#{productBean.mode != null}" />
+                                        <h:commandButton value="Add to Edit" action="#{orderEditBean.addSelectedProduct(productBean.pid)}" styleClass="btn btn-primary" rendered="#{productBean.mode != null}" />
+                                       
+                                        
                                     </div>
 
                                 </h:form>
