@@ -169,6 +169,11 @@ public class OrderEditBean {
         int index = -1;
         OrderProductDetails opd = (OrderProductDetails) edit_products.getRowData();
         List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
+        if (opds.size() == 1) {
+            ApplicationHelper.addMessage("Order need one or more products!");
+            ApplicationHelper.redirect("/client/order/edit_products.xhtml?number=" + number, true);
+        }
+        
         for (OrderProductDetails o : opds) {
             if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
                 index = opds.indexOf(o);
@@ -177,6 +182,7 @@ public class OrderEditBean {
         
         if (index >= 0) {
             opds.remove(index);
+            ApplicationHelper.addMessage("Product removed!");
         }
         ApplicationHelper.redirect("/client/order/edit_products.xhtml?number=" + number, true);
     }

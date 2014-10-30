@@ -147,7 +147,7 @@ public class OrderCreateBean implements Serializable {
         ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
     }
 
-    public String updateSelectdProductQuantity() {
+    public void updateSelectdProductQuantity() {
         OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         for (OrderProductDetails o : opds) {
@@ -155,13 +155,17 @@ public class OrderCreateBean implements Serializable {
                 o.setQuantity(opd.getQuantity());
             }
         }
-        return "selected_products.xhtml";
+        ApplicationHelper.redirect("selected_products.xhtml", true);
     }
 
-    public String removeSelectedProduct() {
+    public void removeSelectedProduct() {
         int index = -1;
         OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+        if (opds.size() == 1) {
+            ApplicationHelper.addMessage("Order need one or more products!");
+            ApplicationHelper.redirect("selected_products.xhtml", true);
+        }
         for (OrderProductDetails o : opds) {
             if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
                 index = opds.indexOf(o);
@@ -170,8 +174,9 @@ public class OrderCreateBean implements Serializable {
 
         if (index >= 0) {
             opds.remove(index);
+            ApplicationHelper.addMessage("Product removed!");
         }
-        return "selected_products.xhtml";
+        ApplicationHelper.redirect("selected_products.xhtml", true);
     }
 
     public int getTotalSelectedProducts() {
