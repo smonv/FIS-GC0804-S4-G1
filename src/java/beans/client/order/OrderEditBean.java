@@ -35,10 +35,10 @@ import models.ProductModel;
 @ManagedBean
 @ViewScoped
 public class OrderEditBean {
-    
+
     @EJB
     private OrderProductDetailModel orderProductDetailModel;
-    
+
     @EJB
     private PaymentTypeModel paymentTypeModel;
     @EJB
@@ -55,10 +55,10 @@ public class OrderEditBean {
     private HtmlDataTable edit_products;
     private int quantity;
     private String stringQuantity;
-    
+
     public OrderEditBean() {
     }
-    
+
     public void init() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!orderModel.orderExists(number)) {
@@ -70,13 +70,13 @@ public class OrderEditBean {
             locationName = order.getLocationName();
             locationAddress = order.getLocationAddress();
             paymentId = order.getPaymentType().getPtid();
-            
+
             session.put("edit_number", number);
-            
+
             boolean reload = false;
             if (session.get("edit_products") == null) {
                 reload = true;
-                
+
             } else {
                 List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
                 if (opds.size() > 0) {
@@ -92,7 +92,7 @@ public class OrderEditBean {
             }
         }
     }
-    
+
     public void updateInfo() {
         if (!locationName.isEmpty() && !locationAddress.isEmpty()) {
             order = orderModel.getByNumber(number);
@@ -100,7 +100,7 @@ public class OrderEditBean {
             order.setLocationAddress(locationAddress);
             order.setPaymentType(new PaymentTypes(paymentId));
             order.setUpdateAt(PersistenceHelper.getCurrentTime());
-            
+
             boolean result = orderModel.update(order);
             if (result) {
                 ApplicationHelper.addMessage("Order updated!");
@@ -113,32 +113,32 @@ public class OrderEditBean {
             ApplicationHelper.redirect("/client/order/edit_info.xhtml?number=" + number, true);
         }
     }
-    
+
     public List<OrderProductDetails> getListOrderProducts() {
         return (List<OrderProductDetails>) session.get("edit_products");
     }
-    
+
     public List<PaymentTypes> getListPaymentTypes() {
         return paymentTypeModel.getAll();
     }
-    
+
     public Products getCurrentProduct(int pid) {
         if (currentProduct == null) {
             currentProduct = productModel.getById(pid);
         } else if (currentProduct.getPid() != pid) {
             currentProduct = productModel.getById(pid);
         }
-        
+
         return currentProduct;
     }
-    
+
     public int getTotalSelectedProducts() {
         int total = 0;
         List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
         total = opds.size();
         return total;
     }
-    
+
     public long getTotalSelectedProductsPrice() {
         long totalPrice = 0;
         List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
@@ -150,19 +150,19 @@ public class OrderEditBean {
                 }
             }
         }
-        
+
         return totalPrice;
     }
-    
+
     public void addSelectedProduct(int pid) {
         boolean valid = false;
         session = SessionHelper.getSessionMap();
         if (session.get("edit_products") != null && session.get("edit_number") != null) {
-            
+
             String edit_number = session.get("edit_number").toString();
-            
+
             Orders current_order = orderModel.getByNumber(edit_number); //get edit order
-            
+
             List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
             if (ApplicationHelper.isInteger(stringQuantity)) {
                 quantity = Integer.parseInt(stringQuantity);
@@ -170,7 +170,7 @@ public class OrderEditBean {
                     valid = true;
                 }
             }
-            
+
             if (!valid) {
                 ApplicationHelper.addMessage("Quantity between 1 and 10");
             } else {
@@ -182,17 +182,17 @@ public class OrderEditBean {
                 session.put("edit_products", opds);
                 ApplicationHelper.addMessage("Product added!");
             }
-            
+
             ApplicationHelper.redirect("/client/order/edit_products.xhtml?number=" + edit_number, true);
-            
+
         } else {
             ApplicationHelper.addMessage("You are not in update mode!");
             ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid, true);
         }
     }
-    
+
     public void updateSelectedProduct() {
-        
+
         OrderProductDetails opd = (OrderProductDetails) edit_products.getRowData();
         if (opd.getQuantity() > 0 && opd.getQuantity() < 10) {
             List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
@@ -204,10 +204,10 @@ public class OrderEditBean {
         } else {
             ApplicationHelper.addMessage("Quantity min 1 and max 10");
         }
-        
+
         ApplicationHelper.redirect("/client/order/edit_products.xhtml?number=" + number, true);
     }
-    
+
     public void removeSelectedProduct() {
         int index = -1;
         OrderProductDetails opd = (OrderProductDetails) edit_products.getRowData();
@@ -216,31 +216,29 @@ public class OrderEditBean {
             ApplicationHelper.addMessage("Order need one or more products!");
             ApplicationHelper.redirect("/client/order/edit_products.xhtml?number=" + number, true);
         }
-        
+
         for (OrderProductDetails o : opds) {
             if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
                 index = opds.indexOf(o);
             }
         }
-        
+
         if (index >= 0) {
             opds.remove(index);
             ApplicationHelper.addMessage("Product removed!");
         }
         ApplicationHelper.redirect("/client/order/edit_products.xhtml?number=" + number, true);
     }
-    
+
     public void updateProducts() {
         session = SessionHelper.getSessionMap(); //get session
-        
+
         Orders current_order = orderModel.getByNumber(number); // get edit order
-        
-        
+
         List<OrderProductDetails> change = new ArrayList<>();
         List<OrderProductDetails> remove = new ArrayList<>();
         List<OrderProductDetails> add = new ArrayList<>();
-        
-        
+
         //find change
         List<OrderProductDetails> current_opds = (List<OrderProductDetails>) session.get("edit_products");
         List<OrderProductDetails> order_opds = current_order.getOrderProductDetailsList();
@@ -258,7 +256,7 @@ public class OrderEditBean {
                 add.add(co);
             }
         }
-        
+
         for (OrderProductDetails oo : order_opds) {
             boolean exists = false;
             for (OrderProductDetails co : current_opds) {
@@ -271,72 +269,87 @@ public class OrderEditBean {
                 remove.add(oo);
             }
         }
-        
-        if (orderProductDetailModel.createList(add) && orderProductDetailModel.updateList(change) && orderProductDetailModel.removeList(remove)) {
-            ApplicationHelper.addMessage("Order products updated!");
-            session.remove("edit_products");
-            List<OrderProductDetails> updated_opds = orderProductDetailModel.getByOrderId(current_order);
-            current_order.setOrderProductDetailsList(updated_opds);
-        } else {
-            ApplicationHelper.addMessage("Order products update fail!");
+
+        boolean result = true;
+        if (!orderProductDetailModel.createList(add)) {
+            ApplicationHelper.addMessage("Failed to add new product to order!");
+            result = false;
         }
+        if (!orderProductDetailModel.updateList(change)) {
+            ApplicationHelper.addMessage("Failed to update exists product in order!");
+            result = false;
+        }
+        if (!orderProductDetailModel.removeList(remove)) {
+            ApplicationHelper.addMessage("Failed to remove product in order!");
+            result = false;
+        }
+        if (result) {
+            ApplicationHelper.addMessage("Order products updated!");
+        }
+        
+        
+        session.remove("edit_products");
+
+        //update order product details for current order
+        List<OrderProductDetails> updated_opds = orderProductDetailModel.getByOrderId(current_order);
+        current_order.setOrderProductDetailsList(updated_opds);
         ApplicationHelper.redirect("/client/order/details.xhtml?number=" + number, true);
     }
-    
+
     public String getNumber() {
         return number;
     }
-    
+
     public void setNumber(String number) {
         this.number = number;
     }
-    
+
     public String getLocationName() {
         return locationName;
     }
-    
+
     public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
-    
+
     public String getLocationAddress() {
         return locationAddress;
     }
-    
+
     public void setLocationAddress(String locationAddress) {
         this.locationAddress = locationAddress;
     }
-    
+
     public int getPaymentId() {
         return paymentId;
     }
-    
+
     public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
     }
-    
+
     public HtmlDataTable getEdit_products() {
         return edit_products;
     }
-    
+
     public void setEdit_products(HtmlDataTable edit_products) {
         this.edit_products = edit_products;
     }
-    
+
     public int getQuantity() {
         return quantity;
     }
-    
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
     public String getStringQuantity() {
         return stringQuantity;
     }
-    
+
     public void setStringQuantity(String stringQuantity) {
         this.stringQuantity = stringQuantity;
     }
-    
+
 }
