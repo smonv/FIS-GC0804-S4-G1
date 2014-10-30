@@ -16,10 +16,10 @@
                 <h1>Order: <h:outputText value="#{orderShowBean.order.number}" /></h1>
                 <br/>
                 <span><strong>Status: </strong><h:outputText value="#{orderShowBean.order.orderStatus.name}" style="color: red"/></span>
-
+                <h:messages class="messages"/>
             </div>
             <div class="row">
-                <h:messages />
+
                 <div class="container">
                     <div class="col-lg-6" style="border: solid 1px #E7E7E7; width: 100%">
                         <span style="position: absolute; background: white; top: -15px">Information</span>
@@ -34,16 +34,56 @@
                         <br />
                         <h:link value="Edit Infomation" outcome="/client/order/edit_info.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary" style="float: right; margin-bottom: 20px"/>  
                     </div>
-                  
+
                     <div class="col-lg-6" style="border: solid 1px #E7E7E7; position: relative; margin-top: 50px;width: 100%">
                         <span style="position: absolute; background: white; top: -15px">Products ordered</span><br/>
+                    
+                         <ul class="pro-ordered-head">
+                             <li><strong> Name</strong></li>
+                                    <li><strong>Quantity</strong></li>
+                                    <li><strong>Unit Price</strong></li>
+                                    <li><strong>Total Cost</strong></li>
+                                </ul>
+                                <br/>
+                                
                         <ui:repeat value="#{orderShowBean.order.orderProductDetailsList}" var="opd">
-                            
-                                <h3>Name: <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}"/></h3>
-                                <p>Quantity: <h:outputText value="#{opd.quantity}" /></p>
-                            
-                        </ui:repeat>
+                                
+                               
+                                <ul class="pro-ordered">
+                                    <li><h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}"/></li>
+                                    <li><h:outputText value="#{opd.quantity}" /></li>
+                                    <li><h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price}.00" /></li>
+                                    <li><h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price*opd.quantity}.00" /></li>
+                                </ul>
+                                <br/>
+                            </ui:repeat>
+                    
+
+
                         <h:link value="Edit Products" outcome="/client/order/edit_products.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary" style="float: right;width: 130.828125px; margin-bottom: 20px"/>
+                        <style>
+                            .pro-ordered,.pro-ordered-head{
+                               float: none; 
+                               position: relative;
+                               width: 100%;
+                               border-bottom: solid 1px #E7E7E7;
+                               padding-bottom: 10px;
+                               height: 30px;
+                               padding-left: 10px;
+                            }
+                            .pro-ordered>li, .pro-ordered-head>li{
+                                float: left;
+                                width: 25%;
+                                font-weight: bold
+                            }
+                            .pro-ordered-head{
+                               background: rgb(239, 239, 230);
+                               padding-bottom: 0px;
+                               
+                            }
+                        </style>
+
+
                     </div>
                 </div>
             </div>

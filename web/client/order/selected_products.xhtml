@@ -14,7 +14,7 @@
                 <div class="container">
                     <h:messages class="messages" />
                     <h:form>
-                        <h:dataTable class="idCart2" value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
+                        <h:dataTable class="idCart" value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
                             <h:column>
                                 <f:facet name="header">Item</f:facet>
                                 <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{opd.productId.pid}" style="color: black">
