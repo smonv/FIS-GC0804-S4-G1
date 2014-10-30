@@ -8,12 +8,12 @@
         <ui:define name="content">
             <!-- Page title -->
             <div class="page-title">
-                <h1>Portfolio</h1>
+                <h1>Products</h1>
 
                 <!-- BREADCRUMBS -->
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a><span class="divider"></span></li>
-                    <li class="active">Portfolio</li>
+                    <li><h:link outcome="/index.xhtml">Home</h:link><span class="divider"></span></li>
+                    <li class="active">Products</li>
                 </ul>
             </div>
             <!-- //Page title -->							
@@ -46,14 +46,13 @@
 
                                                     <a data-rel="prettyPhoto" href="#{resource['client/img/products/demo.jpg']}" class="element-lightbox" ><i class="fa fa-search-plus"></i></a>
 
-                                                    
+
                                                     <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{product.pid}"><i class="fa fa-link"></i></h:link>
                                                 </div>
 
                                                 <div class="project-details">
-                                                    <h2><a href="#"><h:outputText value="#{product.name}" /></a></h2>
-                                                    <p><h:outputText value="#{product.infomations}"/></p>
-
+                                                    <h2><h:link outcome="/client/product/show.xhtml?pid=#{product.pid}"><h:outputText value="#{product.name}" /></h:link></h2>
+                                                    <p>Price:&nbsp;<h:outputText value="$ #{product.price}.00" style="font-weight: 400;font-size: 16px; color: red" /></p>
                                                     <div class="readmore"><h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}" /></div>
 
                                                 </div>

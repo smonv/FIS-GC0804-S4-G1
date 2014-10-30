@@ -4129,7 +4129,7 @@ KEY FRAME
 
 
 
-                    #cartItems, .idCart {
+                    #cartItems, .idCart,.idCart2 {
                         display: block;
                         font-family: Helvetica, Arial, sans-serif;
                         font-size: 12px;
@@ -4143,11 +4143,11 @@ KEY FRAME
                         width: 100%;
 
                     }
-                    .idCart > thead, tbody{
+                    .idCart > thead, tbody, .idCart2 > thead, tbody{
                         min-width: 928px;
                         width: 100%;
                     }
-                    #itemsHead, .idCart > thead>tr {
+                    #itemsHead, .idCart > thead>tr, .idCart2> thead>tr {
                         -webkit-background-clip: border-box;
                         -webkit-background-origin: padding-box;
                         -webkit-background-size: auto;
@@ -4177,7 +4177,7 @@ KEY FRAME
                         min-width: 1154px;
                         bottom: 10px;
                     }
-                    .grid-3, .grid-2, .grid-4, .idCart > thead>tr>th, .idCart > tbody>tr>td{
+                    .grid-3, .grid-2, .grid-4, .idCart > thead>tr>th,.idCart2 > thead>tr>th, .idCart > tbody>tr>td,.idCart2 > tbody>tr>td{
                         display: block;
                         float: left;
                         font-family: Helvetica, Arial, sans-serif;
@@ -4190,15 +4190,25 @@ KEY FRAME
                         text-align: left;
                         width: 20%;
                     }
+                    .idCart2 > thead>tr>th,.idCart2 > tbody>tr>td{
+                        width: 14%;
+                    }
                     .idCart > tbody>tr{
                         height: 182px;
                         border-bottom: 1px solid #999;
+                    }
+                    .idCart2 > tbody>tr{
+                        height: 60px;
+                        border-bottom: 1px solid #e9e9e9;
                     }
                     .idCart > tbody>tr>td>img{
                         height: auto;
                         max-height: 120px;
                         width: auto;
                         max-width: 150px;
+                    }
+                    .idCart2{
+                        margin-top: 20px
                     }
                     .cart-item {
                         padding: 5px;

@@ -7,9 +7,19 @@
     <ui:composition template="/templates/client/layout.xhtml">
         <ui:define name="title">List Orders</ui:define>
         <ui:define name="content">
+            <div class="page-title">
+                <h1>My Orders</h1>
+
+                <!-- BREADCRUMBS -->
+                <ul class="breadcrumb">
+                    <li><h:link outcome="/index.xhtml">Home</h:link><span class="divider"></span></li>
+                    <li class="active">Orders</li>
+                    <li class="active">Lists</li>
+                </ul>
+            </div>
             <h:form>
-                <h:inputText value="#{orderShowBean.search}"/>
-                <h:selectOneMenu value="#{orderShowBean.statusid}" converter="javax.faces.Integer">
+                <h:inputText class="form-control" style="width: 350px; position: absolute" value="#{orderShowBean.search}"/>
+                <h:selectOneMenu class="form-control" style="width: 160px; position: absolute; left: 390px; padding: 7px 12px 6px 12px" value="#{orderShowBean.statusid}" converter="javax.faces.Integer">
 
                     <f:selectItem itemValue="0" itemLabel="Select status"/>
                     <f:selectItem itemValue="1" itemLabel="Pending" />
@@ -17,8 +27,8 @@
                     <f:selectItem itemValue="3" itemLabel="Completed"/>
                 </h:selectOneMenu>
 
-                <h:commandButton value="search" action="#{orderShowBean.showInfo()}" styleClass="btn btn-primary"/>
-            <h:dataTable value="#{orderShowBean.orders}" var="o">
+                <h:commandButton value="search" action="#{orderShowBean.showInfo()}" styleClass="btn btn-primary" style="left: 515px; position: relative;padding: 7px 12px 8px 12px"/>
+                <h:dataTable class="idCart2" value="#{orderShowBean.orders}" var="o">
                 <h:column>
                     <f:facet name="header">Order Number</f:facet>
                     <h:outputText value="#{o.number}" />
@@ -29,7 +39,7 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Total Cost</f:facet>
-                    <h:outputText value="#{orderShowBean.getTotalOrderCost(o)}" />
+                    <h:outputText value="$#{orderShowBean.getTotalOrderCost(o)}.00" style="color: red"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Status</f:facet>
@@ -44,7 +54,7 @@
                     <h:outputText value="#{o.createAt}"/>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Command</f:facet>
+                    <f:facet name="header"></f:facet>
                     <h:link value="View Details" outcome="/client/order/details.xhtml?number=#{o.number}" styleClass="btn btn-primary"/>
                 </h:column>
             </h:dataTable>

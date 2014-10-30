@@ -11,20 +11,40 @@
         </f:metadata>
         <ui:define name="title">New Order Details</ui:define>
         <ui:define name="content">
-            <div class="row">
-                <div class="col-lg-6">
-                Order Number: <h:outputText value="#{orderNewDetailsBean.order.number}" />
-                <br />
-                Order Cost: <h:outputText value="#{orderNewDetailsBean.getTotalOrderCost()}"/>
-                <br />
-                Order Status: <h:outputText value="#{orderNewDetailsBean.order.orderStatus.name}" />
-                <br />
-                Order Payment: <h:outputText value="#{orderNewDetailsBean.order.paymentType.name}" />
-                </div>
-                <div class="col-lg-6">
-                    <h:messages />
-                </div>
+            <div class="page-title">
+                <h1>Order successful</h1>
+
+
             </div>
+            <div class="row" style="text-align: center; position: relative">
+                <br/>
+                <img src="../../resources/client/img/Icon-CampaignChecklist.png" alt="" style="height: 130px; width: auto;position: relative; top: -30px;float: left; margin-left:300px">
+
+                    <ul style="text-align: left; position: absolute;float: right; margin-left:450px">
+                        <li>
+                            Order Number: <h:outputText value="#{orderNewDetailsBean.order.number}" />
+
+                        </li>
+                        <li>
+                            Order Cost: <h:outputText value="#{orderNewDetailsBean.getTotalOrderCost()}"/>
+
+                        </li>
+                        <li>
+                            Order Status: <h:outputText value="#{orderNewDetailsBean.order.orderStatus.name}" />
+
+                        </li>
+                        <li>
+                            Order Payment: <h:outputText value="#{orderNewDetailsBean.order.paymentType.name}" />
+                        </li>
+                        <h:link value="Home" outcome="/index.xhtml" styleClass="btn btn-primary" style="width: 100px; margin-top: 20px;"/>
+                        <h:link value="View Details" outcome="/client/order/details.xhtml?number=#{orderNewDetailsBean.order.number}" styleClass="btn btn-primary" style="width: 100px; margin-left: 10px;margin-top: 20px;"/>
+                    <br/>
+                    </ul>
+                    
+                 </img>
+                
+                 </div>
+            <p style="height: 50px"></p>
         </ui:define>
     </ui:composition>
 </html>

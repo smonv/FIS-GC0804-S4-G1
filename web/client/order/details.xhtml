@@ -11,34 +11,43 @@
         </f:metadata>
         <ui:define name="title">Order Details</ui:define>
         <ui:define name="content">
+
+            <div class="page-title">
+                <h1>Order: <h:outputText value="#{orderShowBean.order.number}" /></h1>
+                <br/>
+                <span><strong>Status: </strong><h:outputText value="#{orderShowBean.order.orderStatus.name}" style="color: red"/></span>
+
+            </div>
             <div class="row">
                 <h:messages />
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    Order Number: <h:outputText value="#{orderShowBean.order.number}" />
-                    <br />
-                    Location Name: <h:outputText value="#{orderShowBean.order.locationName}" />
-                    <br />
-                    Location Address: <h:outputText value="#{orderShowBean.order.locationAddress}" />
-                    <br />
-                    Status: <h:outputText value="#{orderShowBean.order.orderStatus.name}" />
-                    <br />
-                    Payment: <h:outputText value="#{orderShowBean.order.paymentType.name}" />
-                    <br />
-                    <h:link value="Edit Infomation" outcome="/client/order/edit_info.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary"/>  
+                <div class="container">
+                    <div class="col-lg-6" style="border: solid 1px #E7E7E7; width: 100%">
+                        <span style="position: absolute; background: white; top: -15px">Information</span>
+                        <br/>
+                        <strong>Order Number: </strong> <h:outputText value="#{orderShowBean.order.number}" />
+                        <br />
+                        <strong>Location Name: </strong><h:outputText value="#{orderShowBean.order.locationName}" />
+                        <br />
+                        <strong>Location Address: </strong><h:outputText value="#{orderShowBean.order.locationAddress}" />
+                        <br />
+                        <strong>Payment:</strong><h:outputText value=" #{orderShowBean.order.paymentType.name}" />
+                        <br />
+                        <h:link value="Edit Infomation" outcome="/client/order/edit_info.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary" style="float: right; margin-bottom: 20px"/>  
+                    </div>
+                  
+                    <div class="col-lg-6" style="border: solid 1px #E7E7E7; position: relative; margin-top: 50px;width: 100%">
+                        <span style="position: absolute; background: white; top: -15px">Products ordered</span><br/>
+                        <ui:repeat value="#{orderShowBean.order.orderProductDetailsList}" var="opd">
+                            
+                                <h3>Name: <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}"/></h3>
+                                <p>Quantity: <h:outputText value="#{opd.quantity}" /></p>
+                            
+                        </ui:repeat>
+                        <h:link value="Edit Products" outcome="/client/order/edit_products.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary" style="float: right;width: 130.828125px; margin-bottom: 20px"/>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    List products: <br />
-                    <ui:repeat value="#{orderShowBean.order.orderProductDetailsList}" var="opd">
-                        <div class="row">
-                            <h3>Name: <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}"/></h3>
-                            <p>Quantity: <h:outputText value="#{opd.quantity}" /></p>
-                        </div>
-                    </ui:repeat>
-                    <h:link value="Edit Products" outcome="/client/order/edit_products.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary"/>
-                </div>
             </div>
+            <div style="height: 50px"></div>
         </ui:define>
     </ui:composition>
 </html>
