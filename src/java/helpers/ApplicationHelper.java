@@ -8,6 +8,8 @@ package helpers;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -61,5 +63,11 @@ public class ApplicationHelper {
             buff[i] = VALID_CHARACTERS[rand.nextInt(VALID_CHARACTERS.length)];
         }
         return new String(buff);
+    }
+    
+    public static String formatDate(Date date, String pattern){
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        String formated_date = format.format(date);
+        return formated_date;
     }
 }

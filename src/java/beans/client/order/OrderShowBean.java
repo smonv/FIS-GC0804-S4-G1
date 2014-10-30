@@ -10,6 +10,7 @@ import entities.OrderProductDetails;
 import entities.Orders;
 import entities.Products;
 import helpers.ApplicationHelper;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -110,6 +111,11 @@ public class OrderShowBean {
         return product;
     }
 
+    public String formateDate(Date date){
+        String formated_date = ApplicationHelper.formatDate(date, "dd-MM-yyyy HH:mm:ss");
+        return formated_date;
+    }
+    
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
