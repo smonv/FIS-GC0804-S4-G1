@@ -17,7 +17,7 @@
                     <f:selectItem itemValue="3" itemLabel="Completed"/>
                 </h:selectOneMenu>
 
-                <h:commandButton value="search" action="#{orderShowBean.search()}" styleClass="btn btn-primary"/>
+                <h:commandButton value="search" action="#{orderShowBean.showInfo()}" styleClass="btn btn-primary"/>
             <h:dataTable value="#{orderShowBean.orders}" var="o">
                 <h:column>
                     <f:facet name="header">Order Number</f:facet>

@@ -74,28 +74,37 @@ public class OrderShowBean {
 
     public List<Orders> getOrders() {
         if (orders == null) {
-            orders = orderModel.getListOrder(2);//test=id truc tiep
+            orders = orderModel.getListOrder(1);//test=id truc tiep
+            return orders;
         }
-        orders = orderModel.getListOrder(1);
-        return orders;
+       else
+            return orders;
+        
     }
 
-    public String search() {
-        return "listSearch";
-    }
+    
 
-    public List<Orders> getListSearch() {
+    public String showInfo(){
         //  search="dwqdqwd1";
-        List<Orders> orderSeach = orderModel.getListOrderbylocaladdress(search, 1);
-        if (statusid > 0) {
-            orderSeach = orderModel.getListOrderByStatus(1, statusid);
-            return orderSeach;
+        orders = orderModel.getListOrderbylocaladdress(search, 1);
+        if(search.equals("")&&statusid ==0){
+            orders =null;
+            return "lists.xhtml";
         }
-        if (orderSeach.size() > 0) {
-            return orderSeach;
+        if (statusid > 0) {
+            orders = orderModel.getListOrderByStatus(1, statusid);
+            statusid=0;
+            return "lists.xhtml";
+        }
+        if (orders.size() > 0) {
+            statusid=0;
+            search="";
+            return "lists.xhtml";
         } else {
-            orderSeach = orderModel.getListOrderbylocalname(search, 1);
-            return orderSeach;
+            orders = orderModel.getListOrderbylocalname(search, 1);
+            statusid=0;
+            search="";
+            return "lists.xhtml";
         }
 
     }
