@@ -33,7 +33,7 @@ import models.ProductModel;
  * @author Cu Beo
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class OrderEditBean {
 
     @EJB
@@ -140,12 +140,13 @@ public class OrderEditBean {
     }
 
     public long getTotalSelectedProductsPrice() {
+        session = SessionHelper.getSessionMap();
         long totalPrice = 0;
         List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
         List<Products> products = productModel.getAll();
         for (OrderProductDetails opd : opds) {
             for (Products p : products) {
-                if (opd.getProductId().getPid() == p.getPid()) {
+                if (Objects.equals(opd.getProductId().getPid(), p.getPid())) {
                     totalPrice += opd.getQuantity() * p.getPrice();
                 }
             }
@@ -173,12 +174,25 @@ public class OrderEditBean {
 
             if (!valid) {
                 ApplicationHelper.addMessage("Quantity between 1 and 10");
+                ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid + "&mode=update", true);
+                return;
             } else {
-                OrderProductDetails opd = new OrderProductDetails();
-                opd.setOrderId(current_order);
-                opd.setProductId(new Products(pid));
-                opd.setQuantity(quantity);
-                opds.add(opd);
+                boolean exists = false;
+                for (OrderProductDetails opd : opds) {
+                    if (opd.getProductId().getPid() == pid) {
+                        opd.setQuantity(quantity);
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) {
+                    OrderProductDetails opd = new OrderProductDetails();
+                    opd.setOrderId(current_order);
+                    opd.setProductId(new Products(pid));
+                    opd.setQuantity(quantity);
+                    opds.add(opd);
+                }
+
                 session.put("edit_products", opds);
                 ApplicationHelper.addMessage("Product added!");
             }
@@ -187,7 +201,7 @@ public class OrderEditBean {
 
         } else {
             ApplicationHelper.addMessage("You are not in update mode!");
-            ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid, true);
+            ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid + "&mode=update", true);
         }
     }
 
@@ -286,8 +300,7 @@ public class OrderEditBean {
         if (result) {
             ApplicationHelper.addMessage("Order products updated!");
         }
-        
-        
+
         session.remove("edit_products");
 
         //update order product details for current order

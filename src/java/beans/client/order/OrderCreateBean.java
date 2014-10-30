@@ -155,7 +155,7 @@ public class OrderCreateBean implements Serializable {
                 o.setQuantity(opd.getQuantity());
             }
         }
-        ApplicationHelper.redirect("selected_products.xhtml", true);
+        ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
     }
 
     public void removeSelectedProduct() {
@@ -164,7 +164,8 @@ public class OrderCreateBean implements Serializable {
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         if (opds.size() == 1) {
             ApplicationHelper.addMessage("Order need one or more products!");
-            ApplicationHelper.redirect("selected_products.xhtml", true);
+            ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
+            return;
         }
         for (OrderProductDetails o : opds) {
             if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
@@ -176,7 +177,7 @@ public class OrderCreateBean implements Serializable {
             opds.remove(index);
             ApplicationHelper.addMessage("Product removed!");
         }
-        ApplicationHelper.redirect("selected_products.xhtml", true);
+        ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
     }
 
     public int getTotalSelectedProducts() {
