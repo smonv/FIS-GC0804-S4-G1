@@ -63,31 +63,31 @@
 
                     <div class="col-md-6">
                         <ul class="single-project-info">
-                            <li>
-                                <p><strong>Product Name:</strong>&nbsp;<h:outputText value="#{productBean.currentProduct.name}" /></p>
+                            <li style=" border-bottom: solid 1px #DBDBDB;">
+                                <h:outputText value="#{productBean.currentProduct.name}" style="font-weight: 900;font-size: 24px;" />
                             </li>
 
                             <li>
-                                <p><strong>Price:</strong> &nbsp;<h:outputText value="#{productBean.currentProduct.name}" /></p>
+                                <p>Price:&nbsp;<h:outputText value="$ #{productBean.currentProduct.price}.00" style="font-weight: 400;font-size: 16px; color: red" /></p>
                             </li>
 
                             <li>
-                                <p><strong>Product Infomations:</strong></p>
+                                <p>Product Infomations:</p>
 
                                 <blockquote>
                                     <h:outputText value="#{productBean.currentProduct.infomations}" />
                                 </blockquote>
                             </li>
                             <li>
-                                <h:form>
-                                    <div class="form-group">
+                                <h:form style="border-top: solid 1px #DBDBDB">
+                                    <div class="form-group" style="width: 112px; float: right">
                                         Quantity:&nbsp;<h:messages class="messages"/>
-                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control"/>
-
-                                    </div>
-                                    <div class="form-group">
+                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px"/>
+                   
+                                        
                                         <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct(productBean.pid)}" styleClass="btn btn-primary" />
                                     </div>
+                            
                                 </h:form>
                             </li>
                         </ul>

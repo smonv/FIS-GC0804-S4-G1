@@ -4076,3 +4076,180 @@ KEY FRAME
         .messages{
             color: red;
         }
+   
+                    #cartCompletion {
+                        display: block;
+                        float: left;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        height: 172px;
+                        margin-top: 10px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        text-align: left;
+                        width: 390.828125px;
+                    }
+                    #totalsWrap #totalsTop {
+                        background: url("http://i819.photobucket.com/albums/zz116/phamtheloi1/totals-top_zpsd864e72e.jpg") left top repeat-x;
+                        height: 4px;
+                    }
+                    #totalsWrap #totalsBottom {
+                        background: url("http://i819.photobucket.com/albums/zz116/phamtheloi1/totals-bottom_zps3c728aa9.jpg") left top repeat-x;
+                        height: 8px;
+                    }           
+                    #totalsWrap #totalsContent {
+                        padding: 15px;
+                        font-size: 116.667%;
+                    }     
+                    #totalsWrap {
+                        margin-left: 5px;
+                        background-color: #e4e1d6;
+                        margin-bottom: 10px;
+                    }
+
+                    .hrztl-line {
+
+                        background-attachment: scroll;
+                        background-clip: border-box;
+                        background-color: rgba(0, 0, 0, 0);
+                        background-image: url(http://ak1.ostkcdn.com/img/mxc/20120816_dot_space.png);
+                        background-origin: padding-box;
+                        background-size: auto;
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 24px;
+                        font-weight: bold;
+                        height: 1px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        width: 355.828125px;
+                    }
+
+
+
+                    #cartItems, .idCart {
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        margin-bottom: 10px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+                        text-align: left;
+                        width: 100%;
+
+                    }
+                    .idCart > thead, tbody{
+                        min-width: 928px;
+                        width: 100%;
+                    }
+                    #itemsHead, .idCart > thead>tr {
+                        -webkit-background-clip: border-box;
+                        -webkit-background-origin: padding-box;
+                        -webkit-background-size: auto;
+                        background-attachment: scroll;
+                        background-clip: border-box;
+                        background-color: rgb(239, 239, 230);
+                        background-image: none;
+                        background-origin: padding-box;
+                        background-size: auto;
+                        clear: both;
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        font-weight: bold;
+                        height: 14px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+                        padding-bottom: 25px;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        padding-top: 5px;
+                        text-align: left;
+                        width: 100%;
+                        min-width: 1154px;
+                        bottom: 10px;
+                    }
+                    .grid-3, .grid-2, .grid-4, .idCart > thead>tr>th, .idCart > tbody>tr>td{
+                        display: block;
+                        float: left;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        font-weight: bold;
+                        height: 14px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        text-align: left;
+                        width: 20%;
+                    }
+                    .idCart > tbody>tr{
+                        height: 182px;
+                        border-bottom: 1px solid #999;
+                    }
+                    .idCart > tbody>tr>td>img{
+                        height: auto;
+                        max-height: 120px;
+                        width: auto;
+                        max-width: 150px;
+                    }
+                    .cart-item {
+                        padding: 5px;
+                        border-bottom: 1px solid #999;
+                    }
+                    .grid-container {
+                        clear: both;
+                        //overflow: hidden;
+                        border-bottom-color: rgb(153, 153, 153);
+                        border-bottom-style: solid;
+                        border-bottom-width: 1px;
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+                        padding-bottom: 5px;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        padding-top: 5px;
+                        text-align: left;
+                        width: 928px;
+                        margin-top:  10px;
+                        height:auto
+                    }
+                    .cart-item-qty {
+                        padding-bottom: 5px;
+                        border-bottom: 1px solid #999;
+                        margin: 0 15px 10px 0;
+                    }
+                    .grid-content {
+                        display: block;
+                        font-family: Helvetica, Arial, sans-serif;
+                        font-size: 12px;
+                        height: 172px;
+                        outline-color: rgb(0, 0, 0);
+                        outline-style: none;
+                        outline-width: 0px;
+                        padding-bottom: 5px;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        padding-top: 5px;
+                        text-align: left;
+                        width: 222px;
+                    }
+
+                    .grid-container {
+                        clear: both;
+                        overflow: hidden;
+                    }
+           
