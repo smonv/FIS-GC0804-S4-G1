@@ -24,11 +24,12 @@ public class OrderProductDetailModel {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    public boolean createListOrderProductDetails(List<OrderProductDetails> opds, int order_id) {
+    public boolean createListOrderProductDetails(List<OrderProductDetails> opds, Orders order) {
         try {
             for (OrderProductDetails opd : opds) {
-                opd.setOrderId(new Orders(order_id));
+                opd.setOrderId(order);
                 em.persist(opd);
+                em.refresh(opd);
             }
             return true;
         } catch (Exception e) {
@@ -88,6 +89,7 @@ public class OrderProductDetailModel {
         try {
             OrderProductDetails o = em.find(OrderProductDetails.class, opd.getOpdid());
             em.remove(o);
+            em.flush();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,6 +103,7 @@ public class OrderProductDetailModel {
                 OrderProductDetails o = em.find(OrderProductDetails.class, opd.getOpdid());
                 em.remove(o);
             }
+            em.flush();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,6 +116,7 @@ public class OrderProductDetailModel {
             for (OrderProductDetails opd : opds) {
                 em.persist(opd);
             }
+            em.flush();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -67,9 +67,21 @@ public class OrderEditBean {
             locationName = order.getLocationName();
             locationAddress = order.getLocationAddress();
             paymentId = order.getPaymentType().getPtid();
+            boolean reload = false;
             if (session.get("edit_products") == null) {
-                session.put("edit_products", order.getOrderProductDetailsList());
-            } else if (!Objects.equals(((List<OrderProductDetails>) session.get("edit_products")).get(0).getOrderId().getOid(), order.getOid())) {
+                reload = true;
+
+            } else {
+                List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
+                if (opds.size() > 0) {
+                    if (!Objects.equals(opds.get(0).getOrderId().getOid(), order.getOid())) {
+                        reload = true;
+                    }
+                } else {
+                    reload = true;
+                }
+            }
+            if (reload) {
                 session.put("edit_products", order.getOrderProductDetailsList());
             }
         }
@@ -206,6 +218,7 @@ public class OrderEditBean {
 
         if (orderProductDetailModel.createList(add) && orderProductDetailModel.updateList(change) && orderProductDetailModel.removeList(remove)) {
             ApplicationHelper.addMessage("Order products updated!");
+            session.remove("edit_products");
         } else {
             ApplicationHelper.addMessage("Order products update fail!");
         }

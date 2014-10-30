@@ -73,11 +73,7 @@ public class OrderShowBean {
     }
 
     public List<Orders> getOrders() {
-        if (orders == null) {
             orders = orderModel.getListOrder(1);//test=id truc tiep
-            return orders;
-        }
-       else
             return orders;
         
     }

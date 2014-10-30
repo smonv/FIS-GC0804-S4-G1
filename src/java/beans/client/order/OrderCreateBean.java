@@ -214,19 +214,19 @@ public class OrderCreateBean implements Serializable {
         order.setLocationAddress(location_address);
         order.setOrderStatus(new ListStatus(1));
         order.setCreateAt(PersistenceHelper.getCurrentTime());
-        int oid = orderModel.createOrder(order);
+        order = orderModel.createOrder(order);
 
         boolean result = false;
-        if (oid > 0) {
-            result = orderProductDetailModel.createListOrderProductDetails(opds, oid);
+        if (order != null) {
+            result = orderProductDetailModel.createListOrderProductDetails(opds, order);
         }
 
         if (result) {
             session.remove("order_product_details");
             ApplicationHelper.addMessage("Order created!");
-            ApplicationHelper.redirect("/client/order/new_order_details.xhtml?oid=" + oid, true);
+            ApplicationHelper.redirect("/client/order/new_order_details.xhtml?oid=" + order.getOid(), true);
         } else {
-            orderModel.removeOrder(oid);
+            orderModel.removeOrder(order);
             ApplicationHelper.addMessage("Failed to create new order!");
             ApplicationHelper.redirect("/client/order/new.xhtml", true);
         }

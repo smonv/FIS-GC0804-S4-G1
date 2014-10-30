@@ -8,18 +8,11 @@ package models;
 import entities.Clients;
 import entities.ListStatus;
 import entities.Orders;
-import helpers.PersistenceHelper;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
-/**
- *
- * @author Cu Beo
- */
 @Stateless
 public class OrderModel {
 
@@ -28,20 +21,22 @@ public class OrderModel {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    public int createOrder(Orders order) {
+    public Orders createOrder(Orders order) {
         try {
             em.persist(order);
             em.flush();
-            return order.getOid();
+            em.refresh(order);
+            return order;
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return null;
         }
 
     }
 
     public Orders getById(int oid) {
         try {
+            em.clear();
             List<Orders> orders = em.createNamedQuery("Orders.findByOid").setParameter("oid", oid).getResultList();
             if (orders.size() > 0) {
                 return orders.get(0);
@@ -58,10 +53,14 @@ public class OrderModel {
         return orders.size() > 0 ? orders.get(0) : null;
     }
 
-    public boolean removeOrder(int order_id) {
+    public boolean removeOrder(Orders order) {
         try {
-            em.remove(order_id);
-            return true;
+            if (em.find(Orders.class, order.getOid()) != null) {
+                em.remove(order);
+                return true;
+            }
+            return false;
+
         } catch (Exception e) {
             return false;
         }
@@ -88,7 +87,6 @@ public class OrderModel {
 
     }
 
-
     public List<Orders> getListOrderbylocalname(String Name, int Id) {
         List<Orders> orders = em.createNamedQuery("Orders.findByLocationName").setParameter("locationName", Name).setParameter("cid", new Clients(Id)).getResultList();
         return orders;
@@ -102,15 +100,13 @@ public class OrderModel {
         return orders;
     }
 
-
     public List<Orders> getListOrderByStatus(int clientId, int statusId) {
         List<Orders> orders = em.createNamedQuery("Orders.findByClientIdAndStatus")
                 .setParameter("cid", new Clients(clientId))
                 .setParameter("orderStatus", new ListStatus(statusId))
-				.getResultList();
+                .getResultList();
         return orders;
     }
-
 
     public boolean update(Orders order) {
         try {
