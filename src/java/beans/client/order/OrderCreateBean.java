@@ -98,7 +98,7 @@ public class OrderCreateBean implements Serializable {
         }
     }
 
-    public void addProduct(int pid) throws IOException {
+    public void addProduct(int pid) {
         boolean valid = false;
 
         if (ApplicationHelper.isInteger(stringQuantity)) {
