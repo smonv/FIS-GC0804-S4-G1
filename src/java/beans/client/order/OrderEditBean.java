@@ -16,9 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import models.OrderModel;
@@ -31,7 +33,7 @@ import models.ProductModel;
  * @author Cu Beo
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class OrderEditBean {
     
     @EJB
@@ -52,6 +54,7 @@ public class OrderEditBean {
     private Products currentProduct;
     private HtmlDataTable edit_products;
     private int quantity;
+    private String stringQuantity;
     
     public OrderEditBean() {
     }
@@ -67,6 +70,9 @@ public class OrderEditBean {
             locationName = order.getLocationName();
             locationAddress = order.getLocationAddress();
             paymentId = order.getPaymentType().getPtid();
+            
+            session.put("edit_number", number);
+            
             boolean reload = false;
             if (session.get("edit_products") == null) {
                 reload = true;
@@ -148,6 +154,43 @@ public class OrderEditBean {
         return totalPrice;
     }
     
+    public void addSelectedProduct(int pid) {
+        boolean valid = false;
+        session = SessionHelper.getSessionMap();
+        if (session.get("edit_products") != null && session.get("edit_number") != null) {
+            
+            String edit_number = session.get("edit_number").toString();
+            
+            Orders current_order = orderModel.getByNumber(edit_number); //get edit order
+            
+            List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
+            if (ApplicationHelper.isInteger(stringQuantity)) {
+                quantity = Integer.parseInt(stringQuantity);
+                if (0 < quantity && quantity <= 10) {
+                    valid = true;
+                }
+            }
+            
+            if (!valid) {
+                ApplicationHelper.addMessage("Quantity between 1 and 10");
+            } else {
+                OrderProductDetails opd = new OrderProductDetails();
+                opd.setOrderId(current_order);
+                opd.setProductId(new Products(pid));
+                opd.setQuantity(quantity);
+                opds.add(opd);
+                session.put("edit_products", opds);
+                ApplicationHelper.addMessage("Product added!");
+            }
+            
+            ApplicationHelper.redirect("/client/order/edit_products.xhtml?number=" + edit_number, true);
+            
+        } else {
+            ApplicationHelper.addMessage("You are not in update mode!");
+            ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid, true);
+        }
+    }
+    
     public void updateSelectedProduct() {
         
         OrderProductDetails opd = (OrderProductDetails) edit_products.getRowData();
@@ -188,11 +231,17 @@ public class OrderEditBean {
     }
     
     public void updateProducts() {
-        Orders current_order = orderModel.getByNumber(number);
+        session = SessionHelper.getSessionMap(); //get session
+        
+        Orders current_order = orderModel.getByNumber(number); // get edit order
+        
+        
         List<OrderProductDetails> change = new ArrayList<>();
         List<OrderProductDetails> remove = new ArrayList<>();
         List<OrderProductDetails> add = new ArrayList<>();
         
+        
+        //find change
         List<OrderProductDetails> current_opds = (List<OrderProductDetails>) session.get("edit_products");
         List<OrderProductDetails> order_opds = current_order.getOrderProductDetailsList();
         for (OrderProductDetails co : current_opds) {
@@ -280,6 +329,14 @@ public class OrderEditBean {
     
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+    
+    public String getStringQuantity() {
+        return stringQuantity;
+    }
+    
+    public void setStringQuantity(String stringQuantity) {
+        this.stringQuantity = stringQuantity;
     }
     
 }
