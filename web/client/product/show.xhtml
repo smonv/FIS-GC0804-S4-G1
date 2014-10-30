@@ -3,12 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/client/layout.xhtml">
         <f:metadata>
             <f:viewParam name="pid" value="#{productBean.pid}" />
-            <f:viewParam name="mode" value="#{productBean.mode}" />
             <f:viewAction action="#{productBean.init()}" />
         </f:metadata>
         <ui:define name="title">Product Information</ui:define>
@@ -23,7 +21,9 @@
                     <!-- BREADCRUMBS -->
                     <ul class="breadcrumb">
                         <li><h:link outcome="/index.xhtml">Home</h:link><span class="divider"></span></li>
-                        <li class="active">Products</li>
+                        <li class="active"><h:link value="Products" outcome="/client/product/index.xhml">
+                                <f:param name="mode" value="#{productBean.mode}" rendered="#{productBean.mode != null}" />
+                            </h:link></li>
                         <li class="active">Details</li>
                     </ul>
                 </div>
@@ -64,6 +64,7 @@
                     </div>
 
                     <div class="col-md-6">
+
                         <ul class="single-project-info">
                             <li style=" border-bottom: solid 1px #DBDBDB;">
                                 <h:outputText value="#{productBean.currentProduct.name}" style="font-weight: 900;font-size: 24px;" />
@@ -84,14 +85,10 @@
                                 <h:form style="border-top: solid 1px #DBDBDB">
                                     <div class="form-group" style="width: 112px; float: left">
                                         Quantity:&nbsp;<h:messages class="messages"/>
+                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px"/>
 
 
-                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px" rendered="#{ productBean.mode == null}"/>
-                                        <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct(productBean.currentProduct.pid)}" styleClass="btn btn-primary" rendered="#{productBean.mode == null}"/>
-
-
-                                        <h:inputText value="#{orderEditBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px" rendered="#{productBean.mode != null}"/>
-                                        <h:commandButton value="Add to Edit" action="#{orderEditBean.addSelectedProduct(productBean.currentProduct.pid)}"  styleClass="btn btn-primary" rendered="#{productBean.mode != null}" />
+                                        <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct(productBean.pid)}" styleClass="btn btn-primary" />
 
                                     </div>
 
