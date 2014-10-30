@@ -8,6 +8,7 @@
     <ui:composition template="/templates/client/layout.xhtml">
         <f:metadata>
             <f:viewParam name="pid" value="#{productBean.pid}" />
+            <f:viewParam name="mode" value="#{productBean.mode}" />
             <f:viewAction action="#{productBean.init()}" />
         </f:metadata>
         <ui:define name="title">Product Information</ui:define>
@@ -81,14 +82,19 @@
                             </li>
                             <li>
                                 <h:form style="border-top: solid 1px #DBDBDB">
-                                    <div class="form-group" style="width: 112px; float: right">
+                                    <div class="form-group" style="width: 112px; float: left">
                                         Quantity:&nbsp;<h:messages class="messages"/>
-                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px"/>
-                   
-                                        
-                                        <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct(productBean.pid)}" styleClass="btn btn-primary" />
+
+
+                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px" rendered="#{ productBean.mode == null}"/>
+                                        <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct(productBean.currentProduct.pid)}" styleClass="btn btn-primary" rendered="#{productBean.mode == null}"/>
+
+
+                                        <h:inputText value="#{orderEditBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px" rendered="#{productBean.mode != null}"/>
+                                        <h:commandButton value="Add to Edit" action="#{orderEditBean.addSelectedProduct(productBean.currentProduct.pid)}"  styleClass="btn btn-primary" rendered="#{productBean.mode != null}" />
+
                                     </div>
-                            
+
                                 </h:form>
                             </li>
                         </ul>

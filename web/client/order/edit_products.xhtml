@@ -60,7 +60,10 @@
                     <br />
                     Total Price: <h:outputText value="#{orderEditBean.getTotalSelectedProductsPrice()}" />
                     <div class="form-group">
-                        <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> &nbsp;&nbsp; 
+                        <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> 
+                        &nbsp;&nbsp; 
+                        <h:link value="Add More" outcome="/client/product/index.xhtml?mode=update" styleClass="btn btn-primary"/>
+                        &nbsp;&nbsp; 
                         <h:commandButton value="Update" action="#{orderEditBean.updateProducts()}" class="btn btn-primary"/>
                     </div>
                 </h:form>

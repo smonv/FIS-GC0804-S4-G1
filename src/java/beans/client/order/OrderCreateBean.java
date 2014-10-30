@@ -100,7 +100,7 @@ public class OrderCreateBean implements Serializable {
 
     public void addProduct(int pid) throws IOException {
         boolean valid = false;
-        ExternalContext ec = ApplicationHelper.getExternalContext();
+
         if (ApplicationHelper.isInteger(stringQuantity)) {
             quantity = Integer.parseInt(stringQuantity);
             if (0 < quantity && quantity <= 10) {

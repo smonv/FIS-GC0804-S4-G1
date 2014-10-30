@@ -2,8 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/templates/client/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="mode" value="#{productBean.mode}" />
+            <f:viewAction action="#{productBean.checkMode()}"/>
+        </f:metadata>
         <ui:define name="title">List Products</ui:define>
         <ui:define name="content">
             <!-- Page title -->
@@ -51,9 +57,21 @@
                                                 </div>
 
                                                 <div class="project-details">
-                                                    <h2><h:link outcome="/client/product/show.xhtml?pid=#{product.pid}"><h:outputText value="#{product.name}" /></h:link></h2>
-                                                    <p>Price:&nbsp;<h:outputText value="$ #{product.price}.00" style="font-weight: 400;font-size: 16px; color: red" /></p>
-                                                    <div class="readmore"><h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}" /></div>
+                                                    <h2><h:link value="#{product.name}" outcome="/client/product/show.xhtml">
+                                                            <f:param name="pid" value="#{product.pid}" />
+                                                            <c:if test="#{productBean.mode != null}">
+                                                                <f:param name="mode" value="#{productBean.mode}" />
+                                                            </c:if>
+                                                        </h:link></h2>
+                                                    <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                                                    <div class="readmore">
+                                                        <h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}">
+                                                            <f:param name="pid" value="#{product.pid}" />
+                                                            <c:if test="#{productBean.mode != null}">
+                                                                <f:param name="mode" value="#{productBean.mode}" />
+                                                            </c:if>
+                                                        </h:link>
+                                                    </div>
 
                                                 </div>
                                             </div>
