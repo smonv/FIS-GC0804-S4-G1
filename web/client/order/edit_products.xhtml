@@ -15,7 +15,7 @@
                 <h1>Edit products ordered</h1>
 
                 <!-- BREADCRUMBS -->
-           
+
             </div>
             <div class="row">
                 <h:messages class="messages"/>
@@ -62,23 +62,23 @@
                     </h:dataTable>
 
                     <br />
-<<<<<<< HEAD
+
                     Total Price: <h:outputText value="#{orderEditBean.getTotalSelectedProductsPrice()}" />
                     <div class="form-group">
                         <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> 
                         &nbsp;&nbsp; 
                         <h:link value="Add More" outcome="/client/product/index.xhtml?mode=update" styleClass="btn btn-primary"/>
                         &nbsp;&nbsp; 
-=======
 
-                    <div class="form-group" style="float: right">
-                        <strong>Total Price: 
-                            <br/>
-                            <h:outputText value="$#{orderEditBean.getTotalSelectedProductsPrice()}.00" /></strong><br/>
-                        <div style="height: 20px"></div>
-                        <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> &nbsp;&nbsp; 
->>>>>>> 7c210505facaa129d72bb22468ad3d9f6a890e3b
-                        <h:commandButton value="Update" action="#{orderEditBean.updateProducts()}" class="btn btn-primary"/>
+                        <div class="form-group" style="float: right">
+                            <strong>Total Price: 
+                                <br/>
+                                <h:outputText value="$#{orderEditBean.getTotalSelectedProductsPrice()}.00" /></strong><br/>
+                            <div style="height: 20px"></div>
+                            <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> &nbsp;&nbsp; 
+
+                            <h:commandButton value="Update" action="#{orderEditBean.updateProducts()}" class="btn btn-primary"/>
+                        </div>
                     </div>
                 </h:form>
             </div>
