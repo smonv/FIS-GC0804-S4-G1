@@ -21,12 +21,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import models.OrderModel;
 import models.OrderProductDetailModel;
 import models.PaymentTypeModel;
@@ -222,6 +220,7 @@ public class OrderCreateBean implements Serializable {
         }
 
         if (result) {
+            order.setOrderProductDetailsList(opds);
             session.remove("order_product_details");
             ApplicationHelper.addMessage("Order created!");
             ApplicationHelper.redirect("/client/order/new_order_details.xhtml?oid=" + order.getOid(), true);

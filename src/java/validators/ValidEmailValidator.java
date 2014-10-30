@@ -15,6 +15,7 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -23,11 +24,13 @@ import javax.persistence.EntityManager;
 @FacesValidator("validEmail")
 public class ValidEmailValidator implements Validator {
 
+    @PersistenceContext
+    EntityManager em;
+
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        EntityManager em = PersistenceHelper.getEntityManager();
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(value.toString());
         if (!matcher.matches()) {

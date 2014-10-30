@@ -7,21 +7,28 @@ package helpers;
 
 import java.util.Calendar;
 import java.util.Date;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author Cu Beo
+ *
  */
+@Stateless
 public class PersistenceHelper {
-
-    public static EntityManager getEntityManager() {
-        
-        return Persistence.createEntityManagerFactory("esopu").createEntityManager();
-    }
+    @PersistenceContext
+    EntityManager em;
+    
+//    public static EntityManager getEntityManager() {
+//
+//        return Persistence.createEntityManagerFactory("esopu").createEntityManager();
+//    }
 
     public static Date getCurrentTime() {
         return Calendar.getInstance().getTime();
     }
+
 }
