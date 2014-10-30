@@ -11,24 +11,28 @@
         </f:metadata>
         <ui:define name="title">Edit Order Products</ui:define>
         <ui:define name="content">
+            <div class="page-title">
+                <h1>Edit products ordered</h1>
+
+                <!-- BREADCRUMBS -->
+           
+            </div>
             <div class="row">
                 <h:messages class="messages"/>
             </div>
             <div class="row">
                 <h:form>
                     <h:inputHidden value="#{orderEditBean.number}" />
-                    <h:dataTable value="#{orderEditBean.getListOrderProducts()}" var="opd" binding="#{orderEditBean.edit_products}">
+                    <h:dataTable class="idCart" value="#{orderEditBean.getListOrderProducts()}" var="opd" binding="#{orderEditBean.edit_products}">
+
                         <h:column>
-                            <f:facet name="header">Image</f:facet>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).name}" /><br/>
                             <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Name</f:facet>
-                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).name}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Price</f:facet>
-                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).price}" />
+                            <f:facet name="header">Unit Price</f:facet>
+                            <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).price}.00"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Quantity</f:facet>
@@ -43,7 +47,7 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Total</f:facet>
-                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).price*opd.quantity}" />
+                            <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).price*opd.quantity}.00" style="color: red" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Command</f:facet>
@@ -56,10 +60,14 @@
                             </h:commandButton>
                         </h:column>
                     </h:dataTable>
-                    Total: <h:outputText value="#{orderEditBean.getTotalSelectedProducts()}" />
+
                     <br />
-                    Total Price: <h:outputText value="#{orderEditBean.getTotalSelectedProductsPrice()}" />
-                    <div class="form-group">
+
+                    <div class="form-group" style="float: right">
+                        <strong>Total Price: 
+                            <br/>
+                            <h:outputText value="$#{orderEditBean.getTotalSelectedProductsPrice()}.00" /></strong><br/>
+                        <div style="height: 20px"></div>
                         <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> &nbsp;&nbsp; 
                         <h:commandButton value="Update" action="#{orderEditBean.updateProducts()}" class="btn btn-primary"/>
                     </div>

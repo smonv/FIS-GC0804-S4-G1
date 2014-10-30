@@ -28,14 +28,14 @@
                                 </h:inputText>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Price</f:facet>
+                                <f:facet name="header">Unit Price</f:facet>
                                 <h:outputText value="Today: USD " style="font-weight: normal;"/><br/>
                                 <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price}.00" style="font-weight: normal;"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Total</f:facet>
                                 <h:outputText value="Today: USD " /><br/>
-                                <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price*opd.quantity}.00" />
+                                <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price*opd.quantity}.00"  style="color: red"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header"></f:facet>
@@ -57,7 +57,7 @@
                                             <div class="grid-3" style="font-size: 24px; font-weight: bold">
                                                 Total
                                             </div>
-                                            <div class="grid-9 line-total" data-total-type="Total" style="border-bottom-style: none"><h:outputText value="USA #{orderCreateBean.getTotalSelectedProductsPrice()}.00" style="font-size: 24px; font-weight: bold" /></div>
+                                            <div class="grid-9 line-total" data-total-type="Total" style="border-bottom-style: none"><h:outputText value="USD #{orderCreateBean.getTotalSelectedProductsPrice()}.00" style="font-size: 24px; font-weight: bold" /></div>
                                             <div class="grid-12 hrztl-line"></div>
                                         </div>
 
