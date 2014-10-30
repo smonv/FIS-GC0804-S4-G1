@@ -50,7 +50,7 @@
                             <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).price*opd.quantity}.00" style="color: red" />
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Command</f:facet>
+                            <f:facet name="header"></f:facet>
                             <h:commandButton value="Update" action="#{orderEditBean.updateSelectedProduct()}" styleClass="btn btn-primary">
                                 <f:ajax execute="@form" render="@all" />
                             </h:commandButton>
@@ -59,24 +59,21 @@
                                 <f:ajax execute="@form" render="@all" />
                             </h:commandButton>
                         </h:column>
+                         
                     </h:dataTable>
-
+                    <h:link value="Add Product " outcome="/client/product/index.xhtml?mode=update" styleClass="btn btn-primary"/>
                     <br />
 
-                    Total Price: <h:outputText value="#{orderEditBean.getTotalSelectedProductsPrice()}" />
+                    
                     <div class="form-group">
-                        <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> 
-                        &nbsp;&nbsp; 
-                        <h:link value="Add More" outcome="/client/product/index.xhtml?mode=update" styleClass="btn btn-primary"/>
-                        &nbsp;&nbsp; 
 
-                        <div class="form-group" style="float: right">
+                        <div class="form-group" style="float: right; padding-right: 20px">
                             <strong>Total Price: 
                                 <br/>
                                 <h:outputText value="$#{orderEditBean.getTotalSelectedProductsPrice()}.00" /></strong><br/>
                             <div style="height: 20px"></div>
                             <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> &nbsp;&nbsp; 
-
+                           
                             <h:commandButton value="Update" action="#{orderEditBean.updateProducts()}" class="btn btn-primary"/>
                         </div>
                     </div>
