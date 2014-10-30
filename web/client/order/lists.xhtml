@@ -7,6 +7,17 @@
     <ui:composition template="/templates/client/layout.xhtml">
         <ui:define name="title">List Orders</ui:define>
         <ui:define name="content">
+            <h:form>
+                <h:inputText value="#{orderShowBean.search}"/>
+                <h:selectOneMenu value="#{orderShowBean.statusid}" converter="javax.faces.Integer">
+
+                    <f:selectItem itemValue="0" itemLabel="Select status"/>
+                    <f:selectItem itemValue="1" itemLabel="Pending" />
+                    <f:selectItem itemValue="2" itemLabel="Proccess"/>
+                    <f:selectItem itemValue="3" itemLabel="Completed"/>
+                </h:selectOneMenu>
+
+                <h:commandButton value="search" action="#{orderShowBean.search()}" styleClass="btn btn-primary"/>
             <h:dataTable value="#{orderShowBean.orders}" var="o">
                 <h:column>
                     <f:facet name="header">Order Number</f:facet>
@@ -37,6 +48,7 @@
                     <h:link value="View Details" outcome="/client/order/details.xhtml?number=#{o.number}" styleClass="btn btn-primary"/>
                 </h:column>
             </h:dataTable>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>
