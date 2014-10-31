@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
  */
 public class ApplicationHelper {
 
-    private static char[] VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456879".toCharArray();
+    private static char[] VALID_CHARACTERS = "123456879".toCharArray();
 
     public static ExternalContext getExternalContext() {
         return FacesContext.getCurrentInstance().getExternalContext();

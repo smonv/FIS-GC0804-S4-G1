@@ -212,7 +212,7 @@ public class OrderCreateBean implements Serializable {
         Orders order = new Orders();
         order.setCid(new Clients(2));
         order.setCid(new Clients(1));
-        order.setNumber(ApplicationHelper.secureRandomString(16));
+        order.setNumber(ApplicationHelper.secureRandomString(8));
         order.setPaymentType(new PaymentTypes(paymentTypeId));
         order.setLocationName(location_name);
         order.setLocationAddress(location_address);
