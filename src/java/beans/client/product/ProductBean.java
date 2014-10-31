@@ -41,7 +41,7 @@ public class ProductBean {
             if (!productModel.productExists(pid)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
-            //checkMode();
+           checkMode();
         }
         currentProduct = productModel.getById(pid);
     }
