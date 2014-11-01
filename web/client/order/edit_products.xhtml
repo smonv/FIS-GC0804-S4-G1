@@ -37,12 +37,32 @@
                         <h:column>
                             <f:facet name="header">Quantity</f:facet>
                             <h:inputText value="#{opd.quantity}" size="5" label="Quantity" 
-                                         required="true" requiredMessage="Quantity is required"
-                                         validatorMessage="Quantity min 1 and max 10"
-                                         converterMessage="Quantity only integer"
+                                         required="true" requiredMessage="Quantity is required!"
+                                         validatorMessage="Quantity min 1 and max 10!"
+                                         converterMessage="Quantity only integer!"
                                          >
                                 <f:validateLongRange minimum="1" maximum="10" />
                                 <f:convertNumber integerOnly="true" />
+                            </h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Floor</f:facet>
+                            <h:inputText value="#{opd.floors}" size="5" label="Floor" 
+                                         required="true" requiredMessage="Floor is required!"
+                                         validatorMessage="Floor min 1 and max 100!"
+                                         converterMessage="Floor is number!"
+                                         >
+                                <f:validateLongRange minimum="1" maximum="10" />
+                                <f:convertNumber integerOnly="true" />
+                            </h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Height of Floor</f:facet>
+                            <h:inputText value="#{opd.heightOfFloor}" size="5" label="Height of Floor" 
+                                         required="true" requiredMessage="Height of Floor is required"
+                                         validatorMessage="Quantity min 1 and max 10"
+                                         converterMessage="Height of Floor is number"
+                                         >
                             </h:inputText>
                         </h:column>
                         <h:column>

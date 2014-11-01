@@ -72,7 +72,15 @@
                             </li>
 
                             <li>
-                                <p>Price:&nbsp;<h:outputText value="$ #{productBean.currentProduct.price}.00" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                                <p>Size:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.size} m" /></p>
+                            </li>
+
+                            <li>
+                                <p>Manufacturer :&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.manufacturer}" /></p>
+                            </li>
+
+                            <li>
+                                <p>Produced in:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.producedIn}"/></p>
                             </li>
 
                             <li>
@@ -83,19 +91,60 @@
                                 </blockquote>
                             </li>
                             <li>
-                                <h:form style="border-top: solid 1px #DBDBDB">
-                                    <div class="form-group" style="width: 112px; float: left">
-                                        Quantity:&nbsp;<h:messages class="messages"/>
-                                        <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px" rendered="#{productBean.mode == null}" />
-                                        <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct(productBean.pid)}" styleClass="btn btn-primary" rendered="#{productBean.mode == null}"/>
-                                       
-                                        <h:inputText value="#{orderEditBean.stringQuantity}" styleClass="form-control" style="margin-bottom: 10px" rendered="#{productBean.mode != null}" />
-                                        <h:commandButton value="Add to Edit" action="#{orderEditBean.addSelectedProduct(productBean.pid)}" styleClass="btn btn-primary" rendered="#{productBean.mode != null}" />
-                                       
-                                        
-                                    </div>
+                                <p>Price:&nbsp;&nbsp;<h:outputText value="$ #{productBean.currentProduct.price}.00" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                            </li>
+                            <li>
+                                <p>Contruction Price:&nbsp;&nbsp;<h:outputText value="$ #{productBean.currentProduct.constructionPrice}.00" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                            </li>
+                            <li>
+                                <p>Contruction Time (per floor):&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.constructionTime} week" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                            </li>
+                            <li>
+                                <div class="row">
+                                    <h:form style="border-top: solid 1px #DBDBDB">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Quantity" />
+                                                    <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" rendered="#{productBean.mode == null}" />
+                                                    <h:inputText value="#{orderEditBean.stringQuantity}" styleClass="form-control" rendered="#{productBean.mode != null}" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Floor" />
+                                                    <h:inputText value="#{orderCreateBean.stringFloor}" styleClass="form-control" rendered="#{productBean.mode == null}"/>
+                                                    <h:inputText value="#{orderEditBean.stringFloor}" styleClass="form-control" rendered="#{productBean.mode != null}" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Height Of Floor" />
+                                                    <h:inputText value="#{orderCreateBean.stringHeightOfFloor}" styleClass="form-control" rendered="#{productBean.mode == null}"/>
+                                                    <h:inputText value="#{orderEditBean.stringHeightOfFloor}" styleClass="form-control" rendered="#{productBean.mode != null}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
 
-                                </h:form>
+                                                    <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct}" styleClass="btn btn-primary" rendered="#{productBean.mode == null}">
+                                                        <f:param name="pid" value="#{productBean.pid}" />
+                                                    </h:commandButton>
+
+                                                    <h:commandButton value="Add to Edit" action="#{orderEditBean.addSelectedProduct()}" styleClass="btn btn-primary" rendered="#{productBean.mode != null}">
+                                                        <f:param name="pid" value="#{productBean.pid}" />
+                                                    </h:commandButton>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <h:messages class="messages"/>
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+                                </div>
                             </li>
                         </ul>
 

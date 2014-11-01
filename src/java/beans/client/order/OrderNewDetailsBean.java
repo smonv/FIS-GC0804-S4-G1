@@ -7,6 +7,7 @@ package beans.client.order;
 
 import entities.OrderProductDetails;
 import entities.Orders;
+import entities.Products;
 import helpers.ApplicationHelper;
 import java.io.IOException;
 import java.util.List;
@@ -51,7 +52,7 @@ public class OrderNewDetailsBean {
             if (!orderModel.orderExists(oid)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
-                order = orderModel.getById(oid);
+            order = orderModel.getById(oid);
         }
     }
 
@@ -61,7 +62,9 @@ public class OrderNewDetailsBean {
             opds = orderProductDetailModel.getByOrderId(order);
             if (opds.size() > 0) {
                 for (OrderProductDetails opd : opds) {
-                    totalCost += productModel.getProductPriceById(opd.getProductId().getPid()) * opd.getQuantity();
+                    Products p = productModel.getById(opd.getProductId().getPid());
+                    totalCost += p.getPrice() * opd.getQuantity();
+                    totalCost += p.getConstructionPrice() * opd.getFloors() * opd.getHeightOfFloor();
                 }
             }
         }
@@ -69,19 +72,18 @@ public class OrderNewDetailsBean {
         return totalCost;
     }
 
-    public String showdetail(){//phan show list order
+    public String showdetail() {//phan show list order
         try {
-        Orders o=(Orders)ordertable.getRowData();
-        detail= orderProductDetailModel.getSingeByOrderId(o);
-        return "showdetail";
+            Orders o = (Orders) ordertable.getRowData();
+            detail = orderProductDetailModel.getSingeByOrderId(o);
+            return "showdetail";
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
+
         return null;
     }
-    
+
     public int getOid() {
         return oid;
     }
