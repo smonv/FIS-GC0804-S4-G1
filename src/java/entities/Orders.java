@@ -9,10 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "orders")
@@ -40,15 +38,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findByOid", query = "SELECT o FROM Orders o WHERE o.oid = :oid"),
     @NamedQuery(name = "Orders.findByNumber", query = "SELECT o FROM Orders o WHERE o.number = :number"),
-    @NamedQuery(name = "Orders.findByLocationName", query = "SELECT o FROM Orders o WHERE o.locationName = :locationName AND o.cid = :cid"),
-    @NamedQuery(name = "Orders.findByLocationAddress", query = "SELECT o FROM Orders o WHERE o.locationAddress = :locationAddress AND o.cid = :cid"),
+    @NamedQuery(name = "Orders.findByLocationName", query = "SELECT o FROM Orders o WHERE o.locationName = :locationName"),
+    @NamedQuery(name = "Orders.findByLocationAddress", query = "SELECT o FROM Orders o WHERE o.locationAddress = :locationAddress"),
+    @NamedQuery(name = "Orders.findByStartAt", query = "SELECT o FROM Orders o WHERE o.startAt = :startAt"),
     @NamedQuery(name = "Orders.findByCreateAt", query = "SELECT o FROM Orders o WHERE o.createAt = :createAt"),
     @NamedQuery(name = "Orders.findByUpdateAt", query = "SELECT o FROM Orders o WHERE o.updateAt = :updateAt"),
     @NamedQuery(name = "Orders.orderExists", query = "SELECT COUNT(o.oid) FROM Orders o WHERE o.oid = :oid "),
-    @NamedQuery(name = "Orders.findByClientId", query = "SELECT o FROM Orders o WHERE o.cid = :cid"),
+    @NamedQuery(name = "Orders.findByClientId", query = "SELECT o FROM Orders o WHERE o.clientId = :cid"),
     @NamedQuery(name = "Orders.orderNumberExists", query = "SELECT COUNT(o.oid) FROM Orders o WHERE o.number = :number"),
-    @NamedQuery(name = "Orders.findByClientIdAndStatus",query = "SELECT o FROM Orders o WHERE o.cid = :cid AND o.orderStatus = :orderStatus"),
-    @NamedQuery(name = "Orders.searchByNumber", query = "SELECT o FROM Orders o WHERE o.number like :number AND o.cid = :cid"),
+    @NamedQuery(name = "Orders.findByClientIdAndStatus", query = "SELECT o FROM Orders o WHERE o.clientId = :cid AND o.orderStatus = :orderStatus"),
+    @NamedQuery(name = "Orders.searchByNumber", query = "SELECT o FROM Orders o WHERE o.number like :number AND o.clientId = :cid"),
+
 })
 public class Orders implements Serializable {
 
@@ -74,6 +74,9 @@ public class Orders implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "location_address")
     private String locationAddress;
+    @Column(name = "start_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startAt;
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
@@ -81,12 +84,14 @@ public class Orders implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
     @OneToMany(mappedBy = "orderId")
+    private List<Projects> projectsList;
+    @OneToMany(mappedBy = "orderId")
     private List<OrderProductDetails> orderProductDetailsList;
-    @OneToMany(mappedBy = "oid")
+    @OneToMany(mappedBy = "orderId")
     private List<Complaints> complaintsList;
-    @JoinColumn(name = "cid", referencedColumnName = "cid")
+    @JoinColumn(name = "client_id", referencedColumnName = "cid")
     @ManyToOne
-    private Clients cid;
+    private Clients clientId;
     @JoinColumn(name = "order_status", referencedColumnName = "lsid")
     @ManyToOne
     private ListStatus orderStatus;
@@ -140,6 +145,14 @@ public class Orders implements Serializable {
         this.locationAddress = locationAddress;
     }
 
+    public Date getStartAt() {
+        return startAt;
+    }
+
+    public void setStartAt(Date startAt) {
+        this.startAt = startAt;
+    }
+
     public Date getCreateAt() {
         return createAt;
     }
@@ -154,6 +167,15 @@ public class Orders implements Serializable {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    @XmlTransient
+    public List<Projects> getProjectsList() {
+        return projectsList;
+    }
+
+    public void setProjectsList(List<Projects> projectsList) {
+        this.projectsList = projectsList;
     }
 
     @XmlTransient
@@ -174,12 +196,12 @@ public class Orders implements Serializable {
         this.complaintsList = complaintsList;
     }
 
-    public Clients getCid() {
-        return cid;
+    public Clients getClientId() {
+        return clientId;
     }
 
-    public void setCid(Clients cid) {
-        this.cid = cid;
+    public void setClientId(Clients clientId) {
+        this.clientId = clientId;
     }
 
     public ListStatus getOrderStatus() {

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "clients")
@@ -46,9 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clients.findByUpdateAt", query = "SELECT c FROM Clients c WHERE c.updateAt = :updateAt"),
     @NamedQuery(name = "Clients.uniqueUsername", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.username = :username"),
     @NamedQuery(name = "Clients.uniqueEmail", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.email = :email")
-
 })
 public class Clients implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -57,7 +57,7 @@ public class Clients implements Serializable {
     private Integer cid;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 4, max = 100,message = "Length 4 and 100 character!")
+    @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
@@ -90,7 +90,7 @@ public class Clients implements Serializable {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
-    @OneToMany(mappedBy = "cid")
+    @OneToMany(mappedBy = "clientId")
     private List<Orders> ordersList;
 
     public Clients() {
@@ -218,8 +218,7 @@ public class Clients implements Serializable {
 
     @Override
     public String toString() {
-        //return "entities.Clients[ cid=" + cid + " ]";
-        return this.username;
+        return "entities.Clients[ cid=" + cid + " ]";
     }
-    
+
 }

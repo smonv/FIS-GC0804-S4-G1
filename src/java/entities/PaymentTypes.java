@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "payment_types")
@@ -108,8 +108,7 @@ public class PaymentTypes implements Serializable {
 
     @Override
     public String toString() {
-        
-        return this.name;
+        return "entities.PaymentTypes[ ptid=" + ptid + " ]";
     }
     
 }

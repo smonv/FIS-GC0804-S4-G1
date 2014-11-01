@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "complaints")
@@ -58,9 +58,9 @@ public class Complaints implements Serializable {
     @JoinColumn(name = "complaint_status", referencedColumnName = "lsid")
     @ManyToOne
     private ListStatus complaintStatus;
-    @JoinColumn(name = "oid", referencedColumnName = "oid")
+    @JoinColumn(name = "order_id", referencedColumnName = "oid")
     @ManyToOne
-    private Orders oid;
+    private Orders orderId;
 
     public Complaints() {
     }
@@ -109,12 +109,12 @@ public class Complaints implements Serializable {
         this.complaintStatus = complaintStatus;
     }
 
-    public Orders getOid() {
-        return oid;
+    public Orders getOrderId() {
+        return orderId;
     }
 
-    public void setOid(Orders oid) {
-        this.oid = oid;
+    public void setOrderId(Orders orderId) {
+        this.orderId = orderId;
     }
 
     @Override

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "list_status")
@@ -130,8 +130,7 @@ public class ListStatus implements Serializable {
 
     @Override
     public String toString() {
-        
-            return this.name;
+        return "entities.ListStatus[ lsid=" + lsid + " ]";
     }
     
 }

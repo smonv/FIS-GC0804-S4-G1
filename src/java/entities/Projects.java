@@ -13,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "projects")
@@ -34,7 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Projects.findAll", query = "SELECT p FROM Projects p"),
     @NamedQuery(name = "Projects.findByPid", query = "SELECT p FROM Projects p WHERE p.pid = :pid"),
     @NamedQuery(name = "Projects.findByTitle", query = "SELECT p FROM Projects p WHERE p.title = :title"),
-    @NamedQuery(name = "Projects.findByLocation", query = "SELECT p FROM Projects p WHERE p.location = :location"),
     @NamedQuery(name = "Projects.findByImagePath", query = "SELECT p FROM Projects p WHERE p.imagePath = :imagePath"),
     @NamedQuery(name = "Projects.findByStartAt", query = "SELECT p FROM Projects p WHERE p.startAt = :startAt"),
     @NamedQuery(name = "Projects.findByEndAt", query = "SELECT p FROM Projects p WHERE p.endAt = :endAt")})
@@ -57,9 +58,6 @@ public class Projects implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "content")
     private String content;
-    @Size(max = 254)
-    @Column(name = "location")
-    private String location;
     @Size(max = 2147483647)
     @Column(name = "image_path")
     private String imagePath;
@@ -69,6 +67,9 @@ public class Projects implements Serializable {
     @Column(name = "end_at")
     @Temporal(TemporalType.DATE)
     private Date endAt;
+    @JoinColumn(name = "order_id", referencedColumnName = "oid")
+    @ManyToOne
+    private Orders orderId;
 
     public Projects() {
     }
@@ -107,14 +108,6 @@ public class Projects implements Serializable {
         this.content = content;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getImagePath() {
         return imagePath;
     }
@@ -137,6 +130,14 @@ public class Projects implements Serializable {
 
     public void setEndAt(Date endAt) {
         this.endAt = endAt;
+    }
+
+    public Orders getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Orders orderId) {
+        this.orderId = orderId;
     }
 
     @Override

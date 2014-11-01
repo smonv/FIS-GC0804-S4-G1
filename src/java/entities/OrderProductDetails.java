@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "order_product_details")
@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OrderProductDetails.findAll", query = "SELECT o FROM OrderProductDetails o"),
     @NamedQuery(name = "OrderProductDetails.findByOpdid", query = "SELECT o FROM OrderProductDetails o WHERE o.opdid = :opdid"),
     @NamedQuery(name = "OrderProductDetails.findByQuantity", query = "SELECT o FROM OrderProductDetails o WHERE o.quantity = :quantity"),
+    @NamedQuery(name = "OrderProductDetails.findByFloors", query = "SELECT o FROM OrderProductDetails o WHERE o.floors = :floors"),
+    @NamedQuery(name = "OrderProductDetails.findByHeightOfFloor", query = "SELECT o FROM OrderProductDetails o WHERE o.heightOfFloor = :heightOfFloor"),
     @NamedQuery(name = "OrderProductDetails.findByCreateAt", query = "SELECT o FROM OrderProductDetails o WHERE o.createAt = :createAt"),
     @NamedQuery(name = "OrderProductDetails.findByOrderId", query = "SELECT o FROM OrderProductDetails o WHERE o.orderId = :orderId")
 })
@@ -48,6 +50,10 @@ public class OrderProductDetails implements Serializable {
     private Integer opdid;
     @Column(name = "quantity")
     private Integer quantity;
+    @Column(name = "floors")
+    private Integer floors;
+    @Column(name = "height_of_floor")
+    private Long heightOfFloor;
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
@@ -79,6 +85,22 @@ public class OrderProductDetails implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getFloors() {
+        return floors;
+    }
+
+    public void setFloors(Integer floors) {
+        this.floors = floors;
+    }
+
+    public Long getHeightOfFloor() {
+        return heightOfFloor;
+    }
+
+    public void setHeightOfFloor(Long heightOfFloor) {
+        this.heightOfFloor = heightOfFloor;
     }
 
     public Date getCreateAt() {

@@ -67,6 +67,8 @@ create table order_product_details(
 	order_id int foreign key references orders(oid),
 	product_id int foreign key references products(pid),
 	quantity int,
+	floors int,
+	height_of_floor decimal,
 	create_at datetime
 )
 

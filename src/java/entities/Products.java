@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "products")
@@ -40,9 +40,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Products.findByPid", query = "SELECT p FROM Products p WHERE p.pid = :pid"),
     @NamedQuery(name = "Products.findByCode", query = "SELECT p FROM Products p WHERE p.code = :code"),
     @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name"),
+    @NamedQuery(name = "Products.findByManufacturer", query = "SELECT p FROM Products p WHERE p.manufacturer = :manufacturer"),
+    @NamedQuery(name = "Products.findByProducedIn", query = "SELECT p FROM Products p WHERE p.producedIn = :producedIn"),
+    @NamedQuery(name = "Products.findBySize", query = "SELECT p FROM Products p WHERE p.size = :size"),
     @NamedQuery(name = "Products.findByPrice", query = "SELECT p FROM Products p WHERE p.price = :price"),
+    @NamedQuery(name = "Products.findByConstructionPrice", query = "SELECT p FROM Products p WHERE p.constructionPrice = :constructionPrice"),
+    @NamedQuery(name = "Products.findByConstructionTime", query = "SELECT p FROM Products p WHERE p.constructionTime = :constructionTime"),
     @NamedQuery(name = "Products.findByImagePath", query = "SELECT p FROM Products p WHERE p.imagePath = :imagePath"),
     @NamedQuery(name = "Products.findByCreateAt", query = "SELECT p FROM Products p WHERE p.createAt = :createAt"),
+    @NamedQuery(name = "Products.findByUpdateAt", query = "SELECT p FROM Products p WHERE p.updateAt = :updateAt"),
     @NamedQuery(name = "Products.exists", query = "SELECT COUNT(p.pid) FROM Products p WHERE p.pid = :pid"),
     @NamedQuery(name = "Products.getForSelectBox", query = "SELECT p.pid,p.name FROM Products p"),
     @NamedQuery(name = "Products.getProductPrice", query = "SELECT p.price FROM Products p WHERE p.pid = :pid")
@@ -66,23 +72,39 @@ public class Products implements Serializable {
     @Size(min = 1, max = 254)
     @Column(name = "name")
     private String name;
+    @Size(max = 254)
+    @Column(name = "manufacturer")
+    private String manufacturer;
+    @Size(max = 254)
+    @Column(name = "produced_in")
+    private String producedIn;
+    @Size(max = 254)
+    @Column(name = "size")
+    private String size;
     @Lob
     @Size(max = 2147483647)
     @Column(name = "infomations")
     private String infomations;
     @Column(name = "price")
     private Long price;
+    @Column(name = "construction_price")
+    private Long constructionPrice;
+    @Column(name = "construction_time")
+    private Integer constructionTime;
     @Size(max = 2147483647)
     @Column(name = "image_path")
     private String imagePath;
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
+    @Column(name = "update_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateAt;
     @OneToMany(mappedBy = "productId")
     private List<OrderProductDetails> orderProductDetailsList;
-    @JoinColumn(name = "cid", referencedColumnName = "cid")
+    @JoinColumn(name = "category_id", referencedColumnName = "cid")
     @ManyToOne
-    private Categories cid;
+    private Categories categoryId;
 
     public Products() {
     }
@@ -121,6 +143,30 @@ public class Products implements Serializable {
         this.name = name;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getProducedIn() {
+        return producedIn;
+    }
+
+    public void setProducedIn(String producedIn) {
+        this.producedIn = producedIn;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     public String getInfomations() {
         return infomations;
     }
@@ -135,6 +181,22 @@ public class Products implements Serializable {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public Long getConstructionPrice() {
+        return constructionPrice;
+    }
+
+    public void setConstructionPrice(Long constructionPrice) {
+        this.constructionPrice = constructionPrice;
+    }
+
+    public Integer getConstructionTime() {
+        return constructionTime;
+    }
+
+    public void setConstructionTime(Integer constructionTime) {
+        this.constructionTime = constructionTime;
     }
 
     public String getImagePath() {
@@ -153,6 +215,14 @@ public class Products implements Serializable {
         this.createAt = createAt;
     }
 
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
     @XmlTransient
     public List<OrderProductDetails> getOrderProductDetailsList() {
         return orderProductDetailsList;
@@ -162,12 +232,12 @@ public class Products implements Serializable {
         this.orderProductDetailsList = orderProductDetailsList;
     }
 
-    public Categories getCid() {
-        return cid;
+    public Categories getCategoryId() {
+        return categoryId;
     }
 
-    public void setCid(Categories cid) {
-        this.cid = cid;
+    public void setCategoryId(Categories categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Cu Beo
+ * @author SolomonT
  */
 @Entity
 @Table(name = "categories")
@@ -46,7 +46,7 @@ public class Categories implements Serializable {
     @Size(min = 1, max = 254)
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "cid")
+    @OneToMany(mappedBy = "categoryId")
     private List<Products> productsList;
 
     public Categories() {

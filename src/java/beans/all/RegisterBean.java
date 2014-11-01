@@ -6,6 +6,7 @@
 package beans.all;
 
 import entities.Clients;
+import helpers.ApplicationHelper;
 import helpers.PersistenceHelper;
 import helpers.PasswordHelper;
 import java.io.UnsupportedEncodingException;
@@ -27,6 +28,7 @@ import models.ClientModel;
 @ManagedBean
 @RequestScoped
 public class RegisterBean {
+
     @EJB
     private ClientModel clientModel;
 
@@ -41,7 +43,7 @@ public class RegisterBean {
     public RegisterBean() {
     }
 
-    public String register() {
+    public void register() {
         Clients client = new Clients();
         //before validate
         client.setName(name);
@@ -63,10 +65,14 @@ public class RegisterBean {
         }
         client.setCreateAt(PersistenceHelper.getCurrentTime());
         //save client to db
-        
-        boolean result = clientModel.register(client);
 
-        return "register.xhtml";
+        boolean result = clientModel.register(client);
+        if (result) {
+            ApplicationHelper.addMessage("Account Registed!");
+        } else {
+            ApplicationHelper.addMessage("Failed to register new account!");
+        }
+        ApplicationHelper.redirect("/register.xhtml", true);
     }
 
     public String getName() {
