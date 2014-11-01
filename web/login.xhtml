@@ -34,7 +34,9 @@
                                     <h:commandLink >I can't access my account </h:commandLink>
                                     <h:commandButton class="btn btn-primary btn-mega btn-block" action="#{authenticationBean.authenticate}" value="Login" />
                                     <h:messages class="messages"/>
-
+                                    <c:if test="#{authenticationBean.message != null}">
+                                        <p class="messages"><h:outputText value="#{authenticationBean.message}" /></p>
+                                    </c:if>
                                 </h:form>
 
                             </div>

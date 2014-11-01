@@ -33,5 +33,13 @@
         <extension>eot</extension>
         <mime-type>application/vnd.ms-fontobject</mime-type>
     </mime-mapping>
-    
+    <filter>
+        <filter-name>FilterClient</filter-name>
+        <filter-class>filters.FilterClient</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterClient</filter-name>
+        <url-pattern>/client/*</url-pattern>
+    </filter-mapping>
+        
 </web-app>
