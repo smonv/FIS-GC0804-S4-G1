@@ -48,6 +48,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clients.uniqueEmail", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.email = :email")
 })
 public class Clients implements Serializable {
+    @OneToMany(mappedBy = "clientId")
+    private List<Feedbacks> feedbacksList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -219,6 +221,15 @@ public class Clients implements Serializable {
     @Override
     public String toString() {
         return "entities.Clients[ cid=" + cid + " ]";
+    }
+
+    @XmlTransient
+    public List<Feedbacks> getFeedbacksList() {
+        return feedbacksList;
+    }
+
+    public void setFeedbacksList(List<Feedbacks> feedbacksList) {
+        this.feedbacksList = feedbacksList;
     }
 
 }

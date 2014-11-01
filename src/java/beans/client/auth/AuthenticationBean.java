@@ -41,8 +41,9 @@ public class AuthenticationBean {
             session.remove("msg");
         }
         Clients client = clientModel.authenticate(username, password);
-        client.setPasswordDigest("");
+
         if (client != null) {
+            client.setPasswordDigest("");
             ApplicationHelper.addMessage("Logged!");
             SessionHelper.getSessionMap().put("client", client);
             ApplicationHelper.redirect("/index.xhtml", true);

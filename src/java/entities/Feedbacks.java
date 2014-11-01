@@ -38,7 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Feedbacks.findByName", query = "SELECT f FROM Feedbacks f WHERE f.name = :name"),
     @NamedQuery(name = "Feedbacks.findByEmail", query = "SELECT f FROM Feedbacks f WHERE f.email = :email"),
     @NamedQuery(name = "Feedbacks.findByCreateAt", query = "SELECT f FROM Feedbacks f WHERE f.createAt = :createAt"),
-    @NamedQuery(name = "Feedbacks.findByUpdateAt", query = "SELECT f FROM Feedbacks f WHERE f.updateAt = :updateAt")})
+    @NamedQuery(name = "Feedbacks.findByUpdateAt", query = "SELECT f FROM Feedbacks f WHERE f.updateAt = :updateAt"),
+    @NamedQuery(name = "Feedbacks.findByClientId", query = "SELECT f FROM Feedbacks f WHERE f.clientId = :clientId")
+})
 public class Feedbacks implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -78,6 +80,9 @@ public class Feedbacks implements Serializable {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
+    @JoinColumn(name = "client_id", referencedColumnName = "cid")
+    @ManyToOne
+    private Clients clientId;
     @JoinColumn(name = "feedback_level", referencedColumnName = "flid")
     @ManyToOne
     private FeedbackLevel feedbackLevel;
@@ -161,6 +166,14 @@ public class Feedbacks implements Serializable {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public Clients getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Clients clientId) {
+        this.clientId = clientId;
     }
 
     public FeedbackLevel getFeedbackLevel() {
