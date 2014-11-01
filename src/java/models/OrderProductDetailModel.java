@@ -29,6 +29,8 @@ public class OrderProductDetailModel {
             for (OrderProductDetails opd : opds) {
                 opd.setOrderId(order);
                 em.persist(opd);
+                //em.flush();
+                opd = null;
             }
             return true;
         } catch (Exception e) {

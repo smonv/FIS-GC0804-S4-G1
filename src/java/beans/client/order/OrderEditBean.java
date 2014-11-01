@@ -55,6 +55,8 @@ public class OrderEditBean {
     private HtmlDataTable edit_products;
     private int quantity;
     private String stringQuantity;
+    private String stringFloor;
+    private String stringHeightOfFloor;
 
     public OrderEditBean() {
     }
@@ -155,8 +157,18 @@ public class OrderEditBean {
         return totalPrice;
     }
 
-    public void addSelectedProduct(int pid) {
-        boolean valid = false;
+    public void addSelectedProduct() {
+        String string_pid = ApplicationHelper.getRequestParameterMap().get("pid");
+        int pid = 0;
+        int floor = 0;
+        long heightOfFloor = 0;
+        if (ApplicationHelper.isInteger(string_pid)) {
+            pid = Integer.parseInt(string_pid);
+        } else {
+            ApplicationHelper.addMessage("Wrong Product ID!");
+            ApplicationHelper.redirect("/404.xhtml", true);
+        }
+        List<String> list_msg = new ArrayList<>();
         session = SessionHelper.getSessionMap();
         if (session.get("edit_products") != null && session.get("edit_number") != null) {
 
@@ -167,20 +179,41 @@ public class OrderEditBean {
             List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
             if (ApplicationHelper.isInteger(stringQuantity)) {
                 quantity = Integer.parseInt(stringQuantity);
-                if (0 < quantity && quantity <= 10) {
-                    valid = true;
+                if (0 > quantity && quantity > 10) {
+                    list_msg.add("Quantity between 1 and 10!");
                 }
+            } else {
+                list_msg.add("Quantity is number!");
             }
 
-            if (!valid) {
-                ApplicationHelper.addMessage("Quantity between 1 and 10");
-                ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid + "&mode=update", true);
+            if (ApplicationHelper.isInteger(stringFloor)) {
+                floor = Integer.parseInt(stringFloor);
+                if (0 > floor && floor > 100) {
+                    list_msg.add("Floor between 1 and 100!");
+                }
+            } else {
+                list_msg.add("Floor is number!");
+            }
+
+            if (ApplicationHelper.isLong(stringHeightOfFloor)) {
+                heightOfFloor = Long.parseLong(stringHeightOfFloor);
+            } else {
+                list_msg.add("Height of floor is number!");
+            }
+
+            if (list_msg.size() > 0) {
+                for (String msg : list_msg) {
+                    ApplicationHelper.addMessage(msg);
+                }
+                ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid, true);
                 return;
             } else {
                 boolean exists = false;
                 for (OrderProductDetails opd : opds) {
                     if (opd.getProductId().getPid() == pid) {
                         opd.setQuantity(quantity);
+                        opd.setFloors(floor);
+                        opd.setHeightOfFloor(heightOfFloor);
                         exists = true;
                         break;
                     }
@@ -190,6 +223,8 @@ public class OrderEditBean {
                     opd.setOrderId(current_order);
                     opd.setProductId(new Products(pid));
                     opd.setQuantity(quantity);
+                    opd.setFloors(floor);
+                    opd.setHeightOfFloor(heightOfFloor);
                     opds.add(opd);
                 }
 
@@ -213,6 +248,8 @@ public class OrderEditBean {
             for (OrderProductDetails o : opds) {
                 if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
                     o.setQuantity(opd.getQuantity());
+                    o.setFloors(opd.getFloors());
+                    o.setHeightOfFloor(opd.getHeightOfFloor());
                 }
             }
         } else {
@@ -261,6 +298,8 @@ public class OrderEditBean {
             for (OrderProductDetails oo : order_opds) {
                 if (Objects.equals(oo.getOpdid(), co.getOpdid())) {
                     oo.setQuantity(co.getQuantity());
+                    oo.setFloors(co.getFloors());
+                    oo.setHeightOfFloor(co.getHeightOfFloor());
                     change.add(oo);
                     exists = true;
                     break;
@@ -363,6 +402,22 @@ public class OrderEditBean {
 
     public void setStringQuantity(String stringQuantity) {
         this.stringQuantity = stringQuantity;
+    }
+
+    public String getStringFloor() {
+        return stringFloor;
+    }
+
+    public void setStringFloor(String stringFloor) {
+        this.stringFloor = stringFloor;
+    }
+
+    public String getStringHeightOfFloor() {
+        return stringHeightOfFloor;
+    }
+
+    public void setStringHeightOfFloor(String stringHeightOfFloor) {
+        this.stringHeightOfFloor = stringHeightOfFloor;
     }
 
 }

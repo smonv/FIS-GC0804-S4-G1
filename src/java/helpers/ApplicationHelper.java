@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Random;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -25,6 +26,10 @@ public class ApplicationHelper {
 
     public static ExternalContext getExternalContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
+    }
+    
+    public static Map<String,String> getRequestParameterMap(){
+        return getExternalContext().getRequestParameterMap();
     }
 
     public static void redirect(String externalPath, boolean keepMessage) {
@@ -44,6 +49,15 @@ public class ApplicationHelper {
     public static boolean isInteger(String number) {
         try {
             Integer.parseInt(number);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public static boolean isLong(String number) {
+        try {
+            Long.parseLong(number);
             return true;
         } catch (Exception e) {
             return false;
