@@ -26,11 +26,17 @@ create table products(
 	pid int identity primary key,
 	code nvarchar(10) not null,
 	name nvarchar(254) not null,
-	cid int foreign key references categories(cid),
+	client_id int foreign key references categories(cid),
+	manufacturer nvarchar(254),
+	produced_in nvarchar(254),
+	size nvarchar(254),
 	infomations text,
 	price decimal,
+	construction_price decimal,
+	construction_time int,
 	image_path nvarchar(max),
-	create_at datetime
+	create_at datetime,
+	update_at datetime
 )
 
 create table payment_types(
@@ -45,12 +51,13 @@ create table list_status(
 
 create table orders(
 	oid int identity primary key,
-	cid int foreign key references clients(cid),
+	client_id int foreign key references clients(cid),
 	number nvarchar(254) not null,
 	location_name nvarchar(254) not null,
 	location_address nvarchar(max) not null,
 	order_status int foreign key references list_status(lsid),
 	payment_type int foreign key references payment_types(ptid),
+	start_at datetime,
 	create_at datetime,
 	update_at datetime
 )
@@ -65,7 +72,7 @@ create table order_product_details(
 
 create table complaints(
 	cid int identity primary key,
-	oid int foreign key references orders(oid),
+	order_id int foreign key references orders(oid),
 	problem text,
 	complaint_status int foreign key references list_status(lsid),
 	create_at datetime,
@@ -104,9 +111,9 @@ create table admins(
 
 create table projects(
 	pid int identity primary key,
+	order_id int foreign key references orders(oid),
 	title nvarchar(254) not null,
 	content text not null,
-	location nvarchar(254),
 	image_path nvarchar(max),
 	start_at date,
 	end_at date,
