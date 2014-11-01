@@ -26,7 +26,7 @@ create table products(
 	pid int identity primary key,
 	code nvarchar(10) not null,
 	name nvarchar(254) not null,
-	client_id int foreign key references categories(cid),
+	category_id int foreign key references categories(cid),
 	manufacturer nvarchar(254),
 	produced_in nvarchar(254),
 	size nvarchar(254),
@@ -122,18 +122,19 @@ create table projects(
 insert into categories values('cylindrical')
 insert into categories values('Rectangular')
 
-insert into products values('EVE1', 'Elevator 1', 1, 'fast and stable', 123, null, GETDATE())
-insert into products values('EVE2', 'Elevator 2', 1, 'fast and stable', 312, null, GETDATE())
-insert into products values('EVE3', 'Elevator 3', 1, 'fast and stable', 234, null, GETDATE())
-insert into products values('EVE4', 'Elevator 4', 2, 'fast and stable', 432, null, GETDATE())
-insert into products values('EVE5', 'Elevator 5', 2, 'fast and stable', 345, null, GETDATE())
-insert into products values('EVE6', 'Elevator 6', 2, 'fast and stable', 543, null, GETDATE())
-insert into products values('EVE12', 'Elevator 1', 1, 'fast and stable', 123, null, GETDATE())
-insert into products values('EVE25', 'Elevator 2', 1, 'fast and stable', 312, null, GETDATE())
-insert into products values('EVE34', 'Elevator 3', 1, 'fast and stable', 234, null, GETDATE())
-insert into products values('EVE48', 'Elevator 4', 2, 'fast and stable', 432, null, GETDATE())
-insert into products values('EVE59', 'Elevator 5', 2, 'fast and stable', 345, null, GETDATE())
-insert into products values('EVE67', 'Elevator 6', 2, 'fast and stable', 543, null, GETDATE())
+insert into products values('EVE1', 'Elevator 1', 1,'Cu Beo','Viet Nam','1 x 1 x 1', 'fast and stable', 123,10, 1,null, GETDATE(),null)
+insert into products values('EVE2', 'Elevator 2', 1,'Cu Beo','Viet Nam','2 x 2 x 2', 'fast and stable', 312,20, 2,null, GETDATE(),null)
+insert into products values('EVE3', 'Elevator 3', 1,'Cu Beo','Viet Nam','3 x 3 x 3', 'fast and stable', 234,30, 3,null, GETDATE(),null)
+insert into products values('EVE4', 'Elevator 4', 2,'Cu Beo','Viet Nam','4 x 4 x 4', 'fast and stable', 432,40, 4,null, GETDATE(),null)
+insert into products values('EVE5', 'Elevator 5', 2,'Cu Beo','Viet Nam','5 x 5 x 5', 'fast and stable', 345,50, 5,null, GETDATE(),null)
+insert into products values('EVE6', 'Elevator 6', 2,'Cu Beo','Viet Nam','6 x 6 x 6', 'fast and stable', 543,60, 6,null, GETDATE(),null)
+---insert into products values('EVE12', 'Elevator 1', 1, 'fast and stable', 123, null, GETDATE())
+---insert into products values('EVE25', 'Elevator 2', 1, 'fast and stable', 312, null, GETDATE())
+--insert into products values('EVE34', 'Elevator 3', 1, 'fast and stable', 234, null, GETDATE())
+--insert into products values('EVE48', 'Elevator 4', 2, 'fast and stable', 432, null, GETDATE())
+--insert into products values('EVE59', 'Elevator 5', 2, 'fast and stable', 345, null, GETDATE())
+--insert into products values('EVE67', 'Elevator 6', 2, 'fast and stable', 543, null, GETDATE())
+
 insert into payment_types values('Cash')
 insert into payment_types values('Bank Transfer')
 
