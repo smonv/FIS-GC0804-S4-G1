@@ -40,7 +40,7 @@
                             </c:if>
                             <c:if test="#{sessionBean.clientLogged}">
                                 <li>
-                                    <h:link outcome="/client/profile.xhtml" value="#{sessionBean.currentClient.name}"/>
+                                    <h:link outcome="/client/profile.xhtml" value="#{sessionBean.currentClient.name}" style="font-weight: bold;"/>
                                 </li>
 
                                 <li>

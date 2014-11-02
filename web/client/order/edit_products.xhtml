@@ -65,6 +65,15 @@
                                          >
                             </h:inputText>
                         </h:column>
+                              <h:column>
+                                <f:facet name="header">Contruction Price</f:facet>
+
+                                <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00" style="font-weight: normal;"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Contruction Time</f:facet>
+                                <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).constructionTime * opd.floors * opd.heightOfFloor} weeks" style="font-weight: normal;"/>
+                            </h:column>
                         <h:column>
                             <f:facet name="header">Total</f:facet>
                             <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).price*opd.quantity}.00" style="color: red" />
