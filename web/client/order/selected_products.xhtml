@@ -13,7 +13,7 @@
             <div class="row">
           
                     <h:messages class="messages" />
-                    <h:form>
+                    <h:form style="width: 100%">
                         <h:dataTable class="idCart" value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
                             <h:column>
                                 <f:facet name="header">Item</f:facet>
@@ -72,9 +72,9 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header"></f:facet>
-                                <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary"/>
+                                <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary" style="text-align: center"/>
                                 &nbsp;&nbsp;
-                                <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" />
+                                <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" style="text-align: center"/>
                             </h:column>
                         </h:dataTable>
 
