@@ -36,16 +36,16 @@ import models.ProductModel;
 @ManagedBean
 @RequestScoped
 public class OrderCreateBean implements Serializable {
-    
+
     @EJB
     private OrderProductDetailModel orderProductDetailModel;
-    
+
     @EJB
     private OrderModel orderModel;
-    
+
     @EJB
     private PaymentTypeModel paymentTypeModel;
-    
+
     @EJB
     private ProductModel productModel;
 
@@ -68,21 +68,21 @@ public class OrderCreateBean implements Serializable {
      */
     public OrderCreateBean() {
     }
-    
+
     public List<Products> getListProductSelectBox() {
         List<Products> products = productModel.getAllForSelectBox();
         return products;
     }
-    
+
     public List<PaymentTypes> getListPaymentType() {
         return paymentTypeModel.getAll();
     }
-    
+
     public Products getProduct(int id) {
         Products p = productModel.getById(id);
         return p;
     }
-    
+
     public List<OrderProductDetails> getSelectedProducts() {
         session = SessionHelper.getSessionMap();
         if (session.get("order_product_details") == null) {
@@ -98,7 +98,7 @@ public class OrderCreateBean implements Serializable {
             return opds;
         }
     }
-    
+
     public void addProduct() {
         int pid = 0;
         String stringPid = ApplicationHelper.getRequestParameterMap().get("pid");
@@ -111,7 +111,7 @@ public class OrderCreateBean implements Serializable {
         int floor = 0;
         long heightOfFloor = 0;
         List<String> list_msg = new ArrayList<>();
-        
+
         if (ApplicationHelper.isInteger(stringQuantity)) {
             quantity = Integer.parseInt(stringQuantity);
             if (0 > quantity && quantity > 10) {
@@ -120,22 +120,22 @@ public class OrderCreateBean implements Serializable {
         } else {
             list_msg.add("Quantity is number!");
         }
-        
+
         if (ApplicationHelper.isInteger(stringFloor)) {
             floor = Integer.parseInt(stringFloor);
             if (0 > floor && floor > 100) {
                 list_msg.add("Floor between 1 and 100!");
-            }            
+            }
         } else {
             list_msg.add("Floor is number!");
         }
-        
+
         if (ApplicationHelper.isLong(stringHeightOfFloor)) {
             heightOfFloor = Long.parseLong(stringHeightOfFloor);
         } else {
             list_msg.add("Height of floor is number!");
         }
-        
+
         if (list_msg.size() > 0) {
             for (String msg : list_msg) {
                 ApplicationHelper.addMessage(msg);
@@ -143,7 +143,7 @@ public class OrderCreateBean implements Serializable {
             ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid, true);
             return;
         }
-        
+
         session = SessionHelper.getSessionMap();
         if (session.get("order_product_details") == null) {
             List<OrderProductDetails> opds = new ArrayList<>();
@@ -177,14 +177,14 @@ public class OrderCreateBean implements Serializable {
                         } else {
                             opd.setQuantity(opd.getQuantity() + quantity);
                         }
-                        
+
                     }
-                    
+
                     exists = true;
                     break;
                 }
             }
-            
+
             if (!exists) {
                 OrderProductDetails opd = new OrderProductDetails();
                 opd.setProductId(new Products(pid));
@@ -193,14 +193,14 @@ public class OrderCreateBean implements Serializable {
                 opd.setHeightOfFloor(heightOfFloor);
                 opds.add(opd);
             }
-            
+
             session.put("order_product_details", opds);
         }
-        
+
         ApplicationHelper.addMessage("Product added!");
         ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
     }
-    
+
     public void updateSelectdProductQuantity() {
         OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
@@ -213,7 +213,7 @@ public class OrderCreateBean implements Serializable {
         }
         ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
     }
-    
+
     public void removeSelectedProduct() {
         int index = -1;
         OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
@@ -228,21 +228,21 @@ public class OrderCreateBean implements Serializable {
                 index = opds.indexOf(o);
             }
         }
-        
+
         if (index >= 0) {
             opds.remove(index);
             ApplicationHelper.addMessage("Product removed!");
         }
         ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
     }
-    
+
     public int getTotalSelectedProducts() {
         int total = 0;
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         total = opds.size();
         return total;
     }
-    
+
     public long getTotalSelectedProductsPrice() {
         long totalPrice = 0;
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
@@ -254,19 +254,21 @@ public class OrderCreateBean implements Serializable {
                 }
             }
         }
-        
+
         return totalPrice;
     }
-    
-    public void newOrder() throws IOException {
+
+    public void newOrder() {
+        Map<String, Object> session = SessionHelper.getSessionMap();
+        Clients client = (Clients) session.get("client");
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         if (opds.isEmpty()) {
             ApplicationHelper.addMessage("Please select product to make order");
             ApplicationHelper.redirect("/client/order/new.xhtml", true);
         }
-        
+
         Orders order = new Orders();
-        order.setClientId(new Clients(1));
+        order.setClientId(client);
         order.setNumber(ApplicationHelper.secureRandomString(8));
         order.setPaymentType(new PaymentTypes(paymentTypeId));
         order.setLocationName(location_name);
@@ -274,12 +276,12 @@ public class OrderCreateBean implements Serializable {
         order.setOrderStatus(new ListStatus(1));
         order.setCreateAt(PersistenceHelper.getCurrentTime());
         order = orderModel.createOrder(order);
-        
+
         boolean result = false;
         if (order != null) {
             result = orderProductDetailModel.createListOrderProductDetails(opds, order);
         }
-        
+
         if (result) {
             order.setOrderProductDetailsList(opds);
             session.remove("order_product_details");
@@ -291,11 +293,11 @@ public class OrderCreateBean implements Serializable {
             ApplicationHelper.redirect("/client/order/new.xhtml", true);
         }
     }
-    
+
     public List<Orders> getListOrders() {//phan show list 
 
         return orderModel.getListOrder(2);
-        
+
     }
 
     //////////////////////////////
@@ -309,100 +311,100 @@ public class OrderCreateBean implements Serializable {
     public Products getCurrentProduct() {
         return currentProduct;
     }
-    
+
     public void setCurrentProduct(Products currentProduct) {
         this.currentProduct = currentProduct;
     }
-    
+
     public int getQuantity() {
         return quantity;
     }
-    
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
     public ProductModel getProductModel() {
         return productModel;
     }
-    
+
     public void setProductModel(ProductModel productModel) {
         this.productModel = productModel;
     }
-    
+
     public String getLocation_name() {
         return location_name;
     }
-    
+
     public void setLocation_name(String location_name) {
         this.location_name = location_name;
     }
-    
+
     public String getLocation_address() {
         return location_address;
     }
-    
+
     public void setLocation_address(String location_address) {
         this.location_address = location_address;
     }
-    
+
     public int getPaymentTypeId() {
         return paymentTypeId;
     }
-    
+
     public void setPaymentTypeId(int paymentTypeId) {
         this.paymentTypeId = paymentTypeId;
     }
-    
+
     public HtmlDataTable getSelected_products() {
         return selected_products;
     }
-    
+
     public void setSelected_products(HtmlDataTable selected_products) {
         this.selected_products = selected_products;
     }
-    
+
     public OrderProductDetails getDataItem() {
         return dataItem;
     }
-    
+
     public void setDataItem(OrderProductDetails dataItem) {
         this.dataItem = dataItem;
     }
-    
+
     public String getStringQuantity() {
         return stringQuantity;
     }
-    
+
     public void setStringQuantity(String stringQuantity) {
         this.stringQuantity = stringQuantity;
     }
-    
+
     public List<Orders> getOrders() {
         if (orders == null) {
             orders = orderModel.getListOrder(8); // get list order
         }
         return orders;
     }
-    
+
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
-    
+
     public String getStringFloor() {
         return stringFloor;
     }
-    
+
     public void setStringFloor(String stringFloor) {
         this.stringFloor = stringFloor;
     }
-    
+
     public String getStringHeightOfFloor() {
         return stringHeightOfFloor;
     }
-    
+
     public void setStringHeightOfFloor(String stringHeightOfFloor) {
         this.stringHeightOfFloor = stringHeightOfFloor;
     }
-    
+
 }

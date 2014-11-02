@@ -24,20 +24,32 @@
 
                     <!-- Top Social Icon -->
                     <div class="social-icon hidden-xs clearfix">
-         
+
                         <ul>
-                            <li>
-                            
-                                <h:link outcome="/login.xhtml" styleClass="btn btn-primary" style="height: 30px; border-radius: 0px; ">Log In</h:link>
-                            </li>
+                            <c:if test="#{!sessionBean.clientLogged}">
+                                <li>
 
-                            <li>
-                                 <h:link outcome="/register.xhtml">
-                            <i class="glyph--cancel"></i><span>Register</span>
-                                 </h:link>
-                            </li>
+                                    <h:link outcome="/login.xhtml">Log In</h:link>
+                                </li>
 
-        
+                                <li>
+                                    <h:link outcome="/register.xhtml">
+                                        <i class="glyph--cancel"></i><span>Register</span>
+                                    </h:link>
+                                </li>
+                            </c:if>
+                            <c:if test="#{sessionBean.clientLogged}">
+                                <li>
+                                    <h:link outcome="/client/profile.xhtml" value="#{sessionBean.currentClient.name}"/>
+                                </li>
+
+                                <li>
+                                    <h:form>
+                                        <h:commandLink action="#{authenticationBean.logout()}" value="Log out"/>
+                                    </h:form>
+                                </li>
+                            </c:if>
+
                         </ul>
                     </div><!-- end of Top Social Icon -->
 
@@ -71,7 +83,7 @@
 
                                 <!--Product-->
                                 <li><h:link value="products" outcome="/client/product/index.xhtml"/></li>											
-                           
+
                                 <!-- Pages -->
                                 <li><h:link value="orders" outcome="/client/order/lists.xhtml"></h:link></li> <!-- /Pages -->
 
@@ -79,11 +91,11 @@
                                 <li><h:link value="Complaint" outcome="/index.xhtml"></h:link></li> <!-- /Portfolio Pages -->
 
                                 <!-- Blog Pages -->
-                                <li><h:link value="feedback" outcome="/feedback.xhtml"></h:link></li> <!-- /Blog Pages -->
+                                <li><h:link value="feedback" outcome="/client/feedback/index.xhtml"></h:link></li> <!-- /Blog Pages -->
 
                                 <!-- Contact Pages -->
                                 <li><h:link value="about" outcome="/about.xhtml"></h:link></li> <!-- /Contact Pages -->
-                             
+
                             </ul> <!-- /navbar-nav -->
                         </div> <!-- /navbar-collapse -->
                     </div> <!-- /navbar -->

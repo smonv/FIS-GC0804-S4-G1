@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/client/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="fid" value="#{feedbackEditBean.fid}" />
+            <f:viewAction action="#{feedbackEditBean.init()}" onPostback="true" />
+        </f:metadata>
+        <ui:define name="title">Edit Feedback</ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <h1>Edit Feedback</h1>
+            </div>
+            <div class="row">
+                <h:messages class="messages" />
+            </div>
+            <div class="row">
+                <h:form>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <h:outputLabel value="Name" for="name" />
+                                <h:inputText id="name" value="#{feedbackEditBean.name}" required="true" requiredMessage="Name is required!" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel value="Email" for="email" />
+                                <h:inputText id="email" value="#{feedbackEditBean.email}" required="true" requiredMessage="Email is required!" class="form-control">
+                                    <f:validator validatorId="validEmail" />
+                                </h:inputText>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel value="Satisfying Level" />
+                                <h:selectOneMenu value="#{feedbackEditBean.levelId}" class="form-control">
+                                    <f:selectItems value="#{feedbackNewBean.feedbacklevels}" var="fl" itemLabel="#{fl.name}" itemValue="#{fl.flid}" />
+                                </h:selectOneMenu>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel value="Description" for="description" />
+                                <h:inputTextarea id="description" value="#{feedbackEditBean.description}" required="true" requiredMessage="Description is required!" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <h:commandButton value="New Feedback" action="#{feedbackEditBean.update()}" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <h:outputLabel value="Problem (optional)" for="problem" />
+                                <h:inputTextarea id="problem" value="#{feedbackEditBean.problem}" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel value="Improvement (optional)" for="improvement" />
+                                <h:inputTextarea id="improvement" value="#{feedbackEditBean.improvement}" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

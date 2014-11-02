@@ -26,13 +26,18 @@ public class ClientModel {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    public boolean authenticate(String username, String password) {
+    public Clients authenticate(String username, String password) {
         try {
             Clients client = em.createNamedQuery("Clients.findByUsername", Clients.class).setParameter("username", username).getSingleResult();
             String salt = client.getPasswordDigest().split("_")[1];
-            return client.getPasswordDigest().equals(PasswordHelper.hashPassword(password, salt));
+            boolean result = client.getPasswordDigest().equals(PasswordHelper.hashPassword(password, salt));
+            if (result) {
+                return client;
+            } else {
+                return null;
+            }
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 
@@ -46,5 +51,5 @@ public class ClientModel {
         }
 
     }
-    
+
 }

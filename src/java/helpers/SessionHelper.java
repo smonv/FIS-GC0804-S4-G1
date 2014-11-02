@@ -5,6 +5,7 @@
  */
 package helpers;
 
+import entities.Clients;
 import entities.OrderProductDetails;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +35,10 @@ public class SessionHelper {
             session.put("order_product_details", opds);
             return opds;
         }
+    }
+
+    public static Clients getCurrentClient() {
+        Map<String, Object> session = getSessionMap();
+        return session.get("client") != null ? (Clients) session.get("client") : null;
     }
 }

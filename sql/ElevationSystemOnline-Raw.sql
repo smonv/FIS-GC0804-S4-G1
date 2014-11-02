@@ -88,6 +88,7 @@ create table feedback_level(
 
 create table feedbacks(
 	fid int identity primary key,
+	client_id int foreign key references clients(cid),
 	name nvarchar(254) not null,
 	email nvarchar(254) not null,
 	feedback_description text not null,
@@ -138,3 +139,8 @@ insert into payment_types values('Bank Transfer')
 insert into list_status values('Pending')
 insert into list_status values('Proccess')
 insert into list_status values('Completed')
+
+insert into feedback_level values('Good')
+insert into feedback_level values('Average')
+insert into feedback_level values('Satisfactory')
+insert into feedback_level values('Poor')
