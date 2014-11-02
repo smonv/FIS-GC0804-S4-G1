@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clients.findByCreateAt", query = "SELECT c FROM Clients c WHERE c.createAt = :createAt"),
     @NamedQuery(name = "Clients.findByUpdateAt", query = "SELECT c FROM Clients c WHERE c.updateAt = :updateAt"),
     @NamedQuery(name = "Clients.uniqueUsername", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.username = :username"),
-    @NamedQuery(name = "Clients.uniqueEmail", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.email = :email")
+    @NamedQuery(name = "Clients.uniqueEmail", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.email = :email"),
+    @NamedQuery(name = "Clients.clientExists", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.cid = :cid ")
 })
 public class Clients implements Serializable {
     @OneToMany(mappedBy = "clientId")

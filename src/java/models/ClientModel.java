@@ -51,5 +51,21 @@ public class ClientModel {
         }
 
     }
+    
+    public boolean clientExists(int cid){
+        long result=(long)em.createNamedQuery("Clients.clientExists").setParameter("cid", cid).getSingleResult();
+        return result>0;
+    }
+    
+    public Clients getByCid(int cid){
+        List<Clients> clients=em.createNamedQuery("Clients.findByCid").setParameter("cid", cid).getResultList();
+        return clients.size() > 0 ? clients.get(0) :null;
+    }
+    
+    public List<Clients> getListClient(){
+        List<Clients> clients=em.createNamedQuery("Clients.findAll").getResultList();
+        return clients;
+        
+    }
 
 }

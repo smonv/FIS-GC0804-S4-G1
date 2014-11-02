@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/client/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="cid" value="#{clientShowBean.cid}" />
+            <f:viewAction action="#{clientShowBean.init()}" />
+        </f:metadata>
+        <ui:define name="title">Client Details</ui:define>
+        <ui:define name="content">
+
+            <div class="page-title">
+                <h1>Client: <h:outputText value="#{clientShowBean.cid}" /></h1>
+                <br/>
+                <span><strong>UserName: </strong><h:outputText value="#{clientShowBean.acc.username}" style="color: red"/></span>
+                <h:messages class="messages"/>
+            </div>
+            <div class="row">
+
+                <div class="container">
+                    <div class="col-lg-6" style="border: solid 1px #E7E7E7; width: 100%">
+                        <span style="position: absolute; background: white; top: -15px">Information</span>
+                        <br/>
+                        <strong>Contact Details: </strong> <h:outputText value="#{clientShowBean.acc.contactDetails}" />
+                        <br />
+                        <strong>Company : </strong><h:outputText value="#{clientShowBean.acc.companyName}" />
+                        <br />
+                        <strong>Address: </strong><h:outputText value="#{clientShowBean.acc.clientAddress}" />
+                        <br />
+                        <strong>Email:</strong><h:outputText value=" #{clientShowBean.acc.email}" />
+                        <br />
+                        
+                    </div>
+
+                    
+                </div>
+            </div>
+            <div style="height: 50px"></div>
+        </ui:define>
+    </ui:composition>
+</html>
+
