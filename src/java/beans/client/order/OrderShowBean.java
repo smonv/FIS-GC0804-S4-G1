@@ -6,10 +6,12 @@
 package beans.client.order;
 
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
+import entities.Clients;
 import entities.OrderProductDetails;
 import entities.Orders;
 import entities.Products;
 import helpers.ApplicationHelper;
+import helpers.SessionHelper;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -74,43 +76,36 @@ public class OrderShowBean {
     }
 
     public List<Orders> getOrders() {
-        if(orders==null){
-            orders = orderModel.getListOrder(1);//test=id truc tiep
-            return orders;
-        }
-        else
-            return orders;
+        Clients current_client = SessionHelper.getCurrentClient();
+        orders = orderModel.getListOrder(current_client.getCid());
+        return orders;
     }
 
-    
-
-    public String showInfo(){
+    public String showInfo() {
         //  search="dwqdqwd1";
         orders = orderModel.getListOrderbylocaladdress(search, 1);
-        if(search.equals("")&&statusid ==0){
-            orders =null;
+        if (search.equals("") && statusid == 0) {
+            orders = null;
             return "lists.xhtml";
         }
         if (statusid > 0) {
             orders = orderModel.getListOrderByStatus(1, statusid);
-            statusid=0;
+            statusid = 0;
             return "lists.xhtml";
         }
         if (orders.size() > 0) {
-            statusid=0;
-            search="";
+            statusid = 0;
+            search = "";
             return "lists.xhtml";
         } else {
             orders = orderModel.getListOrderbylocalname(search, 1);
-            if(orders.isEmpty()){
-                orders=orderModel.getListOrderByNumber(search, 1);
+            if (orders.isEmpty()) {
+                orders = orderModel.getListOrderByNumber(search, 1);
             }
-            statusid=0;
-            search="";
+            statusid = 0;
+            search = "";
             return "lists.xhtml";
         }
-           
-        
 
     }
 
@@ -119,11 +114,11 @@ public class OrderShowBean {
         return product;
     }
 
-    public String formateDate(Date date){
+    public String formateDate(Date date) {
         String formated_date = ApplicationHelper.formatDate(date, "dd-MM-yyyy HH:mm:ss");
         return formated_date;
     }
-    
+
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }

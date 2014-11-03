@@ -52,9 +52,8 @@ public class OrderEditBean {
     private Products currentProduct;
     private HtmlDataTable edit_products;
     private int quantity;
-    private String stringQuantity;
-    private String stringFloor;
-    private String stringHeightOfFloor;
+    private int floor;
+    private long heightOfFloor;
 
     public OrderEditBean() {
     }
@@ -158,8 +157,6 @@ public class OrderEditBean {
     public void addSelectedProduct() {
         String string_pid = ApplicationHelper.getRequestParameterMap().get("pid");
         int pid = 0;
-        int floor = 0;
-        long heightOfFloor = 0;
         if (ApplicationHelper.isInteger(string_pid)) {
             pid = Integer.parseInt(string_pid);
         } else {
@@ -175,60 +172,29 @@ public class OrderEditBean {
             Orders current_order = orderModel.getByNumber(edit_number); //get edit order
 
             List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
-            if (ApplicationHelper.isInteger(stringQuantity)) {
-                quantity = Integer.parseInt(stringQuantity);
-                if (0 > quantity && quantity > 10) {
-                    list_msg.add("Quantity between 1 and 10!");
-                }
-            } else {
-                list_msg.add("Quantity is number!");
-            }
-
-            if (ApplicationHelper.isInteger(stringFloor)) {
-                floor = Integer.parseInt(stringFloor);
-                if (0 > floor && floor > 100) {
-                    list_msg.add("Floor between 1 and 100!");
-                }
-            } else {
-                list_msg.add("Floor is number!");
-            }
-
-            if (ApplicationHelper.isLong(stringHeightOfFloor)) {
-                heightOfFloor = Long.parseLong(stringHeightOfFloor);
-            } else {
-                list_msg.add("Height of floor is number!");
-            }
-
-            if (list_msg.size() > 0) {
-                for (String msg : list_msg) {
-                    ApplicationHelper.addMessage(msg);
-                }
-                ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid, true);
-                return;
-            } else {
-                boolean exists = false;
-                for (OrderProductDetails opd : opds) {
-                    if (opd.getProductId().getPid() == pid) {
-                        opd.setQuantity(quantity);
-                        opd.setFloors(floor);
-                        opd.setHeightOfFloor(heightOfFloor);
-                        exists = true;
-                        break;
-                    }
-                }
-                if (!exists) {
-                    OrderProductDetails opd = new OrderProductDetails();
-                    opd.setOrderId(current_order);
-                    opd.setProductId(new Products(pid));
+            
+            boolean exists = false;
+            for (OrderProductDetails opd : opds) {
+                if (opd.getProductId().getPid() == pid) {
                     opd.setQuantity(quantity);
                     opd.setFloors(floor);
                     opd.setHeightOfFloor(heightOfFloor);
-                    opds.add(opd);
+                    exists = true;
+                    break;
                 }
-
-                session.put("edit_products", opds);
-                ApplicationHelper.addMessage("Product added!");
             }
+            if (!exists) {
+                OrderProductDetails opd = new OrderProductDetails();
+                opd.setOrderId(current_order);
+                opd.setProductId(new Products(pid));
+                opd.setQuantity(quantity);
+                opd.setFloors(floor);
+                opd.setHeightOfFloor(heightOfFloor);
+                opds.add(opd);
+            }
+
+            session.put("edit_products", opds);
+            ApplicationHelper.addMessage("Product added!");
 
             ApplicationHelper.redirect("/client/order/edit_products.xhtml?number=" + edit_number, true);
 
@@ -394,28 +360,20 @@ public class OrderEditBean {
         this.quantity = quantity;
     }
 
-    public String getStringQuantity() {
-        return stringQuantity;
+    public int getFloor() {
+        return floor;
     }
 
-    public void setStringQuantity(String stringQuantity) {
-        this.stringQuantity = stringQuantity;
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
-    public String getStringFloor() {
-        return stringFloor;
+    public long getHeightOfFloor() {
+        return heightOfFloor;
     }
 
-    public void setStringFloor(String stringFloor) {
-        this.stringFloor = stringFloor;
-    }
-
-    public String getStringHeightOfFloor() {
-        return stringHeightOfFloor;
-    }
-
-    public void setStringHeightOfFloor(String stringHeightOfFloor) {
-        this.stringHeightOfFloor = stringHeightOfFloor;
+    public void setHeightOfFloor(long heightOfFloor) {
+        this.heightOfFloor = heightOfFloor;
     }
 
 }

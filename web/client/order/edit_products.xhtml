@@ -30,12 +30,12 @@
                             <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).name}" /><br/>
                             <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
                         </h:column>
-                    
+
                         <h:column>
                             <f:facet name="header">Quantity</f:facet>
                             <h:inputText value="#{opd.quantity}" size="5" label="Quantity" 
                                          required="true" requiredMessage="Quantity is required!"
-                                         validatorMessage="Quantity min 1 and max 10!"
+                                         validatorMessage="Quantity value must be between 1 and 10!"
                                          converterMessage="Quantity only integer!"
                                          >
                                 <f:validateLongRange minimum="1" maximum="10" />
@@ -46,10 +46,10 @@
                             <f:facet name="header">Floor</f:facet>
                             <h:inputText value="#{opd.floors}" size="5" label="Floor" 
                                          required="true" requiredMessage="Floor is required!"
-                                         validatorMessage="Floor min 1 and max 100!"
+                                         validatorMessage="Floor value must be between 1 and 200!"
                                          converterMessage="Floor is number!"
                                          >
-                                <f:validateLongRange minimum="1" maximum="10" />
+                                <f:validateLongRange minimum="1" maximum="200" />
                                 <f:convertNumber integerOnly="true" />
                             </h:inputText>
                         </h:column>
@@ -57,24 +57,24 @@
                             <f:facet name="header">Height of Floor</f:facet>
                             <h:inputText value="#{opd.heightOfFloor}" size="5" label="Height of Floor" 
                                          required="true" requiredMessage="Height of Floor is required"
-                                         validatorMessage="Quantity min 1 and max 10"
-                                         converterMessage="Height of Floor is number"
+                                         validatorMessage="Height of Floor min valus is 1"
                                          >
+                                <f:validateLongRange minimum="1" />
                             </h:inputText>
                         </h:column>
-                            <h:column>
+                        <h:column>
                             <f:facet name="header">Unit Price</f:facet>
                             <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).price}.00"/>
                         </h:column>
-                              <h:column>
-                                <f:facet name="header">Contruction Price</f:facet>
+                        <h:column>
+                            <f:facet name="header">Contruction Price</f:facet>
 
-                                <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00" style="font-weight: normal;"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Contruction Time</f:facet>
-                                <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).constructionTime * opd.floors * opd.heightOfFloor} weeks" style="font-weight: normal;"/>
-                            </h:column>
+                            <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00" style="font-weight: normal;"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Contruction Time</f:facet>
+                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).constructionTime * opd.floors * opd.heightOfFloor} weeks" style="font-weight: normal;"/>
+                        </h:column>
                         <h:column>
                             <f:facet name="header">Total</f:facet>
                             <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).price*opd.quantity}.00" style="color: red" />

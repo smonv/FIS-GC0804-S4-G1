@@ -117,7 +117,7 @@
                                                         <f:validateLongRange minimum="1" maximum="10" />
                                                         <f:convertNumber integerOnly="true" />
                                                     </h:inputText>
-                                                    <h:inputText value="#{orderEditBean.stringQuantity}" 
+                                                    <h:inputText value="#{orderEditBean.quantity}" 
                                                                  styleClass="form-control" 
                                                                  rendered="#{productBean.mode != null}"
                                                                  required="true"
@@ -144,7 +144,7 @@
                                                         <f:validateLongRange minimum="1" maximum="200"/>
                                                         <f:convertNumber integerOnly="true" />
                                                     </h:inputText>
-                                                    <h:inputText value="#{orderEditBean.stringFloor}" 
+                                                    <h:inputText value="#{orderEditBean.floor}" 
                                                                  styleClass="form-control" 
                                                                  rendered="#{productBean.mode != null}"
                                                                  required="true"
@@ -169,7 +169,7 @@
                                                                  >
                                                         <f:validateLongRange minimum="1" />
                                                     </h:inputText>
-                                                    <h:inputText value="#{orderEditBean.stringHeightOfFloor}" 
+                                                    <h:inputText value="#{orderEditBean.heightOfFloor}" 
                                                                  styleClass="form-control" 
                                                                  rendered="#{productBean.mode != null}"
                                                                  required="true"

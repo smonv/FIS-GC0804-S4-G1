@@ -57,10 +57,7 @@ public class OrderCreateBean implements Serializable {
     Map<String, Object> session = SessionHelper.getSessionMap();
     private HtmlDataTable selected_products;
     private OrderProductDetails dataItem;
-    private String stringQuantity;
     private List<Orders> orders;
-    private String stringFloor;
-    private String stringHeightOfFloor;
     private int floor;
     private long heightOfFloor;
 
@@ -343,14 +340,6 @@ public class OrderCreateBean implements Serializable {
         this.dataItem = dataItem;
     }
 
-    public String getStringQuantity() {
-        return stringQuantity;
-    }
-
-    public void setStringQuantity(String stringQuantity) {
-        this.stringQuantity = stringQuantity;
-    }
-
     public List<Orders> getOrders() {
         if (orders == null) {
             orders = orderModel.getListOrder(8); // get list order
@@ -360,22 +349,6 @@ public class OrderCreateBean implements Serializable {
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
-    }
-
-    public String getStringFloor() {
-        return stringFloor;
-    }
-
-    public void setStringFloor(String stringFloor) {
-        this.stringFloor = stringFloor;
-    }
-
-    public String getStringHeightOfFloor() {
-        return stringHeightOfFloor;
-    }
-
-    public void setStringHeightOfFloor(String stringHeightOfFloor) {
-        this.stringHeightOfFloor = stringHeightOfFloor;
     }
 
     public int getFloor() {
