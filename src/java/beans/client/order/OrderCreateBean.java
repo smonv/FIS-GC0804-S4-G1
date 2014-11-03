@@ -14,7 +14,6 @@ import entities.Products;
 import helpers.ApplicationHelper;
 import helpers.PersistenceHelper;
 import helpers.SessionHelper;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +61,8 @@ public class OrderCreateBean implements Serializable {
     private List<Orders> orders;
     private String stringFloor;
     private String stringHeightOfFloor;
+    private int floor;
+    private long heightOfFloor;
 
     /**
      * Creates a new instance of OrderBean
@@ -107,41 +108,6 @@ public class OrderCreateBean implements Serializable {
             ApplicationHelper.redirect("/404.xhtml", true);
         } else {
             pid = Integer.parseInt(stringPid);
-        }
-        int floor = 0;
-        long heightOfFloor = 0;
-        List<String> list_msg = new ArrayList<>();
-
-        if (ApplicationHelper.isInteger(stringQuantity)) {
-            quantity = Integer.parseInt(stringQuantity);
-            if (0 > quantity && quantity > 10) {
-                list_msg.add("Quantity between 1 and 10!");
-            }
-        } else {
-            list_msg.add("Quantity is number!");
-        }
-
-        if (ApplicationHelper.isInteger(stringFloor)) {
-            floor = Integer.parseInt(stringFloor);
-            if (0 > floor && floor > 100) {
-                list_msg.add("Floor between 1 and 100!");
-            }
-        } else {
-            list_msg.add("Floor is number!");
-        }
-
-        if (ApplicationHelper.isLong(stringHeightOfFloor)) {
-            heightOfFloor = Long.parseLong(stringHeightOfFloor);
-        } else {
-            list_msg.add("Height of floor is number!");
-        }
-
-        if (list_msg.size() > 0) {
-            for (String msg : list_msg) {
-                ApplicationHelper.addMessage(msg);
-            }
-            ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid, true);
-            return;
         }
 
         session = SessionHelper.getSessionMap();
@@ -203,6 +169,11 @@ public class OrderCreateBean implements Serializable {
 
     public void updateSelectdProductQuantity() {
         OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
+        if (opd.getHeightOfFloor() <= 0) {
+            ApplicationHelper.addMessage("Height of Floor greator than 0");
+            ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
+            return;
+        }
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         for (OrderProductDetails o : opds) {
             if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
@@ -405,6 +376,22 @@ public class OrderCreateBean implements Serializable {
 
     public void setStringHeightOfFloor(String stringHeightOfFloor) {
         this.stringHeightOfFloor = stringHeightOfFloor;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public long getHeightOfFloor() {
+        return heightOfFloor;
+    }
+
+    public void setHeightOfFloor(long heightOfFloor) {
+        this.heightOfFloor = heightOfFloor;
     }
 
 }

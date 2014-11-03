@@ -11,124 +11,125 @@
                 <h2 style="width: 100%;border-bottom: 1px solid #eeeeee;">SHOPPING CART</h2>
             </div>
             <div class="row">
-          
-                    <h:messages class="messages" />
-                    <h:form style="width: 100%">
-                        <h:dataTable class="idCart" value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
-                            <h:column>
-                                <f:facet name="header">Item</f:facet>
-                                <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{opd.productId.pid}" style="color: black">
-                                    <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}" /></h:link><br />
-                                <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Quantity</f:facet>
-                                <h:inputText value="#{opd.quantity}" size="3" 
-                                             label="Quantity" required="true" 
-                                             requiredMessage="Quantity is required!" 
-                                             validatorMessage="Quantity Max 10 and Min 1!" 
-                                             converterMessage="Quantity is number!">
-                                    <f:convertNumber integerOnly="true" />
-                                    <f:validateLongRange maximum="10" minimum="1" />
-                                </h:inputText>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Floor</f:facet>
-                                <h:inputText value="#{opd.floors}" size="3" 
-                                             label="Floor" required="true"
-                                             requiredMessage="Floor is required!"
-                                             validatorMessage="Max 10 and Min 1!" 
-                                             converterMessage="Floor is number!">
-                                    <f:convertNumber integerOnly="true" />
-                                    <f:validateLongRange maximum="10" minimum="1" />
-                                </h:inputText>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Height of Floor</f:facet>
-                                <h:inputText value="#{opd.heightOfFloor}" size="3" 
-                                             label="Height of Floor" required="true"
-                                             requiredMessage="Height of Floor is required!"
-                                             validatorMessage="Height of Floor is number!">
-                                    <!--<f:validator validatorId="longType" />-->
-                                </h:inputText>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Total Price</f:facet>
 
-                                <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price * opd.quantity}.00" style="font-weight: normal;"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Contruction Price</f:facet>
+                <h:messages class="messages" />
+                <h:form style="width: 100%">
+                    <h:dataTable class="idCart" value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
+                        <h:column>
+                            <f:facet name="header">Item</f:facet>
+                            <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{opd.productId.pid}" style="color: black">
+                                <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}" /></h:link><br />
+                            <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Quantity</f:facet>
+                            <h:inputText value="#{opd.quantity}" size="3" 
+                                         label="Quantity" required="true" 
+                                         requiredMessage="Quantity is required!" 
+                                         validatorMessage="Quantity Max 10 and Min 1!" 
+                                         converterMessage="Quantity is number!">
+                                <f:convertNumber integerOnly="true" />
+                                <f:validateLongRange maximum="10" minimum="1" />
+                            </h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Floor</f:facet>
+                            <h:inputText value="#{opd.floors}" size="3" 
+                                         label="Floor" required="true"
+                                         requiredMessage="Floor is required!"
+                                         validatorMessage="Floor Max 10 and Min 1!" 
+                                         converterMessage="Floor is number!">
+                                <f:convertNumber integerOnly="true" />
+                                <f:validateLongRange maximum="10" minimum="1" />
+                            </h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Height of Floor</f:facet>
+                            <h:inputText value="#{opd.heightOfFloor}" size="3" 
+                                         label="Height of Floor" required="true"
+                                         requiredMessage="Height of Floor is required!"
+                                         validatorMessage="Height of Floor min value is 1!"
+                                         >
+                                <f:validateLongRange minimum="1" />
+                            </h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Total Price</f:facet>
 
-                                <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00" style="font-weight: normal;"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Contruction Time</f:facet>
-                                <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).constructionTime * opd.floors * opd.heightOfFloor} weeks" style="font-weight: normal;"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Total</f:facet>
-                                <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price * opd.quantity + orderCreateBean.getProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00"  style="color: red"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"></f:facet>
-                                <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary" style="text-align: center; width: 40%; min-width: 50px; font-size: 8px; padding: 5px"/>
-                                &nbsp;&nbsp;
-                                <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
-                            </h:column>
-                        </h:dataTable>
-                        <style>
-                            .btn, .btn-primary{
-                                
-                            }
-                        </style>
-                        <div id="cartCompletion" class="grid-5" style="float: right">
+                            <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price * opd.quantity}.00" style="font-weight: normal;"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Contruction Price</f:facet>
 
-                            <div id="totalsWrap">
+                            <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00" style="font-weight: normal;"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Contruction Time</f:facet>
+                            <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).constructionTime * opd.floors * opd.heightOfFloor} weeks" style="font-weight: normal;"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Total</f:facet>
+                            <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price * opd.quantity + orderCreateBean.getProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00"  style="color: red"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"></f:facet>
+                            <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary" style="text-align: center; width: 40%; min-width: 50px; font-size: 8px; padding: 5px"/>
+                            &nbsp;&nbsp;
+                            <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
+                        </h:column>
+                    </h:dataTable>
+                    <style>
+                        .btn, .btn-primary{
 
-                                <div id="totalsTop"></div>
-                                <div id="totalsContent" class="grid-container" style="border-bottom-style: none">
-                                    <div class="grid-container line-item-totals" style="border-bottom-style: none">
-                                        <div id="grandTotal" class="grid-container" style="border-bottom-style: none">
-                                            <div class="grid-12 hrztl-line"></div>
-                                            <div class="grid-3" style="font-size: 24px; font-weight: bold">
-                                                Total
-                                            </div>
-                                            <div class="grid-9 line-total" data-total-type="Total" style="border-bottom-style: none"><h:outputText value="USD #{orderCreateBean.getTotalSelectedProductsPrice()}.00" style="font-size: 24px; font-weight: bold" /></div>
-                                            <div class="grid-12 hrztl-line"></div>
+                        }
+                    </style>
+                    <div id="cartCompletion" class="grid-5" style="float: right">
+
+                        <div id="totalsWrap">
+
+                            <div id="totalsTop"></div>
+                            <div id="totalsContent" class="grid-container" style="border-bottom-style: none">
+                                <div class="grid-container line-item-totals" style="border-bottom-style: none">
+                                    <div id="grandTotal" class="grid-container" style="border-bottom-style: none">
+                                        <div class="grid-12 hrztl-line"></div>
+                                        <div class="grid-3" style="font-size: 24px; font-weight: bold">
+                                            Total
                                         </div>
-
-
+                                        <div class="grid-9 line-total" data-total-type="Total" style="border-bottom-style: none"><h:outputText value="USD #{orderCreateBean.getTotalSelectedProductsPrice()}.00" style="font-size: 24px; font-weight: bold" /></div>
+                                        <div class="grid-12 hrztl-line"></div>
                                     </div>
 
 
                                 </div>
-                                <div id="totalsBottom"></div>
-                            </div>
-                            <div id="checkoutBtns" class="grid-container" style="border-bottom-style: none;float: right; width: 100%">
 
-                                <h:link value="Select more" outcome="/client/product/index.xhtml" styleClass="btn btn-primary" style="margin-left: 0px; width: 48%"/>
-                                &nbsp;&nbsp;
-                                <h:link value="Order Now" outcome="/client/order/new.xhtml" styleClass="btn btn-primary" style="float: right;width: 48%;margin-right:  0px;"/>
 
                             </div>
-                        </div> 
-                        <div class="row">
+                            <div id="totalsBottom"></div>
+                        </div>
+                        <div id="checkoutBtns" class="grid-container" style="border-bottom-style: none;float: right; width: 100%">
+
+                            <h:link value="Select more" outcome="/client/product/index.xhtml" styleClass="btn btn-primary" style="margin-left: 0px; width: 48%"/>
+                            &nbsp;&nbsp;
+                            <h:link value="Order Now" outcome="/client/order/new.xhtml" styleClass="btn btn-primary" style="float: right;width: 48%;margin-right:  0px;"/>
 
                         </div>
-                        <br/><br/><br/>
-                    </h:form>
+                    </div> 
+                    <div class="row">
+
+                    </div>
+                    <br/><br/><br/>
+                </h:form>
 
 
 
 
 
 
-                </div>
+            </div>
 
 
 
-           
+
         </ui:define>
     </ui:composition>
 </html>

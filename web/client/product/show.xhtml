@@ -106,22 +106,78 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <h:outputLabel value="Quantity" />
-                                                    <h:inputText value="#{orderCreateBean.stringQuantity}" styleClass="form-control" rendered="#{productBean.mode == null}" />
-                                                    <h:inputText value="#{orderEditBean.stringQuantity}" styleClass="form-control" rendered="#{productBean.mode != null}" />
+                                                    <h:inputText value="#{orderCreateBean.quantity}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode == null}"
+                                                                 required="true"
+                                                                 requiredMessage="Quantity is required!"
+                                                                 converterMessage="Quantity must be number!"
+                                                                 validatorMessage="Quantity must be between 1 and 10"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="10" />
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{orderEditBean.stringQuantity}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null}"
+                                                                 required="true"
+                                                                 requiredMessage="Quantity is required!"
+                                                                 converterMessage="Quantity must be number!"
+                                                                 validatorMessage="Quantity must be between 1 and 10"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="10" />
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <h:outputLabel value="Floor" />
-                                                    <h:inputText value="#{orderCreateBean.stringFloor}" styleClass="form-control" rendered="#{productBean.mode == null}"/>
-                                                    <h:inputText value="#{orderEditBean.stringFloor}" styleClass="form-control" rendered="#{productBean.mode != null}" />
+                                                    <h:inputText value="#{orderCreateBean.floor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode == null}"
+                                                                 required="true"
+                                                                 requiredMessage="Floor is required!"
+                                                                 converterMessage="Floor must be number"
+                                                                 validatorMessage="Floor must be between 1 and 200"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="200"/>
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{orderEditBean.stringFloor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null}"
+                                                                 required="true"
+                                                                 requiredMessage="Floor is required!"
+                                                                 converterMessage="Floor must be number"
+                                                                 validatorMessage="Floor must be between 1 and 200"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="200"/>
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <h:outputLabel value="Height Of Floor" />
-                                                    <h:inputText value="#{orderCreateBean.stringHeightOfFloor}" styleClass="form-control" rendered="#{productBean.mode == null}"/>
-                                                    <h:inputText value="#{orderEditBean.stringHeightOfFloor}" styleClass="form-control" rendered="#{productBean.mode != null}" />
+                                                    <h:inputText value="#{orderCreateBean.heightOfFloor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode == null}"
+                                                                 required="true"
+                                                                 requiredMessage="Height of floor is required!"
+                                                                 validatorMessage="Height of floor min is 1!"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{orderEditBean.stringHeightOfFloor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null}"
+                                                                 required="true"
+                                                                 requiredMessage="Height of floor is required!"
+                                                                 validatorMessage="Height of floor min is 1!"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" />
+                                                    </h:inputText>
                                                 </div>
                                             </div>
                                         </div>
