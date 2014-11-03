@@ -51,21 +51,41 @@ public class ClientModel {
         }
 
     }
-    
-    public boolean clientExists(int cid){
-        long result=(long)em.createNamedQuery("Clients.clientExists").setParameter("cid", cid).getSingleResult();
-        return result>0;
-    }
-    
-    public Clients getByCid(int cid){
-        List<Clients> clients=em.createNamedQuery("Clients.findByCid").setParameter("cid", cid).getResultList();
-        return clients.size() > 0 ? clients.get(0) :null;
-    }
-    
-    public List<Clients> getListClient(){
-        List<Clients> clients=em.createNamedQuery("Clients.findAll").getResultList();
-        return clients;
-        
+
+    public boolean clientExists(int cid) {
+        long result = (long) em.createNamedQuery("Clients.clientExists").setParameter("cid", cid).getSingleResult();
+        return result > 0;
     }
 
+    public Clients getByCid(int cid) {
+        List<Clients> clients = em.createNamedQuery("Clients.findByCid").setParameter("cid", cid).getResultList();
+        return clients.size() > 0 ? clients.get(0) : null;
+    }
+
+    public List<Clients> getListClient() {
+        List<Clients> clients = em.createNamedQuery("Clients.findAll").getResultList();
+        return clients;
+
+    }
+
+    public List<Clients> findRange(int[] range) {
+        List<Clients> clients = em.createNamedQuery("Clients.findAll")
+                .setMaxResults(range[1] - range[0])
+                .setFirstResult(range[0])
+                .getResultList();
+        return clients;
+
+    }
+
+//    public int count(){
+//        javax.persistence.Query q = em.createNamedQuery("Clients.findAll");
+//        return ((Long) q.getSingleResult()).intValue();
+//    }
+    public int count() {
+        javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        javax.persistence.criteria.Root<Clients> rt = cq.from(Clients.class);
+        cq.select(em.getCriteriaBuilder().count(rt));
+        javax.persistence.Query q = em.createQuery(cq);
+        return ((Long) q.getSingleResult()).intValue();
+    }
 }

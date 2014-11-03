@@ -8,11 +8,15 @@ package beans.admin.clients;
 import entities.Clients;
 import entities.Orders;
 import helpers.ApplicationHelper;
+import helpers.PaginationHelper;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import models.ClientModel;
 import models.OrderModel;
 
@@ -21,7 +25,7 @@ import models.OrderModel;
  * @author BUIVUHUECHI
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ClientShowBean {
     @EJB
     private OrderModel orderModel;
@@ -32,8 +36,12 @@ public class ClientShowBean {
     private List<Clients> clients;
 
     private Clients acc;
+    
+    private PaginationHelper pagination;
 
     private int cid;
+    
+    private DataModel items = null;
 
     /**
      * Creates a new instance of ClientShowBean
@@ -48,17 +56,57 @@ public class ClientShowBean {
         }
     }
     
+    public PaginationHelper getPagination() {
+         if (pagination == null) {
+             pagination = new PaginationHelper(10){
+
+                 @Override
+                 public int getItemsCount() {
+                      
+                     return clientModel.count();
+                 }
+
+                 @Override
+                 public DataModel createPageDataModel() {
+                    return new ListDataModel(clientModel.findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                 }
+                 
+             };
+         }
+        
+         return pagination;
+    }
+    
     public int getTotalOrder(Clients client){
         List<Orders> listOrder=client.getOrdersList();
         return listOrder.size();
     }
 
-    public List<Clients> getClients() {
-        if (clients == null) {
-            clients = clientModel.getListClient();
-        }
-        return clients;
+    public DataModel getItems() {
+        if (items == null) {
+            items = getPagination().createPageDataModel();
+        }       
+        return items;
+    }
 
+    private void recreateModel() {
+        items = null;
+    }
+
+    private void recreatePagination() {
+        pagination = null;
+    }
+
+    public String next() {
+        getPagination().nextPage();
+        recreateModel();
+        return "list.xhtml";
+    }
+
+    public String previous() {
+        getPagination().previousPage();
+        recreateModel();
+        return "list.xhtml";
     }
 
     public void setClients(List<Clients> clients) {

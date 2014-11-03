@@ -18,11 +18,12 @@
                 </ul>
             </div>
             <h:form>
-                <h:dataTable class="idCart2" value="#{clientShowBean.clients}" var="c">
-                    <h:column>
-                        <f:facet name="header">Cid</f:facet>
-                        <h:outputText value="#{c.cid}" />
-                    </h:column>
+                <h:panelGroup rendered="#{clientShowBean.items.rowCount > 0}">
+                    <h:outputText value="#{clientShowBean.pagination.pageFirstItem + 1}..#{clientShowBean.pagination.pageLastItem + 1}/#{clientShowBean.pagination.itemsCount}"/>
+                <h:commandLink action="#{clientShowBean.previous()}" value="Previous #{clientShowBean.pagination.pageSize}" rendered="#{clientShowBean.pagination.hasPreviousPage}"/>
+                <h:commandLink action="#{clientShowBean.next()}" value="Nexts #{clientShowBean.pagination.pageSize}" />
+                <h:dataTable class="idCart2" value="#{clientShowBean.items}" var="c">
+
                     <h:column>
                         <f:facet name="header">Name</f:facet>
                         <h:outputText value="#{c.name}"/>
@@ -56,7 +57,9 @@
                         <h:link value="View Details" outcome="/admin/client/details.xhtml?cid=#{c.cid}" styleClass="btn btn-primary"/>
                     </h:column>
                 </h:dataTable>
+                 </h:panelGroup>
             </h:form>
+            
         </ui:define>
     </ui:composition>
 </html>
