@@ -72,12 +72,16 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header"></f:facet>
-                                <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary" style="text-align: center"/>
+                                <h:commandButton value="Update" action="#{orderCreateBean.updateSelectdProductQuantity()}" styleClass="btn btn-primary" style="text-align: center; width: 40%; min-width: 50px; font-size: 8px; padding: 5px"/>
                                 &nbsp;&nbsp;
-                                <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" style="text-align: center"/>
+                                <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
                             </h:column>
                         </h:dataTable>
-
+                        <style>
+                            .btn, .btn-primary{
+                                
+                            }
+                        </style>
                         <div id="cartCompletion" class="grid-5" style="float: right">
 
                             <div id="totalsWrap">

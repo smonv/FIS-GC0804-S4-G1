@@ -237,7 +237,7 @@
     outline-style: none;
     outline-width: 0px;
     text-align: left;
-    width: 11%;
+    width: 11.1%;
 
 }
 .idCart > thead>tr>th,.idCart2 > thead>tr>th{
@@ -248,6 +248,15 @@
     width: 90%;
     text-align: right;
 }
+.idCart > tbody>tr>td>.btn--primary, .idCart2 > input[type="submit"]{
+    
+    text-align: center; 
+    width: 40%; 
+    min-width: 50px; 
+    font-size: 8px; 
+    padding: 5px;
+}
+
 .idCart2 > thead>tr>th,.idCart2 > tbody>tr>td{
     width: 14%;
 }
