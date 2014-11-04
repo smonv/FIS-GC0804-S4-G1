@@ -8,12 +8,15 @@
         <ui:define name="title">Feedbacks</ui:define>
         <ui:define name="content">
             <div class="row">
-                <h1>Feedbacks</h1>
+                <div class="page-title">
+                    <h1>FEEDBACK</h1>
+                </div>
                 <h:link value="New Feedback" outcome="/client/feedback/new.xhtml" class="btn btn-primary"/>
             </div>
+            <br/>
             <div class="row">
                 <h:form>
-                    <h:dataTable value="#{feedbackShowBean.feedbacks}" var="feedback" binding="#{feedbackShowBean.feedbackTable}">
+                    <h:dataTable class="idCart" value="#{feedbackShowBean.feedbacks}" var="feedback" binding="#{feedbackShowBean.feedbackTable}">
                         <h:column>
                             <f:facet name="header">Name</f:facet>
                             <h:outputText value="#{feedback.name}" />
@@ -36,15 +39,17 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Command</f:facet>
-                            <h:link outcome="/client/feedback/view.xhtml?fid=#{feedback.fid}" value="View" class="btn btn-primary"/>
-                            &nbsp;&nbsp;
-                            <h:link outcome="/client/feedback/edit.xhtml?fid=#{feedback.fid}" value="Edit" class="btn btn-primary"/>
-                            &nbsp;&nbsp;
-                            <h:commandButton value="Remove" action="#{feedbackShowBean.removeFeedback()}" class="btn btn-primary" />
+                            <h:link outcome="/client/feedback/view.xhtml?fid=#{feedback.fid}" value="View" class="btn btn-primary" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
+                            <h:commandButton value="Remove" action="#{feedbackShowBean.removeFeedback()}" class="btn btn-primary" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
                         </h:column>
 
                     </h:dataTable>
                 </h:form>
+                <style>
+                    .idCart > thead>tr>th,.idCart > tbody>tr>td{
+                        width: 16%;
+                    }
+                </style>
             </div>
         </ui:define>
     </ui:composition>
