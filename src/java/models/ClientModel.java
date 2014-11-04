@@ -76,11 +76,29 @@ public class ClientModel {
         return clients;
 
     }
+    
+    public List<Clients> getListClientByName(String name) {
+        List<Clients> clients = em.createNamedQuery("Clients.findByName").setParameter("name", name).getResultList();
+        return clients;
 
-//    public int count(){
-//        javax.persistence.Query q = em.createNamedQuery("Clients.findAll");
-//        return ((Long) q.getSingleResult()).intValue();
-//    }
+    }
+    
+    public List<Clients> getClientsByName(String name,int[] range){
+        List<Clients> clients = em.createNamedQuery("Clients.findByName").setParameter("name", name)
+                .setMaxResults(range[1] - range[0])
+                .setFirstResult(range[0])
+                .getResultList();
+        return clients;
+    }
+    
+    
+    public List<Clients> getListClientByMail(String mail) {
+        List<Clients> clients = em.createNamedQuery("Clients.findByEmail").setParameter("email", mail).getResultList();
+        return clients;
+
+    }
+
+
     public int count() {
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         javax.persistence.criteria.Root<Clients> rt = cq.from(Clients.class);

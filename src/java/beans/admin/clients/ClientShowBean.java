@@ -27,6 +27,7 @@ import models.OrderModel;
 @ManagedBean
 @SessionScoped
 public class ClientShowBean {
+
     @EJB
     private OrderModel orderModel;
 
@@ -36,18 +37,19 @@ public class ClientShowBean {
     private List<Clients> clients;
 
     private Clients acc;
-    
+
     private PaginationHelper pagination;
 
     private int cid;
-    
+
     private DataModel items = null;
+
+    private String search;
 
     /**
      * Creates a new instance of ClientShowBean
      */
-
-    public void init(){
+    public void init() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!clientModel.clientExists(cid)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
@@ -55,37 +57,91 @@ public class ClientShowBean {
             acc = clientModel.getByCid(cid);
         }
     }
-    
+
     public PaginationHelper getPagination() {
-         if (pagination == null) {
-             pagination = new PaginationHelper(10){
+        if (pagination == null) {
+            pagination = new PaginationHelper(10) {
 
-                 @Override
-                 public int getItemsCount() {
-                      
-                     return clientModel.count();
-                 }
+                @Override
+                public int getItemsCount() {
 
-                 @Override
-                 public DataModel createPageDataModel() {
+                    return clientModel.count();
+                }
+
+                @Override
+                public DataModel createPageDataModel() {
                     return new ListDataModel(clientModel.findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                 }
-                 
-             };
-         }
-        
-         return pagination;
+                }
+
+            };
+        }
+
+        return pagination;
     }
-    
-    public int getTotalOrder(Clients client){
-        List<Orders> listOrder=client.getOrdersList();
+
+    public int getTotalOrder(Clients client) {
+        List<Orders> listOrder = client.getOrdersList();
         return listOrder.size();
+    }
+
+    public String showInfo() {
+         
+        if (!search.equals("")) {
+            recreateModel();
+            pagination = new PaginationHelper(5) {
+
+                @Override
+                public int getItemsCount() {
+                    return clientModel.getListClientByName(search).size();
+                };
+            
+            @Override
+                public DataModel createPageDataModel() {
+                    return new ListDataModel(clientModel.getClientsByName(search, new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                }
+            };
+        }
+        if (clientModel.getListClientByName(search).size() == 0) {
+            recreateModel();
+            pagination = new PaginationHelper(1) {
+
+                @Override
+                public int getItemsCount() {
+                    return clientModel.getListClientByMail(search).size();
+                }
+
+                ;
+            
+            @Override
+                public DataModel createPageDataModel() {
+                    return new ListDataModel(clientModel.getListClientByMail(search));
+                }
+            };
+        }
+        if (clientModel.getListClientByName(search).size() == 0&&clientModel.getListClientByMail(search).size()==0) {
+            recreateModel();
+              pagination = new PaginationHelper(10) {
+
+                @Override
+                public int getItemsCount() {
+
+                    return clientModel.count();
+                }
+
+                @Override
+                public DataModel createPageDataModel() {
+                    return new ListDataModel(clientModel.findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                }
+
+            };
+        }
+        return "list.xhtml";
     }
 
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
-        }       
+        }
         return items;
     }
 
@@ -127,6 +183,14 @@ public class ClientShowBean {
 
     public void setCid(int cid) {
         this.cid = cid;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 
 }

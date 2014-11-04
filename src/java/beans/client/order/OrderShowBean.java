@@ -93,20 +93,23 @@ public class OrderShowBean {
 
     public List<Orders> getOrders() {
         Clients current_client = SessionHelper.getCurrentClient();
+        if(orders==null){
         orders = orderModel.getListOrder(current_client.getCid());
+        }
         //orders = orderModel.getListOrder(1);
         return orders;
     }
 
     public String showInfo() {
         //  search="dwqdqwd1";
-        orders = orderModel.getListOrderbylocaladdress(search, 1);
+        Clients current_client = SessionHelper.getCurrentClient();
+        orders = orderModel.getListOrderbylocaladdress(search, current_client.getCid());
         if (search.equals("") && statusid == 0) {
             orders = null;
             return "lists.xhtml";
         }
         if (statusid > 0) {
-            orders = orderModel.getListOrderByStatus(1, statusid);
+            orders = orderModel.getListOrderByStatus(current_client.getCid(), statusid);
             statusid = 0;
             return "lists.xhtml";
         }
@@ -115,9 +118,9 @@ public class OrderShowBean {
             search = "";
             return "lists.xhtml";
         } else {
-            orders = orderModel.getListOrderbylocalname(search, 1);
+            orders = orderModel.getListOrderbylocalname(search, current_client.getCid());
             if (orders.isEmpty()) {
-                orders = orderModel.getListOrderByNumber(search, 1);
+                orders = orderModel.getListOrderByNumber(search, current_client.getCid());
             }
             statusid = 0;
             search = "";
