@@ -31,8 +31,8 @@ create table products(
 	produced_in nvarchar(254),
 	size nvarchar(254),
 	infomations text,
-	price decimal,
-	construction_price decimal,
+	price decimal(16,2),
+	construction_price decimal(16,2),
 	construction_time int,
 	image_path nvarchar(max),
 	create_at datetime,
@@ -68,7 +68,7 @@ create table order_product_details(
 	product_id int foreign key references products(pid),
 	quantity int,
 	floors int,
-	height_of_floor decimal,
+	height_of_floor decimal(16,2),
 	create_at datetime
 )
 
@@ -125,12 +125,12 @@ create table projects(
 insert into categories values('cylindrical')
 insert into categories values('Rectangular')
 
-insert into products values('EVE1', 'Elevator 1', 1,'Cu Beo','Viet Nam','1 x 1 x 1', 'fast and stable', 123,10, 1,null, GETDATE(),null)
-insert into products values('EVE2', 'Elevator 2', 1,'Cu Beo','Viet Nam','2 x 2 x 2', 'fast and stable', 312,20, 2,null, GETDATE(),null)
-insert into products values('EVE3', 'Elevator 3', 1,'Cu Beo','Viet Nam','3 x 3 x 3', 'fast and stable', 234,30, 3,null, GETDATE(),null)
-insert into products values('EVE4', 'Elevator 4', 2,'Cu Beo','Viet Nam','4 x 4 x 4', 'fast and stable', 432,40, 4,null, GETDATE(),null)
-insert into products values('EVE5', 'Elevator 5', 2,'Cu Beo','Viet Nam','5 x 5 x 5', 'fast and stable', 345,50, 5,null, GETDATE(),null)
-insert into products values('EVE6', 'Elevator 6', 2,'Cu Beo','Viet Nam','6 x 6 x 6', 'fast and stable', 543,60, 6,null, GETDATE(),null)
+insert into products values('EVE1', 'Elevator 1', 1,'Cu Beo','Viet Nam','1 x 1 x 1', 'fast and stable', 123.99,9.99, 1,null, GETDATE(),null)
+insert into products values('EVE2', 'Elevator 2', 1,'Cu Beo','Viet Nam','2 x 2 x 2', 'fast and stable', 312.99,19.99, 2,null, GETDATE(),null)
+insert into products values('EVE3', 'Elevator 3', 1,'Cu Beo','Viet Nam','3 x 3 x 3', 'fast and stable', 234.99,29.99, 3,null, GETDATE(),null)
+insert into products values('EVE4', 'Elevator 4', 2,'Cu Beo','Viet Nam','4 x 4 x 4', 'fast and stable', 432.99,39.99, 4,null, GETDATE(),null)
+insert into products values('EVE5', 'Elevator 5', 2,'Cu Beo','Viet Nam','5 x 5 x 5', 'fast and stable', 345.99,49.99, 5,null, GETDATE(),null)
+insert into products values('EVE6', 'Elevator 6', 2,'Cu Beo','Viet Nam','6 x 6 x 6', 'fast and stable', 543.99,59.99, 6,null, GETDATE(),null)
 
 
 insert into payment_types values('Cash')

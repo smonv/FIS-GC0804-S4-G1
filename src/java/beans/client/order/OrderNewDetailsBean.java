@@ -10,6 +10,8 @@ import entities.Orders;
 import entities.Products;
 import helpers.ApplicationHelper;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -56,20 +58,26 @@ public class OrderNewDetailsBean {
         }
     }
 
-    public long getTotalOrderCost() {
-        long totalCost = 0;
+    public BigDecimal getTotalOrderCost() {
+        BigDecimal totalCost = BigDecimal.ZERO;
         if (order != null) {
             opds = orderProductDetailModel.getByOrderId(order);
-            if (opds.size() > 0) {
+            if (opds != null) {
+                List<Products> products = productModel.getAll();
                 for (OrderProductDetails opd : opds) {
-                    Products p = productModel.getById(opd.getProductId().getPid());
-                    totalCost += p.getPrice() * opd.getQuantity();
-                    totalCost += p.getConstructionPrice() * opd.getFloors() * opd.getHeightOfFloor();
+                    for (Products p : products) {
+
+                        totalCost = totalCost.add(p.getPrice().multiply(new BigDecimal(opd.getQuantity())));
+
+                        ////add contruction price
+                        BigDecimal totalHeight = opd.getHeightOfFloor().multiply(new BigDecimal(opd.getFloors()));
+                        totalCost = totalCost.add(p.getConstructionPrice().multiply(totalHeight));
+                    }
                 }
             }
         }
 
-        return totalCost;
+        return totalCost.setScale(2, RoundingMode.HALF_UP);
     }
 
     public String showdetail() {//phan show list order

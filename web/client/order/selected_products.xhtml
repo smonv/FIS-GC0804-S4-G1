@@ -49,27 +49,34 @@
                                          label="Height of Floor" required="true"
                                          requiredMessage="Height of Floor is required!"
                                          validatorMessage="Height of Floor min value is 1!"
+                                         converter="javax.faces.BigDecimal"
+                                         converterMessage="Height of Floor must be like 0.001!"
                                          >
+                                <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
                                 <f:validateLongRange minimum="1" />
                             </h:inputText>
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Total Price</f:facet>
+                            <f:facet name="header">Product Price</f:facet>
 
-                            <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price * opd.quantity}.00" style="font-weight: normal;"/>
+                            <h:outputText value="$#{orderCreateBean.getTotalProductPrice(opd)}" style="font-weight: normal;"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Contruction Price</f:facet>
 
-                            <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00" style="font-weight: normal;"/>
+                            <h:outputText value="$#{orderCreateBean.getTotalContructionPrice(opd)}" style="font-weight: normal;"
+                                          converter="javax.faces.BigDecimal"
+                                          >
+                                <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
+                            </h:outputText>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Contruction Time</f:facet>
-                            <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).constructionTime * opd.floors * opd.heightOfFloor} weeks" style="font-weight: normal;"/>
+                            <h:outputText value="#{orderCreateBean.getTotalContructionTime(opd)} weeks" style="font-weight: normal;"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Total</f:facet>
-                            <h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price * opd.quantity + orderCreateBean.getProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00"  style="color: red"/>
+                            <h:outputText value="$#{orderCreateBean.getTotalSelectedProductPrice(opd)}"  style="color: red"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header"></f:facet>
@@ -95,7 +102,7 @@
                                         <div class="grid-3" style="font-size: 24px; font-weight: bold">
                                             Total
                                         </div>
-                                        <div class="grid-9 line-total" data-total-type="Total" style="border-bottom-style: none"><h:outputText value="USD #{orderCreateBean.getTotalSelectedProductsPrice()}.00" style="font-size: 24px; font-weight: bold" /></div>
+                                        <div class="grid-9 line-total" data-total-type="Total" style="border-bottom-style: none"><h:outputText value="USD #{orderCreateBean.getTotalSelectedProductsPrice()}" style="font-size: 24px; font-weight: bold" /></div>
                                         <div class="grid-12 hrztl-line"></div>
                                     </div>
 

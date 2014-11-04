@@ -15,6 +15,8 @@ import helpers.ApplicationHelper;
 import helpers.PersistenceHelper;
 import helpers.SessionHelper;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +61,7 @@ public class OrderCreateBean implements Serializable {
     private OrderProductDetails dataItem;
     private List<Orders> orders;
     private int floor;
-    private long heightOfFloor;
+    private BigDecimal heightOfFloor;
 
     /**
      * Creates a new instance of OrderBean
@@ -166,11 +168,7 @@ public class OrderCreateBean implements Serializable {
 
     public void updateSelectdProductQuantity() {
         OrderProductDetails opd = (OrderProductDetails) selected_products.getRowData();
-        if (opd.getHeightOfFloor() <= 0) {
-            ApplicationHelper.addMessage("Height of Floor greator than 0");
-            ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
-            return;
-        }
+
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         for (OrderProductDetails o : opds) {
             if (Objects.equals(o.getProductId().getPid(), opd.getProductId().getPid())) {
@@ -211,19 +209,57 @@ public class OrderCreateBean implements Serializable {
         return total;
     }
 
-    public long getTotalSelectedProductsPrice() {
-        long totalPrice = 0;
+    public BigDecimal getTotalSelectedProductsPrice() {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+
         List<Products> products = productModel.getAll();
         for (OrderProductDetails opd : opds) {
             for (Products p : products) {
                 if (Objects.equals(opd.getProductId().getPid(), p.getPid())) {
-                    totalPrice += opd.getQuantity() * p.getPrice();
+
+                    //add total product price
+                    totalPrice = totalPrice.add(p.getPrice().multiply(new BigDecimal(opd.getQuantity())));
+                    //add total contruction price
+                    BigDecimal totalHeight = opd.getHeightOfFloor().multiply(new BigDecimal(opd.getFloors()));
+                    totalPrice = totalPrice.add(p.getConstructionPrice().multiply(totalHeight).setScale(0, RoundingMode.HALF_UP));
                 }
             }
         }
 
         return totalPrice;
+    }
+
+    public BigDecimal getTotalProductPrice(OrderProductDetails opd) {
+        BigDecimal totalProductPrice = BigDecimal.ZERO;
+        Products p = productModel.getById(opd.getProductId().getPid());
+        totalProductPrice = p.getPrice().multiply(new BigDecimal(opd.getQuantity()));
+        return totalProductPrice;
+    }
+
+    public BigDecimal getTotalContructionPrice(OrderProductDetails opd) {
+        BigDecimal totalContructionPrice = BigDecimal.ZERO;
+        Products p = productModel.getById(opd.getProductId().getPid()); //get product info
+        BigDecimal totalHeight = opd.getHeightOfFloor().multiply(new BigDecimal(opd.getFloors())); //get total height
+        totalContructionPrice = p.getConstructionPrice().multiply(totalHeight);
+
+        return totalContructionPrice.setScale(0, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getTotalContructionTime(OrderProductDetails opd) {
+        BigDecimal totalContructionTime = BigDecimal.ZERO;
+        Products p = productModel.getById(opd.getProductId().getPid()); //get product info
+        BigDecimal totalHeight = opd.getHeightOfFloor().multiply(new BigDecimal(opd.getFloors())); //get total height
+        totalContructionTime = totalHeight.multiply(new BigDecimal(p.getConstructionTime()));
+        return totalContructionTime.setScale(0, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getTotalSelectedProductPrice(OrderProductDetails opd) {
+        BigDecimal totalSelectedProductPrice = BigDecimal.ZERO;
+        totalSelectedProductPrice = totalSelectedProductPrice.add(getTotalProductPrice(opd));
+        totalSelectedProductPrice = totalSelectedProductPrice.add(getTotalContructionPrice(opd));
+        return totalSelectedProductPrice;
     }
 
     public void newOrder() {
@@ -359,11 +395,11 @@ public class OrderCreateBean implements Serializable {
         this.floor = floor;
     }
 
-    public long getHeightOfFloor() {
+    public BigDecimal getHeightOfFloor() {
         return heightOfFloor;
     }
 
-    public void setHeightOfFloor(long heightOfFloor) {
+    public void setHeightOfFloor(BigDecimal heightOfFloor) {
         this.heightOfFloor = heightOfFloor;
     }
 

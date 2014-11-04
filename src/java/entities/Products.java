@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -52,6 +53,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Products.exists", query = "SELECT COUNT(p.pid) FROM Products p WHERE p.pid = :pid"),
     @NamedQuery(name = "Products.getForSelectBox", query = "SELECT p.pid,p.name FROM Products p"),
     @NamedQuery(name = "Products.getProductPrice", query = "SELECT p.price FROM Products p WHERE p.pid = :pid")
+
 })
 public class Products implements Serializable {
 
@@ -85,10 +87,11 @@ public class Products implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "infomations")
     private String infomations;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "price")
-    private Long price;
+    private BigDecimal price;
     @Column(name = "construction_price")
-    private Long constructionPrice;
+    private BigDecimal constructionPrice;
     @Column(name = "construction_time")
     private Integer constructionTime;
     @Size(max = 2147483647)
@@ -175,19 +178,19 @@ public class Products implements Serializable {
         this.infomations = infomations;
     }
 
-    public Long getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Long getConstructionPrice() {
+    public BigDecimal getConstructionPrice() {
         return constructionPrice;
     }
 
-    public void setConstructionPrice(Long constructionPrice) {
+    public void setConstructionPrice(BigDecimal constructionPrice) {
         this.constructionPrice = constructionPrice;
     }
 

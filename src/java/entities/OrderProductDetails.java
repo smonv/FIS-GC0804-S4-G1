@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -39,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "OrderProductDetails.findByCreateAt", query = "SELECT o FROM OrderProductDetails o WHERE o.createAt = :createAt"),
     @NamedQuery(name = "OrderProductDetails.findByOrderId", query = "SELECT o FROM OrderProductDetails o WHERE o.orderId = :orderId")
 })
+
 public class OrderProductDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,8 +54,9 @@ public class OrderProductDetails implements Serializable {
     private Integer quantity;
     @Column(name = "floors")
     private Integer floors;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "height_of_floor")
-    private Long heightOfFloor;
+    private BigDecimal heightOfFloor;
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
@@ -95,11 +98,11 @@ public class OrderProductDetails implements Serializable {
         this.floors = floors;
     }
 
-    public Long getHeightOfFloor() {
+    public BigDecimal getHeightOfFloor() {
         return heightOfFloor;
     }
 
-    public void setHeightOfFloor(Long heightOfFloor) {
+    public void setHeightOfFloor(BigDecimal heightOfFloor) {
         this.heightOfFloor = heightOfFloor;
     }
 

@@ -12,8 +12,11 @@ import entities.Orders;
 import entities.Products;
 import helpers.ApplicationHelper;
 import helpers.SessionHelper;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -66,13 +69,26 @@ public class OrderShowBean {
         return opds.size();
     }
 
-    public long getTotalOrderCost(Orders order) {
-        long totalCost = 0;
+    public BigDecimal getTotalOrderCost(Orders order) {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
         List<OrderProductDetails> opds = order.getOrderProductDetailsList();
+
+        List<Products> products = productModel.getAll();
         for (OrderProductDetails opd : opds) {
-            totalCost += productModel.getById(opd.getProductId().getPid()).getPrice() * opd.getQuantity();
+            for (Products p : products) {
+                if (Objects.equals(opd.getProductId().getPid(), p.getPid())) {
+
+                    //add total product price
+                    totalPrice = totalPrice.add(p.getPrice().multiply(new BigDecimal(opd.getQuantity())));
+                    //add total contruction price
+                    BigDecimal totalHeight = opd.getHeightOfFloor().multiply(new BigDecimal(opd.getFloors()));
+                    totalPrice = totalPrice.add(p.getConstructionPrice().multiply(totalHeight).setScale(0, RoundingMode.HALF_UP));
+                }
+            }
         }
-        return totalCost;
+
+        return totalPrice;
     }
 
     public List<Orders> getOrders() {

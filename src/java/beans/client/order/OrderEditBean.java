@@ -12,12 +12,15 @@ import entities.Products;
 import helpers.ApplicationHelper;
 import helpers.PersistenceHelper;
 import helpers.SessionHelper;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
@@ -53,8 +56,9 @@ public class OrderEditBean {
     private HtmlDataTable edit_products;
     private int quantity;
     private int floor;
-    private long heightOfFloor;
+    private BigDecimal heightOfFloor;
 
+    
     public OrderEditBean() {
     }
 
@@ -138,15 +142,19 @@ public class OrderEditBean {
         return total;
     }
 
-    public long getTotalSelectedProductsPrice() {
+    public BigDecimal getTotalSelectedProductsPrice() {
         session = SessionHelper.getSessionMap();
-        long totalPrice = 0;
+        BigDecimal totalPrice = BigDecimal.ZERO;
         List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
         List<Products> products = productModel.getAll();
         for (OrderProductDetails opd : opds) {
             for (Products p : products) {
                 if (Objects.equals(opd.getProductId().getPid(), p.getPid())) {
-                    totalPrice += opd.getQuantity() * p.getPrice();
+                    //add total product price
+                    totalPrice = totalPrice.add(p.getPrice().multiply(new BigDecimal(opd.getQuantity())));
+                    //add total contruction price
+                    BigDecimal totalHeight = opd.getHeightOfFloor().multiply(new BigDecimal(opd.getFloors()));
+                    totalPrice = totalPrice.add(p.getConstructionPrice().multiply(totalHeight).setScale(0, RoundingMode.HALF_UP));
                 }
             }
         }
@@ -172,7 +180,7 @@ public class OrderEditBean {
             Orders current_order = orderModel.getByNumber(edit_number); //get edit order
 
             List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("edit_products");
-            
+
             boolean exists = false;
             for (OrderProductDetails opd : opds) {
                 if (opd.getProductId().getPid() == pid) {
@@ -368,11 +376,11 @@ public class OrderEditBean {
         this.floor = floor;
     }
 
-    public long getHeightOfFloor() {
+    public BigDecimal getHeightOfFloor() {
         return heightOfFloor;
     }
 
-    public void setHeightOfFloor(long heightOfFloor) {
+    public void setHeightOfFloor(BigDecimal heightOfFloor) {
         this.heightOfFloor = heightOfFloor;
     }
 

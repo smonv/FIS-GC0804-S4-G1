@@ -166,8 +166,10 @@
                                                                  required="true"
                                                                  requiredMessage="Height of floor is required!"
                                                                  validatorMessage="Height of floor min is 1!"
+                                                                 converter="javax.faces.BigDecimal"
                                                                  >
                                                         <f:validateLongRange minimum="1" />
+                                                        <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
                                                     </h:inputText>
                                                     <h:inputText value="#{orderEditBean.heightOfFloor}" 
                                                                  styleClass="form-control" 
@@ -175,6 +177,7 @@
                                                                  required="true"
                                                                  requiredMessage="Height of floor is required!"
                                                                  validatorMessage="Height of floor min is 1!"
+                                                                 converter="javax.faces.BigDecimal"
                                                                  >
                                                         <f:validateLongRange minimum="1" />
                                                     </h:inputText>
