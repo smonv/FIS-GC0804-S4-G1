@@ -17,6 +17,8 @@
                 <h1>Order: <h:outputText value="#{orderShowBean.order.number}" /></h1>
                 <br/>
                 <span><strong>Status: </strong><h:outputText value="#{orderShowBean.order.orderStatus.name}" style="color: red"/></span>
+                <br />
+                <h:link outcome="/client/complaint/new.xhtml?number=#{orderShowBean.order.number}" value="New Complaint" />
                 <h:messages class="messages"/>
             </div>
             <div class="row">

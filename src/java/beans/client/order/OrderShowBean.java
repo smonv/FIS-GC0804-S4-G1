@@ -94,6 +94,7 @@ public class OrderShowBean {
     public List<Orders> getOrders() {
         Clients current_client = SessionHelper.getCurrentClient();
         orders = orderModel.getListOrder(current_client.getCid());
+        //orders = orderModel.getListOrder(1);
         return orders;
     }
 
