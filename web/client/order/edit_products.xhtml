@@ -58,26 +58,29 @@
                             <h:inputText value="#{opd.heightOfFloor}" size="5" label="Height of Floor" 
                                          required="true" requiredMessage="Height of Floor is required"
                                          validatorMessage="Height of Floor min valus is 1"
+                                         converter="javax.faces.BigDecimal"
+                                         
                                          >
+                                <f:convertNumber maxFractionDigits="2" maxIntegerDigits="2" />
                                 <f:validateLongRange minimum="1" />
                             </h:inputText>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Unit Price</f:facet>
-                            <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).price}.00"/>
+                            <h:outputText value="$#{orderCreateBean.getTotalProductPrice(opd)}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Contruction Price</f:facet>
 
-                            <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).constructionPrice * opd.floors * opd.heightOfFloor}.00" style="font-weight: normal;"/>
+                            <h:outputText value="$#{orderCreateBean.getTotalContructionPrice(opd)}" style="font-weight: normal;"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Contruction Time</f:facet>
-                            <h:outputText value="#{orderEditBean.getCurrentProduct(opd.productId.pid).constructionTime * opd.floors * opd.heightOfFloor} weeks" style="font-weight: normal;"/>
+                            <h:outputText value="#{orderCreateBean.getTotalContructionTime(opd)} weeks" style="font-weight: normal;"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Total</f:facet>
-                            <h:outputText value="$#{orderEditBean.getCurrentProduct(opd.productId.pid).price*opd.quantity}.00" style="color: red" />
+                            <h:outputText value="$#{orderCreateBean.getTotalSelectedProductPrice(opd)}" style="color: red" />
                         </h:column>
                         <h:column>
                             <f:facet name="header"></f:facet>
@@ -98,7 +101,7 @@
                         <div class="form-group" style="float: right; padding-right: 20px">
                             <strong>Total Price: 
                                 <br/>
-                                <h:outputText value="$#{orderEditBean.getTotalSelectedProductsPrice()}.00" /></strong><br/>
+                                <h:outputText value="$#{orderEditBean.getTotalSelectedProductsPrice()}" /></strong><br/>
                             <div style="height: 20px"></div>
                             <h:link value="Cancle" outcome="/client/order/details.xhtml?number=#{orderEditBean.number}" styleClass="btn btn-primary"/> &nbsp;&nbsp; 
 

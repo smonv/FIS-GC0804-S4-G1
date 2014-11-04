@@ -38,47 +38,47 @@
 
                     <div class="col-lg-6" style="border: solid 1px #E7E7E7; position: relative; margin-top: 50px;width: 100%">
                         <span style="position: absolute; background: white; top: -15px">Products ordered</span><br/>
-                    
-                         <ul class="pro-ordered-head">
-                                    <li><strong> Name</strong></li>
-                                    <li><strong>Quantity</strong></li>
-                                    <li><strong>Unit Price</strong></li>
-                                    <li><strong>Floor</strong></li>
-                                    <li><strong>Height of Floor</strong></li>
-                                    <li><strong>Contruction Price</strong></li>
-                                    <li><strong>Contruction Time</strong></li>
-                                    <li><strong>Total Cost</strong></li>
-                                </ul>
-                                <br/>
-                                
+
+                        <ul class="pro-ordered-head">
+                            <li><strong> Name</strong></li>
+                            <li><strong>Quantity</strong></li>
+                            <li><strong>Unit Price</strong></li>
+                            <li><strong>Floor</strong></li>
+                            <li><strong>Height of Floor</strong></li>
+                            <li><strong>Contruction Price</strong></li>
+                            <li><strong>Contruction Time</strong></li>
+                            <li><strong>Total Cost</strong></li>
+                        </ul>
+                        <br/>
+
                         <ui:repeat value="#{orderShowBean.order.orderProductDetailsList}" var="opd">
-                                
-                               
-                                <ul class="pro-ordered">
-                                    <li><h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}"/></li>
-                                    <li><h:outputText value="#{opd.quantity}" /></li>
-                                    <li><h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price}.00" /></li>
-                                    <li><h:outputText value="#{opd.floors}" /></li>
-                                    <li><h:outputText value="#{opd.heightOfFloor}" /></li>
-                                    <li><h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).constructionPrice}.00" /></li>
-                                    <li><h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).constructionTime}.00" /></li>
-                                    <li><h:outputText value="$#{orderCreateBean.getProduct(opd.productId.pid).price*opd.quantity+orderCreateBean.getProduct(opd.productId.pid).constructionPrice}.00" /></li>
-                                </ul>
-                                <br/>
-                            </ui:repeat>
-                    
+
+
+                            <ul class="pro-ordered">
+                                <li><h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}"/></li>
+                                <li><h:outputText value="#{opd.quantity}" /></li>
+                                <li><h:outputText value="$#{orderCreateBean.getTotalProductPrice(opd)}" /></li>
+                                <li><h:outputText value="#{opd.floors}" /></li>
+                                <li><h:outputText value="#{opd.heightOfFloor} m" /></li>
+                                <li><h:outputText value="$#{orderCreateBean.getTotalContructionPrice(opd)}" /></li>
+                                <li><h:outputText value="#{orderCreateBean.getTotalContructionTime(opd)} weeks" /></li>
+                                <li><h:outputText value="$#{orderCreateBean.getTotalSelectedProductPrice(opd)}" /></li>
+                            </ul>
+                            <br/>
+                        </ui:repeat>
+
 
 
                         <h:link value="Edit Products" outcome="/client/order/edit_products.xhtml?number=#{orderShowBean.order.number}" styleClass="btn btn-primary" style="float: right;width: 130.828125px; margin-bottom: 20px"/>
                         <style>
                             .pro-ordered,.pro-ordered-head{
-                               float: none; 
-                               position: relative;
-                               width: 100%;
-                               border-bottom: solid 1px #E7E7E7;
-                               padding-bottom: 10px;
-                               height: 30px;
-                               padding-left: 10px;
+                                float: none; 
+                                position: relative;
+                                width: 100%;
+                                border-bottom: solid 1px #E7E7E7;
+                                padding-bottom: 10px;
+                                height: 30px;
+                                padding-left: 10px;
                             }
                             .pro-ordered>li, .pro-ordered-head>li{
                                 float: left;
@@ -86,13 +86,13 @@
                                 font-weight: bold
                             }
                             .pro-ordered-head{
-                               background: rgb(239, 239, 230);
-                               padding-bottom: 0px;
-                               
+                                background: rgb(239, 239, 230);
+                                padding-bottom: 0px;
+
                             }
                         </style>
                         <c:if test="#{!orderShowBean.order.orderStatus.name.equals('Pending')}">
-                        
+
                             <style>
                                 .btn, .btn-primary{
                                     display: none;
