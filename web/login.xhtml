@@ -77,8 +77,12 @@
             <section class="portfolio-content">
 
             </section>
+            <c:if test="#{sessionBean.clientLogged}">
+                <meta http-equiv="refresh" content="0;client/profile.xhtml"/>  
+            </c:if>
         </ui:define>
 
     </ui:composition>
+
 </html>
 
