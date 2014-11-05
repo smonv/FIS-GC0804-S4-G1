@@ -53,15 +53,14 @@
 
                                             <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
                                                 <div class="project-item">
-                                                    <div class="post-thumbnail element">
+                                                    
+                                                    <div class="post-thumbnail">
                                                         <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
-                                                        <div class="element-overly">Overly</div>
-                                                        <a data-rel="prettyPhoto" href="#{resource['client/img/products/demo.jpg']}" class="element-lightbox" ><i class="fa fa-search-plus"></i></a>
-                                                        <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{product.pid}"><i class="fa fa-link"></i></h:link>
+                                                        <h:link class="element-link2" outcome="/product/show.xhtml?pid=#{product.pid}"></h:link>
                                                     </div>
 
                                                     <div class="project-details">
-                                                        <h2><h:link value="#{product.name}" outcome="/client/product/show.xhtml">
+                                                        <h2><h:link value="#{product.name}" outcome="/product/show.xhtml">
                                                                 <f:param name="pid" value="#{product.pid}" />
                                                                 <c:if test="#{productBean.mode != null}">
                                                                     <f:param name="mode" value="#{productBean.mode}" />
@@ -69,7 +68,7 @@
                                                             </h:link></h2>
                                                         <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
                                                         <div class="readmore">
-                                                            <h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}">
+                                                            <h:link value="Details" outcome="/product/show.xhtml?pid=#{product.pid}">
                                                                 <f:param name="pid" value="#{product.pid}" />
                                                                 <c:if test="#{productBean.mode != null}">
                                                                     <f:param name="mode" value="#{productBean.mode}" />
@@ -87,15 +86,14 @@
 
                                             <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
                                                 <div class="project-item">
-                                                    <div class="post-thumbnail element">
+                                                    
+                                                    <div class="post-thumbnail">
                                                         <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
-                                                        <div class="element-overly">Overly</div>
-                                                        <a data-rel="prettyPhoto" href="#{resource['client/img/products/demo.jpg']}" class="element-lightbox" ><i class="fa fa-search-plus"></i></a>
-                                                        <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{product.pid}"><i class="fa fa-link"></i></h:link>
+                                                        <h:link class="element-link2" outcome="/product/show.xhtml?pid=#{product.pid}"></h:link>
                                                     </div>
 
                                                     <div class="project-details">
-                                                        <h2><h:link value="#{product.name}" outcome="/client/product/show.xhtml">
+                                                        <h2><h:link value="#{product.name}" outcome="/product/show.xhtml">
                                                                 <f:param name="pid" value="#{product.pid}" />
                                                                 <c:if test="#{productBean.mode != null}">
                                                                     <f:param name="mode" value="#{productBean.mode}" />
@@ -103,7 +101,7 @@
                                                             </h:link></h2>
                                                         <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
                                                         <div class="readmore">
-                                                            <h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}">
+                                                            <h:link value="Details" outcome="/product/show.xhtml?pid=#{product.pid}">
                                                                 <f:param name="pid" value="#{product.pid}" />
                                                                 <c:if test="#{productBean.mode != null}">
                                                                     <f:param name="mode" value="#{productBean.mode}" />
@@ -123,6 +121,25 @@
                         </div>
                     </div>
                 </div>
+                <style>
+                    
+                    .post-thumbnail:hover img{
+
+                        transform: none;
+                    }
+                    .element-link2{
+                        top: 0;
+                        display: block;
+                        position: absolute;
+                        height: 100%; 
+                        width: 100%; 
+                        z-index: 30;
+                    }
+                    .element-link2:hover{
+                        background-color: none;
+                        
+                    }
+                </style>
             </section>
         </ui:define>
     </ui:composition>
