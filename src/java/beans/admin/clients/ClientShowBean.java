@@ -85,7 +85,7 @@ public class ClientShowBean {
     }
 
     public String showInfo() {
-         
+
         if (!search.equals("")) {
             recreateModel();
             pagination = new PaginationHelper(5) {
@@ -93,7 +93,9 @@ public class ClientShowBean {
                 @Override
                 public int getItemsCount() {
                     return clientModel.getListClientByName(search).size();
-                };
+                }
+
+                ;
             
             @Override
                 public DataModel createPageDataModel() {
@@ -101,7 +103,7 @@ public class ClientShowBean {
                 }
             };
         }
-        if (clientModel.getListClientByName(search).size() == 0) {
+        if (clientModel.getListClientByName(search).isEmpty()) {
             recreateModel();
             pagination = new PaginationHelper(1) {
 
@@ -118,9 +120,9 @@ public class ClientShowBean {
                 }
             };
         }
-        if (clientModel.getListClientByName(search).size() == 0&&clientModel.getListClientByMail(search).size()==0) {
+        if (clientModel.getListClientByName(search).isEmpty() && clientModel.getListClientByMail(search).size() == 0) {
             recreateModel();
-              pagination = new PaginationHelper(10) {
+            pagination = new PaginationHelper(10) {
 
                 @Override
                 public int getItemsCount() {
