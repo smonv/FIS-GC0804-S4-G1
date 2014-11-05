@@ -50,7 +50,7 @@
                                          requiredMessage="Height of Floor is required!"
                                          validatorMessage="Height of Floor min value is 1!"
                                          converter="javax.faces.BigDecimal"
-                                         converterMessage="Height of Floor must be like 0.001!"
+                                         converterMessage="Height of Floor must be like 01!"
                                          >
                                 <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
                                 <f:validateLongRange minimum="1" />
@@ -85,11 +85,7 @@
                             <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
                         </h:column>
                     </h:dataTable>
-                    <style>
-                        .btn, .btn-primary{
-
-                        }
-                    </style>
+                  
                     <div id="cartCompletion" class="grid-5" style="float: right">
 
                         <div id="totalsWrap">

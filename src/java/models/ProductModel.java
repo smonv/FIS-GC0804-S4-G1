@@ -31,6 +31,10 @@ public class ProductModel {
         List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(0).setMaxResults(12).getResultList();
         return products;
     }
+    public List<Products> getProductsByCategory(int id) {
+        List<Products> products = em.createNamedQuery("Products.findByCategoy").setParameter("category_id", id).setFirstResult(0).setMaxResults(12).getResultList();
+        return products;
+    }
 
     public List<Products> getAllForSelectBox() {
         List<Products> products = em.createNamedQuery("Products.getForSelectBox").getResultList();

@@ -61,7 +61,10 @@ public class ProductBean {
     public List<Products> getTop12Product() {
         return productModel.getTop12();
     }
-
+    public List<Products> getProductsByCtegory(int id) {
+        return productModel.getProductsByCategory(id);
+    }
+    
     public int getPid() {
         return pid;
     }

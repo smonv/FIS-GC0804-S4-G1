@@ -10,12 +10,17 @@
             <f:viewParam name="mode" value="#{productBean.mode}" />
             <f:viewAction action="#{productBean.checkMode()}"/>
         </f:metadata>
-        <ui:define name="title">List Products</ui:define>
+        <ui:define name="title">List Products </ui:define>
         <ui:define name="content">
             <!-- Page title -->
             <div class="page-title">
+                
+                <c:if test="#{categoryBean.currentCategory== null}">
                 <h1>Products</h1>
-
+                </c:if>
+                <c:if test="#{categoryBean.currentCategory!= null}">
+                    <h1>Products by #{categoryBean.currentCategory.name}</h1>
+                </c:if>
                 <!-- BREADCRUMBS -->
                 <ul class="breadcrumb">
                     <li><h:link outcome="/index.xhtml">Home</h:link><span class="divider"></span></li>
@@ -31,52 +36,87 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="box-wrapper">
-                                <ul id="filter">
-                                    <li><a class="active btn btn-primary" href="#" data-group="all">All</a></li>
-                                    <li><a href="#" data-group="red" class="btn btn-primary">Home</a></li>
-                                    <li><a href="#" data-group="green" class="btn btn-primary">Office</a></li>
-                                    <li><a href="#" data-group="blue" class="btn btn-primary">Interior</a></li>
-                                    <li><a href="#" data-group="numbers" class="btn btn-primary">Design</a></li>
-                                    <li><a href="#" data-group="letters" class="btn btn-primary">Illusion</a></li>
-                                    <li><a href="#" data-group="square" class="btn btn-primary">Idea</a></li>
-                                    <li><a href="#" data-group="circle" class="btn btn-primary">Creative</a></li>
+                                <ul id="filter"> 
+                                    <h:form>
+                                        <li><h:commandLink action="#{categoryBean.setCurrentCategory(null)}" class="btn btn-primary">All</h:commandLink></li>                     
+                                    </h:form>  
+                                    <ui:repeat var="category" value="#{categoryBean.allCategory}" varStatus="status">
+                                        <h:form>
+                                            <li><h:commandLink action="#{categoryBean.setCurrentCategory(category)}" class="btn btn-primary">#{category.name}</h:commandLink></li>                           
+                                        </h:form>       
+                                    </ui:repeat>
                                 </ul>
 
                                 <div id="grid">
-                                    <ui:repeat var="product" value="#{productBean.getAllProduct()}" varStatus="status">
-                                        <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
-                                            <div class="project-item">
-                                                <div class="post-thumbnail element">
-                                                    <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
-                                                    <div class="element-overly">Overly</div>
+                                    <c:if test="#{categoryBean.currentCategory==null}">
+                                        <ui:repeat var="product" value="#{productBean.allProduct}" varStatus="status">
 
-                                                    <a data-rel="prettyPhoto" href="#{resource['client/img/products/demo.jpg']}" class="element-lightbox" ><i class="fa fa-search-plus"></i></a>
-
-
-                                                    <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{product.pid}"><i class="fa fa-link"></i></h:link>
-                                                </div>
-
-                                                <div class="project-details">
-                                                    <h2><h:link value="#{product.name}" outcome="/client/product/show.xhtml">
-                                                            <f:param name="pid" value="#{product.pid}" />
-                                                            <c:if test="#{productBean.mode != null}">
-                                                                <f:param name="mode" value="#{productBean.mode}" />
-                                                            </c:if>
-                                                        </h:link></h2>
-                                                    <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
-                                                    <div class="readmore">
-                                                        <h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}">
-                                                            <f:param name="pid" value="#{product.pid}" />
-                                                            <c:if test="#{productBean.mode != null}">
-                                                                <f:param name="mode" value="#{productBean.mode}" />
-                                                            </c:if>
-                                                        </h:link>
+                                            <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
+                                                <div class="project-item">
+                                                    <div class="post-thumbnail element">
+                                                        <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
+                                                        <div class="element-overly">Overly</div>
+                                                        <a data-rel="prettyPhoto" href="#{resource['client/img/products/demo.jpg']}" class="element-lightbox" ><i class="fa fa-search-plus"></i></a>
+                                                        <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{product.pid}"><i class="fa fa-link"></i></h:link>
                                                     </div>
 
+                                                    <div class="project-details">
+                                                        <h2><h:link value="#{product.name}" outcome="/client/product/show.xhtml">
+                                                                <f:param name="pid" value="#{product.pid}" />
+                                                                <c:if test="#{productBean.mode != null}">
+                                                                    <f:param name="mode" value="#{productBean.mode}" />
+                                                                </c:if>
+                                                            </h:link></h2>
+                                                        <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                                                        <div class="readmore">
+                                                            <h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}">
+                                                                <f:param name="pid" value="#{product.pid}" />
+                                                                <c:if test="#{productBean.mode != null}">
+                                                                    <f:param name="mode" value="#{productBean.mode}" />
+                                                                </c:if>
+                                                            </h:link>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </ui:repeat>
+                                        </ui:repeat>
+                                    </c:if>
+                                    <c:if test="#{categoryBean.currentCategory!= null}">
+                                        <ui:repeat var="product" value="#{productBean.getProductsByCtegory(categoryBean.currentCategory.cid)}" varStatus="status">
+
+                                            <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
+                                                <div class="project-item">
+                                                    <div class="post-thumbnail element">
+                                                        <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
+                                                        <div class="element-overly">Overly</div>
+                                                        <a data-rel="prettyPhoto" href="#{resource['client/img/products/demo.jpg']}" class="element-lightbox" ><i class="fa fa-search-plus"></i></a>
+                                                        <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{product.pid}"><i class="fa fa-link"></i></h:link>
+                                                    </div>
+
+                                                    <div class="project-details">
+                                                        <h2><h:link value="#{product.name}" outcome="/client/product/show.xhtml">
+                                                                <f:param name="pid" value="#{product.pid}" />
+                                                                <c:if test="#{productBean.mode != null}">
+                                                                    <f:param name="mode" value="#{productBean.mode}" />
+                                                                </c:if>
+                                                            </h:link></h2>
+                                                        <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                                                        <div class="readmore">
+                                                            <h:link value="Details" outcome="/client/product/show.xhtml?pid=#{product.pid}">
+                                                                <f:param name="pid" value="#{product.pid}" />
+                                                                <c:if test="#{productBean.mode != null}">
+                                                                    <f:param name="mode" value="#{productBean.mode}" />
+                                                                </c:if>
+                                                            </h:link>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ui:repeat>
+                                    </c:if>
+
                                 </div> <!-- /grid -->	
                             </div> <!-- /box-wrapper -->
 
