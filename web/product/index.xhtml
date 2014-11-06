@@ -57,7 +57,7 @@
                                                     <f:param name="startIndex" value="#{productBean.startIndex - productBean.pageSize}"/>
                                                 </h:link>
                                             </c:if>
-                                            <c:if test="#{!productBean.disable}">
+                                            <c:if test="#{!productBean.hasNextPage}">
                                                   <h:link outcome="index" value="Next" class="btn btn-primary">
                                                     <f:param name="startIndex" value="#{productBean.startIndex + productBean.pageSize}"/>
                                                  </h:link> 
