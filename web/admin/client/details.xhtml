@@ -5,12 +5,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <ui:composition template="/templates/client/layout.xhtml">
+    <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
             <f:viewParam name="cid" value="#{clientShowBean.cid}" />
             <f:viewAction action="#{clientShowBean.init()}" />
         </f:metadata>
-        <ui:define name="title">Client Details</ui:define>
         <ui:define name="content">
 
             <div class="page-title">

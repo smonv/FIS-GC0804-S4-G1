@@ -4,26 +4,18 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <ui:composition template="/templates/client/layout.xhtml">
-        <ui:define name="title">List Client</ui:define>
+    <ui:composition template="/templates/admin/layout.xhtml">
         <ui:define name="content">
             <div class="page-title">
                 <h1>List Client</h1>
-
-                <!-- BREADCRUMBS -->
-                <ul class="breadcrumb">
-                    <li><h:link outcome="/index.xhtml">Home</h:link><span class="divider"></span></li>
-                    <li class="active">Orders</li>
-                    <li class="active">Lists</li>
-                </ul>
             </div>
             <h:form>
                 <h:panelGroup rendered="#{clientShowBean.items.rowCount > 0}">
                     <h:outputText value="#{clientShowBean.pagination.pageFirstItem + 1}..#{clientShowBean.pagination.pageLastItem + 1}/#{clientShowBean.pagination.itemsCount}"/><br/>
                     <h:commandLink action="#{clientShowBean.previous()}" value="Previous #{clientShowBean.pagination.pageSize}" rendered="#{clientShowBean.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{clientShowBean.next()}" value="Nexts #{clientShowBean.pagination.pageSize}" rendered="#{clientShowBean.pagination.hasNextPage}"/><br/>
-                    <h:inputText value="#{clientShowBean.search}" />
-                    <h:commandButton action="#{clientShowBean.showInfo()}" value="search"/>
+                    <h:inputText value="#{clientShowBean.search}" class="text-input"/>
+                    <h:commandButton action="#{clientShowBean.showInfo()}" value="search" class="btn-red"/>
                 <h:dataTable class="idCart2" value="#{clientShowBean.items}" var="c">
 
                     <h:column>
@@ -31,7 +23,7 @@
                         <h:outputText value="#{c.name}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Total Order Created</f:facet>
+                        <f:facet name="header">Total Order</f:facet>
                         <h:outputText value="Order:#{clientShowBean.getTotalOrder(c)}" style="color: red"/>
                     </h:column>
                     <h:column>
@@ -61,7 +53,9 @@
                 </h:dataTable>
                  </h:panelGroup>
             </h:form>
-            
+            <style>
+                
+            </style>
         </ui:define>
     </ui:composition>
 </html>
