@@ -7,8 +7,10 @@ package beans.client.product;
 
 import entities.Products;
 import helpers.ApplicationHelper;
+
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -28,14 +30,18 @@ public class ProductBean {
     private ProductModel productModel;
 
     private int pid;
+    private  int startIndex;
+    private int pageSize;
     private Products currentProduct;
     Map<String, Object> session;
     private int quantity;
     private String mode;
-
+    private boolean disable = false;
+    private List<Products> list;
+    
     public ProductBean() {
     }
-
+    
     public void init() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!productModel.productExists(pid)) {
@@ -53,16 +59,29 @@ public class ProductBean {
             }
         }
     }
-
-    public List<Products> getAllProduct() {
-        return productModel.getAll();
+    public boolean isHasNextPage() {
+        if(startIndex  == productModel.getAll().size() || startIndex  > productModel.getAll().size()){
+            return true;
+        }else
+            return false;
     }
 
+    public List<Products> getAllProduct() {
+            loadProductList();
+        return list;
+    }
+    
     public List<Products> getTop12Product() {
         return productModel.getTop12();
     }
-    public List<Products> getProductsByCtegory(int id) {
-        return productModel.getProductsByCategory(id);
+    
+    public List<Products > getProductsByCtegory(int id) {
+        list = productModel.getProductsByCategory(id);
+        return list;
+    }
+    
+    public void loadProductList(){
+        list = productModel.getAllProduct(startIndex, pageSize);    
     }
     
     public int getPid() {
@@ -95,6 +114,30 @@ public class ProductBean {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    public int getPageSize() {
+        return pageSize = 2;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    } 
+
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
     }
 
 }

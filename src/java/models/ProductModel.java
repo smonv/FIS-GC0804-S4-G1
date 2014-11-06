@@ -27,12 +27,16 @@ public class ProductModel {
         List<Products> products = em.createNamedQuery("Products.findAll").getResultList();
         return products;
     }
+    public List<Products> getAllProduct(int startIndex,int pageSize) {
+        List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+        return products;
+    }
     public List<Products> getTop12() {
         List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(0).setMaxResults(12).getResultList();
         return products;
     }
     public List<Products> getProductsByCategory(int id) {
-        List<Products> products = em.createNamedQuery("Products.findByCategoy").setParameter("category_id", id).setFirstResult(0).setMaxResults(12).getResultList();
+        List<Products> products = em.createNamedQuery("Products.findByCategoy").setParameter("category_id", id).getResultList();
         return products;
     }
 
