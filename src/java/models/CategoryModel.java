@@ -28,6 +28,9 @@ public class CategoryModel {
         return categories;
     }
 
-    
+    public Categories getById(int categoryId) {
+        List<Categories> categories = em.createNamedQuery("Categories.findByCid").setParameter("cid", categoryId).getResultList();
+        return categories.size() > 0 ? categories.get(0) : null;
+    }
 
 }
