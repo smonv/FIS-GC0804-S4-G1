@@ -221,7 +221,7 @@
                             <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
                             <figcaption>
                                 <h2><h:outputText value="#{product.name}" /></h2>
-                                <p><h:outputText value="#{product.infomations}"/></p>
+                                <p><h:outputText value="#{product.productInformations.informations}"/></p>
                                 <h:link value="Detail" outcome="/product/show.xhtml?pid=#{product.pid}" />
                             </figcaption>			
                         </figure>

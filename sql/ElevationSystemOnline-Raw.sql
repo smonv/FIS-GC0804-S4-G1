@@ -36,7 +36,7 @@ create table products(
 
 create table product_informations(
 	pinfoid int identity primary key,
-	product_id int foreign key references products(pid),
+	product_id int foreign key references products(pid) unique,
 	manufacturer nvarchar(254),
 	produced_in nvarchar(254),
 	size nvarchar(254),

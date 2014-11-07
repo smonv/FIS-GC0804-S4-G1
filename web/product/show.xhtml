@@ -72,22 +72,22 @@
                             </li>
 
                             <li>
-                                <p>Size:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.size} m" /></p>
+                                <p>Size:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.productInformations.size} m" /></p>
                             </li>
 
                             <li>
-                                <p>Manufacturer :&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.manufacturer}" /></p>
+                                <p>Manufacturer :&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.productInformations.manufacturer}" /></p>
                             </li>
 
                             <li>
-                                <p>Produced in:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.producedIn}"/></p>
+                                <p>Produced in:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.productInformations.producedIn}"/></p>
                             </li>
 
                             <li>
                                 <p>Product Infomations:</p>
 
                                 <blockquote>
-                                    <h:outputText value="#{productBean.currentProduct.infomations}" />
+                                    <h:outputText value="#{productBean.currentProduct.productInformations.informations}" />
                                 </blockquote>
                             </li>
                             <li>
