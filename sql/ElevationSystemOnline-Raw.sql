@@ -27,13 +27,25 @@ create table products(
 	code nvarchar(10) not null,
 	name nvarchar(254) not null,
 	category_id int foreign key references categories(cid),
-	manufacturer nvarchar(254),
-	produced_in nvarchar(254),
-	size nvarchar(254),
-	infomations text,
 	price decimal(16,2),
 	construction_price decimal(16,2),
 	construction_time int,
+	create_at datetime,
+	update_at datetime
+)
+
+create table product_informations(
+	pinfoid int identity primary key,
+	product_id int foreign key references products(pid),
+	manufacturer nvarchar(254),
+	produced_in nvarchar(254),
+	size nvarchar(254),
+	informations text,
+	min_load int,
+	max_load int,
+	feature_1 nvarchar(max),
+	feature_2 nvarchar(max),
+	feature_3 nvarchar(max),
 	image_path nvarchar(max),
 	create_at datetime,
 	update_at datetime
