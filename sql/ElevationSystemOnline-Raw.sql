@@ -41,8 +41,8 @@ create table product_informations(
 	produced_in nvarchar(254),
 	size nvarchar(254),
 	informations text,
-	min_load int,
-	max_load int,
+	e_load nvarchar(254),
+	speed nvarchar(254),
 	feature_1 nvarchar(max),
 	feature_2 nvarchar(max),
 	feature_3 nvarchar(max),
@@ -134,16 +134,29 @@ create table projects(
 	end_at date,
 )
 
-insert into categories values('cylindrical')
-insert into categories values('Rectangular')
+insert into categories values('Passenger')
+insert into categories values('Home')
+insert into categories values('Vehicle')
+insert into categories values('Medical')
+insert into categories values('Freight')
+insert into categories values('Observation')
+insert into categories values('Dumbwaiter')
 
-insert into products values('EVE1', 'Elevator 1', 1,'Cu Beo','Viet Nam','1 x 1 x 1', 'fast and stable', 123.99,9.99, 1,null, GETDATE(),null)
-insert into products values('EVE2', 'Elevator 2', 1,'Cu Beo','Viet Nam','2 x 2 x 2', 'fast and stable', 312.99,19.99, 2,null, GETDATE(),null)
-insert into products values('EVE3', 'Elevator 3', 1,'Cu Beo','Viet Nam','3 x 3 x 3', 'fast and stable', 234.99,29.99, 3,null, GETDATE(),null)
-insert into products values('EVE4', 'Elevator 4', 2,'Cu Beo','Viet Nam','4 x 4 x 4', 'fast and stable', 432.99,39.99, 4,null, GETDATE(),null)
-insert into products values('EVE5', 'Elevator 5', 2,'Cu Beo','Viet Nam','5 x 5 x 5', 'fast and stable', 345.99,49.99, 5,null, GETDATE(),null)
-insert into products values('EVE6', 'Elevator 6', 2,'Cu Beo','Viet Nam','6 x 6 x 6', 'fast and stable', 543.99,59.99, 6,null, GETDATE(),null)
+insert into products values('AM', 'Anti Mage', 1, 15400, 1540, 1, GETDATE(),null)
+insert into products values('TBS', 'Timbersaw', 2, 10000, 1000, 1, GETDATE(),null)
+insert into products values('BM', 'Beastmaster', 3, 40000, 4000, 2, GETDATE(),null)
+insert into products values('DS', 'Dwarven Sniper', 4, 16700, 1670, 2, GETDATE(),null)
+insert into products values('ES', 'Earthshaker', 5, 12000, 1200, 2, GETDATE(),null)
+insert into products values('WR', 'Windranger', 6, 19000, 1900, 1, GETDATE(),null)
+insert into products values('POTM', 'Priestess of The Moon', 7, 4200, 420, 1, GETDATE(),null)
 
+insert into product_informations values(1, 'Uzumaki Naruto', 'Germany', '2.5 x 2 x 2.5', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '600-1000kg', '1.5-2m/s', null, null, null, null, GETDATE(), null)
+insert into product_informations values(2, 'Hyuga Neji', 'Japan', '2 x 2 x 2.5', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '300-400kg', '1-2m/s', null, null, null, null, GETDATE(), null)
+insert into product_informations values(3, 'Rock Lee', 'United Kingdom', '4 x 4 x 4', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '3000-5000kg', '1.5-2.5m/s', null, null, null, null, GETDATE(), null)
+insert into product_informations values(4, 'Hatake Kakashi', 'Canada', '4 x 3 x 3', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '600-1000kg', '1-2m/s', null, null, null, null, GETDATE(), null)
+insert into product_informations values(5, 'Killer Bee', 'Italy', '3 x 2 x 3.5', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '1500-2000kg', '1.5-3m/s', null, null, null, null, GETDATE(), null)
+insert into product_informations values(6, 'Uchiha Sasuke', 'Spain', '1.5 x 1.5 x 4', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '500-800kg', '1-2m/s', null, null, null, null, GETDATE(), null)
+insert into product_informations values(1, 'Senju Tobirama', 'France', '1.5 x 1 x 1.5', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry is standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '200kg', '2m/s', null, null, null, null, GETDATE(), null)
 
 insert into payment_types values('Cash')
 insert into payment_types values('Bank Transfer')
