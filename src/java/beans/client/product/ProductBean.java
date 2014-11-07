@@ -7,6 +7,7 @@ package beans.client.product;
 
 import entities.Products;
 import helpers.ApplicationHelper;
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,6 @@ public class ProductBean {
     private ProductModel productModel;
 
     private int pid;
-    private  int startIndex;
     private int pageSize;
     private Products currentProduct;
     Map<String, Object> session;
@@ -38,6 +38,7 @@ public class ProductBean {
     private String mode;
     private boolean disable = false;
     private List<Products> list;
+    private int page; 
     
     public ProductBean() {
     }
@@ -60,12 +61,9 @@ public class ProductBean {
         }
     }
     public boolean isHasNextPage() {
-        if(startIndex  == productModel.getAll().size() || startIndex  > productModel.getAll().size()){
-            return true;
-        }else
-            return false;
+            return (page + 1) * this.getPageSize() + 1<= productModel.getAll().size();
     }
-
+   
     public List<Products> getAllProduct() {
             loadProductList();
         return list;
@@ -81,7 +79,7 @@ public class ProductBean {
     }
     
     public void loadProductList(){
-        list = productModel.getAllProduct(startIndex, pageSize);    
+        list = productModel.getAllProduct(this.getStartIndex(), this.getPageSize());    
     }
     
     public int getPid() {
@@ -117,12 +115,9 @@ public class ProductBean {
     }
 
     public int getStartIndex() {
-        return startIndex;
+        return page * pageSize;
     }
 
-    public void setStartIndex(int startIndex) {
-        this.startIndex = startIndex;
-    }
 
     public int getPageSize() {
         return pageSize = 2;
@@ -139,5 +134,15 @@ public class ProductBean {
     public void setDisable(boolean disable) {
         this.disable = disable;
     }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+    
+    
 
 }

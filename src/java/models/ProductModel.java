@@ -40,6 +40,10 @@ public class ProductModel {
         return products;
     }
 
+    public List<Products> getProductsByCategorySort(int id) {
+        List<Products> products = em.createNamedQuery("Products.findByCategoy").setParameter("category_id", id).getResultList();
+        return products;
+    }
     public List<Products> getAllForSelectBox() {
         List<Products> products = em.createNamedQuery("Products.getForSelectBox").getResultList();
         return products;

@@ -9,7 +9,7 @@
         <f:metadata>
             <f:viewParam name="mode" value="#{productBean.mode}" />
             <f:viewAction action="#{productBean.checkMode()}"/>
-            <f:viewParam name="startIndex" value="#{productBean.startIndex}" />
+            <f:viewParam name="page" value="#{productBean.page}" />
             <f:event listener="#{productBean.loadProductList()}" type="preRenderView"/>
         </f:metadata>
         <ui:define name="title">List Products </ui:define>
@@ -40,11 +40,11 @@
                             <div class="box-wrapper">
                                 <ul id="filter"> 
                                     <h:form>
-                                        <li><h:commandLink action="#{categoryBean.setCurrentCategory(null)}" class="btn btn-primary">All</h:commandLink></li>                     
+                                        <li><h:commandLink action="#{categoryBean.setCurrentCategory(null)}"   class="btn btn-primary">All</h:commandLink></li>                     
                                     </h:form>  
                                     <ui:repeat var="category" value="#{categoryBean.allCategory}" varStatus="status">
                                         <h:form>
-                                            <li><h:commandLink action="#{categoryBean.setCurrentCategory(category)}" class="btn btn-primary">#{category.name}</h:commandLink></li>                           
+                                            <li><h:commandLink action="#{categoryBean.setCurrentCategory(category)}"  class="btn btn-primary">#{category.name}</h:commandLink></li>                           
                                         </h:form>       
                                     </ui:repeat>
                                 </ul>
@@ -52,16 +52,17 @@
                                 <div id="grid">
                                     <c:if test="#{categoryBean.currentCategory==null}">
                                         <h:form>
-                                            <c:if test="#{productBean.startIndex > 0}">
+                                            <c:if test="#{productBean.page > 0}">
                                                 <h:link outcome="index" value="Previous" class="btn btn-primary">
-                                                    <f:param name="startIndex" value="#{productBean.startIndex - productBean.pageSize}"/>
+                                                    <f:param name="page" value="#{productBean.page - 1}"/>
                                                 </h:link>
                                             </c:if>
-                                            <c:if test="#{!productBean.hasNextPage}">
+                                            <c:if test="#{productBean.hasNextPage}">
                                                   <h:link outcome="index" value="Next" class="btn btn-primary">
-                                                    <f:param name="startIndex" value="#{productBean.startIndex + productBean.pageSize}"/>
+                                                    <f:param name="page" value="#{productBean.page + 1}"/>
                                                  </h:link> 
                                             </c:if>
+                                            <br/>
                                             <ui:repeat var="product" value="#{productBean.allProduct}" varStatus="status">
 
                                                 <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
@@ -96,8 +97,8 @@
 
                                         </h:form>
                                     </c:if>
-                                    <c:if test="#{categoryBean.currentCategory!= null}">
-                                            <ui:repeat var="product" value="#{productBean.getProductsByCtegory(categoryBean.currentCategory.cid)}" varStatus="status">
+                                    <c:if test="#{categoryBean.currentCategory!= null}"> 
+                                        <ui:repeat var="product" value="#{productBean.getProductsByCtegory(categoryBean.currentCategory.cid)}" varStatus="status">
                                                 <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
                                                     <div class="project-item">
 
