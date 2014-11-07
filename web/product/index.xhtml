@@ -105,8 +105,9 @@
                                     rendered="#{productBean.totalProducts > productBean.pageSize and productBean.page > 0}">
                                 <f:param name="page" value="#{productBean.page - 1}"/>
 
-                                <f:param name="cid" value="#{productBean.cid}" rendered="#{productBean.cid > 0}" />
-
+                                <c:if test="#{productBean.cid gt 0}">
+                                    <f:param name="cid" value="#{productBean.cid}" />
+                                </c:if>
                             </h:link>
 
 
@@ -116,9 +117,9 @@
                                                 and productBean.pageSize * (productBean.page + 1) lt productBean.totalProducts 
                                                         }">
                                 <f:param name="page" value="#{productBean.page + 1}"/>
-
-                                <f:param name="cid" value="#{productBean.cid}" rendered="#{productBean.cid > 0}"/>
-
+                                <c:if test="#{productBean.cid gt 0}">
+                                    <f:param name="cid" value="#{productBean.cid}"/>
+                                </c:if>
                             </h:link> 
                         </div>
                     </div>
