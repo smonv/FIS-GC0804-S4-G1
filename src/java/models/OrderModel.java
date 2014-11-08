@@ -18,8 +18,11 @@ public class OrderModel {
 
     @PersistenceContext
     EntityManager em;
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
+    public List<Orders> getAll(){
+        List<Orders> orders = em.createNamedQuery("Orders.findAll").getResultList();
+        return orders;
+    }
 
     public Orders createOrder(Orders order) {
         try {
@@ -107,11 +110,11 @@ public class OrderModel {
                 .getResultList();
         return orders;
     }
-    
-    public List<Orders> getListOrderByNumber(String number ,int clientId) {
+
+    public List<Orders> getListOrderByNumber(String number, int clientId) {
         List<Orders> orders = em.createNamedQuery("Orders.searchByNumber")
-                .setParameter("number","%"+ number+"%")
-                .setParameter("cid", new Clients(clientId))              
+                .setParameter("number", "%" + number + "%")
+                .setParameter("cid", new Clients(clientId))
                 .getResultList();
         return orders;
     }
