@@ -8,10 +8,13 @@ package helpers;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -27,8 +30,8 @@ public class ApplicationHelper {
     public static ExternalContext getExternalContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
     }
-    
-    public static Map<String,String> getRequestParameterMap(){
+
+    public static Map<String, String> getRequestParameterMap() {
         return getExternalContext().getRequestParameterMap();
     }
 
@@ -54,7 +57,7 @@ public class ApplicationHelper {
             return false;
         }
     }
-    
+
     public static boolean isLong(String number) {
         try {
             Long.parseLong(number);
@@ -78,10 +81,22 @@ public class ApplicationHelper {
         }
         return new String(buff);
     }
-    
-    public static String formatDate(Date date, String pattern){
+
+    public static String formatDate(Date date, String pattern) {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         String formated_date = format.format(date);
         return formated_date;
+    }
+
+    public static Date parseDate(String stringDate, String pattern) {
+        SimpleDateFormat parse = new SimpleDateFormat(pattern);
+        try {
+            Date date = parse.parse(stringDate);
+            return date;
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
     }
 }

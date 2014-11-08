@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,10 +63,8 @@ public class OrderCreateBean implements Serializable {
     private List<Orders> orders;
     private int floor;
     private BigDecimal heightOfFloor;
+    private String stringStartAt;
 
-    /**
-     * Creates a new instance of OrderBean
-     */
     public OrderCreateBean() {
     }
 
@@ -263,6 +262,22 @@ public class OrderCreateBean implements Serializable {
     }
 
     public void newOrder() {
+        //validate start_at time input
+//        Date start_at = ApplicationHelper.parseDate(stringStartAt, "dd/MM/yyyy");
+//        boolean valid = true;
+//        if (start_at == null) {
+//            ApplicationHelper.addMessage("Wrong date type!");
+//            valid = false;
+//        } else if (start_at.compareTo(PersistenceHelper.getCurrentTime()) < 0) {
+//            ApplicationHelper.addMessage("Wish date before current date!");
+//            valid = false;
+//        }
+//        if (!valid) {
+//            ApplicationHelper.redirect("/client/order/new.xhtml", true);
+//            return;
+//        }
+
+        //begin add new order
         Map<String, Object> session = SessionHelper.getSessionMap();
         Clients client = (Clients) session.get("client");
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
@@ -299,9 +314,7 @@ public class OrderCreateBean implements Serializable {
     }
 
     public List<Orders> getListOrders() {//phan show list 
-
-        return orderModel.getListOrder(2);
-
+        return orderModel.getListOrder(1);
     }
 
     //////////////////////////////
@@ -401,6 +414,14 @@ public class OrderCreateBean implements Serializable {
 
     public void setHeightOfFloor(BigDecimal heightOfFloor) {
         this.heightOfFloor = heightOfFloor;
+    }
+
+    public String getStringStartAt() {
+        return stringStartAt;
+    }
+
+    public void setStringStartAt(String stringStartAt) {
+        this.stringStartAt = stringStartAt;
     }
 
 }

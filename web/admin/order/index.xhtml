@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <ui:define name="content">
+            <h1 class="margin-bottom">Orders</h1>
+            
+            <h:form>
+                <div class="table-responsive">
+                    <h:dataTable class="table table-bordered datatable" id="order_table" 
+                                 value="#{adminShowOrder.orders}" var="order"
+                                 binding="#{adminShowOrder.orders_table}"
+                                 >
+                        <h:column>
+                            <f:facet name="header">Client</f:facet>
+                            <h:outputText value="#{order.clientId.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Order Number</f:facet>
+                            <h:outputText value="#{order.number}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Status</f:facet>
+                            <h:outputText value="#{order.orderStatus.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Products</f:facet>
+                            <h:outputText value="#{order.orderProductDetailsList.size()}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Total Price</f:facet>
+                            <h:outputText value="$ #{adminShowOrder.getTotalOrderCost(order.orderProductDetailsList)}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Start Date</f:facet>
+                            <h:outputText value="Not Support Yet" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Command</f:facet>
+                            <h:link value="Detail" outcome="/admin/order/detail.xhtml?oid=#{order.oid}" class="btn btn-primary"/> 
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
