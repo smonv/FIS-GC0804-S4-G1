@@ -51,6 +51,13 @@ public class FeedbackModel {
     public List<Feedbacks> getAll() {
         return em.createNamedQuery("Feedbacks.findAll").getResultList();
     }
+    
+    public int getAllForAdmin() {
+        return em.createNamedQuery("Feedbacks.findAll").getResultList().size();
+    }
+    public List<Feedbacks> getAllForAdmin(int startIndex, int pageSize) {
+        return em.createNamedQuery("Feedbacks.findAll").setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+    }
 
     public Feedbacks getById(int fid) {
         List<Feedbacks> feedbacks = em.createNamedQuery("Feedbacks.findByFid").setParameter("fid", fid).getResultList();

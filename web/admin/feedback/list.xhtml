@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="page" value="#{adminfeedbackShowBean.page}" />
+            <f:event listener="#{adminfeedbackShowBean.loadFeedBackList()}" type="preRenderView"/>
+        </f:metadata>
+        <ui:define name="title">Feedbacks</ui:define>
+        <ui:define name="content">
+            <h1 class="margin-bottom">List Feedback</h1>
+            <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
+                <li>
+                    <a href="index.html"><i class="entypo-home"></i>Home</a>
+                </li>
+                <li>
+
+                    <a href="tables-main.html">Tables</a>
+                </li>
+                <li class="active">
+
+                    <strong>Basic Tables</strong>
+                </li>
+            </ol>
+            <br />
+            <div class="table-responsive">
+                <h:form>
+                    <h:dataTable class="table table-bordered datatable" id="table-1" value="#{adminfeedbackShowBean.feedbacks}" var="feedback">
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{feedback.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Email</f:facet>
+                            <h:outputText value="#{feedback.email}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Satisfying </f:facet>
+                            <h:outputText value="#{feedback.feedbackLevel.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Status</f:facet>
+                            <h:outputText value="#{feedback.feedbackStatus.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Create At</f:facet>
+                            <h:outputText value="#{feedback.createAt}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Command</f:facet>
+                            <h:link outcome="/client/feedback/view.xhtml?fid=#{feedback.fid}" value="View" class="btn btn-default btn-sm btn-icon icon-left" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
+
+                        </h:column>
+
+                    </h:dataTable>
+                </h:form>
+            </div>
+            <br/>
+            <div >
+                <h:link outcome="list" value="Previous"  class="btn btn-default btn-sm btn-icon icon-left"
+                        rendered="#{adminfeedbackShowBean.totalfeedback > adminfeedbackShowBean.pageSize and adminfeedbackShowBean.page > 0}">
+                    <f:param name="page" value="#{adminfeedbackShowBean.page - 1}"/>
+                </h:link>
+
+
+                <h:link outcome="list" value="Next" class="btn btn-default btn-sm btn-icon icon-left"
+                        rendered="#{adminfeedbackShowBean.totalfeedback gt adminfeedbackShowBean.pageSize 
+                                    and adminfeedbackShowBean.hasNextPage
+                                    and adminfeedbackShowBean.pageSize * (adminfeedbackShowBean.page + 1) lt adminfeedbackShowBean.totalfeedback
+                                                        }">
+                    <f:param name="page" value="#{adminfeedbackShowBean.page + 1}"/>
+
+                </h:link> 
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+
