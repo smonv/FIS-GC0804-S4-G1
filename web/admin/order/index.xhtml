@@ -5,46 +5,121 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="page" value="#{adminShowOrder.page}" />
+            <f:viewParam name="number" value="#{adminShowOrder.number}" />
+            <f:viewParam name="status" value="#{adminShowOrder.status}" />
+            <f:viewAction action="#{adminShowOrder.init()}" />
+        </f:metadata>
         <ui:define name="content">
             <h1 class="margin-bottom">Orders</h1>
-            
-            <h:form>
-                <div class="table-responsive">
-                    <h:dataTable class="table table-bordered datatable" id="order_table" 
-                                 value="#{adminShowOrder.orders}" var="order"
-                                 binding="#{adminShowOrder.orders_table}"
-                                 >
-                        <h:column>
-                            <f:facet name="header">Client</f:facet>
-                            <h:outputText value="#{order.clientId.name}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Order Number</f:facet>
-                            <h:outputText value="#{order.number}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Status</f:facet>
-                            <h:outputText value="#{order.orderStatus.name}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Products</f:facet>
-                            <h:outputText value="#{order.orderProductDetailsList.size()}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Total Price</f:facet>
-                            <h:outputText value="$ #{adminShowOrder.getTotalOrderCost(order.orderProductDetailsList)}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Start Date</f:facet>
-                            <h:outputText value="Not Support Yet" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Command</f:facet>
-                            <h:link value="Detail" outcome="/admin/order/detail.xhtml?oid=#{order.oid}" class="btn btn-primary"/> 
-                        </h:column>
-                    </h:dataTable>
+            <div class="row">
+                <div class="form-group">
+                    <input type="text" id="input_number" />
+                    <button id="filter_number" class="btn btn-sm btn-primary">Filter Number</button>
                 </div>
-            </h:form>
+                <div class="form-group">
+                    <select id="input_status">
+                        <option value="0"> Select Status</option>
+                        <ui:repeat value="#{adminShowOrder.getAllStatus()}" var="status">
+                            <option value="#{status.lsid}">#{status.name}</option>
+                        </ui:repeat>
+                    </select>
+                    <button id="filter_status" class="btn btn-sm btn-primary">Filter Status</button>
+                </div>
+                <div class="form-group">
+                    <button id="filter_clear" class="btn btn-sm btn-primary">Clear Filter</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <h:form>
+                    <div class="table-responsive">
+                        <h:dataTable class="table table-bordered datatable" id="order_table" 
+                                     value="#{adminShowOrder.orders}" var="order"
+                                     binding="#{adminShowOrder.orders_table}"
+                                     >
+                            <h:column>
+                                <f:facet name="header">Client</f:facet>
+                                <h:outputText value="#{order.clientId.name}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Order Number</f:facet>
+                                <h:outputText value="#{order.number}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Status</f:facet>
+                                <h:outputText value="#{order.orderStatus.name}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Products</f:facet>
+                                <h:outputText value="#{order.orderProductDetailsList.size()}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Total Price</f:facet>
+                                <h:outputText value="$ #{adminShowOrder.getTotalOrderCost(order.orderProductDetailsList)}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Start Date</f:facet>
+                                <h:outputText value="Not Support Yet" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Command</f:facet>
+                                <h:link value="Detail" outcome="/admin/order/detail.xhtml?oid=#{order.oid}" class="btn btn-primary"/> 
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </h:form>
+            </div>
+            <div class="row">
+                <h:link value="Previous" 
+                        outcome="/admin/order/index.xhtml"
+                        rendered="#{adminShowOrder.totalOrders gt adminShowOrder.pageSize and adminShowOrder.page gt 1}"
+                        class="btn btn-primary"
+                        >
+                    <f:param name="page" value="#{adminShowOrder.current_page - 1}" />
+                </h:link>
+                &nbsp;&nbsp;
+                <h:link value="Next"
+                        outcome="/admin/order/index.xhtml"
+                        rendered="#{adminShowOrder.totalOrders gt adminShowOrder.pageSize
+                                    and (adminShowOrder.current_page) * adminShowOrder.pageSize lt adminShowOrder.totalOrders}"
+                        class="btn btn-primary"
+                        >
+                    <f:param name="page" value="#{adminShowOrder.current_page + 1}" />
+                </h:link>
+                &nbsp;&nbsp;
+                <h:outputText value="Page: #{adminShowOrder.current_page}/#{adminShowOrder.getTotalPages()}" />
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#filter_number").click(function (event) {
+                        event.preventDefault();
+                        var input_number = $("#input_number").val();
+                        console.log(input_number);
+                        if (input_number !== "") {
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml?number=" + input_number;
+                        } else {
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml";
+                        }
+                    });
+                    $("#filter_status").click(function (event) {
+                        event.preventDefault();
+                        var input_status = $("#input_status").find(":selected").val();
+                        console.log(input_status);
+                        if (input_status == 0) {
+                            alert("Please select one status!")
+                        } else {
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml?status=" + input_status;
+                        }
+                    });
+                    
+                    $("#filter_clear").click(function(event){
+                        event.preventDefault();
+                        window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml";
+                    });
+                });
+            </script>
         </ui:define>
     </ui:composition>
 </html>
