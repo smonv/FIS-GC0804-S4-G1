@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:composition template="/templates/admin/layout_login.xhtml">
+        <ui:define name="content"> 
+                <div class="form-login-error">
+                    <h3>Invalid login</h3>
+                    <p><h:messages/></p>
+                </div>
+                <h:form id="loginForm">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="entypo-user"></i>
+                            </div>
+                            <h:inputText class="form-control" p:placeholder="Username" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="entypo-key"></i>
+                            </div>
+                            <h:inputText class="form-control" p:placeholder="Password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:commandButton class="btn btn-primary btn-block btn-login">
+                            <i class="entypo-login"></i>
+                            Login In
+                        </h:commandButton>>
+                    </div>
+                </h:form>
+        </ui:define>
+
+    </ui:composition>
+
+</html>
