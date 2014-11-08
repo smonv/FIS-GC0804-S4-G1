@@ -37,15 +37,15 @@ public class FilterClient implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         
-        if (session.getAttribute("client") == null) {
-            session.setAttribute("msg", "Please log in to access that page!");
-            res.sendRedirect(req.getContextPath() + "/login.xhtml");
-        } else if (session.getAttribute("admin") != null) {
-            res.sendRedirect(req.getContextPath() + "/403.xhtml");
-        } else {
-            chain.doFilter(request, response);
-        }
-        //chain.doFilter(request, response);
+//        if (session.getAttribute("client") == null) {
+//            session.setAttribute("msg", "Please log in to access that page!");
+//            res.sendRedirect(req.getContextPath() + "/login.xhtml");
+//        } else if (session.getAttribute("admin") != null) {
+//            res.sendRedirect(req.getContextPath() + "/403.xhtml");
+//        } else {
+//            chain.doFilter(request, response);
+//        }
+        chain.doFilter(request, response);
     }
     
     @Override
