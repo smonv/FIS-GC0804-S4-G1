@@ -118,7 +118,6 @@ public class ProductBean {
         return page * pageSize;
     }
 
-
     public int getPageSize() {
         return pageSize = 2;
     }
