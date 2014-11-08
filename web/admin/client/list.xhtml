@@ -5,57 +5,76 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/admin/layout.xhtml">
-        <ui:define name="content">
-            <div class="page-title">
-                <h1>List Client</h1>
-            </div>
+         <ui:define name="content">
+            <h1 class="margin-bottom">List Client</h1>
+            <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
+                <li>
+                    <a href="index.html"><i class="entypo-home"></i>Home</a>
+                </li>
+                <li>
+
+                    <a href="tables-main.html">Tables</a>
+                </li>
+                <li class="active">
+
+                    <strong>Basic Tables</strong>
+                </li>
+            </ol>
+            <br />
+
             <h:form>
                 <h:panelGroup rendered="#{clientShowBean.items.rowCount > 0}">
                     <h:outputText value="#{clientShowBean.pagination.pageFirstItem + 1}..#{clientShowBean.pagination.pageLastItem + 1}/#{clientShowBean.pagination.itemsCount}"/><br/>
                     <h:commandLink action="#{clientShowBean.previous()}" value="Previous #{clientShowBean.pagination.pageSize}" rendered="#{clientShowBean.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{clientShowBean.next()}" value="Nexts #{clientShowBean.pagination.pageSize}" rendered="#{clientShowBean.pagination.hasNextPage}"/><br/>
-                    <h:inputText value="#{clientShowBean.search}" class="text-input"/>
-                    <h:commandButton action="#{clientShowBean.showInfo()}" value="search" class="btn-red"/>
-                <h:dataTable class="idCart2" value="#{clientShowBean.items}" var="c">
+                    <h:inputText value="#{clientShowBean.search}" class="" style="width: 250px; height: 26px"/>
+                    <h:commandLink action="#{clientShowBean.showInfo()}" value="Search" class="btn btn-info btn-sm btn-icon icon-left">
+                        <i class="entypo-search"></i>
+                    </h:commandLink>
+                    <p></p>
+                    <div class="table-responsive">
+                        <h:dataTable class="table table-bordered datatable" id="table-1" value="#{clientShowBean.items}" var="c">
 
-                    <h:column>
-                        <f:facet name="header">Name</f:facet>
-                        <h:outputText value="#{c.name}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Total Order</f:facet>
-                        <h:outputText value="Order:#{clientShowBean.getTotalOrder(c)}" style="color: red"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">UserName</f:facet>
-                        <h:outputText value="#{c.username}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Contact</f:facet>
-                        <h:outputText value="#{c.contactDetails}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Compamy</f:facet>
-                        <h:outputText value="#{c.companyName}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Address</f:facet>
-                        <h:outputText value="#{c.clientAddress}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Create At</f:facet>
-                        <h:outputText value="#{c.createAt}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"></f:facet>
-                        <h:link value="View Details" outcome="/admin/client/details.xhtml?cid=#{c.cid}" styleClass="btn btn-primary"/>
-                    </h:column>
-                </h:dataTable>
-                 </h:panelGroup>
+                            <h:column>
+                                <f:facet name="header">Name</f:facet>
+                                <h:outputText value="#{c.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Total Order</f:facet>
+                                <h:outputText value="Order:#{clientShowBean.getTotalOrder(c)}" style="color: red"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">UserName</f:facet>
+                                <h:outputText value="#{c.username}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Contact</f:facet>
+                                <h:outputText value="#{c.contactDetails}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Create At</f:facet>
+                                <h:outputText value="#{c.createAt}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header"></f:facet>
+                                <h:link value="" outcome="/admin/client/details.xhtml?cid=#{c.cid}" class="btn btn-default btn-sm btn-icon icon-left">
+
+                                    <i class="entypo-pencil"></i>
+                                    Edit
+                                </h:link>
+                                <h:link value="" outcome="/admin/client/details.xhtml?cid=#{c.cid}" class="btn btn-info btn-sm btn-icon icon-left">
+
+                                    <i class="entypo-info"></i>
+                                    Profile
+                                </h:link>
+
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </h:panelGroup>
             </h:form>
-            <style>
-                
-            </style>
+
+
         </ui:define>
     </ui:composition>
 </html>
