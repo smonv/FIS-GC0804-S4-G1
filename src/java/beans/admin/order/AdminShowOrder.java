@@ -1,8 +1,11 @@
 package beans.admin.order;
 
+import entities.ListStatus;
 import entities.OrderProductDetails;
 import entities.Orders;
 import entities.Products;
+import helpers.ApplicationHelper;
+import helpers.PaginationHelper;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -11,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
+import models.ListStatusModel;
 import models.OrderModel;
 import models.ProductModel;
 
@@ -19,19 +23,60 @@ import models.ProductModel;
 public class AdminShowOrder {
 
     @EJB
+    private ListStatusModel listStatusModel;
+
+    @EJB
     private ProductModel productModel;
 
     @EJB
     private OrderModel orderModel;
+
+    //bean variable
     private HtmlDataTable orders_table;
     private List<Orders> orders;
+    private int current_page = 1;
+    private int pageSize = 1;
+    private long totalOrders;
+
+    //bean param
+    private String page;
+    private String number;
+    private String status;
 
     public AdminShowOrder() {
     }
 
-    public List<Orders> getOrders() {
-        orders = orderModel.getAll();
-        return orders;
+    public void init() {
+        current_page = ApplicationHelper.getCurrentPage(page);
+        if (number == null && status == null) {
+            orders = orderModel.getAll(current_page - 1, pageSize);
+            totalOrders = orderModel.getTotalOrder();
+        } else if (number != null && status == null) {
+            orders = orderModel.getListByNumber(number, current_page - 1, pageSize);
+            totalOrders = orders.size();
+        } else if (status != null && number == null) {
+
+            int sid = 0;
+            if (!ApplicationHelper.isInteger(status)) {
+                ApplicationHelper.redirect("/404.xhtml", true);
+                return;
+            }
+            sid = Integer.parseInt(status);
+            ListStatus status = listStatusModel.getById(sid);
+            if (status == null) {
+                ApplicationHelper.redirect("/404.xhtml", true);
+            }
+            orders = orderModel.getListByStatus(status, current_page - 1, pageSize);
+            totalOrders = orderModel.getCountByStatus(status);
+        }
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public BigDecimal getTotalOrderCost(List<OrderProductDetails> opds) {
@@ -52,7 +97,23 @@ public class AdminShowOrder {
 
         return totalCost;
     }
+
+    public int getTotalPages() {
+        int pages = 0;
+        long totalPages = totalOrders / pageSize;
+        pages = totalPages > (int) totalPages ? ((int) totalPages) + 1 : (int) totalPages;
+        pages = pages == 0 ? 1 : pages;
+        return pages;
+    }
+    
+    public List<ListStatus> getAllStatus(){
+        return listStatusModel.getAll();
+    }
+
     //////////////////////////////
+    public List<Orders> getOrders() {
+        return orders;
+    }
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
@@ -64,6 +125,46 @@ public class AdminShowOrder {
 
     public void setOrders_table(HtmlDataTable orders_table) {
         this.orders_table = orders_table;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+
+    public long getTotalOrders() {
+        return totalOrders;
+    }
+
+    public void setTotalOrders(long totalOrders) {
+        this.totalOrders = totalOrders;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getCurrent_page() {
+        return current_page;
+    }
+
+    public void setCurrent_page(int current_page) {
+        this.current_page = current_page;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
 }

@@ -99,4 +99,18 @@ public class ApplicationHelper {
         }
 
     }
+
+    public static int getCurrentPage(String page) {
+        int current_page = 1;
+        if (page != null && !page.isEmpty()) {
+
+            if (!isInteger(page)) {
+                ApplicationHelper.redirect("/404.xhtml", true);
+
+            }
+            current_page = Integer.parseInt(page);
+            current_page = current_page == 0 ? 1 : current_page;
+        }
+        return current_page;
+    }
 }

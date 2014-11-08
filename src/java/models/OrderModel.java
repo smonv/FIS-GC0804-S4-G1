@@ -18,10 +18,21 @@ public class OrderModel {
 
     @PersistenceContext
     EntityManager em;
-    
-    public List<Orders> getAll(){
+
+    public List<Orders> getAll() {
         List<Orders> orders = em.createNamedQuery("Orders.findAll").getResultList();
         return orders;
+    }
+
+    public List<Orders> getAll(int page, int pageSize) {
+        int startIndex = page * pageSize;
+        List<Orders> orders = em.createNamedQuery("Orders.findAll").setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+        return orders;
+    }
+
+    public long getTotalOrder() {
+        long totalOrder = (long) em.createNamedQuery("Orders.totalOrder").getSingleResult();
+        return totalOrder;
     }
 
     public Orders createOrder(Orders order) {
@@ -54,6 +65,32 @@ public class OrderModel {
     public Orders getByNumber(String number) {
         List<Orders> orders = em.createNamedQuery("Orders.findByNumber").setParameter("number", number).getResultList();
         return orders.size() > 0 ? orders.get(0) : null;
+    }
+
+    public List<Orders> getListByNumber(String number, int page, int pageSize) {
+        int startIndex = page * pageSize;
+        List<Orders> orders = em.createNamedQuery("Orders.findByNumber")
+                .setParameter("number", number)
+                .setFirstResult(startIndex)
+                .setMaxResults(pageSize)
+                .getResultList();
+        return orders;
+    }
+
+    public List<Orders> getListByStatus(ListStatus status, int page, int pageSize) {
+        int startIndex = page * pageSize;
+        List<Orders> orders = em.createNamedQuery("Orders.findByStatus")
+                .setParameter("orderStatus", status)
+                .setFirstResult(startIndex)
+                .setMaxResults(pageSize)
+                .getResultList();
+
+        return orders;
+    }
+
+    public long getCountByStatus(ListStatus status) {
+        long totalOrder = (long) em.createNamedQuery("Orders.countByStatus").setParameter("orderStatus", status).getSingleResult();
+        return totalOrder;
     }
 
     public boolean removeOrder(Orders order) {
