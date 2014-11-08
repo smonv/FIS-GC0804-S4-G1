@@ -16,7 +16,8 @@
                     <h:commandLink action="#{clientShowBean.next()}" value="Nexts #{clientShowBean.pagination.pageSize}" rendered="#{clientShowBean.pagination.hasNextPage}"/><br/>
                     <h:inputText value="#{clientShowBean.search}" class="text-input"/>
                     <h:commandButton action="#{clientShowBean.showInfo()}" value="search" class="btn-red"/>
-                <h:dataTable class="idCart2" value="#{clientShowBean.items}" var="c">
+                    <div class="table-responsive">
+                    <h:dataTable class="table table-bordered" value="#{clientShowBean.items}" var="c">
 
                     <h:column>
                         <f:facet name="header">Name</f:facet>
@@ -48,9 +49,10 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header"></f:facet>
-                        <h:link value="View Details" outcome="/admin/client/details.xhtml?cid=#{c.cid}" styleClass="btn btn-primary"/>
+                        <h:link value="View Details" outcome="/admin/client/details.xhtml?cid=#{c.cid}" styleClass="btn-red"/>
                     </h:column>
                 </h:dataTable>
+                        </div>
                  </h:panelGroup>
             </h:form>
             <style>

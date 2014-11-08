@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <!-- header-wrapper -->
+
+        <header class="logo-env">
+
+            <!-- logo -->
+            <div class="logo">
+                <a href="index.html">
+                    <img src="../../resources/admin/images/logo@2x.png" width="120" alt="" />
+                </a>
+            </div>
+
+            <!-- logo collapse icon -->
+
+            <div class="sidebar-collapse">
+                <a href="#" class="sidebar-collapse-icon with-animation"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+                    <i class="entypo-menu"></i>
+                </a>
+            </div>
+
+
+
+            <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+            <div class="sidebar-mobile-menu visible-xs">
+                <a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
+                    <i class="entypo-menu"></i>
+                </a>
+            </div>
+
+        </header>
+
+
+        <ul id="main-menu" class="">
+            <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+            <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+            <!-- Search Bar -->
+            <li id="search">
+                <form method="get" action="">
+                    <input type="text" name="q" class="search-input" placeholder="Search something..."/>
+                    <button type="submit">
+                        <i class="entypo-search"></i>
+                    </button>
+                </form>
+            </li>
+
+            <li>
+                <h:link outcome="demo.xhtml">
+                    <i class="entypo-window"></i>
+                    <span>Users</span>
+                </h:link>
+                <ul>
+                    <li class="active">
+                        <h:link outcome="demo.xhtml">
+                            <span>Clients</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="demo.xhtml">
+                            <span>Employee</span>
+                        </h:link>
+                    </li>
+                </ul>
+            </li>
+            <!-- /user== -->
+            <li>
+                <h:link outcome="demo.xhtml">
+                    <i class="entypo-newspaper"></i>
+                    <span>Projects</span>
+                </h:link>
+                <ul>
+                    <li class="active">
+                        <h:link outcome="demo.xhtml">
+                            <span>Clients</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="demo.xhtml">
+                            <span>Employee</span>
+                        </h:link>
+                    </li>
+                </ul>
+            </li>
+            <!-- /user== -->
+            <li>
+                <h:link outcome="demo.xhtml">
+                    <i class="entypo-layout"></i>
+                    <span>Products</span>
+                </h:link>
+                <ul>
+                    <li class="active">
+                        <h:link outcome="demo.xhtml">
+                            <span>Clients</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="demo.xhtml">
+                            <span>Employee</span>
+                        </h:link>
+                    </li>
+                </ul>
+            </li>
+            <!-- /user== -->
+            <li>
+                <h:link outcome="demo.xhtml">
+                    <i class="entypo-doc-text"></i>
+                    <span>Orders</span>
+                </h:link>
+                <ul>
+                    <li class="active">
+                        <h:link outcome="demo.xhtml">
+                            <span>Clients</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="demo.xhtml">
+                            <span>Employee</span>
+                        </h:link>
+                    </li>
+                </ul>
+            </li>
+            <!-- /user== -->
+            <li>
+                <h:link outcome="demo.xhtml">
+                    <i class="entypo-mail"></i>
+                    <span>Feedback</span>
+                </h:link>
+                <ul>
+                    <li class="active">
+                        <h:link outcome="demo.xhtml">
+                            <span>Clients</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="demo.xhtml">
+                            <span>Employee</span>
+                        </h:link>
+                    </li>
+                </ul>
+            </li>
+            <!-- /user== -->
+            <li>
+                <h:link outcome="demo.xhtml">
+                    <i class="entypo-attention"></i>
+                    <span>Complaints</span>
+                </h:link>
+                <ul>
+                    <li class="active">
+                        <h:link outcome="demo.xhtml">
+                            <span>Clients</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="demo.xhtml">
+                            <span>Employee</span>
+                        </h:link>
+                    </li>
+                </ul>
+            </li>
+            <!-- /user== -->
+            <li>
+                <a href="charts.html">
+                    <i class="entypo-chart-bar"></i>
+                    <span>Charts</span>
+                </a>
+            </li>
+        </ul>
+        <!-- /header-wrapper -->
+    </ui:composition>
+</html>
+
