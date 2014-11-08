@@ -10,6 +10,8 @@
             <f:viewParam name="mode" value="#{productBean.mode}" />
             <f:viewAction action="#{productBean.checkMode()}"/>
             <f:viewParam name="page" value="#{productBean.page}" />
+            <f:viewParam name="cid" value="#{productBean.cid}" />
+            <f:viewParam name="category" value="#{productBean.category}" />
             <f:event listener="#{productBean.loadProductList()}" type="preRenderView"/>
         </f:metadata>
         <ui:define name="title">List Products </ui:define>
@@ -40,99 +42,85 @@
                             <div class="box-wrapper">
                                 <ul id="filter"> 
                                     <h:form>
-                                        <li><h:commandLink action="#{categoryBean.setCurrentCategory(null)}"   class="btn btn-primary">All</h:commandLink></li>                     
-                                    </h:form>  
-                                    <ui:repeat var="category" value="#{categoryBean.allCategory}" varStatus="status">
-                                        <h:form>
-                                            <li><h:commandLink action="#{categoryBean.setCurrentCategory(category)}"  class="btn btn-primary">#{category.name}</h:commandLink></li>                           
-                                        </h:form>       
-                                    </ui:repeat>
+                                        <li><h:commandLink value="All" immediate="true" action="#{productBean.clearParamAndRedirect()}" class="btn btn-primary"/></li>                     
+
+                                        <ui:repeat var="category" value="#{categoryBean.allCategory}" varStatus="status">
+
+                                            <li>
+                                                <h:commandLink value="#{category.name}" 
+                                                               class="btn btn-primary" 
+                                                               action="#{productBean.clearPageAndRedirect()}">
+                                                    <f:param name="cat_name" value="#{category.name}" />
+                                                    <f:param name="scid" value="#{category.cid}" />
+                                                </h:commandLink>
+                                            </li>                           
+
+                                        </ui:repeat>
+                                    </h:form>
                                 </ul>
 
                                 <div id="grid">
-                                    <c:if test="#{categoryBean.currentCategory == null}">
-                                        <h:form>
-                                            <c:if test="#{productBean.page > 0}">
-                                                <h:link outcome="index" value="Previous" class="btn btn-primary">
-                                                    <f:param name="page" value="#{productBean.page - 1}"/>
-                                                </h:link>
-                                            </c:if>
-                                            <c:if test="#{productBean.hasNextPage}">
-                                                <h:link outcome="index" value="Next" class="btn btn-primary">
-                                                    <f:param name="page" value="#{productBean.page + 1}"/>
-                                                </h:link> 
-                                            </c:if>
-                                            <br/>
-                                            <ui:repeat var="product" value="#{productBean.allProduct}" varStatus="status">
 
-                                                <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
-                                                    <div class="project-item">
+                                    <br/>
+                                    <ui:repeat var="product" value="#{productBean.products}" varStatus="status">
 
-                                                        <div class="post-thumbnail">
-                                                            <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
-                                                            <h:link class="element-link2" outcome="/product/show.xhtml?pid=#{product.pid}"></h:link>
-                                                        </div>
+                                        <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
+                                            <div class="project-item">
 
-                                                        <div class="project-details">
-                                                            <h2><h:link value="#{product.name}" outcome="/product/show.xhtml">
-                                                                    <f:param name="pid" value="#{product.pid}" />
-                                                                    <c:if test="#{productBean.mode != null}">
-                                                                        <f:param name="mode" value="#{productBean.mode}" />
-                                                                    </c:if>
-                                                                </h:link></h2>
-                                                            <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
-                                                            <div class="readmore">
-                                                                <h:link value="Details" outcome="/product/show.xhtml?pid=#{product.pid}">
-                                                                    <f:param name="pid" value="#{product.pid}" />
-                                                                    <c:if test="#{productBean.mode != null}">
-                                                                        <f:param name="mode" value="#{productBean.mode}" />
-                                                                    </c:if>
-                                                                </h:link>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
+                                                <div class="post-thumbnail">
+                                                    <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
+                                                    <h:link class="element-link2" outcome="/product/show.xhtml?pid=#{product.pid}"></h:link>
                                                 </div>
-                                            </ui:repeat>
 
-                                        </h:form>
-                                    </c:if>
-                                    <c:if test="#{categoryBean.currentCategory!= null}"> 
-                                        <ui:repeat var="product" value="#{productBean.getProductsByCtegory(categoryBean.currentCategory.cid)}" varStatus="status">
-                                            <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
-                                                <div class="project-item">
-
-                                                    <div class="post-thumbnail">
-                                                        <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
-                                                        <h:link class="element-link2" outcome="/product/show.xhtml?pid=#{product.pid}"></h:link>
+                                                <div class="project-details">
+                                                    <h2><h:link value="#{product.name}" outcome="/product/show.xhtml">
+                                                            <f:param name="pid" value="#{product.pid}" />
+                                                            <c:if test="#{productBean.mode != null}">
+                                                                <f:param name="mode" value="#{productBean.mode}" />
+                                                            </c:if>
+                                                        </h:link></h2>
+                                                    <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                                                    <div class="readmore">
+                                                        <h:link value="Details" outcome="/product/show.xhtml?pid=#{product.pid}">
+                                                            <f:param name="pid" value="#{product.pid}" />
+                                                            <c:if test="#{productBean.mode != null}">
+                                                                <f:param name="mode" value="#{productBean.mode}" />
+                                                            </c:if>
+                                                        </h:link>
                                                     </div>
 
-                                                    <div class="project-details">
-                                                        <h2><h:link value="#{product.name}" outcome="/product/show.xhtml">
-                                                                <f:param name="pid" value="#{product.pid}" />
-                                                                <c:if test="#{productBean.mode != null}">
-                                                                    <f:param name="mode" value="#{productBean.mode}" />
-                                                                </c:if>
-                                                            </h:link></h2>
-                                                        <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
-                                                        <div class="readmore">
-                                                            <h:link value="Details" outcome="/product/show.xhtml?pid=#{product.pid}">
-                                                                <f:param name="pid" value="#{product.pid}" />
-                                                                <c:if test="#{productBean.mode != null}">
-                                                                    <f:param name="mode" value="#{productBean.mode}" />
-                                                                </c:if>
-                                                            </h:link>
-                                                        </div>
-
-                                                    </div>
                                                 </div>
                                             </div>
-                                        </ui:repeat>
-                                    </c:if>
+                                        </div>
+                                    </ui:repeat>
+
+
 
                                 </div> <!-- /grid -->	
                             </div> <!-- /box-wrapper -->
 
+                        </div>
+                        <div class="col-md-12">
+                            <h:link outcome="index" value="Previous" class="btn btn-primary" 
+                                    rendered="#{productBean.totalProducts > productBean.pageSize and productBean.page > 0}">
+                                <f:param name="page" value="#{productBean.page - 1}"/>
+
+                                <c:if test="#{productBean.cid gt 0}">
+                                    <f:param name="cid" value="#{productBean.cid}" />
+                                </c:if>
+                            </h:link>
+
+
+                            <h:link outcome="index" value="Next" class="btn btn-primary"
+                                    rendered="#{productBean.totalProducts gt productBean.pageSize 
+                                                and productBean.hasNextPage
+                                                and productBean.pageSize * (productBean.page + 1) lt productBean.totalProducts 
+                                                        }">
+                                <f:param name="page" value="#{productBean.page + 1}"/>
+                                <c:if test="#{productBean.cid gt 0}">
+                                    <f:param name="cid" value="#{productBean.cid}"/>
+                                </c:if>
+                            </h:link> 
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@
  */
 package models;
 
+import entities.Categories;
 import entities.Products;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -27,14 +28,35 @@ public class ProductModel {
         List<Products> products = em.createNamedQuery("Products.findAll").getResultList();
         return products;
     }
-    public List<Products> getAllProduct(int startIndex,int pageSize) {
+
+    public List<Products> getAllProduct(int startIndex, int pageSize) {
         List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
         return products;
     }
+
+    public List<Products> getAll(int startIndex, int pageSize, int category_id) {
+        Categories category = new Categories(category_id);
+        List<Products> products = em.createNamedQuery("Products.findAllByCategoryId").setParameter("categoryId", category).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+        return products;
+    }
+    
+    public int getAllTotalProducts(){
+        List<Products> products = em.createNamedQuery("Products.findAll").getResultList();
+        return products.size();
+    }
+    
+    public int getAllTotalProducts(int category_id){
+        Categories category = new Categories(category_id);
+        List<Products> products = em.createNamedQuery("Products.findAllByCategoryId").setParameter("categoryId", category).getResultList();
+        return products.size();
+    }
+    
+
     public List<Products> getTop12() {
         List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(0).setMaxResults(12).getResultList();
         return products;
     }
+
     public List<Products> getProductsByCategory(int id) {
         List<Products> products = em.createNamedQuery("Products.findByCategoy").setParameter("category_id", id).getResultList();
         return products;
@@ -44,6 +66,7 @@ public class ProductModel {
         List<Products> products = em.createNamedQuery("Products.findByCategoy").setParameter("category_id", id).getResultList();
         return products;
     }
+
     public List<Products> getAllForSelectBox() {
         List<Products> products = em.createNamedQuery("Products.getForSelectBox").getResultList();
         return products;

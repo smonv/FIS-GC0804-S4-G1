@@ -1,54 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans.client.product;
 
 import entities.Products;
 import helpers.ApplicationHelper;
-import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import models.CategoryModel;
 import models.ProductModel;
 
-/**
- *
- * @author Cu Beo
- */
 @ManagedBean
 @ViewScoped
 public class ProductBean {
 
     @EJB
+    private CategoryModel categoryModel;
+
+    @EJB
     private ProductModel productModel;
 
     private int pid;
-    private int pageSize;
+    private int pageSize = 1;
     private Products currentProduct;
     Map<String, Object> session;
     private int quantity;
     private String mode;
     private boolean disable = false;
-    private List<Products> list;
-    private int page; 
-    
+    private List<Products> products;
+    private int page;
+    private int cid;
+    private String category;
+    private int totalProducts;
+
     public ProductBean() {
     }
-    
+
     public void init() {
+
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!productModel.productExists(pid)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
-           checkMode();
+            checkMode();
         }
         currentProduct = productModel.getById(pid);
     }
@@ -60,28 +56,41 @@ public class ProductBean {
             }
         }
     }
+
     public boolean isHasNextPage() {
-            return (page + 1) * this.getPageSize() + 1<= productModel.getAll().size();
+        return (page + 1) * this.getPageSize() + 1 <= productModel.getAll().size();
     }
-   
-    public List<Products> getAllProduct() {
-            loadProductList();
-        return list;
-    }
-    
+
     public List<Products> getTop12Product() {
         return productModel.getTop12();
     }
-    
-    public List<Products > getProductsByCtegory(int id) {
-        list = productModel.getProductsByCategory(id);
-        return list;
+
+    public List<Products> getProducts() {
+        loadProductList();
+        return products;
     }
-    
-    public void loadProductList(){
-        list = productModel.getAllProduct(this.getStartIndex(), this.getPageSize());    
+
+    public void loadProductList() {
+        if (cid == 0) {
+            products = productModel.getAllProduct(this.getStartIndex(), this.getPageSize());
+            totalProducts = productModel.getAllTotalProducts();
+        } else {
+            products = productModel.getAll(this.getStartIndex(), this.getPageSize(), cid);
+            totalProducts = productModel.getAllTotalProducts(cid);
+        }
     }
-    
+
+    public void clearParamAndRedirect() {
+        ApplicationHelper.redirect("/product/index.xhtml", true);
+    }
+
+    public void clearPageAndRedirect() {
+        String cat_name = ApplicationHelper.getRequestParameterMap().get("cat_name");
+        String scid = ApplicationHelper.getRequestParameterMap().get("scid");
+        ApplicationHelper.redirect("/product/index.xhtml?category=" + cat_name + "&cid=" + scid, true);
+    }
+
+    ///SET GET
     public int getPid() {
         return pid;
     }
@@ -119,12 +128,12 @@ public class ProductBean {
     }
 
     public int getPageSize() {
-        return pageSize = 2;
+        return pageSize;
     }
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
-    } 
+    }
 
     public boolean isDisable() {
         return disable;
@@ -141,7 +150,33 @@ public class ProductBean {
     public void setPage(int page) {
         this.page = page;
     }
-    
-    
+
+    public int getCid() {
+        return cid;
+    }
+
+    public void setCid(int cid) {
+        this.cid = cid;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setProducts(List<Products> products) {
+        this.products = products;
+    }
+
+    public int getTotalProducts() {
+        return totalProducts;
+    }
+
+    public void setTotalProducts(int totalProducts) {
+        this.totalProducts = totalProducts;
+    }
 
 }
