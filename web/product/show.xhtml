@@ -29,9 +29,6 @@
                     </ul>
                 </div>
                 <!-- //Page title -->
-                <div class="row">
-
-                </div>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -71,144 +68,220 @@
                                 <h:outputText value="#{productBean.currentProduct.name}" style="font-weight: 900;font-size: 24px;" />
                             </li>
 
+
                             <li>
-                                <p>Size:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.productInformations.size} m" /></p>
+                                <p>Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h:outputText value="$#{productBean.currentProduct.price} / Set" /></p> 
+
                             </li>
 
                             <li>
-                                <p>Manufacturer :&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.productInformations.manufacturer}" /></p>
+                                <p>Manufacturer :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h:outputText value="#{productBean.currentProduct.productInformations.manufacturer}" /></p>
                             </li>
 
                             <li>
-                                <p>Produced in:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.productInformations.producedIn}"/></p>
+                                <p>Produced in:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h:outputText value="#{productBean.currentProduct.productInformations.producedIn}"/></p>
                             </li>
+                            <li>
+                                <p>Contruction Price:&nbsp;&nbsp;<h:outputText value="$ #{productBean.currentProduct.constructionPrice}" /></p>
+                            </li>
+                            <li>
+                                <p>Contruction Time:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.constructionTime} week / floor"  /></p>
+                            </li>
+                            <li>
 
-                            <li>
-                                <p>Product Infomations:</p>
-
-                                <blockquote>
-                                    <h:outputText value="#{productBean.currentProduct.productInformations.informations}" />
-                                </blockquote>
-                            </li>
-                            <li>
-                                <p>Price:&nbsp;&nbsp;<h:outputText value="$ #{productBean.currentProduct.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
-                            </li>
-                            <li>
-                                <p>Contruction Price:&nbsp;&nbsp;<h:outputText value="$ #{productBean.currentProduct.constructionPrice}" style="font-weight: 400;font-size: 16px; color: red" /></p>
-                            </li>
-                            <li>
-                                <p>Contruction Time (per floor):&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.constructionTime} week" style="font-weight: 400;font-size: 16px; color: red" /></p>
-                            </li>
-                            <li>
-                                <div class="row">
-                                    <h:form style="border-top: solid 1px #DBDBDB">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <h:outputLabel value="Quantity" />
-                                                    <h:inputText value="#{orderCreateBean.quantity}" 
-                                                                 styleClass="form-control" 
-                                                                 rendered="#{productBean.mode == null}"
-                                                                 required="true"
-                                                                 requiredMessage="Quantity is required!"
-                                                                 converterMessage="Quantity must be number!"
-                                                                 validatorMessage="Quantity must be between 1 and 10"
-                                                                 >
-                                                        <f:validateLongRange minimum="1" maximum="10" />
-                                                        <f:convertNumber integerOnly="true" />
-                                                    </h:inputText>
-                                                    <h:inputText value="#{orderEditBean.quantity}" 
-                                                                 styleClass="form-control" 
-                                                                 rendered="#{productBean.mode != null}"
-                                                                 required="true"
-                                                                 requiredMessage="Quantity is required!"
-                                                                 converterMessage="Quantity must be number!"
-                                                                 validatorMessage="Quantity must be between 1 and 10"
-                                                                 >
-                                                        <f:validateLongRange minimum="1" maximum="10" />
-                                                        <f:convertNumber integerOnly="true" />
-                                                    </h:inputText>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <h:outputLabel value="Floor" />
-                                                    <h:inputText value="#{orderCreateBean.floor}" 
-                                                                 styleClass="form-control" 
-                                                                 rendered="#{productBean.mode == null}"
-                                                                 required="true"
-                                                                 requiredMessage="Floor is required!"
-                                                                 converterMessage="Floor must be number"
-                                                                 validatorMessage="Floor must be between 1 and 200"
-                                                                 >
-                                                        <f:validateLongRange minimum="1" maximum="200"/>
-                                                        <f:convertNumber integerOnly="true" />
-                                                    </h:inputText>
-                                                    <h:inputText value="#{orderEditBean.floor}" 
-                                                                 styleClass="form-control" 
-                                                                 rendered="#{productBean.mode != null}"
-                                                                 required="true"
-                                                                 requiredMessage="Floor is required!"
-                                                                 converterMessage="Floor must be number"
-                                                                 validatorMessage="Floor must be between 1 and 200"
-                                                                 >
-                                                        <f:validateLongRange minimum="1" maximum="200"/>
-                                                        <f:convertNumber integerOnly="true" />
-                                                    </h:inputText>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <h:outputLabel value="Height Of Floor" />
-                                                    <h:inputText value="#{orderCreateBean.heightOfFloor}" 
-                                                                 styleClass="form-control" 
-                                                                 rendered="#{productBean.mode == null}"
-                                                                 required="true"
-                                                                 requiredMessage="Height of floor is required!"
-                                                                 validatorMessage="Height of floor min is 1!"
-                                                                 converter="javax.faces.BigDecimal"
-                                                                 >
-                                                        <f:validateLongRange minimum="1" />
-                                                        <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
-                                                    </h:inputText>
-                                                    <h:inputText value="#{orderEditBean.heightOfFloor}" 
-                                                                 styleClass="form-control" 
-                                                                 rendered="#{productBean.mode != null}"
-                                                                 required="true"
-                                                                 requiredMessage="Height of floor is required!"
-                                                                 validatorMessage="Height of floor min is 1!"
-                                                                 converter="javax.faces.BigDecimal"
-                                                                 >
-                                                        <f:validateLongRange minimum="1" />
-                                                    </h:inputText>
-                                                </div>
+                                <h:form style="border-top: solid 1px #DBDBDB">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <h:outputLabel value="Quantity" />
+                                                <h:inputText value="#{orderCreateBean.quantity}" 
+                                                             styleClass="form-control" 
+                                                             rendered="#{productBean.mode == null}"
+                                                             required="true"
+                                                             requiredMessage="Quantity is required!"
+                                                             converterMessage="Quantity must be number!"
+                                                             validatorMessage="Quantity must be between 1 and 10"
+                                                             >
+                                                    <f:validateLongRange minimum="1" maximum="10" />
+                                                    <f:convertNumber integerOnly="true" />
+                                                </h:inputText>
+                                                <h:inputText value="#{orderEditBean.quantity}" 
+                                                             styleClass="form-control" 
+                                                             rendered="#{productBean.mode != null}"
+                                                             required="true"
+                                                             requiredMessage="Quantity is required!"
+                                                             converterMessage="Quantity must be number!"
+                                                             validatorMessage="Quantity must be between 1 and 10"
+                                                             >
+                                                    <f:validateLongRange minimum="1" maximum="10" />
+                                                    <f:convertNumber integerOnly="true" />
+                                                </h:inputText>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-
-                                                    <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct}" styleClass="btn btn-primary" rendered="#{productBean.mode == null}">
-                                                        <f:param name="pid" value="#{productBean.pid}" />
-                                                    </h:commandButton>
-
-                                                    <h:commandButton value="Add to Edit" action="#{orderEditBean.addSelectedProduct()}" styleClass="btn btn-primary" rendered="#{productBean.mode != null}">
-                                                        <f:param name="pid" value="#{productBean.pid}" />
-                                                    </h:commandButton>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <h:messages class="messages"/>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <h:outputLabel value="Floor" />
+                                                <h:inputText value="#{orderCreateBean.floor}" 
+                                                             styleClass="form-control" 
+                                                             rendered="#{productBean.mode == null}"
+                                                             required="true"
+                                                             requiredMessage="Floor is required!"
+                                                             converterMessage="Floor must be number"
+                                                             validatorMessage="Floor must be between 1 and 200"
+                                                             >
+                                                    <f:validateLongRange minimum="1" maximum="200"/>
+                                                    <f:convertNumber integerOnly="true" />
+                                                </h:inputText>
+                                                <h:inputText value="#{orderEditBean.floor}" 
+                                                             styleClass="form-control" 
+                                                             rendered="#{productBean.mode != null}"
+                                                             required="true"
+                                                             requiredMessage="Floor is required!"
+                                                             converterMessage="Floor must be number"
+                                                             validatorMessage="Floor must be between 1 and 200"
+                                                             >
+                                                    <f:validateLongRange minimum="1" maximum="200"/>
+                                                    <f:convertNumber integerOnly="true" />
+                                                </h:inputText>
                                             </div>
                                         </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <h:outputLabel value="Height Of Floor" />
+                                                <h:inputText value="#{orderCreateBean.heightOfFloor}" 
+                                                             styleClass="form-control" 
+                                                             rendered="#{productBean.mode == null}"
+                                                             required="true"
+                                                             requiredMessage="Height of floor is required!"
+                                                             validatorMessage="Height of floor min is 1!"
+                                                             converter="javax.faces.BigDecimal"
+                                                             >
+                                                    <f:validateLongRange minimum="1" />
+                                                    <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
+                                                </h:inputText>
+                                                <h:inputText value="#{orderEditBean.heightOfFloor}" 
+                                                             styleClass="form-control" 
+                                                             rendered="#{productBean.mode != null}"
+                                                             required="true"
+                                                             requiredMessage="Height of floor is required!"
+                                                             validatorMessage="Height of floor min is 1!"
+                                                             converter="javax.faces.BigDecimal"
+                                                             >
+                                                    <f:validateLongRange minimum="1" />
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
 
-                                    </h:form>
-                                </div>
+                                                <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct}" styleClass="btn btn-primary" rendered="#{productBean.mode == null}">
+                                                    <f:param name="pid" value="#{productBean.pid}" />
+                                                </h:commandButton>
+
+                                                <h:commandButton value="Add to Edit" action="#{orderEditBean.addSelectedProduct()}" styleClass="btn btn-primary" rendered="#{productBean.mode != null}">
+                                                    <f:param name="pid" value="#{productBean.pid}" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <h:messages class="messages"/>
+                                        </div>
+                                    </div>
+
+                                </h:form>
+
                             </li>
                         </ul>
 
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12" style=" background-color: #DBDBDB; height: 35px; padding: 5px; padding-top: 8px">
+                        <h2>Details</h2>
+                    </div>
+                </div>
+                <div class="row" style="border-bottom:dashed 1px rgb(221, 221, 221); padding-bottom: 10px">
+                    <h4 style="margin-top: 10px; margin-bottom: 10px; padding-left: 15px">Basic Info.</h4>
+                    <div class="col-md-6">
+
+                        <div ><span >Model NO.:</span><span class="td">XNK-008</span></div>
+                        <div ><span >Driving Type:</span><span class="td">AC Elevator</span></div>
+                        <div ><span >Speed:</span><span class="td">#{productBean.currentProduct.productInformations.speed}</span></div>
+                        <div ><span >Capacity:</span><span class="td">500-1000kg</span></div>
+                    </div> 
+                    <div class="col-md-6"> 
+                        <div ><span >Persons:</span><span class="td">11 - 19</span></div>
+                        <div ><span >Passenger Elevator Model:</span><span class="td">Gearless Passenger Elevator</span></div>
+                        <div ><span >Passenger Elevator Type:</span><span class="td">Elevator for Passenger</span></div>
+                        <div ><span >Export Markets:</span><span class="td">Global</span></div>
+                    </div>
+                </div>
+                <div class="row" style="border-bottom:dashed 1px rgb(221, 221, 221); padding-bottom: 10px">
+                    <h3 style="margin-top: 10px; margin-bottom: 10px; padding-left: 15px">Additional Info.</h3>
+                    <div class="col-md-6">
+                        <div ><span >Trademark:</span><span class="td">SYNEYor OEM</span></div>
+                        <div ><span >Packing:</span><span class="td">1 Set One 20ft Container</span></div>
+                        <div ><span >Origin:</span><span class="td">#{productBean.currentProduct.productInformations.manufacturer}, #{productBean.currentProduct.productInformations.producedIn}</span></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div ><span >HS Code:</span><span class="td">8428101090</span></div>
+                        <div ><span >Production Capacity:</span><span class="td">3000 Sets Per Year</span></div>
+                    </div>
+                </div>
+                <div class="row" style="border-bottom:dashed 1px rgb(221, 221, 221); padding-bottom: 10px">
+                    <h3 style="margin-top: 10px; margin-bottom: 10px; padding-left: 15px">Product Description</h3>
+                    <div class="col-md-12">
+                        <div class="rich-text cf">
+                            <h:outputText value="#{productBean.currentProduct.productInformations.informations}" />
+                        </div>
+                    </div>
+               
+                </div>
+                <div class="row" style="padding-top:10px; padding-bottom: 50px;">
+                        <div class="col-md-12">
+                        <ul class="pro-ordered-head">
+                            <li><strong>Elevator</strong></li>
+                            <li><strong>Capacity</strong></li>
+                            <li><strong>Speed</strong></li>
+                            <li><strong>Size</strong></li>
+                        </ul>
+                         <ul class="pro-ordered">
+                             <li><h:outputText value="#{productBean.currentProduct.name}"/></li>
+                                <li>500~1000kg</li>
+                                <li><h:outputText value="#{productBean.currentProduct.productInformations.speed}" /></li>
+                                <li><h:outputText value="#{productBean.currentProduct.productInformations.size}" /></li>
+                         </ul>    
+                        </div>
+                         <style>
+                            .pro-ordered,.pro-ordered-head{
+                                float: none; 
+                                position: relative;
+                                width: 100%;
+                                border: solid 1px #E7E7E7;
+                                padding-bottom: 10px;
+                                height: 30px;
+                                padding-left: 10px;
+                            }
+                            .pro-ordered>li, .pro-ordered-head>li{
+                                float: left;
+                                width: 25%;
+                                font-weight: bold
+                            }
+                            .pro-ordered-head{
+                                background: rgb(239, 239, 230);
+                                padding-bottom: 0px;
+
+                            }
+                        </style>
+                    </div>
+                <style>
+                </style>
+
             </section>
         </ui:define>
     </ui:composition>
