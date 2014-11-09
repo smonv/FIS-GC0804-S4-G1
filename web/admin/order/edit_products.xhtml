@@ -11,19 +11,24 @@
         </f:metadata>
         <ui:define name="content">
             <div class="container-fluid">
-                <div class="row">
-                    <h1>Order: 
-                        <h:link value="#{adminEditProductOrder.number}"
-                                outcome="/admin/order/view.xhtml">
-                            <f:param name="number" value="#{adminEditProductOrder.number}" />
-                        </h:link>
-                    </h1>
-                </div>
-                <div class="row">
-                    <h3>Order Product List:</h3>
-                    <h:form>
+                <h:form>
+                    <div class="row">
+                        <h1>Order: 
+                            <h:link value="#{adminEditProductOrder.number}"
+                                    outcome="/admin/order/view.xhtml">
+                                <f:param name="number" value="#{adminEditProductOrder.number}" />
+                            </h:link>
+                        </h1>
+                    </div>
+                    <div class="row">
+                        <h:messages class="messages" />
+                    </div>
+                    <div class="row">
+
+                        <h3>Order Product List:</h3>
+
                         <h:dataTable class="table table-bordered datatable"
-                                     value="#{adminEditProductOrder.order.orderProductDetailsList}"
+                                     value="#{adminEditProductOrder.getListOrderProducts()}"
                                      var="opd" binding="#{adminEditProductOrder.dataTable}"
                                      >
                             <h:column>
@@ -44,7 +49,7 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Height of Floor</f:facet>
-                                <h:inputText value="#{opd.heightOfFloor}" converter="javax.faces.Integer" size="3"/>
+                                <h:inputText value="#{opd.heightOfFloor}" converter="javax.faces.BigDecimal" size="3"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Total Price</f:facet>
@@ -75,11 +80,17 @@
                                 <h:commandButton value="Remove" action="#{adminEditProductOrder.remove()}" class="btn btn-primary"/>
                             </h:column>
                         </h:dataTable>
-                    </h:form>
-                </div>
-                <div class="row">
 
-                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <h:link value="Add More" outcome="/product/index.xhtml?mode=admin_edit" style="float: left" class="btn btn-primary"/>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <h:commandButton action="#{adminEditProductOrder.save()}" value="Save" style="float: right" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </h:form>
             </div>
         </ui:define>
     </ui:composition>

@@ -58,7 +58,6 @@ public class OrderEditBean {
     private int floor;
     private BigDecimal heightOfFloor;
 
-    
     public OrderEditBean() {
     }
 
@@ -208,7 +207,7 @@ public class OrderEditBean {
 
         } else {
             ApplicationHelper.addMessage("You are not in update mode!");
-            ApplicationHelper.redirect("/client/product/show.xhtml?pid=" + pid + "&mode=update", true);
+            ApplicationHelper.redirect("/product/show.xhtml?pid=" + pid + "&mode=update", true);
         }
     }
 

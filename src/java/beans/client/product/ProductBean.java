@@ -51,7 +51,7 @@ public class ProductBean {
 
     public void checkMode() {
         if (mode != null) {
-            if (!mode.equals("update")) {
+            if (!mode.equals("update") && !mode.equals("admin_edit")) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
         }
@@ -88,6 +88,13 @@ public class ProductBean {
         String cat_name = ApplicationHelper.getRequestParameterMap().get("cat_name");
         String scid = ApplicationHelper.getRequestParameterMap().get("scid");
         ApplicationHelper.redirect("/product/index.xhtml?category=" + cat_name + "&cid=" + scid, true);
+    }
+    
+    public boolean isAdminMode(){
+        if(mode != null){
+            return mode.equals("admin_edit");
+        }
+        return false;
     }
 
     ///SET GET

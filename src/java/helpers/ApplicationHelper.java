@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
  */
 public class ApplicationHelper {
 
-    private static char[] VALID_CHARACTERS = "123456879".toCharArray();
+    private static final char[] VALID_CHARACTERS = "123456879".toCharArray();
 
     public static ExternalContext getExternalContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
@@ -37,13 +37,10 @@ public class ApplicationHelper {
 
     public static void redirect(String externalPath, boolean keepMessage) {
         try {
-            if (FacesContext.getCurrentInstance().getResponseComplete()) {
-                ExternalContext ec = getExternalContext();
-                ec.getFlash().setKeepMessages(keepMessage);
-                ec.redirect(ec.getRequestContextPath() + externalPath);
-            }
+            ExternalContext ec = getExternalContext();
+            ec.getFlash().setKeepMessages(keepMessage);
+            ec.redirect(ec.getRequestContextPath() + externalPath);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

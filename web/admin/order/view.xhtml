@@ -16,7 +16,7 @@
                         <h1>Order: <h:outputText value="#{adminViewOrder.order.number}" />
                             &nbsp;&nbsp;
                             <h:link value="Create Project" 
-                                    outcome="#" 
+                                    outcome="/admin/project/new.xhtml?number=#{adminViewOrder.number}" 
                                     rendered="#{adminViewOrder.order.orderStatus.lsid gt 1}" 
                                     class="btn btn-primary"/>
                         </h1>
