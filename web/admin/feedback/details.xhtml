@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="fid" value="#{adminfeedbackShowBean.fid}" />
+            <f:viewAction action="#{adminfeedbackShowBean.init()}" onPostback="true" />
+        </f:metadata>
+        <ui:define name="title">Show Feedback Details</ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="page-title">
+                    <h1>FEEDBACK DETAIL</h1>
+                </div>
+            </div>
+            <div class="row" style="border:solid 1px #e1e1e1">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <h:outputLabel value="Name: " for="name" />
+                        <br/>
+                        <h:outputText id="name" value="#{adminfeedbackShowBean.current_feedback.name}"  />
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Email: " for="email" /><br/>
+                        <h:outputText id="email" value="#{adminfeedbackShowBean.current_feedback.email}"  >
+
+                        </h:outputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Satisfying Level: " /><br/>
+                        <h:outputText value="#{adminfeedbackShowBean.current_feedback.feedbackLevel.name}" />
+
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Description: " for="description" /><br/>
+                        <h:outputText id="description" value="#{adminfeedbackShowBean.current_feedback.feedbackDescription}"   />
+                    </div>
+
+                   
+                    <div style="height: 20px;"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <h:outputLabel value="Problem (optional): " for="problem" /><br/>
+                        <h:outputText id="problem" value="#{adminfeedbackShowBean.current_feedback.problem}"  />
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="Improvement (optional): " for="improvement" /><br/>
+                        <h:outputText id="improvement" value="#{adminfeedbackShowBean.current_feedback.improvement}"  />
+                    </div>
+                </div>
+
+            </div>
+            <div style="height: 20px;"></div>
+        </ui:define>
+    </ui:composition>
+</html>
+

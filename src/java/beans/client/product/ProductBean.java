@@ -23,7 +23,7 @@ public class ProductBean {
     private ProductModel productModel;
 
     private int pid;
-    private int pageSize = 1;
+    private int pageSize = 4;
     private Products currentProduct;
     Map<String, Object> session;
     private int quantity;

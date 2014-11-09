@@ -29,7 +29,7 @@
             <br />
             <div class="table-responsive">
                 <h:form>
-                    <h:dataTable class="table table-bordered datatable" id="table-1" value="#{adminfeedbackShowBean.feedbacks}" var="feedback">
+                    <h:dataTable class="table table-bordered datatable" id="table-1" value="#{adminfeedbackShowBean.feedbacks}" var="feedback" binding="#{adminfeedbackShowBean.feedbackTable}">
                         <h:column>
                             <f:facet name="header">Name</f:facet>
                             <h:outputText value="#{feedback.name}" />
@@ -48,11 +48,11 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Create At</f:facet>
-                            <h:outputText value="#{feedback.createAt}" />
+                            <h:outputText value="#{adminfeedbackShowBean.formateDate(feedback.createAt)}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Command</f:facet>
-                            <h:link outcome="/client/feedback/view.xhtml?fid=#{feedback.fid}" value="View" class="btn btn-default btn-sm btn-icon icon-left" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
+                            <h:link outcome="/admin/feedback/details.xhtml?fid=#{feedback.fid}" value="View" class="btn btn-default btn-sm btn-icon icon-left" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
 
                         </h:column>
 
