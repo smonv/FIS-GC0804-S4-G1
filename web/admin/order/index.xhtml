@@ -65,7 +65,11 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Command</f:facet>
-                                <h:link value="Detail" outcome="/admin/order/detail.xhtml?oid=#{order.oid}" class="btn btn-primary"/> 
+                                <h:link value="Detail" 
+                                        outcome="/admin/order/view.xhtml?number=#{order.number}" 
+                                        class="btn btn-primary"/> 
+                                &nbsp;
+
                             </h:column>
                         </h:dataTable>
                     </div>
@@ -113,8 +117,8 @@
                             window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml?status=" + input_status;
                         }
                     });
-                    
-                    $("#filter_clear").click(function(event){
+
+                    $("#filter_clear").click(function (event) {
                         event.preventDefault();
                         window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml";
                     });

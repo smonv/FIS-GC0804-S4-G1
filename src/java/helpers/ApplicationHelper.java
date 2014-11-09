@@ -37,9 +37,11 @@ public class ApplicationHelper {
 
     public static void redirect(String externalPath, boolean keepMessage) {
         try {
-            ExternalContext ec = getExternalContext();
-            ec.getFlash().setKeepMessages(keepMessage);
-            ec.redirect(ec.getRequestContextPath() + externalPath);
+            if (FacesContext.getCurrentInstance().getResponseComplete()) {
+                ExternalContext ec = getExternalContext();
+                ec.getFlash().setKeepMessages(keepMessage);
+                ec.redirect(ec.getRequestContextPath() + externalPath);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
