@@ -60,6 +60,10 @@ public class AdminViewOrder {
         totalCost = totalCost.add(getContructionPrice(opd.getFloors(), opd.getHeightOfFloor(), product.getConstructionPrice()));
         return totalCost;
     }
+    
+    public boolean orderHaveProject(Orders order){
+        return true;
+    }
 
     ////////////////SET GET
     public Orders getOrder() {

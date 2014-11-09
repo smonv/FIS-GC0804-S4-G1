@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,6 +54,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.countByStatus", query = "SELECT COUNT(o.oid) FROM Orders o WHERE o.orderStatus = :orderStatus")
 })
 public class Orders implements Serializable {
+    @OneToOne(mappedBy = "orderId")
+    private Projects projects;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -245,6 +248,14 @@ public class Orders implements Serializable {
     @Override
     public String toString() {
         return "entities.Orders[ oid=" + oid + " ]";
+    }
+
+    public Projects getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Projects projects) {
+        this.projects = projects;
     }
 
 }

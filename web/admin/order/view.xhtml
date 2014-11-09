@@ -17,8 +17,10 @@
                             &nbsp;&nbsp;
                             <h:link value="Create Project" 
                                     outcome="/admin/project/new.xhtml?number=#{adminViewOrder.number}" 
-                                    rendered="#{adminViewOrder.order.orderStatus.lsid gt 1}" 
-                                    class="btn btn-primary"/>
+                                    rendered="#{adminViewOrder.order.orderStatus.lsid gt 1 and adminViewOrder.order.projects == null}" 
+                                    class="btn btn-primary" />
+                            <h:link value="View Project" outcome="#" 
+                                    rendered="#{adminViewOrder.order.projects != null}" class="btn btn-primary"/>
                         </h1>
                     </div>
                 </div>
