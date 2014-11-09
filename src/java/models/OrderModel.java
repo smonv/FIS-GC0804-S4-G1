@@ -8,6 +8,7 @@ package models;
 import entities.Clients;
 import entities.ListStatus;
 import entities.Orders;
+import helpers.ApplicationHelper;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,6 +19,16 @@ public class OrderModel {
 
     @PersistenceContext
     EntityManager em;
+
+    public Orders checkOrderId(String oid) {
+        boolean valid = false;
+        if (ApplicationHelper.isInteger(oid)) {
+            int real_oid = Integer.parseInt(oid);
+            List<Orders> orders = em.createNamedQuery("Orders.findByOid").setParameter("oid", real_oid).getResultList();
+            return orders.size() > 0 ? orders.get(0) : null;
+        }
+        return null;
+    }
 
     public List<Orders> getAll() {
         List<Orders> orders = em.createNamedQuery("Orders.findAll").getResultList();

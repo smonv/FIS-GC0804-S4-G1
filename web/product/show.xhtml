@@ -91,6 +91,7 @@
                                 <p>Contruction Time:&nbsp;&nbsp;<h:outputText value="#{productBean.currentProduct.constructionTime} week / floor"  /></p>
                             </li>
                             <li>
+<<<<<<< HEAD
 
                                 <h:form style="border-top: solid 1px #DBDBDB">
                                     <div class="row">
@@ -172,6 +173,148 @@
                                                              >
                                                     <f:validateLongRange minimum="1" />
                                                 </h:inputText>
+=======
+                                <div class="row">
+                                    <h:form style="border-top: solid 1px #DBDBDB">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Quantity" />
+                                                    <h:inputText value="#{orderCreateBean.quantity}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode == null}"
+                                                                 required="true"
+                                                                 requiredMessage="Quantity is required!"
+                                                                 converterMessage="Quantity must be number!"
+                                                                 validatorMessage="Quantity must be between 1 and 10"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="10" />
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{orderEditBean.quantity}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null and not productBean.isAdminMode()}"
+                                                                 required="true"
+                                                                 requiredMessage="Quantity is required!"
+                                                                 converterMessage="Quantity must be number!"
+                                                                 validatorMessage="Quantity must be between 1 and 10"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="10" />
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{adminEditProductOrder.quantity}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null and productBean.isAdminMode()}"
+                                                                 required="true"
+                                                                 requiredMessage="Quantity is required!"
+                                                                 converterMessage="Quantity must be number!"
+                                                                 validatorMessage="Quantity must be between 1 and 10"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="10" />
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Floor" />
+                                                    <h:inputText value="#{orderCreateBean.floor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode == null}"
+                                                                 required="true"
+                                                                 requiredMessage="Floor is required!"
+                                                                 converterMessage="Floor must be number"
+                                                                 validatorMessage="Floor must be between 1 and 200"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="200"/>
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{orderEditBean.floor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null and not productBean.isAdminMode()}"
+                                                                 required="true"
+                                                                 requiredMessage="Floor is required!"
+                                                                 converterMessage="Floor must be number"
+                                                                 validatorMessage="Floor must be between 1 and 200"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="200"/>
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{adminEditProductOrder.floor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null and productBean.isAdminMode()}"
+                                                                 required="true"
+                                                                 requiredMessage="Floor is required!"
+                                                                 converterMessage="Floor must be number"
+                                                                 validatorMessage="Floor must be between 1 and 200"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" maximum="200"/>
+                                                        <f:convertNumber integerOnly="true" />
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Height Of Floor" />
+                                                    <h:inputText value="#{orderCreateBean.heightOfFloor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode == null}"
+                                                                 required="true"
+                                                                 requiredMessage="Height of floor is required!"
+                                                                 validatorMessage="Height of floor min is 1!"
+                                                                 converter="javax.faces.BigDecimal"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" />
+                                                        <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{orderEditBean.heightOfFloor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null and not productBean.isAdminMode()}"
+                                                                 required="true"
+                                                                 requiredMessage="Height of floor is required!"
+                                                                 validatorMessage="Height of floor min is 1!"
+                                                                 converter="javax.faces.BigDecimal"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" />
+                                                        <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
+                                                    </h:inputText>
+                                                    <h:inputText value="#{adminEditProductOrder.heightOfFloor}" 
+                                                                 styleClass="form-control" 
+                                                                 rendered="#{productBean.mode != null and productBean.isAdminMode()}"
+                                                                 required="true"
+                                                                 requiredMessage="Height of floor is required!"
+                                                                 validatorMessage="Height of floor min is 1!"
+                                                                 converter="javax.faces.BigDecimal"
+                                                                 >
+                                                        <f:validateLongRange minimum="1" />
+                                                        <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+
+                                                    <h:commandButton value="Add to Order" action="#{orderCreateBean.addProduct}" styleClass="btn btn-primary" rendered="#{productBean.mode == null}">
+                                                        <f:param name="pid" value="#{productBean.pid}" />
+                                                    </h:commandButton>
+
+                                                    <h:commandButton value="Add to Edit" 
+                                                                     action="#{orderEditBean.addSelectedProduct()}" 
+                                                                     styleClass="btn btn-primary" 
+                                                                     rendered="#{productBean.mode != null and not productBean.isAdminMode()}">
+                                                        <f:param name="pid" value="#{productBean.pid}" />
+                                                    </h:commandButton>
+
+                                                    <h:commandButton value="Add to Admin Edit" 
+                                                                     action="#{adminEditProductOrder.add()}" 
+                                                                     styleClass="btn btn-primary" 
+                                                                     rendered="#{productBean.mode != null and productBean.isAdminMode()}">
+                                                        <f:param name="pid" value="#{productBean.pid}" />
+                                                    </h:commandButton>
+                                                </div>
+>>>>>>> admin_edit_order
                                             </div>
                                         </div>
                                     </div>

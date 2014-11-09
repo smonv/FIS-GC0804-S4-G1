@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="number" value="#{adminEditProductOrder.number}" />
+            <f:viewAction action="#{adminEditProductOrder.init()}" onPostback="true" />
+        </f:metadata>
+        <ui:define name="content">
+            <div class="container-fluid">
+                <h:form>
+                    <div class="row">
+                        <h1>Order: 
+                            <h:link value="#{adminEditProductOrder.number}"
+                                    outcome="/admin/order/view.xhtml">
+                                <f:param name="number" value="#{adminEditProductOrder.number}" />
+                            </h:link>
+                        </h1>
+                    </div>
+                    <div class="row">
+                        <h:messages class="messages" />
+                    </div>
+                    <div class="row">
+
+                        <h3>Order Product List:</h3>
+
+                        <h:dataTable class="table table-bordered datatable"
+                                     value="#{adminEditProductOrder.getListOrderProducts()}"
+                                     var="opd" binding="#{adminEditProductOrder.dataTable}"
+                                     >
+                            <h:column>
+                                <f:facet name="header">Name</f:facet>
+                                <h:outputText value="#{opd.productId.name}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Price</f:facet>
+                                <h:outputText value="$ #{opd.productId.price}" converter="javax.faces.BigDecimal" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Quantity</f:facet>
+                                <h:inputText value="#{opd.quantity}" converter="javax.faces.Integer" size="3" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Floor</f:facet>
+                                <h:inputText value="#{opd.floors}" converter="javax.faces.Integer" size="3"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Height of Floor</f:facet>
+                                <h:inputText value="#{opd.heightOfFloor}" converter="javax.faces.BigDecimal" size="3"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Total Price</f:facet>
+                                <h:outputText 
+                                    value="$ #{adminViewOrder.getTotalPrice(opd.quantity, opd.productId.price)}" 
+                                    converter="javax.faces.BigDecimal"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Contruction Price</f:facet>
+                                <h:outputText 
+                                    value="$ #{adminViewOrder.getContructionPrice(opd.floors, opd.heightOfFloor, opd.productId.constructionPrice)}" 
+                                    converter="javax.faces.BigDecimal"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Contruction Time</f:facet>
+                                <h:outputText 
+                                    value="#{adminViewOrder.getContructionTime(opd.floors, opd.heightOfFloor, opd.productId.constructionTime)} days" 
+                                    converter="javax.faces.BigDecimal"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Total Cost</f:facet>
+                                <h:outputText value="$ #{adminViewOrder.getTotalCost(opd, opd.productId)}" converter="javax.faces.BigDecimal"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Command</f:facet>
+                                <h:commandButton value="Update" action="#{adminEditProductOrder.update()}" class="btn btn-primary"/>
+                                &nbsp;
+                                <h:commandButton value="Remove" action="#{adminEditProductOrder.remove()}" class="btn btn-primary"/>
+                            </h:column>
+                        </h:dataTable>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <h:link value="Add More" outcome="/product/index.xhtml?mode=admin_edit" style="float: left" class="btn btn-primary"/>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <h:commandButton action="#{adminEditProductOrder.save()}" value="Save" style="float: right" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

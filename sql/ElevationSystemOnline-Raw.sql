@@ -126,12 +126,14 @@ create table admins(
 
 create table projects(
 	pid int identity primary key,
-	order_id int foreign key references orders(oid),
+	order_id int foreign key references orders(oid) unique,
 	title nvarchar(254) not null,
 	content text not null,
 	image_path nvarchar(max),
 	start_at date,
 	end_at date,
+	create_at date,
+	update_at date,
 )
 
 insert into categories values('Passenger')
