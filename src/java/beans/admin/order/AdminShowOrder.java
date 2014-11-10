@@ -34,7 +34,7 @@ public class AdminShowOrder {
     private HtmlDataTable orders_table;
     private List<Orders> orders;
     private int current_page = 1;
-    private int pageSize = 10;
+    private int pageSize = 1;
     private long totalOrders;
 
     //bean param

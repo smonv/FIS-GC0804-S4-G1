@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Feedbacks.findByEmail", query = "SELECT f FROM Feedbacks f WHERE f.email = :email"),
     @NamedQuery(name = "Feedbacks.findByCreateAt", query = "SELECT f FROM Feedbacks f WHERE f.createAt = :createAt"),
     @NamedQuery(name = "Feedbacks.findByUpdateAt", query = "SELECT f FROM Feedbacks f WHERE f.updateAt = :updateAt"),
-    @NamedQuery(name = "Feedbacks.findByClientId", query = "SELECT f FROM Feedbacks f WHERE f.clientId = :clientId")
+    @NamedQuery(name = "Feedbacks.findByClientId", query = "SELECT f FROM Feedbacks f WHERE f.clientId = :clientId"),
+    @NamedQuery(name = "Feedbacks.findByLevel", query = "SELECT f FROM Feedbacks f WHERE f.feedbackLevel = :flid")
 })
 public class Feedbacks implements Serializable {
     private static final long serialVersionUID = 1L;

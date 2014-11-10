@@ -15,5 +15,10 @@ public class FeedbackLevelModel {
     public List<FeedbackLevel> getAll() {
         return em.createNamedQuery("FeedbackLevel.findAll").getResultList();
     }
+    
+    public FeedbackLevel getById(int flid){
+        List<FeedbackLevel> feedbacklevels= em.createNamedQuery("FeedbackLevel.findByFlid").setParameter("flid", flid).getResultList();
+       return feedbacklevels.size() > 0 ? feedbacklevels.get(0) : null;
+    }
 
 }

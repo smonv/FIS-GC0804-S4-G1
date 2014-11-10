@@ -8,6 +8,7 @@
     <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
             <f:viewParam name="page" value="#{adminfeedbackShowBean.page}" />
+            <f:viewParam name="flid" value="#{adminfeedbackShowBean.flid}"/>
             <f:event listener="#{adminfeedbackShowBean.loadFeedBackList()}" type="preRenderView"/>
         </f:metadata>
         <ui:define name="title">Feedbacks</ui:define>
@@ -26,6 +27,22 @@
                     <strong>Basic Tables</strong>
                 </li>
             </ol>
+            <br />
+             <div class="row">
+            <div class="form-group">
+              
+                    <select id="input_level">
+                        <option value="0"> Select level</option>
+                        <ui:repeat value="#{adminfeedbackShowBean.feedbackLevel}" var="level">
+                            <option value="#{level.flid}">#{level.name}</option>
+                        </ui:repeat>
+                    </select>
+                    <button id="filter_level" class="btn btn-sm btn-primary">Filter Status</button>
+                     </div>
+                <div class="form-group">
+                    <button id="filter_clear" class="btn btn-sm btn-primary">Clear Filter</button>
+                </div>
+            </div>
             <br />
             <div class="table-responsive">
                 <h:form>
@@ -64,6 +81,7 @@
                 <h:link outcome="list" value="Previous"  class="btn btn-default btn-sm btn-icon icon-left"
                         rendered="#{adminfeedbackShowBean.totalfeedback > adminfeedbackShowBean.pageSize and adminfeedbackShowBean.page > 0}">
                     <f:param name="page" value="#{adminfeedbackShowBean.page - 1}"/>
+                    
                 </h:link>
 
 
@@ -73,9 +91,30 @@
                                     and adminfeedbackShowBean.pageSize * (adminfeedbackShowBean.page + 1) lt adminfeedbackShowBean.totalfeedback
                                                         }">
                     <f:param name="page" value="#{adminfeedbackShowBean.page + 1}"/>
-
+                    
                 </h:link> 
+                <br/>
+                <h:outputText value="Page: #{adminfeedbackShowBean.page+1}/#{adminfeedbackShowBean.totalPages}" />
             </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#filter_level").click(function (event) {
+                        event.preventDefault();
+                        var input_status = $("#input_level").find(":selected").val();
+                        console.log(input_status);
+                        if (input_level == 0) {
+                            alert("Please select one level!")
+                        } else {
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/feedback/list.xhtml?flid=" + input_status;
+                        }
+                    });
+
+                    $("#filter_clear").click(function (event) {
+                        event.preventDefault();
+                        window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/feedback/list.xhtml";
+                    });
+                });
+            </script>
         </ui:define>
     </ui:composition>
 </html>

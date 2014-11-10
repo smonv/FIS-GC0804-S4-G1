@@ -1,6 +1,7 @@
 package models;
 
 import entities.Clients;
+import entities.FeedbackLevel;
 import entities.Feedbacks;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -66,5 +67,12 @@ public class FeedbackModel {
 
     public List<Feedbacks> getByClientId(Clients client) {
         return em.createNamedQuery("Feedbacks.findByClientId").setParameter("clientId", client).getResultList();
+    }
+    
+    public int getByLevel(FeedbackLevel flid){
+        return em.createNamedQuery("Feedbacks.findByLevel").setParameter("flid", flid).getResultList().size(); 
+    }
+    public List<Feedbacks> getByLevel(FeedbackLevel flid,int startIndex, int pageSize){
+        return em.createNamedQuery("Feedbacks.findByLevel").setParameter("flid", flid).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
     }
 }

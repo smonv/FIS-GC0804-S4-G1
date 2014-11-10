@@ -5,6 +5,7 @@
  */
 package beans.admin.feedback;
 
+import entities.FeedbackLevel;
 import entities.Feedbacks;
 import helpers.ApplicationHelper;
 import java.util.Date;
@@ -13,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
+import models.FeedbackLevelModel;
 import models.FeedbackModel;
 
 /**
@@ -22,6 +24,8 @@ import models.FeedbackModel;
 @ManagedBean
 @RequestScoped
 public class AdminfeedbackShowBean {
+    @EJB
+    private FeedbackLevelModel feedbackLevelModel;
 
     @EJB
     private FeedbackModel feedbackModel;
@@ -29,12 +33,13 @@ public class AdminfeedbackShowBean {
     /**
      * Creates a new instance of FeedBackShowBean
      */
-    private int pageSize = 2;
+    private int pageSize = 1;
     private int page;
     private List<Feedbacks> feedbacks;
     private HtmlDataTable feedbackTable;
     private int totalfeedback;
     private String fid;
+    private String flid;
     private Feedbacks current_feedback;
 
     public AdminfeedbackShowBean() {
@@ -55,20 +60,40 @@ public class AdminfeedbackShowBean {
     public boolean isHasNextPage() {
         return (page + 1) * this.getPageSize() + 1 <= feedbackModel.getAllForAdmin();
     }
-
+    
+    public int getTotalPages() {
+        int pages = 0;
+        long totalPages = totalfeedback / pageSize;
+        pages = totalPages > (int) totalPages ? ((int) totalPages) + 1 : (int) totalPages;
+        pages = pages == 0 ? 1 : pages;
+        return pages;
+    }
+    
     public List<Feedbacks> getFeedbacks() {
         loadFeedBackList();
         return feedbacks;
     }
 
     public void loadFeedBackList() {
+        if(flid == null){
         feedbacks = feedbackModel.getAllForAdmin(this.getStartIndex(), this.getPageSize());
         totalfeedback = feedbackModel.getAllForAdmin();
+        }
+        else{
+            int sflid=Integer.parseInt(flid);
+            FeedbackLevel fl=feedbackLevelModel.getById(sflid);
+            feedbacks=feedbackModel.getByLevel(fl, this.getStartIndex(),this.getPageSize());
+            totalfeedback=feedbackModel.getByLevel(fl);
+        }
     }
     
     public String formateDate(Date date) {
         String formated_date = ApplicationHelper.formatDate(date, "dd-MM-yyyy HH:mm:ss");
         return formated_date;
+    }
+    
+    public List<FeedbackLevel> getFeedbackLevel(){
+        return feedbackLevelModel.getAll();
     }
 
     public int getStartIndex() {
@@ -128,7 +153,14 @@ public class AdminfeedbackShowBean {
     public void setCurrent_feedback(Feedbacks current_feedback) {
         this.current_feedback = current_feedback;
     }
-    
-    
 
+    public String getFlid() {
+        return flid;
+    }
+
+    public void setFlid(String flid) {
+        this.flid = flid;
+    }
+
+  
 }
