@@ -287,7 +287,8 @@ public class OrderCreateBean implements Serializable {
         }
 
         Orders order = new Orders();
-        order.setClientId(client);
+        //order.setClientId(client); uncomment if enable filter client
+        order.setClientId(new Clients(1));
         order.setNumber(ApplicationHelper.secureRandomString(8));
         order.setPaymentType(new PaymentTypes(paymentTypeId));
         order.setLocationName(location_name);
