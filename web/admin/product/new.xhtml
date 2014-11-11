@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
-            <f:viewAction action="#{adminNewProduct.init()}" />
+            <f:viewAction action="#{adminNewProduct.init()}" onPostback="true"/>
         </f:metadata>
         <ui:define name="content">
             <div class="container-fluid">
@@ -17,6 +17,11 @@
                     <div class="col-lg-6 col-md-6">
                         <h:form>
                             <div class="form-group">
+                                <h:outputLabel value="Product Code" />
+                                <h:inputText value="#{adminNewProduct.productCode}" class="form-control"
+                                             required="true" requiredMessage="Product Code is require!" />
+                            </div>
+                            <div class="form-group">
                                 <h:outputLabel value="Product Name" />
                                 <h:inputText value="#{adminNewProduct.productName}" 
                                              required="true" requiredMessage="Product Name is require!"
@@ -25,13 +30,13 @@
                             <div class="form-group">
                                 <h:outputLabel value="Category" />
                                 <h:selectOneMenu value="#{adminNewProduct.productCategory}" class="form-control">
-                                    <f:selectItems value="#{adminNewProduct.categories}" var="category" 
+                                    <f:selectItems value="#{adminNewProduct.getAllCategories()}" var="category" 
                                                    itemLabel="#{category.name}" itemValue="#{category.cid}"
                                                    />
                                 </h:selectOneMenu>
                             </div>
                             <div class="form-group">
-                                <h:outputLabel value="Product Price" />
+                                <h:outputLabel value="Product Price ($)" />
                                 <h:inputText value="#{adminNewProduct.productPrice}" class="form-control" 
                                              required="true" requiredMessage="Product price is require!"
                                              converter="javax.faces.BigDecimal" converterMessage="Wrong data type!"
@@ -40,7 +45,7 @@
                                 </h:inputText>
                             </div>
                             <div class="form-group">
-                                <h:outputLabel value="Contruction Price" />
+                                <h:outputLabel value="Contruction Price ($)" />
                                 <h:inputText value="#{adminNewProduct.productContructionPrice}" class="form-control" 
                                              required="true" requiredMessage="Contruction price is require!"
                                              converter="javax.faces.BigDecimal" converterMessage="Wrong data type!"
@@ -53,13 +58,16 @@
                                 <h:inputText value="#{adminNewProduct.productContructionTime}" class="form-control"
                                              required="true" requiredMessage="Contruction time is require!"
                                              converter="javax.faces.Integer" converterMessage="Wrong data type!">
-                                    <f:convertNumber integerOnly="true"
+                                    <f:convertNumber integerOnly="true" />
                                 </h:inputText>
                             </div>
                             <div class="form-group">
-                                <h:commandButton value="Create" action="#{adminNewProduct.create()}" />
+                                <h:commandButton value="Create" action="#{adminNewProduct.create()}" class="btn btn-primary"/>
                             </div>
                         </h:form>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <h:messages />
                     </div>
                 </div>
             </div>

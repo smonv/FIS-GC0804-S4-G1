@@ -94,5 +94,16 @@ public class ProductModel {
             return 0;
         }
     }
+    
+    public int create(Products product){
+        try {
+            em.persist(product);
+            em.flush();
+            return product.getPid();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
 }
