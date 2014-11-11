@@ -40,7 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Products.exists", query = "SELECT COUNT(p.pid) FROM Products p WHERE p.pid = :pid"),
     @NamedQuery(name = "Products.getForSelectBox", query = "SELECT p.pid,p.name FROM Products p"),
     @NamedQuery(name = "Products.getProductPrice", query = "SELECT p.price FROM Products p WHERE p.pid = :pid"),
-    @NamedQuery(name = "Products.findAllByCategoryId", query = "SELECT p FROM Products p WHERE p.categoryId = :categoryId")
+    @NamedQuery(name = "Products.findAllByCategoryId", query = "SELECT p FROM Products p WHERE p.categoryId = :categoryId"),
+    @NamedQuery(name = "Products.countAll", query = "SELECT COUNT(p.pid) FROM Products p"),
+    @NamedQuery(name = "Products.countAllByCategory", query = "SELECT COUNT(p.pid) FROM Products p WHERE p.categoryId = :categoryId"),
 
 })
 

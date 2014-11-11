@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package models;
 
 import entities.Categories;
@@ -12,45 +7,40 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Cu Beo
- */
 @Stateless
 public class ProductModel {
 
     @PersistenceContext
     EntityManager em;
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     public List<Products> getAll() {
         List<Products> products = em.createNamedQuery("Products.findAll").getResultList();
         return products;
     }
 
-    public List<Products> getAllProduct(int startIndex, int pageSize) {
+    public List<Products> getAll(int page, int pageSize) {
+        int startIndex = page * pageSize;
         List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
         return products;
     }
 
-    public List<Products> getAll(int startIndex, int pageSize, int category_id) {
-        Categories category = new Categories(category_id);
+    public List<Products> getAll(int page, int pageSize, Categories category) {
+        int startIndex = page * pageSize;
         List<Products> products = em.createNamedQuery("Products.findAllByCategoryId").setParameter("categoryId", category).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
         return products;
     }
-    
-    public int getAllTotalProducts(){
-        List<Products> products = em.createNamedQuery("Products.findAll").getResultList();
-        return products.size();
+
+    public long countAll() {
+        long total = 0;
+        total = (long) em.createNamedQuery("Products.countAll").getSingleResult();
+        return total;
     }
-    
-    public int getAllTotalProducts(int category_id){
-        Categories category = new Categories(category_id);
-        List<Products> products = em.createNamedQuery("Products.findAllByCategoryId").setParameter("categoryId", category).getResultList();
-        return products.size();
+
+    public long countAll(Categories category) {
+        long total = 0;
+        total = (long) em.createNamedQuery("Products.countAllByCategory").setParameter("categoryId", category).getSingleResult();
+        return total;
     }
-    
 
     public List<Products> getTop12() {
         List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(0).setMaxResults(12).getResultList();
@@ -94,8 +84,8 @@ public class ProductModel {
             return 0;
         }
     }
-    
-    public int create(Products product){
+
+    public int create(Products product) {
         try {
             em.persist(product);
             em.flush();

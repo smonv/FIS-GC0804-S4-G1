@@ -7,62 +7,52 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/templates/client/layout.xhtml">
         <f:metadata>
-            <f:viewParam name="mode" value="#{productBean.mode}" />
-            <f:viewAction action="#{productBean.checkMode()}"/>
-            <f:viewParam name="page" value="#{productBean.page}" />
-            <f:viewParam name="cid" value="#{productBean.cid}" />
-            <f:viewParam name="category" value="#{productBean.category}" />
-            <f:event listener="#{productBean.loadProductList()}" type="preRenderView"/>
+            <f:viewParam name="page" value="#{indexProduct.page}" />
+            <f:viewParam name="cid" value="#{indexProduct.cid}" />
+            <f:viewAction action="#{indexProduct.init()}" />
         </f:metadata>
-        <ui:define name="title">List Products </ui:define>
+        <ui:define name="title">Product List</ui:define>
         <ui:define name="content">
             <!-- Page title -->
             <div class="page-title">
-
-                <c:if test="#{categoryBean.currentCategory== null}">
-                    <h1>Products</h1>
-                </c:if>
-                <c:if test="#{categoryBean.currentCategory!= null}">
-                    <h1>Products by #{categoryBean.currentCategory.name}</h1>
-                </c:if>
+                <h1>Products</h1>
                 <!-- BREADCRUMBS -->
                 <ul class="breadcrumb">
                     <li><h:link outcome="/index.xhtml">Home</h:link><span class="divider"></span></li>
                     <li class="active">Products</li>
                 </ul>
             </div>
-            <!-- //Page title -->							
-
-
-            <!-- Project area -->
+            <!-- //Page title -->
             <section class="project">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="box-wrapper">
                                 <ul id="filter"> 
-                                    <h:form>
-                                        <li><h:commandLink value="All" immediate="true" action="#{productBean.clearParamAndRedirect()}" class="btn btn-primary"/></li>                     
-
-                                        <ui:repeat var="category" value="#{categoryBean.allCategory}" varStatus="status">
-
-                                            <li>
-                                                <h:commandLink value="#{category.name}" 
-                                                               class="btn btn-primary" 
-                                                               action="#{productBean.clearPageAndRedirect()}">
-                                                    <f:param name="cat_name" value="#{category.name}" />
-                                                    <f:param name="scid" value="#{category.cid}" />
-                                                </h:commandLink>
-                                            </li>                           
-
-                                        </ui:repeat>
-                                    </h:form>
+                                    <li>
+                                        <select class="form-control" id="filter_category">
+                                            <option value="0">All</option>
+                                            <ui:repeat value="#{indexProduct.getAllCategories()}" var="category">
+                                                <c:if test="#{indexProduct.current_cid == category.cid}">
+                                                    <option value="#{category.cid}" selected="selected">#{category.name}</option>
+                                                </c:if>
+                                                <c:if test="#{indexProduct.current_cid != category.cid}">
+                                                    <option value="#{category.cid}">#{category.name}</option>
+                                                </c:if>
+                                            </ui:repeat>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <button class="btn btn-primary" id="filter_button">Filter</button>
+                                    </li>
+                                    <li>
+                                        <button class="btn btn-primary" id="filter_clear">Clear</button>
+                                    </li>
                                 </ul>
-
                                 <div id="grid">
 
                                     <br/>
-                                    <ui:repeat var="product" value="#{productBean.products}" varStatus="status">
+                                    <ui:repeat var="product" value="#{indexProduct.products}" varStatus="status">
 
                                         <div class="item blue col-md-4 col-sm-6 col-xs-12 fix"  data-groups='["all", "numbers", "blue", "square"]'>
                                             <div class="project-item">
@@ -93,57 +83,53 @@
                                             </div>
                                         </div>
                                     </ui:repeat>
-
-
-
-                                </div> <!-- /grid -->	
-                            </div> <!-- /box-wrapper -->
-
+                                </div> <!-- /grid -->
+                            </div>
                         </div>
+                    </div>
+                    <div class="row ">
                         <div class="col-md-12">
-                            <h:link outcome="index" value="Previous" class="btn btn-primary" 
-                                    rendered="#{productBean.totalProducts > productBean.pageSize and productBean.page > 0}">
-                                <f:param name="page" value="#{productBean.page - 1}"/>
-
-                                <c:if test="#{productBean.cid gt 0}">
-                                    <f:param name="cid" value="#{productBean.cid}" />
+                            <ul class="pagination">
+                                <c:if test="#{indexProduct.totalProduct gt indexProduct.pageSize}">
+                                    <c:if test="#{indexProduct.current_page == 1}">
+                                        <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                                    </c:if>
+                                    <c:if test="#{indexProduct.current_page > 1}">
+                                        <li><h:link outcome="/product/index.xhtml?page=#{indexProduct.current_page - 1}"><i class="fa fa-angle-left"></i></h:link></li>
+                                    </c:if>
+                                    <c:if test="#{indexProduct.current_page - 2 > 0}">
+                                        <li><h:link value="#{indexProduct.current_page - 2}" outcome="/product/index.xhtml?page=#{indexProduct.current_page - 2}" /></li>
+                                    </c:if>
+                                    <c:if test="#{indexProduct.current_page - 1 > 0}">
+                                        <li><h:link value="#{indexProduct.current_page - 1}" outcome="/product/index.xhtml?page=#{indexProduct.current_page - 1}" /></li>
+                                    </c:if>
+                                    <li class="active"><h:link value="#{indexProduct.current_page}" outcome="/product/index.xhtml?page=#{indexProduct.current_page}" /></li>
+                                    <c:if test="#{indexProduct.totalPage >= indexProduct.current_page + 1}">
+                                        <li><h:link value="#{indexProduct.current_page + 1}" outcome="/product/index.xhtml?page=#{indexProduct.current_page + 1}" /></li>
+                                    </c:if>
+                                    <c:if test="#{indexProduct.totalPage >= indexProduct.current_page + 2}">
+                                        <li><h:link value="#{indexProduct.current_page + 2}" outcome="/product/index.xhtml?page=#{indexProduct.current_page + 2}" /></li>
+                                    </c:if>
+                                    <c:if test="#{indexProduct.totalPage == indexProduct.current_page}">
+                                        <li class="disabled"><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                                    </c:if>
+                                    <c:if test="#{indexProduct.totalPage >= indexProduct.current_page + 1}">
+                                        <li><h:link outcome="/product/index.xhtml?page=#{indexProduct.current_page + 1}"><i class="fa fa-angle-right"></i></h:link></li>
+                                    </c:if>
                                 </c:if>
-                            </h:link>
+                                <li class="active"><h:outputText value="Page: #{indexProduct.current_page} / #{indexProduct.totalPage}" class="btn btn-primary"/></li>
 
-
-                            <h:link outcome="index" value="Next" class="btn btn-primary"
-                                    rendered="#{productBean.totalProducts gt productBean.pageSize 
-                                                and productBean.hasNextPage
-                                                and productBean.pageSize * (productBean.page + 1) lt productBean.totalProducts 
-                                                        }">
-                                <f:param name="page" value="#{productBean.page + 1}"/>
-                                <c:if test="#{productBean.cid gt 0}">
-                                    <f:param name="cid" value="#{productBean.cid}"/>
-                                </c:if>
-                            </h:link> 
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <style>
-
-                    .post-thumbnail:hover img{
-
-                        transform: none;
-                    }
-                    .element-link2{
-                        top: 0;
-                        display: block;
-                        position: absolute;
-                        height: 100%; 
-                        width: 100%; 
-                        z-index: 30;
-                    }
-                    .element-link2:hover{
-                        background-color: none;
-
-                    }
-                </style>
             </section>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var new_url = "#{facesContext.externalContext.requestContextPath}/product/index.xhtml";
+                    filter_product(new_url);
+                });
+            </script>
         </ui:define>
     </ui:composition>
 </html>
