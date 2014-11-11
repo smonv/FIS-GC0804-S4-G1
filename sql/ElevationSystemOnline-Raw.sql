@@ -41,8 +41,8 @@ create table product_informations(
 	produced_in nvarchar(254),
 	size nvarchar(254),
 	informations text,
-	e_load nvarchar(254),
-	speed nvarchar(254),
+	e_load int,
+	speed decimal(16,2),
 	feature_1 nvarchar(max),
 	feature_2 nvarchar(max),
 	feature_3 nvarchar(max),
@@ -82,6 +82,31 @@ create table order_product_details(
 	floors int,
 	height_of_floor decimal(16,2),
 	create_at datetime
+)
+
+create table contracts(
+	cid int primary key identity,
+	order_id int foreign key references orders(oid) unique,
+	client_name nvarchar(254),
+	client_email nvarchar(254),
+	client_phone nvarchar(20),
+	client_requirements text,
+	payment_details text,
+	create_at datetime,
+	update_at datetime
+)
+
+create table projects(
+	pid int identity primary key,
+	contract_id int foreign key references contracts(cid) unique,
+	title nvarchar(254) not null,
+	content text not null,
+	project_status int foreign key references list_status(lsid),
+	image_path nvarchar(max),
+	start_at datetime,
+	end_at datetime,
+	create_at datetime,
+	update_at datetime,
 )
 
 create table complaints(
@@ -124,17 +149,9 @@ create table admins(
 	update_at datetime
 )
 
-create table projects(
-	pid int identity primary key,
-	order_id int foreign key references orders(oid) unique,
-	title nvarchar(254) not null,
-	content text not null,
-	image_path nvarchar(max),
-	start_at date,
-	end_at date,
-	create_at date,
-	update_at date,
-)
+
+
+
 
 insert into categories values('Passenger')
 insert into categories values('Home')
