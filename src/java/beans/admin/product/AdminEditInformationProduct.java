@@ -10,8 +10,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.persistence.PersistenceContext;
 import models.NationModel;
 import models.ProductInformationModel;
 import models.ProductModel;
@@ -51,17 +49,20 @@ public class AdminEditInformationProduct {
     }
 
     public void init() {
+        //check pid
         if (!ApplicationHelper.isInteger(pid)) {
             ApplicationHelper.redirect("/404.xhtml", true);
             return;
         }
         int realPid = Integer.parseInt(pid);
-        product = productModel.getById(realPid);
+        product = productModel.getById(realPid); //get product
         if (product == null) {
             ApplicationHelper.redirect("/404.xhtml", true);
         }
-        productInformation = product.getProductInformations();
-        if (productInformation != null) {
+        
+        productInformation = product.getProductInformations(); //get product information
+        
+        if (productInformation != null) { /// if edit mode, get current product information
             productModelNo = productInformation.getModelNo();
             productManufacturer = productInformation.getManufacturer();
             productProducedNation = productInformation.getProducedNation().getNid();
@@ -77,16 +78,17 @@ public class AdminEditInformationProduct {
 
     public void update() {
         boolean result = false;
-        int realPid = 0;
+        int realPid = 0; 
+        //check pid
         String pid = ApplicationHelper.getRequestParameterMap().get("pid");
         if (!ApplicationHelper.isInteger(pid)) {
             ApplicationHelper.addMessage("Wrong product id!");
             return;
         }
         realPid = Integer.parseInt(pid);
-        Products update_product = productModel.getById(realPid);
-        ProductInformations update_product_info = new ProductInformations();
-
+        Products update_product = productModel.getById(realPid); //get product for check if edit or add new product information
+        ProductInformations update_product_info = new ProductInformations(); //new product informatin
+        ////set value for new product information
         update_product_info.setProductId(update_product);
         update_product_info.setModelNo(productModelNo);
         update_product_info.setManufacturer(productManufacturer);
@@ -99,20 +101,19 @@ public class AdminEditInformationProduct {
         update_product_info.setFeature2(productFeature2);
         update_product_info.setFeature3(productFeature3);
 
-        if (update_product.getProductInformations() == null) {
-            
+        if (update_product.getProductInformations() == null) { //if product dont have informations, insert new
             update_product_info.setCreateAt(PersistenceHelper.getCurrentTime());
             result = productInformationModel.create(update_product_info);
-        } else {
+        } else { //if product have information, edit and merge
             update_product_info.setPinfoid(update_product.getProductInformations().getPinfoid());
             update_product_info.setUpdateAt(PersistenceHelper.getCurrentTime());
             result = productInformationModel.update(update_product_info);
         }
 
-        if (result) {
+        if (result) { //if result true, return view product page
             ApplicationHelper.addMessage("Product Infomation Updated!");
             ApplicationHelper.redirect("/admin/product/view.xhtml?pid=" + pid, result);
-        } else {
+        } else { //if resutl false, return edit informations page
             ApplicationHelper.addMessage("Failed to update product informations !");
             ApplicationHelper.redirect("/admin/product/edit_information.xhtml?pid=" + pid, result);
 
