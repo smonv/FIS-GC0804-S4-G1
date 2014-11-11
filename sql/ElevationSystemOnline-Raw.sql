@@ -22,6 +22,18 @@ create table categories(
 	name nvarchar(254) not null
 )
 
+create table nations(
+	nid int identity primary key,
+	name nvarchar(254)
+)
+
+create table images(
+	img_id int primary key identity,
+	img_path nvarchar(max),
+	img_size int,
+	create_at datetime,
+)
+
 create table products(
 	pid int identity primary key,
 	code nvarchar(10) not null,
@@ -37,8 +49,9 @@ create table products(
 create table product_informations(
 	pinfoid int identity primary key,
 	product_id int foreign key references products(pid) unique,
+	model_no nvarchar(254),
 	manufacturer nvarchar(254),
-	produced_in nvarchar(254),
+	produced_nation int foreign key references nations(nid),
 	size nvarchar(254),
 	informations text,
 	e_load int,
@@ -46,9 +59,14 @@ create table product_informations(
 	feature_1 nvarchar(max),
 	feature_2 nvarchar(max),
 	feature_3 nvarchar(max),
-	image_path nvarchar(max),
 	create_at datetime,
 	update_at datetime
+)
+
+create table product_images(
+	product_img_id int primary key identity,
+	product_id int foreign key references products(pid),
+	img_id int foreign key references images(img_id)
 )
 
 create table payment_types(
@@ -92,6 +110,9 @@ create table contracts(
 	client_phone nvarchar(20),
 	client_requirements text,
 	payment_details text,
+	total_product_price decimal(16,2),
+	total_construction_price decimal(16,2),
+	total_construction_time int,
 	create_at datetime,
 	update_at datetime
 )
@@ -102,7 +123,7 @@ create table projects(
 	title nvarchar(254) not null,
 	content text not null,
 	project_status int foreign key references list_status(lsid),
-	image_path nvarchar(max),
+	img_id int foreign key references images(img_id),
 	start_at datetime,
 	end_at datetime,
 	create_at datetime,
