@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -20,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "products")
@@ -38,7 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Products.getForSelectBox", query = "SELECT p.pid,p.name FROM Products p"),
     @NamedQuery(name = "Products.getProductPrice", query = "SELECT p.price FROM Products p WHERE p.pid = :pid"),
     @NamedQuery(name = "Products.findAllByCategoryId", query = "SELECT p FROM Products p WHERE p.categoryId = :categoryId")
+
 })
+
 public class Products implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,11 +76,15 @@ public class Products implements Serializable {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
-    @OneToOne(mappedBy = "productId")
-    private ProductInformations productInformations;
     @JoinColumn(name = "category_id", referencedColumnName = "cid")
     @ManyToOne
     private Categories categoryId;
+    @OneToMany(mappedBy = "productId")
+    private List<ProductImages> productImagesList;
+    @OneToOne(mappedBy = "productId")
+    private ProductInformations productInformations;
+    @OneToMany(mappedBy = "productId")
+    private List<OrderProductDetails> orderProductDetailsList;
 
     public Products() {
     }
@@ -154,6 +163,23 @@ public class Products implements Serializable {
         this.updateAt = updateAt;
     }
 
+    public Categories getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Categories categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    @XmlTransient
+    public List<ProductImages> getProductImagesList() {
+        return productImagesList;
+    }
+
+    public void setProductImagesList(List<ProductImages> productImagesList) {
+        this.productImagesList = productImagesList;
+    }
+
     public ProductInformations getProductInformations() {
         return productInformations;
     }
@@ -162,12 +188,13 @@ public class Products implements Serializable {
         this.productInformations = productInformations;
     }
 
-    public Categories getCategoryId() {
-        return categoryId;
+    @XmlTransient
+    public List<OrderProductDetails> getOrderProductDetailsList() {
+        return orderProductDetailsList;
     }
 
-    public void setCategoryId(Categories categoryId) {
-        this.categoryId = categoryId;
+    public void setOrderProductDetailsList(List<OrderProductDetails> orderProductDetailsList) {
+        this.orderProductDetailsList = orderProductDetailsList;
     }
 
     @Override

@@ -18,47 +18,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(name = "payment_types")
+@Table(name = "nations")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PaymentTypes.findAll", query = "SELECT p FROM PaymentTypes p"),
-    @NamedQuery(name = "PaymentTypes.findByPtid", query = "SELECT p FROM PaymentTypes p WHERE p.ptid = :ptid"),
-    @NamedQuery(name = "PaymentTypes.findByName", query = "SELECT p FROM PaymentTypes p WHERE p.name = :name")})
+    @NamedQuery(name = "Nations.findAll", query = "SELECT n FROM Nations n"),
+    @NamedQuery(name = "Nations.findByNid", query = "SELECT n FROM Nations n WHERE n.nid = :nid"),
+    @NamedQuery(name = "Nations.findByName", query = "SELECT n FROM Nations n WHERE n.name = :name")})
 
-public class PaymentTypes implements Serializable {
+public class Nations implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     //@NotNull
-    @Column(name = "ptid")
+    @Column(name = "nid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ptid;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 254)
+    private Integer nid;
+    @Size(max = 254)
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "paymentType")
-    private List<Orders> ordersList;
+    @OneToMany(mappedBy = "producedNation")
+    private List<ProductInformations> productInformationsList;
 
-    public PaymentTypes() {
+    public Nations() {
     }
 
-    public PaymentTypes(Integer ptid) {
-        this.ptid = ptid;
+    public Nations(Integer nid) {
+        this.nid = nid;
     }
 
-    public PaymentTypes(Integer ptid, String name) {
-        this.ptid = ptid;
-        this.name = name;
+    public Integer getNid() {
+        return nid;
     }
 
-    public Integer getPtid() {
-        return ptid;
-    }
-
-    public void setPtid(Integer ptid) {
-        this.ptid = ptid;
+    public void setNid(Integer nid) {
+        this.nid = nid;
     }
 
     public String getName() {
@@ -70,29 +63,29 @@ public class PaymentTypes implements Serializable {
     }
 
     @XmlTransient
-    public List<Orders> getOrdersList() {
-        return ordersList;
+    public List<ProductInformations> getProductInformationsList() {
+        return productInformationsList;
     }
 
-    public void setOrdersList(List<Orders> ordersList) {
-        this.ordersList = ordersList;
+    public void setProductInformationsList(List<ProductInformations> productInformationsList) {
+        this.productInformationsList = productInformationsList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (ptid != null ? ptid.hashCode() : 0);
+        hash += (nid != null ? nid.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PaymentTypes)) {
+        if (!(object instanceof Nations)) {
             return false;
         }
-        PaymentTypes other = (PaymentTypes) object;
-        if ((this.ptid == null && other.ptid != null) || (this.ptid != null && !this.ptid.equals(other.ptid))) {
+        Nations other = (Nations) object;
+        if ((this.nid == null && other.nid != null) || (this.nid != null && !this.nid.equals(other.nid))) {
             return false;
         }
         return true;
@@ -100,7 +93,7 @@ public class PaymentTypes implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.PaymentTypes[ ptid=" + ptid + " ]";
+        return "entities.Nations[ nid=" + nid + " ]";
     }
     
 }

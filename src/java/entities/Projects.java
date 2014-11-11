@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -27,7 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Projects.findAll", query = "SELECT p FROM Projects p"),
     @NamedQuery(name = "Projects.findByPid", query = "SELECT p FROM Projects p WHERE p.pid = :pid"),
     @NamedQuery(name = "Projects.findByTitle", query = "SELECT p FROM Projects p WHERE p.title = :title"),
-    @NamedQuery(name = "Projects.findByImagePath", query = "SELECT p FROM Projects p WHERE p.imagePath = :imagePath"),
     @NamedQuery(name = "Projects.findByStartAt", query = "SELECT p FROM Projects p WHERE p.startAt = :startAt"),
     @NamedQuery(name = "Projects.findByEndAt", query = "SELECT p FROM Projects p WHERE p.endAt = :endAt"),
     @NamedQuery(name = "Projects.findByCreateAt", query = "SELECT p FROM Projects p WHERE p.createAt = :createAt"),
@@ -51,24 +51,27 @@ public class Projects implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "content")
     private String content;
-    @Size(max = 2147483647)
-    @Column(name = "image_path")
-    private String imagePath;
     @Column(name = "start_at")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startAt;
     @Column(name = "end_at")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endAt;
     @Column(name = "create_at")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
     @Column(name = "update_at")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
-    @JoinColumn(name = "order_id", referencedColumnName = "oid")
+    @JoinColumn(name = "contract_id", referencedColumnName = "cid")
     @OneToOne
-    private Orders orderId;
+    private Contracts contractId;
+    @JoinColumn(name = "img_id", referencedColumnName = "img_id")
+    @ManyToOne
+    private Images imgId;
+    @JoinColumn(name = "project_status", referencedColumnName = "lsid")
+    @ManyToOne
+    private ListStatus projectStatus;
 
     public Projects() {
     }
@@ -107,14 +110,6 @@ public class Projects implements Serializable {
         this.content = content;
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
     public Date getStartAt() {
         return startAt;
     }
@@ -147,12 +142,28 @@ public class Projects implements Serializable {
         this.updateAt = updateAt;
     }
 
-    public Orders getOrderId() {
-        return orderId;
+    public Contracts getContractId() {
+        return contractId;
     }
 
-    public void setOrderId(Orders orderId) {
-        this.orderId = orderId;
+    public void setContractId(Contracts contractId) {
+        this.contractId = contractId;
+    }
+
+    public Images getImgId() {
+        return imgId;
+    }
+
+    public void setImgId(Images imgId) {
+        this.imgId = imgId;
+    }
+
+    public ListStatus getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(ListStatus projectStatus) {
+        this.projectStatus = projectStatus;
     }
 
     @Override

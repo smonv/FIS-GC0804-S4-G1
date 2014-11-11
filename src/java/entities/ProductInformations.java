@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -26,20 +28,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ProductInformations.findAll", query = "SELECT p FROM ProductInformations p"),
     @NamedQuery(name = "ProductInformations.findByPinfoid", query = "SELECT p FROM ProductInformations p WHERE p.pinfoid = :pinfoid"),
+    @NamedQuery(name = "ProductInformations.findByModelNo", query = "SELECT p FROM ProductInformations p WHERE p.modelNo = :modelNo"),
     @NamedQuery(name = "ProductInformations.findByManufacturer", query = "SELECT p FROM ProductInformations p WHERE p.manufacturer = :manufacturer"),
-    @NamedQuery(name = "ProductInformations.findByProducedIn", query = "SELECT p FROM ProductInformations p WHERE p.producedIn = :producedIn"),
     @NamedQuery(name = "ProductInformations.findBySize", query = "SELECT p FROM ProductInformations p WHERE p.size = :size"),
     @NamedQuery(name = "ProductInformations.findByELoad", query = "SELECT p FROM ProductInformations p WHERE p.eLoad = :eLoad"),
     @NamedQuery(name = "ProductInformations.findBySpeed", query = "SELECT p FROM ProductInformations p WHERE p.speed = :speed"),
     @NamedQuery(name = "ProductInformations.findByFeature1", query = "SELECT p FROM ProductInformations p WHERE p.feature1 = :feature1"),
     @NamedQuery(name = "ProductInformations.findByFeature2", query = "SELECT p FROM ProductInformations p WHERE p.feature2 = :feature2"),
     @NamedQuery(name = "ProductInformations.findByFeature3", query = "SELECT p FROM ProductInformations p WHERE p.feature3 = :feature3"),
-    @NamedQuery(name = "ProductInformations.findByImagePath", query = "SELECT p FROM ProductInformations p WHERE p.imagePath = :imagePath"),
     @NamedQuery(name = "ProductInformations.findByCreateAt", query = "SELECT p FROM ProductInformations p WHERE p.createAt = :createAt"),
     @NamedQuery(name = "ProductInformations.findByUpdateAt", query = "SELECT p FROM ProductInformations p WHERE p.updateAt = :updateAt")})
 
 public class ProductInformations implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -48,11 +48,11 @@ public class ProductInformations implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pinfoid;
     @Size(max = 254)
+    @Column(name = "model_no")
+    private String modelNo;
+    @Size(max = 254)
     @Column(name = "manufacturer")
     private String manufacturer;
-    @Size(max = 254)
-    @Column(name = "produced_in")
-    private String producedIn;
     @Size(max = 254)
     @Column(name = "size")
     private String size;
@@ -60,12 +60,11 @@ public class ProductInformations implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "informations")
     private String informations;
-    @Size(max = 254)
     @Column(name = "e_load")
-    private String eLoad;
-    @Size(max = 254)
+    private Integer eLoad;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "speed")
-    private String speed;
+    private BigDecimal speed;
     @Size(max = 2147483647)
     @Column(name = "feature_1")
     private String feature1;
@@ -75,15 +74,15 @@ public class ProductInformations implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "feature_3")
     private String feature3;
-    @Size(max = 2147483647)
-    @Column(name = "image_path")
-    private String imagePath;
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
+    @JoinColumn(name = "produced_nation", referencedColumnName = "nid")
+    @ManyToOne
+    private Nations producedNation;
     @JoinColumn(name = "product_id", referencedColumnName = "pid")
     @OneToOne
     private Products productId;
@@ -103,20 +102,20 @@ public class ProductInformations implements Serializable {
         this.pinfoid = pinfoid;
     }
 
+    public String getModelNo() {
+        return modelNo;
+    }
+
+    public void setModelNo(String modelNo) {
+        this.modelNo = modelNo;
+    }
+
     public String getManufacturer() {
         return manufacturer;
     }
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
-    }
-
-    public String getProducedIn() {
-        return producedIn;
-    }
-
-    public void setProducedIn(String producedIn) {
-        this.producedIn = producedIn;
     }
 
     public String getSize() {
@@ -135,19 +134,19 @@ public class ProductInformations implements Serializable {
         this.informations = informations;
     }
 
-    public String getELoad() {
+    public Integer getELoad() {
         return eLoad;
     }
 
-    public void setELoad(String eLoad) {
+    public void setELoad(Integer eLoad) {
         this.eLoad = eLoad;
     }
 
-    public String getSpeed() {
+    public BigDecimal getSpeed() {
         return speed;
     }
 
-    public void setSpeed(String speed) {
+    public void setSpeed(BigDecimal speed) {
         this.speed = speed;
     }
 
@@ -175,14 +174,6 @@ public class ProductInformations implements Serializable {
         this.feature3 = feature3;
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
     public Date getCreateAt() {
         return createAt;
     }
@@ -197,6 +188,14 @@ public class ProductInformations implements Serializable {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public Nations getProducedNation() {
+        return producedNation;
+    }
+
+    public void setProducedNation(Nations producedNation) {
+        this.producedNation = producedNation;
     }
 
     public Products getProductId() {
@@ -231,5 +230,5 @@ public class ProductInformations implements Serializable {
     public String toString() {
         return "entities.ProductInformations[ pinfoid=" + pinfoid + " ]";
     }
-
+    
 }

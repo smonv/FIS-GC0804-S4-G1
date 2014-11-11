@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -22,10 +17,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author SolomonT
- */
 @Entity
 @Table(name = "feedback_level")
 @XmlRootElement
@@ -33,6 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "FeedbackLevel.findAll", query = "SELECT f FROM FeedbackLevel f"),
     @NamedQuery(name = "FeedbackLevel.findByFlid", query = "SELECT f FROM FeedbackLevel f WHERE f.flid = :flid"),
     @NamedQuery(name = "FeedbackLevel.findByName", query = "SELECT f FROM FeedbackLevel f WHERE f.name = :name")})
+
 public class FeedbackLevel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

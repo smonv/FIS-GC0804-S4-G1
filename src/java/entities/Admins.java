@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -22,10 +17,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author SolomonT
- */
 @Entity
 @Table(name = "admins")
 @XmlRootElement
@@ -40,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Admins.findByIsManager", query = "SELECT a FROM Admins a WHERE a.isManager = :isManager"),
     @NamedQuery(name = "Admins.findByCreateAt", query = "SELECT a FROM Admins a WHERE a.createAt = :createAt"),
     @NamedQuery(name = "Admins.findByUpdateAt", query = "SELECT a FROM Admins a WHERE a.updateAt = :updateAt")})
+
 public class Admins implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

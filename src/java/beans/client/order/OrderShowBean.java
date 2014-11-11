@@ -93,8 +93,8 @@ public class OrderShowBean {
 
     public List<Orders> getOrders() {
         Clients current_client = SessionHelper.getCurrentClient();
-        if(orders == null){
-        orders = orderModel.getListOrder(current_client.getCid());
+        if (orders == null) {
+            orders = orderModel.getListOrder(current_client.getCid());
         }
 //        orders = orderModel.getListOrder(1);
         return orders;

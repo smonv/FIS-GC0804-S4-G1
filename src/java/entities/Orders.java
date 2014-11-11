@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -28,10 +23,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author SolomonT
- */
 @Entity
 @Table(name = "orders")
 @XmlRootElement
@@ -39,8 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findByOid", query = "SELECT o FROM Orders o WHERE o.oid = :oid"),
     @NamedQuery(name = "Orders.findByNumber", query = "SELECT o FROM Orders o WHERE o.number = :number"),
-    @NamedQuery(name = "Orders.findByLocationName", query = "SELECT o FROM Orders o WHERE o.locationName = :locationName AND o.clientId = :cid"),
-    @NamedQuery(name = "Orders.findByLocationAddress", query = "SELECT o FROM Orders o WHERE o.locationAddress = :locationAddress AND o.clientId = :cid"),
+    @NamedQuery(name = "Orders.findByLocationName", query = "SELECT o FROM Orders o WHERE o.locationName = :locationName"),
+    @NamedQuery(name = "Orders.findByLocationAddress", query = "SELECT o FROM Orders o WHERE o.locationAddress = :locationAddress"),
     @NamedQuery(name = "Orders.findByStartAt", query = "SELECT o FROM Orders o WHERE o.startAt = :startAt"),
     @NamedQuery(name = "Orders.findByCreateAt", query = "SELECT o FROM Orders o WHERE o.createAt = :createAt"),
     @NamedQuery(name = "Orders.findByUpdateAt", query = "SELECT o FROM Orders o WHERE o.updateAt = :updateAt"),
@@ -53,9 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.findByStatus", query = "SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus"),
     @NamedQuery(name = "Orders.countByStatus", query = "SELECT COUNT(o.oid) FROM Orders o WHERE o.orderStatus = :orderStatus")
 })
+
 public class Orders implements Serializable {
-    @OneToOne(mappedBy = "orderId")
-    private Projects projects;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -89,11 +79,11 @@ public class Orders implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
     @OneToMany(mappedBy = "orderId")
-    private List<Projects> projectsList;
+    private List<Complaints> complaintsList;
+    @OneToOne(mappedBy = "orderId")
+    private Contracts contracts;
     @OneToMany(mappedBy = "orderId")
     private List<OrderProductDetails> orderProductDetailsList;
-    @OneToMany(mappedBy = "orderId")
-    private List<Complaints> complaintsList;
     @JoinColumn(name = "client_id", referencedColumnName = "cid")
     @ManyToOne
     private Clients clientId;
@@ -175,12 +165,20 @@ public class Orders implements Serializable {
     }
 
     @XmlTransient
-    public List<Projects> getProjectsList() {
-        return projectsList;
+    public List<Complaints> getComplaintsList() {
+        return complaintsList;
     }
 
-    public void setProjectsList(List<Projects> projectsList) {
-        this.projectsList = projectsList;
+    public void setComplaintsList(List<Complaints> complaintsList) {
+        this.complaintsList = complaintsList;
+    }
+
+    public Contracts getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Contracts contracts) {
+        this.contracts = contracts;
     }
 
     @XmlTransient
@@ -190,15 +188,6 @@ public class Orders implements Serializable {
 
     public void setOrderProductDetailsList(List<OrderProductDetails> orderProductDetailsList) {
         this.orderProductDetailsList = orderProductDetailsList;
-    }
-
-    @XmlTransient
-    public List<Complaints> getComplaintsList() {
-        return complaintsList;
-    }
-
-    public void setComplaintsList(List<Complaints> complaintsList) {
-        this.complaintsList = complaintsList;
     }
 
     public Clients getClientId() {
@@ -248,14 +237,6 @@ public class Orders implements Serializable {
     @Override
     public String toString() {
         return "entities.Orders[ oid=" + oid + " ]";
-    }
-
-    public Projects getProjects() {
-        return projects;
-    }
-
-    public void setProjects(Projects projects) {
-        this.projects = projects;
     }
 
 }

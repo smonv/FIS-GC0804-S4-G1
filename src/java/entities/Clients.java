@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -26,10 +21,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author SolomonT
- */
 @Entity
 @Table(name = "clients")
 @XmlRootElement
@@ -48,13 +39,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clients.uniqueEmail", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.email = :email"),
     @NamedQuery(name = "Clients.clientExists", query = "SELECT COUNT(c.cid) FROM Clients c WHERE c.cid = :cid ")
 })
+
 public class Clients implements Serializable {
-    @OneToMany(mappedBy = "clientId")
-    private List<Feedbacks> feedbacksList;
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    //@NotNull
     @Column(name = "cid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cid;
@@ -93,6 +84,8 @@ public class Clients implements Serializable {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
+    @OneToMany(mappedBy = "clientId")
+    private List<Feedbacks> feedbacksList;
     @OneToMany(mappedBy = "clientId")
     private List<Orders> ordersList;
 
@@ -191,6 +184,15 @@ public class Clients implements Serializable {
     }
 
     @XmlTransient
+    public List<Feedbacks> getFeedbacksList() {
+        return feedbacksList;
+    }
+
+    public void setFeedbacksList(List<Feedbacks> feedbacksList) {
+        this.feedbacksList = feedbacksList;
+    }
+
+    @XmlTransient
     public List<Orders> getOrdersList() {
         return ordersList;
     }
@@ -222,15 +224,6 @@ public class Clients implements Serializable {
     @Override
     public String toString() {
         return "entities.Clients[ cid=" + cid + " ]";
-    }
-
-    @XmlTransient
-    public List<Feedbacks> getFeedbacksList() {
-        return feedbacksList;
-    }
-
-    public void setFeedbacksList(List<Feedbacks> feedbacksList) {
-        this.feedbacksList = feedbacksList;
     }
 
 }

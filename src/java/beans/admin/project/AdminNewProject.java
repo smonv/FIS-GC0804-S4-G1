@@ -63,7 +63,7 @@ public class AdminNewProject {
             ApplicationHelper.redirect("/admin/project/new.xhtml?number=" + number, true);
         } else {
             Projects project = new Projects();
-            project.setOrderId(order);
+            
             project.setTitle(title);
             project.setContent(content);
             project.setStartAt(startAtDate);

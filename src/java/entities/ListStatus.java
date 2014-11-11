@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -22,10 +17,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author SolomonT
- */
 @Entity
 @Table(name = "list_status")
 @XmlRootElement
@@ -33,6 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ListStatus.findAll", query = "SELECT l FROM ListStatus l"),
     @NamedQuery(name = "ListStatus.findByLsid", query = "SELECT l FROM ListStatus l WHERE l.lsid = :lsid"),
     @NamedQuery(name = "ListStatus.findByName", query = "SELECT l FROM ListStatus l WHERE l.name = :name")})
+
 public class ListStatus implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,6 +38,8 @@ public class ListStatus implements Serializable {
     @Size(min = 1, max = 254)
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "projectStatus")
+    private List<Projects> projectsList;
     @OneToMany(mappedBy = "complaintStatus")
     private List<Complaints> complaintsList;
     @OneToMany(mappedBy = "feedbackStatus")
@@ -79,6 +73,15 @@ public class ListStatus implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlTransient
+    public List<Projects> getProjectsList() {
+        return projectsList;
+    }
+
+    public void setProjectsList(List<Projects> projectsList) {
+        this.projectsList = projectsList;
     }
 
     @XmlTransient
