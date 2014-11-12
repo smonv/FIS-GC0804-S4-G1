@@ -23,37 +23,36 @@ public class IndexProduct {
     //bean variables
     private List<Products> products;
     private int current_page = 1;
-    private int pageSize = 2;
+
+    private int pageSize = 6;
     private long totalProduct;
     private long totalPage;
     private int current_cid = 0;
+    private int currentMinLoad = 0;
+    private int currentMaxLoad = 2000;
+    
     //view param
     private String page;
     private String cid;
+    private String minLoad;
+    private String maxLoad;
+
 
     public IndexProduct() {
     }
 
     public void init() {
-        if (cid != null) {
-            if (!ApplicationHelper.isInteger(cid)) {
-                ApplicationHelper.redirect("/404.xhtml", true);
-                return;
-            }
-            current_cid = Integer.parseInt(cid);
-            Categories category = categoryModel.getById(current_cid);
-            if (category != null) {
-                current_page = ApplicationHelper.getCurrentPage(page);
-                products = productModel.getAll(current_page - 1, pageSize, category);
-                totalProduct = productModel.countAll(category);
-            } else {
-                ApplicationHelper.redirect("/404.xhtml", true);
-            }
-        } else {
-            current_page = ApplicationHelper.getCurrentPage(page);
-            products = productModel.getAll(current_page - 1, pageSize);
-            totalProduct = productModel.countAll();
-        }
+
+        current_cid = ApplicationHelper.isInteger(cid) ? Integer.parseInt(cid) : 0; //check cid
+        Categories category = categoryModel.getById(current_cid); //get category by cid;
+
+        currentMinLoad = ApplicationHelper.isInteger(minLoad) ? Integer.parseInt(minLoad) : 0; //check min load
+        currentMaxLoad = ApplicationHelper.isInteger(maxLoad) ? Integer.parseInt(maxLoad) : 2000; //check max load
+
+        current_page = ApplicationHelper.getCurrentPage(page);
+        products = productModel.getAll(current_page - 1, pageSize, category, currentMinLoad, currentMaxLoad);
+        totalProduct = productModel.countAll(category, currentMinLoad, currentMaxLoad);
+
     }
 
     public List<Categories> getAllCategories() {
@@ -90,7 +89,9 @@ public class IndexProduct {
         } else {
             totalPage = totalProduct / pageSize;
         }
-        return totalPage;
+        
+        return totalPage > 0 ? totalPage : 1;
+
     }
 
     public void setTotalPage(long totalPage) {
@@ -129,4 +130,19 @@ public class IndexProduct {
         this.cid = cid;
     }
 
+    public String getMinLoad() {
+        return minLoad;
+    }
+
+    public void setMinLoad(String minLoad) {
+        this.minLoad = minLoad;
+    }
+
+    public String getMaxLoad() {
+        return maxLoad;
+    }
+
+    public void setMaxLoad(String maxLoad) {
+        this.maxLoad = maxLoad;
+    }
 }

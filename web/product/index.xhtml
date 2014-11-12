@@ -9,6 +9,8 @@
         <f:metadata>
             <f:viewParam name="page" value="#{indexProduct.page}" />
             <f:viewParam name="cid" value="#{indexProduct.cid}" />
+            <f:viewParam name="minLoad" value="#{indexProduct.minLoad}" />
+            <f:viewParam name="maxLoad" value="#{indexProduct.maxLoad}" />
             <f:viewAction action="#{indexProduct.init()}" />
         </f:metadata>
         <ui:define name="title">Product List</ui:define>
@@ -40,6 +42,14 @@
                                                     <option value="#{category.cid}">#{category.name}</option>
                                                 </c:if>
                                             </ui:repeat>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <select class="form-control" id="filter_load">
+                                            <option value="0">Select One</option>
+                                            <option value="0-500">0 - 500</option>
+                                            <option value="500-1000">500 - 1000</option>
+                                            <option value="1000-1500">1000 - 1500</option>
                                         </select>
                                     </li>
                                     <li>
@@ -116,8 +126,10 @@
                                     <c:if test="#{indexProduct.totalPage >= indexProduct.current_page + 1}">
                                         <li><h:link outcome="/product/index.xhtml?page=#{indexProduct.current_page + 1}"><i class="fa fa-angle-right"></i></h:link></li>
                                     </c:if>
+
+                                    <li class="active"><h:outputText value="Page: #{indexProduct.current_page} / #{indexProduct.totalPage}" class="btn btn-primary"/></li>
                                 </c:if>
-                                <li class="active"><h:outputText value="Page: #{indexProduct.current_page} / #{indexProduct.totalPage}" class="btn btn-primary"/></li>
+
 
                             </ul>
                         </div>
@@ -128,6 +140,20 @@
                 $(document).ready(function () {
                     var new_url = "#{facesContext.externalContext.requestContextPath}/product/index.xhtml";
                     filter_product(new_url);
+
+                    var selected_cid = GetURLParameter("cid");
+                    if (selected_cid) {
+                        $("#filter_category").val(selected_cid);
+                    }
+
+                    var selected_min_load = GetURLParameter("minLoad");
+                    var selected_max_load = GetURLParameter("maxLoad");
+                    if (selected_min_load) {
+                        $("#filter_load").val(selected_min_load + "-" + (selected_min_load + 500));
+                    }
+                    if (selected_max_load) {
+                        $("#filter_load").val((selected_max_load - 500) + "-" + selected_max_load);
+                    }
                 });
             </script>
         </ui:define>

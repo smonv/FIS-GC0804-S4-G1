@@ -1,45 +1,77 @@
 package models;
 
 import entities.Categories;
+import entities.ProductInformations;
 import entities.Products;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 @Stateless
 public class ProductModel {
 
     @PersistenceContext
     EntityManager em;
+    
+    public List<Products> getAll(){
+        return em.createNamedQuery("Products.findAll").getResultList();
+    }
 
-    public List<Products> getAll() {
-        List<Products> products = em.createNamedQuery("Products.findAll").getResultList();
+    public List<Products> getAll(int page, int pageSize, Categories category, int minLoad, int maxLoad) {
+        int startIndex = page * pageSize; //caculate start row select
+
+        CriteriaBuilder cb = em.getCriteriaBuilder(); // create criteria builder
+        CriteriaQuery<Products> q = cb.createQuery(Products.class); // create criteria query
+        Root<Products> p = q.from(Products.class); // create FROM products
+        Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.INNER); //join with product_infomations table
+        q.select(p); // create SELECT *
+
+        List<Predicate> predicates = new ArrayList<>(); // create list of where
+        if (category != null) {
+            predicates.add(cb.equal(p.get("categoryId"), category)); // create where categoryId 
+        }
+        if (minLoad > 0) {
+            predicates.add(cb.gt(pi.get("eLoad"), minLoad)); //compare eload greator than min load
+        }
+        if (maxLoad < 2000) {
+            predicates.add(cb.lt(pi.get("eLoad"), maxLoad)); //compare eload less than max load
+        }
+        q.where(predicates.toArray(new Predicate[]{})); //apply where query
+
+        //TypedQuery tq = em.createQuery(q); //tranform to query
+        List<Products> products = em.createQuery(q).setFirstResult(startIndex).setMaxResults(pageSize).getResultList(); //get data
+
         return products;
     }
 
-    public List<Products> getAll(int page, int pageSize) {
-        int startIndex = page * pageSize;
-        List<Products> products = em.createNamedQuery("Products.findAll").setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
-        return products;
-    }
+    public long countAll(Categories category, int minLoad, int maxLoad) {
+        CriteriaBuilder cb = em.getCriteriaBuilder(); // create criteria builder
+        CriteriaQuery<Long> q = cb.createQuery(Long.class); // create criteria query
+        Root<Products> p = q.from(Products.class); // create FROM products
+        Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.INNER); //join with product_infomations table
+        q.select(cb.count(p.get("pid"))); // create SELECT *
 
-    public List<Products> getAll(int page, int pageSize, Categories category) {
-        int startIndex = page * pageSize;
-        List<Products> products = em.createNamedQuery("Products.findAllByCategoryId").setParameter("categoryId", category).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
-        return products;
-    }
+        List<Predicate> predicates = new ArrayList<>(); // create list of where
+        if (category != null) {
+            predicates.add(cb.equal(p.get("categoryId"), category)); // create where categoryId 
+        }
+        if (minLoad > 0) {
+            predicates.add(cb.gt(pi.get("eLoad"), minLoad)); //compare eload greator than min load
+        }
+        if (maxLoad < 2000) {
+            predicates.add(cb.lt(pi.get("eLoad"), maxLoad)); //compare eload less than max load
+        }
+        q.where(predicates.toArray(new Predicate[]{})); //apply where query
+        return (long)em.createQuery(q).getSingleResult();
 
-    public long countAll() {
-        long total = 0;
-        total = (long) em.createNamedQuery("Products.countAll").getSingleResult();
-        return total;
-    }
-
-    public long countAll(Categories category) {
-        long total = 0;
-        total = (long) em.createNamedQuery("Products.countAllByCategory").setParameter("categoryId", category).getSingleResult();
-        return total;
     }
 
     public List<Products> getTop12() {
