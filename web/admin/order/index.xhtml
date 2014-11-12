@@ -13,26 +13,35 @@
         </f:metadata>
         <ui:define name="content">
             <h1 class="margin-bottom">Orders</h1>
-            <div class="row">
+             <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
+                <li>
+                    <a href="index.html"><i class="entypo-home"></i>Home</a>
+                </li>
+                <li>
+
+                    <a href="tables-main.html">Order</a>
+                </li>
+                <li class="active">
+
+                    <strong>Index</strong>
+                </li>
+            </ol>
                 <div class="form-group">
-                    <input type="text" id="input_number" />
+                    <input type="text" id="input_number" style="width: 250px; height: 28px"/>
                     <button id="filter_number" class="btn btn-sm btn-primary">Filter Number</button>
                 </div>
                 <div class="form-group">
-                    <select id="input_status">
+                    <select id="input_status" style="width: 250px; height: 28px">
                         <option value="0"> Select Status</option>
                         <ui:repeat value="#{adminShowOrder.getAllStatus()}" var="status">
                             <option value="#{status.lsid}">#{status.name}</option>
                         </ui:repeat>
                     </select>
-                    <button id="filter_status" class="btn btn-sm btn-primary">Filter Status</button>
+                    <button id="filter_status" class="btn btn-sm btn-primary" style="width: 88px;">Filter Status</button>
                 </div>
                 <div class="form-group">
                     <button id="filter_clear" class="btn btn-sm btn-primary">Clear Filter</button>
                 </div>
-            </div>
-
-            <div class="row">
                 <h:form>
                     <div class="table-responsive">
                         <h:dataTable class="table table-bordered datatable" id="order_table" 
@@ -74,7 +83,7 @@
                         </h:dataTable>
                     </div>
                 </h:form>
-            </div>
+    
             <div class="row">
                 <h:link value="Previous" 
                         outcome="/admin/order/index.xhtml"
