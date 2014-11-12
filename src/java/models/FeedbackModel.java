@@ -53,10 +53,12 @@ public class FeedbackModel {
         return em.createNamedQuery("Feedbacks.findAll").getResultList();
     }
     
-    public int getAllForAdmin() {
-        return em.createNamedQuery("Feedbacks.findAll").getResultList().size();
+    public long getAllForAdmin() {
+        long totalfeedback=(long) em.createNamedQuery("Feedbacks.totalFeedback").getSingleResult();
+        return totalfeedback;
     }
-    public List<Feedbacks> getAllForAdmin(int startIndex, int pageSize) {
+    public List<Feedbacks> getAllForAdmin(int page, int pageSize) {
+        int startIndex = page * pageSize;
         return em.createNamedQuery("Feedbacks.findAll").setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
     }
 
@@ -69,10 +71,26 @@ public class FeedbackModel {
         return em.createNamedQuery("Feedbacks.findByClientId").setParameter("clientId", client).getResultList();
     }
     
-    public int getByLevel(FeedbackLevel flid){
-        return em.createNamedQuery("Feedbacks.findByLevel").setParameter("flid", flid).getResultList().size(); 
+    public long getByLevel(FeedbackLevel flid){
+        long totalfeedbackbylv=(long) em.createNamedQuery("Feedbacks.countByLevel").setParameter("flid", flid).getSingleResult();
+        return totalfeedbackbylv;
     }
-    public List<Feedbacks> getByLevel(FeedbackLevel flid,int startIndex, int pageSize){
+    public List<Feedbacks> getByLevel(FeedbackLevel flid,int page, int pageSize){
+        int startIndex = page * pageSize;
         return em.createNamedQuery("Feedbacks.findByLevel").setParameter("flid", flid).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+    }
+    public int getByEmail(String email){
+      return em.createNamedQuery("Feedbacks.findByEmail").setParameter("email", email).getResultList().size();   
+    }
+    public List<Feedbacks> getByEmail(String email,int page, int pageSize){
+        int startIndex = page * pageSize;
+      return em.createNamedQuery("Feedbacks.findByEmail").setParameter("email", email).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();   
+    }
+    public int getByName(String name){
+      return em.createNamedQuery("Feedbacks.findByName").setParameter("name", name).getResultList().size();   
+    }
+    public List<Feedbacks> getByName(String name,int page, int pageSize){
+        int startIndex = page * pageSize;
+      return em.createNamedQuery("Feedbacks.findByName").setParameter("name", name).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();   
     }
 }

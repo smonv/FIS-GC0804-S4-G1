@@ -29,9 +29,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Feedbacks.findByName", query = "SELECT f FROM Feedbacks f WHERE f.name = :name"),
     @NamedQuery(name = "Feedbacks.findByEmail", query = "SELECT f FROM Feedbacks f WHERE f.email = :email"),
     @NamedQuery(name = "Feedbacks.findByCreateAt", query = "SELECT f FROM Feedbacks f WHERE f.createAt = :createAt"),
-    @NamedQuery(name = "Feedbacks.findByUpdateAt", query = "SELECT f FROM Feedbacks f WHERE f.updateAt = :updateAt")})
-	@NamedQuery(name = "Feedbacks.findByLevel", query = "SELECT f FROM Feedbacks f WHERE f.feedbackLevel = :flid")
-	
+    @NamedQuery(name = "Feedbacks.findByUpdateAt", query = "SELECT f FROM Feedbacks f WHERE f.updateAt = :updateAt"),
+    @NamedQuery(name = "Feedbacks.findByLevel", query = "SELECT f FROM Feedbacks f WHERE f.feedbackLevel = :flid"),
+    @NamedQuery(name = "Feedbacks.countByLevel", query = "SELECT COUNT(f.fid) FROM Feedbacks f WHERE f.feedbackLevel = :flid"),
+    @NamedQuery(name = "Feedbacks.totalFeedback",query = "SELECT COUNT(f.fid) FROM Feedbacks f")
+})
 public class Feedbacks implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -207,5 +209,5 @@ public class Feedbacks implements Serializable {
     public String toString() {
         return "entities.Feedbacks[ fid=" + fid + " ]";
     }
-    
+
 }

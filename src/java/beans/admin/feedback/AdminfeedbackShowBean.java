@@ -33,13 +33,16 @@ public class AdminfeedbackShowBean {
     /**
      * Creates a new instance of FeedBackShowBean
      */
-    private int pageSize = 1;
-    private int page;
+    private int pageSize = 2;
+    private int current_page = 1;
+    
     private List<Feedbacks> feedbacks;
     private HtmlDataTable feedbackTable;
-    private int totalfeedback;
+    private long totalfeedback;
+    private String page;
     private String fid;
     private String flid;
+    private String search;
     private Feedbacks current_feedback;
 
     public AdminfeedbackShowBean() {
@@ -57,9 +60,6 @@ public class AdminfeedbackShowBean {
         }
     }
 
-    public boolean isHasNextPage() {
-        return (page + 1) * this.getPageSize() + 1 <= feedbackModel.getAllForAdmin();
-    }
     
     public int getTotalPages() {
         int pages = 0;
@@ -75,15 +75,26 @@ public class AdminfeedbackShowBean {
     }
 
     public void loadFeedBackList() {
-        if(flid == null){
-        feedbacks = feedbackModel.getAllForAdmin(this.getStartIndex(), this.getPageSize());
+        current_page = ApplicationHelper.getCurrentPage(page);
+        if(flid == null && search == null){
+        feedbacks = feedbackModel.getAllForAdmin(current_page -1, this.getPageSize());
         totalfeedback = feedbackModel.getAllForAdmin();
         }
-        else{
+        else if(flid != null && search == null){
+            if (!ApplicationHelper.isInteger(flid)) {
+                ApplicationHelper.redirect("/404.xhtml", true);
+                return;
+            }
             int sflid=Integer.parseInt(flid);
             FeedbackLevel fl=feedbackLevelModel.getById(sflid);
-            feedbacks=feedbackModel.getByLevel(fl, this.getStartIndex(),this.getPageSize());
+            if (fl == null) {
+                ApplicationHelper.redirect("/404.xhtml", true);
+            }
+            feedbacks=feedbackModel.getByLevel(fl, current_page -1,this.getPageSize());
             totalfeedback=feedbackModel.getByLevel(fl);
+        }else{       
+                feedbacks=feedbackModel.getByName(search, current_page -1,this.getPageSize());
+                totalfeedback=feedbackModel.getByName(search);   
         }
     }
     
@@ -96,15 +107,21 @@ public class AdminfeedbackShowBean {
         return feedbackLevelModel.getAll();
     }
 
-    public int getStartIndex() {
-        return page * pageSize;
+   
+
+    public int getCurrent_page() {
+        return current_page;
     }
 
-    public int getPage() {
+    public void setCurrent_page(int current_page) {
+        this.current_page = current_page;
+    }
+
+    public String getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(String page) {
         this.page = page;
     }
 
@@ -116,7 +133,7 @@ public class AdminfeedbackShowBean {
         this.pageSize = pageSize;
     }
 
-    public int getTotalfeedback() {
+    public long getTotalfeedback() {
         return totalfeedback;
     }
 
@@ -161,6 +178,16 @@ public class AdminfeedbackShowBean {
     public void setFlid(String flid) {
         this.flid = flid;
     }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    
 
   
 }

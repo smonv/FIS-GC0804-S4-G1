@@ -9,6 +9,7 @@
         <f:metadata>
             <f:viewParam name="page" value="#{adminfeedbackShowBean.page}" />
             <f:viewParam name="flid" value="#{adminfeedbackShowBean.flid}"/>
+            <f:viewParam name="search" value="#{adminfeedbackShowBean.search}"/>
             <f:event listener="#{adminfeedbackShowBean.loadFeedBackList()}" type="preRenderView"/>
         </f:metadata>
         <ui:define name="title">Feedbacks</ui:define>
@@ -29,6 +30,10 @@
             </ol>
             <br />
              <div class="row">
+                 <div class="form-group">
+                    <input type="text" id="input_search" />
+                    <button id="filter_search" class="btn btn-sm btn-primary">Filter search</button>
+                </div>
             <div class="form-group">
               
                     <select id="input_level">
@@ -79,31 +84,39 @@
             <br/>
             <div >
                 <h:link outcome="list" value="Previous"  class="btn btn-default btn-sm btn-icon icon-left"
-                        rendered="#{adminfeedbackShowBean.totalfeedback > adminfeedbackShowBean.pageSize and adminfeedbackShowBean.page > 0}">
-                    <f:param name="page" value="#{adminfeedbackShowBean.page - 1}"/>
+                        rendered="#{adminfeedbackShowBean.totalfeedback gt adminfeedbackShowBean.pageSize and adminfeedbackShowBean.page gt 0}">
+                    <f:param name="page" value="#{adminfeedbackShowBean.current_page - 1}"/>
                     
                 </h:link>
 
 
                 <h:link outcome="list" value="Next" class="btn btn-default btn-sm btn-icon icon-left"
-                        rendered="#{adminfeedbackShowBean.totalfeedback gt adminfeedbackShowBean.pageSize 
-                                    and adminfeedbackShowBean.hasNextPage
-                                    and adminfeedbackShowBean.pageSize * (adminfeedbackShowBean.page + 1) lt adminfeedbackShowBean.totalfeedback
-                                                        }">
-                    <f:param name="page" value="#{adminfeedbackShowBean.page + 1}"/>
+                        rendered="#{adminfeedbackShowBean.totalfeedback gt adminfeedbackShowBean.pageSize
+                                    and (adminfeedbackShowBean.current_page) * adminfeedbackShowBean.pageSize lt adminfeedbackShowBean.totalfeedback}">
+                    <f:param name="page" value="#{adminfeedbackShowBean.current_page + 1}"/>
                     
                 </h:link> 
                 <br/>
-                <h:outputText value="Page: #{adminfeedbackShowBean.page+1}/#{adminfeedbackShowBean.totalPages}" />
+                <h:outputText value="Page: #{adminfeedbackShowBean.current_page}" />
             </div>
             <script type="text/javascript">
                 $(document).ready(function () {
+                     $("#filter_search").click(function (event) {
+                        event.preventDefault();
+                        var input_search = $("#input_search").val();
+                        console.log(input_search);
+                        if (input_search !== "") {
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/feedback/list.xhtml?search=" + input_search;
+                        } else {
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/feedback/list.xhtml";
+                        }
+                    });
                     $("#filter_level").click(function (event) {
                         event.preventDefault();
                         var input_status = $("#input_level").find(":selected").val();
                         console.log(input_status);
-                        if (input_level == 0) {
-                            alert("Please select one level!")
+                        if (input_level === 0) {
+                            alert("Please select one level!");
                         } else {
                             window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/feedback/list.xhtml?flid=" + input_status;
                         }
