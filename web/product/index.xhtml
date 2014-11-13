@@ -75,11 +75,13 @@
 
                                                 <div class="post-thumbnail">
                                                     <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
-                                                    <h:link class="element-link2" outcome="/product/show.xhtml?pid=#{product.pid}"></h:link>
+                                                    <h:link class="element-link2" outcome="/product/view.xhtml">
+                                                        <f:param name="pid" value="#{product.pid}" />
+                                                    </h:link>
                                                 </div>
 
                                                 <div class="project-details">
-                                                    <h2><h:link value="#{product.name}" outcome="/product/show.xhtml">
+                                                    <h2><h:link value="#{product.name}" outcome="/product/view.xhtml">
                                                             <f:param name="pid" value="#{product.pid}" />
                                                             <c:if test="#{indexProduct.mode != null}">
                                                                 <f:param name="mode" value="#{indexProduct.mode}" />
@@ -87,7 +89,7 @@
                                                         </h:link></h2>
                                                     <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
                                                     <div class="readmore">
-                                                        <h:link value="Details" outcome="/product/show.xhtml">
+                                                        <h:link value="Details" outcome="/product/view.xhtml">
                                                             <f:param name="pid" value="#{product.pid}" />
                                                             <c:if test="#{indexProduct.mode != null}">
                                                                 <f:param name="mode" value="#{indexProduct.mode}" />

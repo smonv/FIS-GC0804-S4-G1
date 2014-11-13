@@ -207,7 +207,7 @@ public class OrderEditBean {
 
         } else {
             ApplicationHelper.addMessage("You are not in update mode!");
-            ApplicationHelper.redirect("/product/show.xhtml?pid=" + pid + "&mode=update", true);
+            ApplicationHelper.redirect("/product/view.xhtml?pid=" + pid + "&mode=update", true);
         }
     }
 
