@@ -37,10 +37,10 @@
                             <h:inputText value="#{opd.floors}" size="3" 
                                          label="Floor" required="true"
                                          requiredMessage="Floor is required!"
-                                         validatorMessage="Floor Max 10 and Min 1!" 
+                                         validatorMessage="Floor value must be between 3 and 200" 
                                          converterMessage="Floor is number!">
                                 <f:convertNumber integerOnly="true" />
-                                <f:validateLongRange maximum="10" minimum="1" />
+                                <f:validateLongRange maximum="200" minimum="3" />
                             </h:inputText>
                         </h:column>
                         <h:column>
@@ -48,12 +48,12 @@
                             <h:inputText value="#{opd.heightOfFloor}" size="3" 
                                          label="Height of Floor" required="true"
                                          requiredMessage="Height of Floor is required!"
-                                         validatorMessage="Height of Floor min value is 1!"
+                                         validatorMessage="Height of Floor minimun value must be 3!"
                                          converter="javax.faces.BigDecimal"
-                                         converterMessage="Height of Floor must be like 01!"
+                                         converterMessage="Height of Floor must be number!"
                                          >
                                 <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
-                                <f:validateLongRange minimum="1" />
+                                <f:validateLongRange minimum="3" />
                             </h:inputText>
                         </h:column>
                         <h:column>
@@ -85,7 +85,7 @@
                             <h:commandButton value="Remove" action="#{orderCreateBean.removeSelectedProduct()}" styleClass="btn btn-primary" style="text-align: center; width: 40%;min-width: 50px; font-size: 8px; padding: 5px"/>
                         </h:column>
                     </h:dataTable>
-                  
+
                     <div id="cartCompletion" class="grid-5" style="float: right">
 
                         <div id="totalsWrap">
