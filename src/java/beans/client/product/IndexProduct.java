@@ -42,6 +42,7 @@ public class IndexProduct {
     private String minLoad;
     private String maxLoad;
     private String nid;
+    private String mode;
 
     public IndexProduct() {
     }
@@ -165,5 +166,13 @@ public class IndexProduct {
 
     public void setNid(String nid) {
         this.nid = nid;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 }

@@ -1,4 +1,4 @@
-function filter_product(url) {
+function filter_product(url, mode) {
 
     $("#filter_button").click(function (event) {
         event.preventDefault();
@@ -41,6 +41,10 @@ function filter_product(url) {
             }
             filter_item["nid"] = filter_nation;
             filter_item["nation"] = filter_nation_text;
+        }
+        
+        if(mode){
+            filter_item["mode"] = mode;
         }
 
         //////////////
