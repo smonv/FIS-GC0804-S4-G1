@@ -17,12 +17,12 @@ import models.PaymentTypeModel;
 @ManagedBean
 @ViewScoped
 public class AdminEditOrder {
-
+    
     @EJB
     private ListStatusModel listStatusModel;
     @EJB
     private PaymentTypeModel paymentTypeModel;
-
+    
     @EJB
     private OrderModel orderModel;
 
@@ -36,7 +36,7 @@ public class AdminEditOrder {
     private String locationAddress;
     private int orderStatus;
     private int paymentType;
-
+    
     public AdminEditOrder() {
     }
 
@@ -45,7 +45,11 @@ public class AdminEditOrder {
         ///check order exists
         order = orderModel.getByNumber(number);
         if (order == null) {
-            ApplicationHelper.redirect("/404.xhtml", true);
+            ApplicationHelper.redirect("/admin/404.xhtml", true);
+        }
+        if (order.getContracts() != null) {
+            ApplicationHelper.addMessage("Order has contract, can't edit now!");
+            ApplicationHelper.redirect("/admin/order/view.xhtml?number=" + order.getNumber(), true);
         }
         if (!FacesContext.getCurrentInstance().isPostback()) {
             locationName = order.getLocationName();
@@ -57,13 +61,13 @@ public class AdminEditOrder {
         status = listStatusModel.getAll();
         payments = paymentTypeModel.getAll();
     }
-
+    
     public void update() {
         order.setLocationName(locationName);
         order.setLocationAddress(locationAddress);
         order.setOrderStatus(new ListStatus(orderStatus));
         order.setPaymentType(new PaymentTypes(paymentType));
-
+        
         boolean result = orderModel.update(order);
         if (result) {
             ApplicationHelper.addMessage("Order updated!");
@@ -78,57 +82,57 @@ public class AdminEditOrder {
     public String getNumber() {
         return number;
     }
-
+    
     public void setNumber(String number) {
         this.number = number;
     }
-
+    
     public String getLocationName() {
         return locationName;
     }
-
+    
     public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
-
+    
     public String getLocationAddress() {
         return locationAddress;
     }
-
+    
     public void setLocationAddress(String locationAddress) {
         this.locationAddress = locationAddress;
     }
-
+    
     public int getOrderStatus() {
         return orderStatus;
     }
-
+    
     public void setOrderStatus(int orderStatus) {
         this.orderStatus = orderStatus;
     }
-
+    
     public int getPaymentType() {
         return paymentType;
     }
-
+    
     public void setPaymentType(int paymentType) {
         this.paymentType = paymentType;
     }
-
+    
     public List<ListStatus> getStatus() {
         return status;
     }
-
+    
     public void setStatus(List<ListStatus> status) {
         this.status = status;
     }
-
+    
     public List<PaymentTypes> getPayments() {
         return payments;
     }
-
+    
     public void setPayments(List<PaymentTypes> payments) {
         this.payments = payments;
     }
-
+    
 }

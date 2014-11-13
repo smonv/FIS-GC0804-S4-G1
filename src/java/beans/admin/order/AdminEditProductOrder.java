@@ -23,6 +23,7 @@ import models.ProductModel;
 @ManagedBean
 @RequestScoped
 public class AdminEditProductOrder {
+
     @EJB
     private OrderProductDetailModel orderProductDetailModel;
 
@@ -54,7 +55,10 @@ public class AdminEditProductOrder {
         if (order == null) {
             ApplicationHelper.redirect("/404.xhtml", true);
         }
-
+        if (order.getContracts() != null) {
+            ApplicationHelper.addMessage("Order has contract, can't edit now!");
+            ApplicationHelper.redirect("/admin/order/view.xhtml?number=" + order.getNumber(), true);
+        }
         //get session variable from facescontext
         session = SessionHelper.getSessionMap();
 
@@ -191,7 +195,7 @@ public class AdminEditProductOrder {
 
         //find change
         List<OrderProductDetails> current_opds = (List<OrderProductDetails>) session.get("aepo");
-        
+
         List<OrderProductDetails> order_opds = current_order.getOrderProductDetailsList();
         for (OrderProductDetails co : current_opds) {
             boolean exists = false; // vòng ngoài có, vong trong k có

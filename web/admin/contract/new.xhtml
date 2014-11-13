@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="number" value="#{adminNewContract.number}" />
+            <f:viewAction action="#{adminNewContract.init()}" onPostback="true"/>
+        </f:metadata>
+        <ui:define name="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>New Contract for Order: 
+                        <h:link value="#{adminNewContract.number}" outcome="/admin/order/view.xhtml">
+                            <f:param name="number" value="#{adminNewContract.number}" />
+                        </h:link>
+                    </h1>
+                </div>
+                <div class="row">
+                    <h:messages />
+                </div>
+                <div class="row">
+                    <h:form>
+                        <div class="col-lg-6 col-md-6">
+                            <h3>Client Informations</h3>
+                            <div class="form-group">
+                                <h:outputLabel value="Client Name" />
+                                <h:inputText value="#{adminNewContract.clientName}" class="form-control"
+                                             required="true" requiredMessage="Client Name is require!" />
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel value="Client Email" />
+                                <h:inputText value="#{adminNewContract.clientEmail}" class="form-control"
+                                             required="true" requiredMessage="Client Email is require!">
+                                    <f:validator validatorId="validEmail"/>
+                                </h:inputText>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel value="Client Phone Number" />
+                                <h:inputText value="#{adminNewContract.clientPhone}" class="form-control"
+                                             required="true" requiredMessage="Client Phone Number is require!" />
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel value="Client Requirements" />
+                                <h:inputTextarea value="#{adminNewContract.clientRequirements}" class="form-control" />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <h3>More Informations</h3>
+                            <div class="form-group">
+                                <h:outputLabel value="Payment Details" />
+                                <h:inputTextarea value="#{adminNewContract.paymentDetails}" class="form-control"
+                                                 required="true" requiredMessage="Payment Details is require!" />
+                            </div>
+                            <div class="form-group">
+                                <h:commandButton value="Create Contract" action="#{adminNewContract.create()}" 
+                                                 class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+                <div class="row"></div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+
