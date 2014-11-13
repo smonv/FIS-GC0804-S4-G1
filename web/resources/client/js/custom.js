@@ -6,8 +6,10 @@ function filter_product(url) {
         var filter_item = {};
         var filter_category = $("#filter_category").find(":selected").val();
         var filter_category_text = $("#filter_category").find(":selected").text();
-
         var filter_load = $("#filter_load").find(":selected").val();
+        var filter_nation = $("#filter_nation").find(":selected").val();
+        var filter_nation_text = $("#filter_nation").find(":selected").text();
+        //////////////
         if (filter_category != 0) {
             if (!$.isNumeric(filter_category)) {
                 alert("cid is number!");
@@ -31,6 +33,14 @@ function filter_product(url) {
 
             filter_item["minLoad"] = loads[0];
             filter_item["maxLoad"] = loads[1];
+        }
+        
+        if(filter_nation != 0){
+            if(!$.isNumeric(filter_nation)){
+                alert("nid is number!")
+            }
+            filter_item["nid"] = filter_nation;
+            filter_item["nation"] = filter_nation_text;
         }
 
         //////////////
