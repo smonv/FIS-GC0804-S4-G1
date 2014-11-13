@@ -7,31 +7,31 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
-            <f:viewParam name="number" value="#{adminNewProject.number}" />
-            <f:viewAction action="#{adminNewProject.init()}" onPostback="true" />
+            <f:viewParam name="cid" value="#{adminNewProject.cid}" />
+            <f:viewAction action="#{adminNewProject.init()}" />
         </f:metadata>
         <ui:define name="content">
             <div class="container-fluid">
                 <div class="row">
-                    <h1>Project for order 
-                        <h:link outcome="/admin/order/view.xhtml?number=#{adminNewProject.order.number}" 
-                                value="#{adminNewProject.order.number}" class="btn btn-primary" />
+                    <h1>Project for Client: 
+                        <h:link value="#{adminNewProject.contract.clientName}"
+                                outcome="/admin/contract/view.xhtml">
+                            <f:param name="cid" value="#{adminNewProject.contract.cid}" />
+                        </h:link>
                     </h1>
                 </div>
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <h:form>
                             <div class="form-group">
-                                <h:outputLabel value="Title" for="title" />
-                                <h:inputText id="title" value="#{adminNewProject.title}"
-                                             required="true" requiredMessage="Title is required!" 
-                                             class="form-control" />
+                                <h:outputLabel value="Title" />
+                                <h:inputText value="#{adminNewProject.title}" class="form-control"
+                                             required="true" requiredMessage="Title is require!"/>
                             </div>
                             <div class="form-group">
-                                <h:outputLabel value="Content" for="content" />
-                                <h:inputTextarea id="content" value="#{adminNewProject.content}"
-                                                 required="true" requiredMessage="Content is required!"
-                                                 class="form-control" />
+                                <h:outputLabel value="Content" />
+                                <h:inputTextarea value="#{adminNewProject.content}" class="form-control"
+                                                 required="true" requiredMessage="Content is require!" />
                             </div>
                             <div class="form-group">
                                 <h:outputLabel value="Start Date" for="start_at" />
@@ -56,6 +56,13 @@
                                 </h:inputText>
                             </div>
                             <div class="form-group">
+                                <h:outputLabel value="Status" />
+                                <h:selectOneMenu value="#{adminNewProject.projectStatus}" class="form-control">
+                                    <f:selectItems value="#{adminNewProject.getListStatus()}" var="status"
+                                                   itemLabel="#{status.name}" itemValue="#{status.lsid}"/>
+                                </h:selectOneMenu>
+                            </div>
+                            <div class="form-group">
                                 <h:commandButton value="Create" action="#{adminNewProject.create()}" class="btn btn-primary" />
                             </div>
                         </h:form>
@@ -64,12 +71,12 @@
                         <h:messages />
                     </div>
                 </div>
+                <div class="row"></div>
             </div>
             <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function () {
                     newProjectDatePicker();
-
                 });
             </script>
         </ui:define>

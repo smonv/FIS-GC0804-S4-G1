@@ -19,8 +19,10 @@
                                     outcome="/admin/contract/new.xhtml?number=#{adminViewOrder.number}" 
                                     rendered="#{adminViewOrder.order.orderStatus.lsid gt 1 and adminViewOrder.order.contracts == null}" 
                                     class="btn btn-primary" />
-                            <h:link value="View Contract" outcome="#"
-                                    rendered="#{adminViewOrder.order.contracts != null}" class="btn btn-primary"/>
+                            <h:link value="View Contract" outcome="/admin/contract/view.xhtml"
+                                    rendered="#{adminViewOrder.order.contracts != null}" class="btn btn-primary">
+                                <f:param name="cid" value="#{adminViewOrder.order.contracts.cid}" />
+                            </h:link>
                         </h1>
                     </div>
                 </div>

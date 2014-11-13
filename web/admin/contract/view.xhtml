@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="cid" value="#{adminViewContract.cid}" />
+            <f:viewAction action="#{adminViewContract.init()}" />
+        </f:metadata>
+        <ui:define name="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>Contract of Order: 
+                        <h:link value="#{adminViewContract.contract.orderId.number}"
+                                outcome="/admin/order/view.xhtml"
+                                >
+                            <f:param name="number" value="#{adminViewContract.contract.orderId.number}" />
+                        </h:link>
+                    </h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <h3>Contract Informations 
+                            <h:link value="Edit" outcome="#" class="btn btn-primary"/>
+                        </h3>
+                        <h4>Client Name: <h:outputText value="#{adminViewContract.contract.clientName}" /></h4>
+                        <h4>Client Email: <h:outputText value="#{adminViewContract.contract.clientEmail}" /></h4>
+                        <h4>Client Phone Number: <h:outputText value="#{adminViewContract.contract.clientPhone}"/></h4>
+                        <h5>Client Requirements: </h5>
+                        <p><h:outputText value="#{adminViewContract.contract.clientRequirements}" /></p>
+                        <br />
+                        <h5>Payment Details: </h5>
+                        <p><h:outputText value="#{adminViewContract.contract.paymentDetails}" /></p>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <c:if test="#{adminViewContract.contract.projects == null}">
+                            <h3>Contract don't have any projects!</h3>
+                            <h:link value="Create Project Now" outcome="/admin/project/new.xhtml" 
+                                    class="btn btn-primary">
+                                <f:param name="cid" value="#{adminViewContract.contract.cid}" />
+                            </h:link>
+                        </c:if>
+                        <c:if test="#{adminViewContract.contract.projects != null}">
+                            <h3>Contract have project!</h3> <h:link value="View Project" outcome="#"></h:link>
+                        </c:if>
+                    </div>
+                </div>
+                <div class="row"></div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

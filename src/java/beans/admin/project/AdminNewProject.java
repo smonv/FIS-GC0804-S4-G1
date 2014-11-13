@@ -1,15 +1,17 @@
 package beans.admin.project;
 
-import entities.Orders;
+import entities.Contracts;
+import entities.ListStatus;
 import entities.Projects;
 import helpers.ApplicationHelper;
 import helpers.PersistenceHelper;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
-import models.OrderModel;
+import models.ContractModel;
+import models.ListStatusModel;
 import models.ProjectModel;
 
 @ManagedBean
@@ -17,29 +19,38 @@ import models.ProjectModel;
 public class AdminNewProject {
 
     @EJB
-    private ProjectModel projectModel;
+    private ListStatusModel listStatusModel;
 
     @EJB
-    private OrderModel orderModel;
-    //bean variable
-    private Orders order;
-    //view param
-    private String number;
+    private ProjectModel projectModel;
+    @EJB
+    private ContractModel contractModel;
 
-    //project variable
+    //bean variable
+    private Contracts contract;
+    private int currentCid;
     private String title;
     private String content;
     private String startAt;
     private String endAt;
+    private int projectStatus;
+    //view param
+    private String cid;
 
     public AdminNewProject() {
     }
 
     public void init() {
-        order = orderModel.getByNumber(number);
-        if (order == null) {
-            ApplicationHelper.redirect("/404.xhtml", true);
+        currentCid = ApplicationHelper.isInteger(cid) ? Integer.parseInt(cid) : 0;
+        contract = contractModel.getById(currentCid);
+        if (contract == null) {
+            ApplicationHelper.redirect("/admin/404.xhtml", true);
         }
+    }
+
+    public List<ListStatus> getListStatus() {
+        List<ListStatus> status = listStatusModel.getAll();
+        return status;
     }
 
     public void create() {
@@ -60,35 +71,53 @@ public class AdminNewProject {
             valid = false;
         }
         if (!valid) {
-            ApplicationHelper.redirect("/admin/project/new.xhtml?number=" + number, true);
-        } else {
-            Projects project = new Projects();
-            
-            project.setTitle(title);
-            project.setContent(content);
-            project.setStartAt(startAtDate);
-            project.setEndAt(endAtDate);
-            project.setCreateAt(PersistenceHelper.getCurrentTime());
-            
-            boolean result = projectModel.create(project);
-            if (result) {
-                ApplicationHelper.addMessage("Project created!");
-                ApplicationHelper.redirect("/admin/order/view.xhtml?number=" + number, true);
-            } else {
-                ApplicationHelper.addMessage("Failed to create new project!");
-                ApplicationHelper.redirect("/admin/project/new.xhtml?number=" + number, true);
-            }
+            ApplicationHelper.redirect("/admin/project/new.xhtml?cid=" + cid, true);
         }
+        //////////////
+        currentCid = ApplicationHelper.isInteger(cid) ? Integer.parseInt(cid) : 0;
+        contract = contractModel.getById(currentCid);
+        if (contract == null) {
+            ApplicationHelper.addMessage("Can't find exists contract!");
+            ApplicationHelper.redirect("/admin/project/new.xhtml?cid=" + cid, valid);
+        }
+        /////////
 
+        Projects project = new Projects();
+        project.setContractId(contract);
+        project.setTitle(title);
+        project.setContent(content);
+        project.setProjectStatus(new ListStatus(projectStatus));
+        project.setStartAt(startAtDate);
+        project.setEndAt(endAtDate);
+        project.setCreateAt(PersistenceHelper.getCurrentTime());
+
+        boolean result = projectModel.create(project);
+        if (result) {
+            ApplicationHelper.addMessage("Project created!");
+            ApplicationHelper.redirect("/admin/contract/view.xhtml?cid=" + contract.getCid(), true);
+            return;
+        } else {
+            ApplicationHelper.addMessage("Failed to create new project!");
+            ApplicationHelper.redirect("/admin/project/new.xhtml?cid=" + contract.getCid(), true);
+            return;
+        }
     }
 
-    ///SET GET
-    public String getNumber() {
-        return number;
+    /// SET GET
+    public Contracts getContract() {
+        return contract;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setContract(Contracts contract) {
+        this.contract = contract;
+    }
+
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 
     public String getTitle() {
@@ -123,12 +152,12 @@ public class AdminNewProject {
         this.endAt = endAt;
     }
 
-    public Orders getOrder() {
-        return order;
+    public int getProjectStatus() {
+        return projectStatus;
     }
 
-    public void setOrder(Orders order) {
-        this.order = order;
+    public void setProjectStatus(int projectStatus) {
+        this.projectStatus = projectStatus;
     }
 
 }
