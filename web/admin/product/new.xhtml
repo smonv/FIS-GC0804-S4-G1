@@ -52,7 +52,9 @@
                                 <h:inputText value="#{adminNewProduct.productPrice}" class="form-control" 
                                              required="true" requiredMessage="Product price is require!"
                                              converter="javax.faces.BigDecimal" converterMessage="Wrong data type!"
+                                             validatorMessage="Price mininum must be greator than 0"
                                              >
+                                    <f:validateLongRange minimum="1" />
                                     <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
                                 </h:inputText>
                             </div>
@@ -61,7 +63,9 @@
                                 <h:inputText value="#{adminNewProduct.productContructionPrice}" class="form-control" 
                                              required="true" requiredMessage="Contruction price is require!"
                                              converter="javax.faces.BigDecimal" converterMessage="Wrong data type!"
+                                             validatorMessage="Contruction Price mininum must be greator than 0"
                                              >
+                                    <f:validateLongRange minimum="1" />
                                     <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
                                 </h:inputText>
                             </div>
@@ -69,7 +73,9 @@
                                 <h:outputLabel value="Contruction Time (day)" />
                                 <h:inputText value="#{adminNewProduct.productContructionTime}" class="form-control"
                                              required="true" requiredMessage="Contruction time is require!"
-                                             converter="javax.faces.Integer" converterMessage="Wrong data type!">
+                                             converter="javax.faces.Integer" converterMessage="Wrong data type!"
+                                             validatorMessage="Contruction Time minimum must be greator than 0">
+                                    <f:validateLongRange minimum="1" />
                                     <f:convertNumber integerOnly="true" />
                                 </h:inputText>
                             </div>
