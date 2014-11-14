@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans.client.order;
 
 import entities.Clients;
@@ -31,10 +26,6 @@ import models.OrderProductDetailModel;
 import models.PaymentTypeModel;
 import models.ProductModel;
 
-/**
- *
- * @author Cu Beo
- */
 @ManagedBean
 @RequestScoped
 public class OrderCreateBean implements Serializable {
@@ -262,20 +253,6 @@ public class OrderCreateBean implements Serializable {
     }
 
     public void newOrder() {
-        //validate start_at time input
-//        Date start_at = ApplicationHelper.parseDate(stringStartAt, "dd/MM/yyyy");
-//        boolean valid = true;
-//        if (start_at == null) {
-//            ApplicationHelper.addMessage("Wrong date type!");
-//            valid = false;
-//        } else if (start_at.compareTo(PersistenceHelper.getCurrentTime()) < 0) {
-//            ApplicationHelper.addMessage("Wish date before current date!");
-//            valid = false;
-//        }
-//        if (!valid) {
-//            ApplicationHelper.redirect("/client/order/new.xhtml", true);
-//            return;
-//        }
 
         //begin add new order
         Map<String, Object> session = SessionHelper.getSessionMap();
@@ -319,13 +296,7 @@ public class OrderCreateBean implements Serializable {
     }
 
     //////////////////////////////
-//    public int getPid() {
-//        return pid;
-//    }
-//    
-//    public void setPid(int pid) {
-//        this.pid = pid;
-//    }
+
     public Products getCurrentProduct() {
         return currentProduct;
     }

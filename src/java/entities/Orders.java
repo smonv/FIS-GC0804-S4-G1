@@ -78,8 +78,6 @@ public class Orders implements Serializable {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
-    @OneToMany(mappedBy = "orderId")
-    private List<Complaints> complaintsList;
     @OneToOne(mappedBy = "orderId")
     private Contracts contracts;
     @OneToMany(mappedBy = "orderId")
@@ -162,15 +160,6 @@ public class Orders implements Serializable {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
-    }
-
-    @XmlTransient
-    public List<Complaints> getComplaintsList() {
-        return complaintsList;
-    }
-
-    public void setComplaintsList(List<Complaints> complaintsList) {
-        this.complaintsList = complaintsList;
     }
 
     public Contracts getContracts() {
