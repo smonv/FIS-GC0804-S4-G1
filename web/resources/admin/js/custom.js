@@ -26,3 +26,12 @@ function newProjectDatePicker() {
     }).data('datepicker');
 }
 
+function adminProjectIndexDatePicker(){
+    $(".filter_start_at").datepicker({
+        format: 'dd/mm/yyyy',
+    });
+    $(".filter_end_at").datepicker({
+        format: 'dd/mm/yyyy',
+    });
+}
+
