@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ProductInformations.findAll", query = "SELECT p FROM ProductInformations p"),
     @NamedQuery(name = "ProductInformations.findByPinfoid", query = "SELECT p FROM ProductInformations p WHERE p.pinfoid = :pinfoid"),
     @NamedQuery(name = "ProductInformations.findByModelNo", query = "SELECT p FROM ProductInformations p WHERE p.modelNo = :modelNo"),
-    @NamedQuery(name = "ProductInformations.findByManufacturer", query = "SELECT p FROM ProductInformations p WHERE p.manufacturer = :manufacturer"),
     @NamedQuery(name = "ProductInformations.findBySize", query = "SELECT p FROM ProductInformations p WHERE p.size = :size"),
     @NamedQuery(name = "ProductInformations.findByELoad", query = "SELECT p FROM ProductInformations p WHERE p.eLoad = :eLoad"),
     @NamedQuery(name = "ProductInformations.findBySpeed", query = "SELECT p FROM ProductInformations p WHERE p.speed = :speed"),
@@ -50,9 +49,6 @@ public class ProductInformations implements Serializable {
     @Size(max = 254)
     @Column(name = "model_no")
     private String modelNo;
-    @Size(max = 254)
-    @Column(name = "manufacturer")
-    private String manufacturer;
     @Size(max = 254)
     @Column(name = "size")
     private String size;
@@ -80,9 +76,9 @@ public class ProductInformations implements Serializable {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
-    @JoinColumn(name = "produced_nation", referencedColumnName = "nid")
+    @JoinColumn(name = "manufacturer_id", referencedColumnName = "mid")
     @ManyToOne
-    private Nations producedNation;
+    private Manufacturers manufacturerId;
     @JoinColumn(name = "product_id", referencedColumnName = "pid")
     @OneToOne
     private Products productId;
@@ -108,14 +104,6 @@ public class ProductInformations implements Serializable {
 
     public void setModelNo(String modelNo) {
         this.modelNo = modelNo;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
     }
 
     public String getSize() {
@@ -190,12 +178,12 @@ public class ProductInformations implements Serializable {
         this.updateAt = updateAt;
     }
 
-    public Nations getProducedNation() {
-        return producedNation;
+    public Manufacturers getManufacturerId() {
+        return manufacturerId;
     }
 
-    public void setProducedNation(Nations producedNation) {
-        this.producedNation = producedNation;
+    public void setManufacturerId(Manufacturers manufacturerId) {
+        this.manufacturerId = manufacturerId;
     }
 
     public Products getProductId() {

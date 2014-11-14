@@ -40,8 +40,6 @@ public class ListStatus implements Serializable {
     private String name;
     @OneToMany(mappedBy = "projectStatus")
     private List<Projects> projectsList;
-    @OneToMany(mappedBy = "complaintStatus")
-    private List<Complaints> complaintsList;
     @OneToMany(mappedBy = "feedbackStatus")
     private List<Feedbacks> feedbacksList;
     @OneToMany(mappedBy = "orderStatus")
@@ -82,15 +80,6 @@ public class ListStatus implements Serializable {
 
     public void setProjectsList(List<Projects> projectsList) {
         this.projectsList = projectsList;
-    }
-
-    @XmlTransient
-    public List<Complaints> getComplaintsList() {
-        return complaintsList;
-    }
-
-    public void setComplaintsList(List<Complaints> complaintsList) {
-        this.complaintsList = complaintsList;
     }
 
     @XmlTransient

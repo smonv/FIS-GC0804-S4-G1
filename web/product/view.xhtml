@@ -77,12 +77,12 @@
 
                             <li>
                                 <p>Manufacturer :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <h:outputText value="#{viewProduct.product.productInformations.manufacturer}" /></p>
+                                    <h:outputText value="#{viewProduct.product.productInformations.manufacturerId.name}" /></p>
                             </li>
 
                             <li>
                                 <p>Produced in:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <h:outputText value="#{viewProduct.product.productInformations.producedNation.name}"/></p>
+                                    <h:outputText value="#{viewProduct.product.productInformations.manufacturerId.nationId.name}"/></p>
                             </li>
                             <li>
                                 <p>Contruction Price:&nbsp;&nbsp;<h:outputText value="$ #{viewProduct.product.constructionPrice}" /></p>
@@ -264,7 +264,7 @@
                 <div class="row" style="border-bottom:dashed 1px rgb(221, 221, 221); padding-bottom: 10px">
                     <h3 style="margin-top: 10px; margin-bottom: 10px; padding-left: 15px">Additional Info.</h3>
                     <div class="col-md-6">
-                        <div ><span >Origin:</span><span class="td">#{viewProduct.product.productInformations.manufacturer}, #{viewProduct.product.productInformations.producedNation}</span></div>
+                        <div ><span >Origin:</span><span class="td">#{viewProduct.product.productInformations.manufacturerId.name}, #{viewProduct.product.productInformations.manufacturerId.nationId.name}</span></div>
                     </div>
                 </div>
                 <div class="row" style="border-bottom:dashed 1px rgb(221, 221, 221); padding-bottom: 10px">

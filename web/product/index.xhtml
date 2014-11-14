@@ -12,7 +12,7 @@
             <f:viewParam name="cid" value="#{indexProduct.cid}" />
             <f:viewParam name="minLoad" value="#{indexProduct.minLoad}" />
             <f:viewParam name="maxLoad" value="#{indexProduct.maxLoad}" />
-            <f:viewParam name="nid" value="#{indexProduct.nid}" />
+            <f:viewParam name="mid" value="#{indexProduct.mid}" />
             <f:viewParam name="mode" value="#{indexProduct.mode}" />
             <f:viewAction action="#{indexProduct.init()}" />
         </f:metadata>
@@ -35,6 +35,14 @@
                             <div class="box-wrapper">
                                 <ul id="filter"> 
                                     <li>
+                                        <select class="form-control" id="filter_manufacturer">
+                                            <option value="0">All</option>
+                                            <ui:repeat value="#{indexProduct.getAllManufacturers()}" var="manufacturer">
+                                                <option value="#{manufacturer.mid}">#{manufacturer.name}</option>
+                                            </ui:repeat>
+                                        </select>
+                                    </li>
+                                    <li>
                                         <select class="form-control" id="filter_category">
                                             <option value="0">All</option>
                                             <ui:repeat value="#{indexProduct.getAllCategories()}" var="category">
@@ -48,14 +56,6 @@
                                             <option value="0-500">0 - 500</option>
                                             <option value="500-1000">500 - 1000</option>
                                             <option value="1000-1500">1000 - 1500</option>
-                                        </select>
-                                    </li>
-                                    <li>
-                                        <select class="form-control" id="filter_nation">
-                                            <option value="0">All</option>
-                                            <ui:repeat value="#{indexProduct.getAllNations()}" var="nation">
-                                                <option value="#{nation.nid}">#{nation.name}</option>
-                                            </ui:repeat>
                                         </select>
                                     </li>
                                     <li>
@@ -165,9 +165,9 @@
                         $("#filter_load").val((selected_max_load - 500) + "-" + selected_max_load);
                     }
 
-                    var selected_nid = GetURLParameter("nid");
+                    var selected_nid = GetURLParameter("mid");
                     if (selected_nid) {
-                        $("#filter_nation").val(selected_nid);
+                        $("#filter_manufacturer").val(selected_nid);
                     }
                 });
             </script>

@@ -1,6 +1,7 @@
 package beans.client.product;
 
 import entities.Categories;
+import entities.Manufacturers;
 import entities.Nations;
 import entities.Products;
 import helpers.ApplicationHelper;
@@ -9,12 +10,15 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import models.CategoryModel;
+import models.ManufacturerModel;
 import models.NationModel;
 import models.ProductModel;
 
 @ManagedBean
 @RequestScoped
 public class IndexProduct {
+    @EJB
+    private ManufacturerModel manufacturerModel;
 
     @EJB
     private NationModel nationModel;
@@ -35,13 +39,13 @@ public class IndexProduct {
     private int currentCid = 0;
     private int currentMinLoad = 0;
     private int currentMaxLoad = 2000;
-    private int currentNid = 0;
+    private int currentMid = 0;
     //view param
     private String page;
     private String cid;
     private String minLoad;
     private String maxLoad;
-    private String nid;
+    private String mid;
     private String mode;
 
     public IndexProduct() {
@@ -54,13 +58,13 @@ public class IndexProduct {
 
         currentMinLoad = ApplicationHelper.isInteger(minLoad) ? Integer.parseInt(minLoad) : 0; //check min load
         currentMaxLoad = ApplicationHelper.isInteger(maxLoad) ? Integer.parseInt(maxLoad) : 2000; //check max load
-        currentNid = ApplicationHelper.isInteger(nid) ? Integer.parseInt(nid) : 0;// check nid
-        Nations nation = nationModel.getById(currentNid); //get nation by id
+        currentMid = ApplicationHelper.isInteger(mid) ? Integer.parseInt(mid) : 0;// check nid
+        Manufacturers manufacturer = manufacturerModel.getById(currentMid);
         
         ///////////
         current_page = ApplicationHelper.getCurrentPage(page);
-        products = productModel.getAll(current_page - 1, pageSize, category, currentMinLoad, currentMaxLoad, nation);
-        totalProduct = productModel.countAll(category, currentMinLoad, currentMaxLoad, nation);
+        products = productModel.getAll(current_page - 1, pageSize, category, currentMinLoad, currentMaxLoad, manufacturer);
+        totalProduct = productModel.countAll(category, currentMinLoad, currentMaxLoad, manufacturer);
 
     }
 
@@ -70,6 +74,10 @@ public class IndexProduct {
 
     public List<Nations> getAllNations() {
         return nationModel.getAll();
+    }
+    
+    public List<Manufacturers> getAllManufacturers(){
+        return manufacturerModel.getAll();
     }
 
     //SET GET
@@ -160,12 +168,12 @@ public class IndexProduct {
         this.maxLoad = maxLoad;
     }
 
-    public String getNid() {
-        return nid;
+    public String getMid() {
+        return mid;
     }
 
-    public void setNid(String nid) {
-        this.nid = nid;
+    public void setMid(String mid) {
+        this.mid = mid;
     }
 
     public String getMode() {
