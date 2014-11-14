@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Feedbacks.findByUpdateAt", query = "SELECT f FROM Feedbacks f WHERE f.updateAt = :updateAt"),
     @NamedQuery(name = "Feedbacks.findByLevel", query = "SELECT f FROM Feedbacks f WHERE f.feedbackLevel = :flid"),
     @NamedQuery(name = "Feedbacks.countByLevel", query = "SELECT COUNT(f.fid) FROM Feedbacks f WHERE f.feedbackLevel = :flid"),
-    @NamedQuery(name = "Feedbacks.totalFeedback",query = "SELECT COUNT(f.fid) FROM Feedbacks f")
+    @NamedQuery(name = "Feedbacks.totalFeedback",query = "SELECT COUNT(f.fid) FROM Feedbacks f"),
+    @NamedQuery(name = "Feedbacks.findByClientId", query = "SELECT f FROM Feedbacks f WHERE f.clientId = :clientId")
 })
 public class Feedbacks implements Serializable {
     private static final long serialVersionUID = 1L;
