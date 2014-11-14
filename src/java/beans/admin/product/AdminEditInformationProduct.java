@@ -1,5 +1,6 @@
 package beans.admin.product;
 
+import entities.Manufacturers;
 import entities.Nations;
 import entities.ProductInformations;
 import entities.Products;
@@ -10,6 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import models.ManufacturerModel;
 import models.NationModel;
 import models.ProductInformationModel;
 import models.ProductModel;
@@ -17,6 +19,9 @@ import models.ProductModel;
 @ManagedBean
 @RequestScoped
 public class AdminEditInformationProduct {
+
+    @EJB
+    private ManufacturerModel manufacturerModel;
 
     @EJB
     private ProductInformationModel productInformationModel;
@@ -32,8 +37,7 @@ public class AdminEditInformationProduct {
     private ProductInformations productInformation;
 
     private String productModelNo;
-    private String productManufacturer;
-    private int productProducedNation;
+    private int productManufacturer;
     private String productSize;
     private String productInformations;
     private int productLoad;
@@ -59,13 +63,13 @@ public class AdminEditInformationProduct {
         if (product == null) {
             ApplicationHelper.redirect("/404.xhtml", true);
         }
-        
+
         productInformation = product.getProductInformations(); //get product information
-        
+
         if (productInformation != null) { /// if edit mode, get current product information
             productModelNo = productInformation.getModelNo();
-            //productManufacturer = productInformation.getManufacturer();
-            //productProducedNation = productInformation.getProducedNation().getNid();
+            productManufacturer = productInformation.getManufacturerId().getMid();
+
             productSize = productInformation.getSize();
             productInformations = productInformation.getInformations();
             productLoad = productInformation.getELoad();
@@ -78,7 +82,7 @@ public class AdminEditInformationProduct {
 
     public void update() {
         boolean result = false;
-        int realPid = 0; 
+        int realPid = 0;
         //check pid
         String pid = ApplicationHelper.getRequestParameterMap().get("pid");
         if (!ApplicationHelper.isInteger(pid)) {
@@ -91,8 +95,7 @@ public class AdminEditInformationProduct {
         ////set value for new product information
         update_product_info.setProductId(update_product);
         update_product_info.setModelNo(productModelNo);
-        //update_product_info.setManufacturer(productManufacturer);
-        //update_product_info.setProducedNation(new Nations(productProducedNation));
+        update_product_info.setManufacturerId(new Manufacturers(productManufacturer));
         update_product_info.setSize(productSize);
         update_product_info.setInformations(productInformations);
         update_product_info.setELoad(productLoad);
@@ -113,7 +116,7 @@ public class AdminEditInformationProduct {
         if (result) { //if result true, return view product page
             ApplicationHelper.addMessage("Product Infomation Updated!");
             ApplicationHelper.redirect("/admin/product/view.xhtml?pid=" + pid, result);
-        } else { //if resutl false, return edit informations page
+        } else { //if result false, return edit informations page
             ApplicationHelper.addMessage("Failed to update product informations !");
             ApplicationHelper.redirect("/admin/product/edit_information.xhtml?pid=" + pid, result);
 
@@ -122,6 +125,10 @@ public class AdminEditInformationProduct {
 
     public List<Nations> getAllNation() {
         return nationModel.getAll();
+    }
+
+    public List<Manufacturers> getAllManufacturers() {
+        return manufacturerModel.getAll();
     }
 
     ///SET GET
@@ -149,20 +156,12 @@ public class AdminEditInformationProduct {
         this.productModelNo = productModelNo;
     }
 
-    public String getProductManufacturer() {
+    public int getProductManufacturer() {
         return productManufacturer;
     }
 
-    public void setProductManufacturer(String productManufacturer) {
+    public void setProductManufacturer(int productManufacturer) {
         this.productManufacturer = productManufacturer;
-    }
-
-    public int getProductProducedNation() {
-        return productProducedNation;
-    }
-
-    public void setProductProducedNation(int productProducedNation) {
-        this.productProducedNation = productProducedNation;
     }
 
     public String getProductSize() {

@@ -27,17 +27,12 @@
                             </div>
                             <div class="form-group">
                                 <h:outputLabel value="Manufacture" />
-                                <h:inputText value="#{adminEditInformationProduct.productManufacturer}" class="form-control"
-                                             required="true" requiredMessage="Manufacture is require!" />
-                            </div>
-                            <div class="form-group">
-                                <h:outputLabel value="Produced In" />
-                                <h:selectOneMenu value="#{adminEditInformationProduct.productProducedNation}" class="form-control"
-                                                 >
-                                    <f:selectItems value="#{adminEditInformationProduct.getAllNation()}" var="nation"
-                                                   itemLabel="#{nation.name}" itemValue="#{nation.nid}" />
+                                <h:selectOneMenu value="#{adminEditInformationProduct.productManufacturer}" class="form-control">
+                                    <f:selectItems value="#{adminEditInformationProduct.getAllManufacturers()}" var="manufacturer" 
+                                                   itemLabel="#{manufacturer.name}" itemValue="#{manufacturer.mid}"/>
                                 </h:selectOneMenu>
                             </div>
+                            
                             <div class="form-group">
                                 <h:outputLabel value="Size" />
                                 <h:inputText value="#{adminEditInformationProduct.productSize}" class="form-control"
