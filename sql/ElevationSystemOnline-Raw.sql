@@ -27,6 +27,12 @@ create table nations(
 	name nvarchar(254)
 )
 
+create table manufacturers(
+	mid int identity primary key,
+	name nvarchar(254),
+	nation_id int foreign key references nations(nid),
+)
+
 create table images(
 	img_id int primary key identity,
 	img_path nvarchar(max),
@@ -50,8 +56,7 @@ create table product_informations(
 	pinfoid int identity primary key,
 	product_id int foreign key references products(pid) unique,
 	model_no nvarchar(254),
-	manufacturer nvarchar(254),
-	produced_nation int foreign key references nations(nid),
+	manufacturer_id int foreign key references manufacturers(mid),
 	size nvarchar(254),
 	informations text,
 	e_load int,
@@ -102,8 +107,21 @@ create table order_product_details(
 	create_at datetime
 )
 
+create table admins(
+	aid int identity primary key,
+	name nvarchar(254) not null,
+	username nvarchar(60) not null,
+	email nvarchar(254) not null,
+	password_digest nvarchar(254) not null,
+	is_super bit,
+	is_manager bit,
+	create_at datetime,
+	update_at datetime
+)
+
 create table contracts(
 	cid int primary key identity,
+	admin_id int foreign key references admins(aid),
 	order_id int foreign key references orders(oid) unique,
 	client_name nvarchar(254),
 	client_email nvarchar(254),
@@ -119,6 +137,7 @@ create table contracts(
 
 create table projects(
 	pid int identity primary key,
+	admin_id int foreign key references admins(aid),
 	contract_id int foreign key references contracts(cid) unique,
 	title nvarchar(254) not null,
 	content text not null,
@@ -128,15 +147,6 @@ create table projects(
 	end_at datetime,
 	create_at datetime,
 	update_at datetime,
-)
-
-create table complaints(
-	cid int identity primary key,
-	order_id int foreign key references orders(oid),
-	problem text,
-	complaint_status int foreign key references list_status(lsid),
-	create_at datetime,
-	update_at datetime
 )
 
 create table feedback_level(
@@ -158,17 +168,7 @@ create table feedbacks(
 	update_at datetime
 )
 
-create table admins(
-	aid int identity primary key,
-	name nvarchar(254) not null,
-	username nvarchar(60) not null,
-	email nvarchar(254) not null,
-	password_digest nvarchar(254) not null,
-	is_super bit,
-	is_manager bit,
-	create_at datetime,
-	update_at datetime
-)
+
 
 
 
