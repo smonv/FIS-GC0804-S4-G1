@@ -36,8 +36,8 @@ public class Nations implements Serializable {
     @Size(max = 254)
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "producedNation")
-    private List<ProductInformations> productInformationsList;
+    @OneToMany(mappedBy = "nationId")
+    private List<Manufacturers> manufacturersList;
 
     public Nations() {
     }
@@ -63,12 +63,12 @@ public class Nations implements Serializable {
     }
 
     @XmlTransient
-    public List<ProductInformations> getProductInformationsList() {
-        return productInformationsList;
+    public List<Manufacturers> getManufacturersList() {
+        return manufacturersList;
     }
 
-    public void setProductInformationsList(List<ProductInformations> productInformationsList) {
-        this.productInformationsList = productInformationsList;
+    public void setManufacturersList(List<Manufacturers> manufacturersList) {
+        this.manufacturersList = manufacturersList;
     }
 
     @Override

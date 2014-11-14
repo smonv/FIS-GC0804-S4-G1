@@ -64,8 +64,8 @@ public class AdminEditInformationProduct {
         
         if (productInformation != null) { /// if edit mode, get current product information
             productModelNo = productInformation.getModelNo();
-            productManufacturer = productInformation.getManufacturer();
-            productProducedNation = productInformation.getProducedNation().getNid();
+            //productManufacturer = productInformation.getManufacturer();
+            //productProducedNation = productInformation.getProducedNation().getNid();
             productSize = productInformation.getSize();
             productInformations = productInformation.getInformations();
             productLoad = productInformation.getELoad();
@@ -91,8 +91,8 @@ public class AdminEditInformationProduct {
         ////set value for new product information
         update_product_info.setProductId(update_product);
         update_product_info.setModelNo(productModelNo);
-        update_product_info.setManufacturer(productManufacturer);
-        update_product_info.setProducedNation(new Nations(productProducedNation));
+        //update_product_info.setManufacturer(productManufacturer);
+        //update_product_info.setProducedNation(new Nations(productProducedNation));
         update_product_info.setSize(productSize);
         update_product_info.setInformations(productInformations);
         update_product_info.setELoad(productLoad);
