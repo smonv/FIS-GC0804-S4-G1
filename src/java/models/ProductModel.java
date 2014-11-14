@@ -1,6 +1,7 @@
 package models;
 
 import entities.Categories;
+import entities.Manufacturers;
 import entities.Nations;
 import entities.ProductInformations;
 import entities.Products;
@@ -26,7 +27,7 @@ public class ProductModel {
         return em.createNamedQuery("Products.findAll").getResultList();
     }
 
-    public List<Products> getAll(int page, int pageSize, Categories category, int minLoad, int maxLoad, Nations nation) {
+    public List<Products> getAll(int page, int pageSize, Categories category, int minLoad, int maxLoad, Manufacturers manufacturer) {
         int startIndex = page * pageSize; //caculate start row select
 
         CriteriaBuilder cb = em.getCriteriaBuilder(); // create criteria builder
@@ -46,8 +47,8 @@ public class ProductModel {
             predicates.add(cb.lt(pi.get("eLoad"), maxLoad)); //compare eload less than max load
         }
 
-        if (nation != null) {
-            predicates.add(cb.equal(pi.get("producedNation"), nation)); //create where produced nation equal with input nation
+        if (manufacturer != null) {
+            predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer)); //create where produced nation equal with input nation
         }
 
         q.where(predicates.toArray(new Predicate[]{})); //apply where query
@@ -58,7 +59,7 @@ public class ProductModel {
         return products;
     }
 
-    public long countAll(Categories category, int minLoad, int maxLoad, Nations nation) {
+    public long countAll(Categories category, int minLoad, int maxLoad, Manufacturers manufacturer) {
         CriteriaBuilder cb = em.getCriteriaBuilder(); // create criteria builder
         CriteriaQuery<Long> q = cb.createQuery(Long.class); // create criteria query
         Root<Products> p = q.from(Products.class); // create FROM products
@@ -76,8 +77,8 @@ public class ProductModel {
             predicates.add(cb.lt(pi.get("eLoad"), maxLoad)); //compare eload less than max load
         }
 
-        if (nation != null) {
-            predicates.add(cb.equal(pi.get("producedNation"), nation)); //create where produced nation equal with input nation
+        if (manufacturer != null) {
+            predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer)); //create where produced nation equal with input nation
         }
 
         q.where(predicates.toArray(new Predicate[]{})); //apply where query
