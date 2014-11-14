@@ -78,10 +78,6 @@ public class OrderCreateBean implements Serializable {
         if (session.get("order_product_details") == null) {
             List<OrderProductDetails> opds = new ArrayList<>();
             session.put("order_product_details", opds);
-            OrderProductDetails opd = new OrderProductDetails();
-            opd.setProductId(new Products(1));
-            opd.setQuantity(6);
-            opds.add(opd);
             return opds;
         } else {
             List<OrderProductDetails> opds = (List<OrderProductDetails>) session.get("order_product_details");

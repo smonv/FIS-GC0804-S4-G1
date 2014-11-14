@@ -30,6 +30,8 @@ public class FilterClient implements Filter {
         
         if (session.getAttribute("client") == null) {
             session.setAttribute("msg", "Please log in to access that page!");
+            session.setAttribute("order_product_details", null);
+            session.setAttribute("edit_products", null);
             res.sendRedirect(req.getContextPath() + "/login.xhtml");
         } else if (session.getAttribute("admin") != null) {
             res.sendRedirect(req.getContextPath() + "/403.xhtml");
