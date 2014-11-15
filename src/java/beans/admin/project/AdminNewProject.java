@@ -95,11 +95,11 @@ public class AdminNewProject {
         if (result) {
             ApplicationHelper.addMessage("Project created!");
             ApplicationHelper.redirect("/admin/contract/view.xhtml?cid=" + contract.getCid(), true);
-            return;
+           
         } else {
             ApplicationHelper.addMessage("Failed to create new project!");
             ApplicationHelper.redirect("/admin/project/new.xhtml?cid=" + contract.getCid(), true);
-            return;
+            
         }
     }
 
