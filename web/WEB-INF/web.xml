@@ -9,9 +9,17 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>servlets.ImageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-      <servlet-name>Faces Servlet</servlet-name>
+        <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/images</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -33,6 +41,10 @@
         <extension>eot</extension>
         <mime-type>application/vnd.ms-fontobject</mime-type>
     </mime-mapping>
+    <context-param>
+        <param-name>uploadDirectory</param-name>
+        <param-value>E:\Workspace\uploads</param-value>
+    </context-param>
     <filter>
         <filter-name>FilterClient</filter-name>
         <filter-class>filters.FilterClient</filter-class>

@@ -112,4 +112,5 @@ public class ApplicationHelper {
         }
         return current_page;
     }
+
 }
