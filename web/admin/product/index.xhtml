@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="page" value="#{adminIndexProduct.page}" />
+            <f:viewAction action="#{adminIndexProduct.init()}" />
+        </f:metadata>
+        <ui:define name="title">Product List</ui:define>
+        <ui:define name="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>Product List</h1>
+                </div>
+                <div class="row">
+                    <h:dataTable value="#{adminIndexProduct.products}" var="product" class="table table-bordered datatable">
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{product.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">CODE</f:facet>
+                            <h:outputText value="#{product.code}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Price</f:facet>
+                            <h:outputText value="$ #{product.price}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Contruction Price</f:facet>
+                            <h:outputText value="$ #{product.constructionPrice}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Contruction Time</f:facet>
+                            <h:outputText value="#{product.constructionTime} days" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Command</f:facet>
+                            <h:link value="More Info" outcome="/admin/product/view.xhtml" class="btn btn-primary">
+                                <f:param name="pid" value="#{product.pid}" />
+                            </h:link>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+                <div class="row">
+                    <c:if test="#{adminIndexProduct.totalProduct gt adminIndexProduct.pageSize}">
+                        <c:if test="#{(adminIndexProduct.currentPage - 1) gt 0}">
+                            <h:link value="Previous" outcome="/admin/product/index.xhtml" class="btn btn-primary">
+                                <f:param name="page" value="#{adminIndexProduct.currentPage - 1}" />
+                            </h:link>
+                        </c:if>
+                        &nbsp;
+                        <h:outputText value="Page: #{adminIndexProduct.currentPage} / #{adminIndexProduct.totalPage}" />
+                        &nbsp;
+                        <c:if test="#{(adminIndexProduct.currentPage + 1) lt (adminIndexProduct.totalPage + 1)}">
+                            <h:link value="Next" outcome="/admin/product/index.xhtml" class="btn btn-primary">
+                                <f:param name="page" value="#{adminIndexProduct.currentPage + 1}" />
+                            </h:link>
+                        </c:if>
+                    </c:if>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+
