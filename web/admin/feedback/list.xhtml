@@ -31,17 +31,17 @@
             <br />
             
             <div class="form-group">
-                <input type="text" id="input_number" style="width: 250px; height: 28px"/>
-                <button id="filter_number" class="btn btn-sm btn-primary">Filter Number</button>
+                <input type="text" id="input_search" style="width: 250px; height: 28px"/>
+                <button id="filter_search" class="btn btn-sm btn-primary">Filter Search</button>
             </div>
             <div class="form-group">
-                <select id="input_status" style="width: 250px; height: 28px">
+                <select id="input_level" style="width: 250px; height: 28px">
                     <option value="0"> Select level</option>
                     <ui:repeat value="#{adminfeedbackShowBean.feedbackLevel}" var="level">
                         <option value="#{level.flid}">#{level.name}</option>
                     </ui:repeat>
                 </select>
-                <button id="filter_status" class="btn btn-sm btn-primary" style="width: 88px;">Filter Status</button>
+                <button id="filter_level" class="btn btn-sm btn-primary" style="width: 88px;">Filter level</button>
             </div>
             <div class="form-group">
                 <button id="filter_clear" class="btn btn-sm btn-primary">Clear Filter</button>
