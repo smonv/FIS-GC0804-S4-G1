@@ -10,10 +10,22 @@
             <f:viewAction action="#{adminIndexProject.init()}" />
         </f:metadata>
         <ui:define name="content">
-            <div class="container-fluid">
-                <div class="row">
+                <div class="form-group">
                     <h1>List Project</h1>
                 </div>
+                <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
+                <li>
+                    <a href="index.html"><i class="entypo-home"></i>Home</a>
+                </li>
+                <li>
+
+                    <a href="tables-main.html">Project</a>
+                </li>
+                <li class="active">
+
+                    <strong>Index</strong>
+                </li>
+            </ol>
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <select class="form-control" id="filter_status">
@@ -35,7 +47,7 @@
                     </div>
                 </div>
                 <br />
-                <div class="row">
+                <div class="form-group">
                     <h:dataTable value="#{adminIndexProject.projects}" var="project" class="table table-bordered datatable">
                         <h:column>
                             <f:facet name="header">Client</f:facet>
@@ -78,7 +90,7 @@
                         </h:column>
                     </h:dataTable>
                 </div>
-            </div>
+        
             <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function(){
