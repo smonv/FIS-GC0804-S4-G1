@@ -27,13 +27,17 @@ public class ProductModel {
         return em.createNamedQuery("Products.findAll").getResultList();
     }
 
-    public List<Products> getAll(int page, int pageSize, Categories category, int minLoad, int maxLoad, Manufacturers manufacturer) {
+    public List<Products> getAll(int page, int pageSize,
+            Categories category, int minLoad, int maxLoad,
+            Manufacturers manufacturer, Nations nation) {
         int startIndex = page * pageSize; //caculate start row select
 
         CriteriaBuilder cb = em.getCriteriaBuilder(); // create criteria builder
         CriteriaQuery<Products> q = cb.createQuery(Products.class); // create criteria query
         Root<Products> p = q.from(Products.class); // create FROM products
-        Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.INNER); //join with product_infomations table
+        Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.LEFT); //join with product_infomations table
+        Join<ProductInformations, Manufacturers> ma = pi.join("manufacturerId", JoinType.LEFT);
+        
         q.select(p); // create SELECT *
 
         List<Predicate> predicates = new ArrayList<>(); // create list of where
@@ -48,7 +52,11 @@ public class ProductModel {
         }
 
         if (manufacturer != null) {
-            predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer)); //create where produced nation equal with input nation
+            predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer)); //create where manufacturer equal with input manufacturer
+        }
+        
+        if(nation != null){
+            predicates.add(cb.equal(ma.get("nationId"), nation)); //create where nation equal with input nation
         }
 
         q.where(predicates.toArray(new Predicate[]{})); //apply where query
@@ -59,11 +67,12 @@ public class ProductModel {
         return products;
     }
 
-    public long countAll(Categories category, int minLoad, int maxLoad, Manufacturers manufacturer) {
+    public long countAll(Categories category, int minLoad, int maxLoad, Manufacturers manufacturer, Nations nation) {
         CriteriaBuilder cb = em.getCriteriaBuilder(); // create criteria builder
         CriteriaQuery<Long> q = cb.createQuery(Long.class); // create criteria query
         Root<Products> p = q.from(Products.class); // create FROM products
-        Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.INNER); //join with product_infomations table
+        Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.LEFT); //join with product_infomations table
+        Join<ProductInformations, Manufacturers> ma = pi.join("manufacturerId", JoinType.LEFT);
         q.select(cb.count(p.get("pid"))); // create SELECT *
 
         List<Predicate> predicates = new ArrayList<>(); // create list of where
@@ -79,6 +88,10 @@ public class ProductModel {
 
         if (manufacturer != null) {
             predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer)); //create where produced nation equal with input nation
+        }
+        
+        if(nation != null){
+            predicates.add(cb.equal(ma.get("nationId"), nation)); //create where nation equal with input nation
         }
 
         q.where(predicates.toArray(new Predicate[]{})); //apply where query

@@ -13,6 +13,7 @@
             <f:viewParam name="minLoad" value="#{indexProduct.minLoad}" />
             <f:viewParam name="maxLoad" value="#{indexProduct.maxLoad}" />
             <f:viewParam name="mid" value="#{indexProduct.mid}" />
+            <f:viewParam name="nid" value="#{indexProduct.nid}" />
             <f:viewParam name="mode" value="#{indexProduct.mode}" />
             <f:viewAction action="#{indexProduct.init()}" />
         </f:metadata>
@@ -33,10 +34,19 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="box-wrapper">
-                                <ul id="filter"> 
+                                <ul id="filter">
+                                    <li>
+                                        <h:outputLabel value="Nation" />
+                                        <select class="form-control" id="filter_nation">
+                                            <option value="0">All</option>
+                                            <ui:repeat value="#{indexProduct.getAllNations()}" var="nation">
+                                                <option value="#{nation.nid}">#{nation.name}</option>
+                                            </ui:repeat>
+                                        </select>
+                                    </li>
                                     <li>
                                         <h:outputLabel value="Manufacturer" /> 
-                                       <select class="form-control" id="filter_manufacturer">
+                                        <select class="form-control" id="filter_manufacturer">
                                             <option value="0">All</option>
                                             <ui:repeat value="#{indexProduct.getAllManufacturers()}" var="manufacturer">
                                                 <option value="#{manufacturer.mid}">#{manufacturer.name}</option>
@@ -79,8 +89,9 @@
                                             <div class="project-item">
 
                                                 <div class="post-thumbnail">
-                                                    <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
+
                                                     <h:link class="element-link2" outcome="/product/view.xhtml">
+                                                        <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
                                                         <f:param name="pid" value="#{product.pid}" />
                                                     </h:link>
                                                 </div>
@@ -93,6 +104,10 @@
                                                             </c:if>
                                                         </h:link></h2>
                                                     <p>Price:&nbsp;<h:outputText value="$ #{product.price}" style="font-weight: 400;font-size: 16px; color: red" /></p>
+                                                    <p>Category: <h:outputText value="#{product.categoryId.name}" /></p>
+                                                    <p>Manufacturer: <h:outputText 
+                                                            value="#{product.productInformations.manufacturerId.name} - #{product.productInformations.manufacturerId.nationId.name}" 
+                                                            /></p>
                                                     <div class="readmore">
                                                         <h:link value="Details" outcome="/product/view.xhtml">
                                                             <f:param name="pid" value="#{product.pid}" />
@@ -103,6 +118,7 @@
                                                     </div>
 
                                                 </div>
+
                                             </div>
                                         </div>
                                     </ui:repeat>
@@ -170,9 +186,14 @@
                         $("#filter_load").val((selected_max_load - 500) + "-" + selected_max_load);
                     }
 
-                    var selected_nid = GetURLParameter("mid");
-                    if (selected_nid) {
-                        $("#filter_manufacturer").val(selected_nid);
+                    var selected_mid = GetURLParameter("mid");
+                    if (selected_mid) {
+                        $("#filter_manufacturer").val(selected_mid);
+                    }
+
+                    var selected_nation = GetURLParameter("nid");
+                    if (selected_nation) {
+                        $("#filter_nation").val(selected_nation);
                     }
                 });
             </script>

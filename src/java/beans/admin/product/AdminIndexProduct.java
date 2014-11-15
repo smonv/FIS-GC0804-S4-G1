@@ -31,8 +31,8 @@ public class AdminIndexProduct {
         currentPage = ApplicationHelper.isInteger(page) ? Integer.parseInt(page) : 1; //check if page is number, convert page to integer, else current page = 1;
         //if dont have other variable like category, manufactorer, min load, max load
         //set category and manufactorer is null, min load = 0, max load = 2000
-        products = productModel.getAll(currentPage - 1, pageSize, null, 0, 2000, null); //get all product for show in datatable;
-        totalProduct = productModel.countAll(null, 0, 2000, null); //count all product, set like get all function;
+        products = productModel.getAll(currentPage - 1, pageSize, null, 0, 2000, null, null); //get all product for show in datatable;
+        totalProduct = productModel.countAll(null, 0, 2000, null, null); //count all product, set like get all function;
         if (totalProduct % pageSize != 0) {
             totalPage = totalProduct % pageSize + 1;
         } else {

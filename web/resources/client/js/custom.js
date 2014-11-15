@@ -9,6 +9,8 @@ function filter_product(url, mode) {
         var filter_load = $("#filter_load").find(":selected").val();
         var filter_manufacturer = $("#filter_manufacturer").find(":selected").val();
         var filter_manufacturer_text = $("#filter_manufacturer").find(":selected").text();
+        var filter_nation = $("#filter_nation").find(":selected").val();
+        var filter_nation_text = $("#filter_nation").find(":selected").text();
         //////////////
         if (filter_category != 0) {
             if (!$.isNumeric(filter_category)) {
@@ -37,10 +39,18 @@ function filter_product(url, mode) {
         
         if(filter_manufacturer != 0){
             if(!$.isNumeric(filter_manufacturer)){
-                alert("nid is number!")
+                alert("mid is number!")
             }
             filter_item["mid"] = filter_manufacturer;
             filter_item["manufacturer"] = filter_manufacturer_text;
+        }
+        
+        if(filter_nation != 0){
+            if(!$.isNumeric(filter_nation)){
+                alert("nid is number!")
+            }
+            filter_item["nid"] = filter_nation;
+            filter_item["nation"] = filter_nation_text;
         }
         
         if(mode){

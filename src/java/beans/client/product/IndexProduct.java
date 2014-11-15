@@ -17,6 +17,7 @@ import models.ProductModel;
 @ManagedBean
 @RequestScoped
 public class IndexProduct {
+
     @EJB
     private ManufacturerModel manufacturerModel;
 
@@ -32,7 +33,7 @@ public class IndexProduct {
     //bean variables
     private List<Products> products;
     private int current_page = 1;
-
+    private Nations nation;
     private int pageSize = 6;
     private long totalProduct;
     private long totalPage;
@@ -40,6 +41,7 @@ public class IndexProduct {
     private int currentMinLoad = 0;
     private int currentMaxLoad = 2000;
     private int currentMid = 0;
+    private int currentNid = 0;
     //view param
     private String page;
     private String cid;
@@ -47,6 +49,7 @@ public class IndexProduct {
     private String maxLoad;
     private String mid;
     private String mode;
+    private String nid;
 
     public IndexProduct() {
     }
@@ -60,11 +63,13 @@ public class IndexProduct {
         currentMaxLoad = ApplicationHelper.isInteger(maxLoad) ? Integer.parseInt(maxLoad) : 2000; //check max load
         currentMid = ApplicationHelper.isInteger(mid) ? Integer.parseInt(mid) : 0;// check nid
         Manufacturers manufacturer = manufacturerModel.getById(currentMid);
-        
+        currentNid = ApplicationHelper.isInteger(nid) ? Integer.parseInt(nid) : 0; //check valid nation id
+        nation = nationModel.getById(currentNid); //get nation to filter
+
         ///////////
         current_page = ApplicationHelper.getCurrentPage(page);
-        products = productModel.getAll(current_page - 1, pageSize, category, currentMinLoad, currentMaxLoad, manufacturer);
-        totalProduct = productModel.countAll(category, currentMinLoad, currentMaxLoad, manufacturer);
+        products = productModel.getAll(current_page - 1, pageSize, category, currentMinLoad, currentMaxLoad, manufacturer, nation);
+        totalProduct = productModel.countAll(category, currentMinLoad, currentMaxLoad, manufacturer, nation);
 
     }
 
@@ -75,9 +80,9 @@ public class IndexProduct {
     public List<Nations> getAllNations() {
         return nationModel.getAll();
     }
-    
-    public List<Manufacturers> getAllManufacturers(){
-        return manufacturerModel.getAll();
+
+    public List<Manufacturers> getAllManufacturers() {
+        return nation != null ? manufacturerModel.getAll(nation) : manufacturerModel.getAll();
     }
 
     //SET GET
@@ -183,4 +188,13 @@ public class IndexProduct {
     public void setMode(String mode) {
         this.mode = mode;
     }
+
+    public String getNid() {
+        return nid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
+    }
+
 }
