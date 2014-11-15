@@ -13,6 +13,7 @@
         <ui:define name="content">
             <div class="container-fluid">
                 <div class="row">
+                    <h:messages style="color: red;list-style: none; padding: 0px;"/>
                     <h1>Project for Client: 
                         <h:link value="#{adminNewProject.contract.clientName}"
                                 outcome="/admin/contract/view.xhtml">
@@ -66,9 +67,6 @@
                                 <h:commandButton value="Create" action="#{adminNewProject.create()}" class="btn btn-primary" />
                             </div>
                         </h:form>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <h:messages />
                     </div>
                 </div>
                 <div class="row"></div>

@@ -12,30 +12,46 @@
         </f:metadata>
         <ui:define name="content">
             <div class="container-fluid">
+                <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
+                    <li>
+                        <a href="index.html"><i class="entypo-home"></i>Home</a>
+                    </li>
+                    <li>
+
+                        <a href="tables-main.html">Order</a>
+                    </li>
+                    <li class="active">
+
+                        <strong>Contract</strong>
+                    </li>
+                </ol>
+                <h1>Contract of Order: 
+                    <h:link value="#{adminViewContract.contract.orderId.number}"
+                            outcome="/admin/order/view.xhtml"
+                            >
+                        <f:param name="number" value="#{adminViewContract.contract.orderId.number}" />
+                    </h:link>
+                </h1>
+
                 <div class="row">
-                    <h1>Contract of Order: 
-                        <h:link value="#{adminViewContract.contract.orderId.number}"
-                                outcome="/admin/order/view.xhtml"
-                                >
-                            <f:param name="number" value="#{adminViewContract.contract.orderId.number}" />
-                        </h:link>
-                    </h1>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-6 col-md-6" style="border-top: solid 1px #f5f5f5;">
                         <h3>Contract Informations 
                             <h:link value="Edit" outcome="#" class="btn btn-primary"/>
                         </h3>
-                        <h4>Client Name: <h:outputText value="#{adminViewContract.contract.clientName}" /></h4>
-                        <h4>Client Email: <h:outputText value="#{adminViewContract.contract.clientEmail}" /></h4>
-                        <h4>Client Phone Number: <h:outputText value="#{adminViewContract.contract.clientPhone}"/></h4>
+                        <h4>Client Name : &nbsp;&nbsp;&nbsp;&nbsp;
+                            <h:outputText value="#{adminViewContract.contract.clientName}" /></h4>
+                        <h4>Client Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <h:outputText value="#{adminViewContract.contract.clientEmail}" /></h4>
+                        <h4>Client Phone : &nbsp;&nbsp;&nbsp;
+                            <h:outputText value="#{adminViewContract.contract.clientPhone}"/></h4>
+                        <br />
                         <h5>Client Requirements: </h5>
                         <p><h:outputText value="#{adminViewContract.contract.clientRequirements}" /></p>
                         <br />
                         <h5>Payment Details: </h5>
                         <p><h:outputText value="#{adminViewContract.contract.paymentDetails}" /></p>
                     </div>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-6 col-md-6" style="border-top: solid 1px #f5f5f5">
                         <c:if test="#{adminViewContract.contract.projects == null}">
                             <h3>Contract don't have any projects!</h3>
                             <h:link value="Create Project Now" outcome="/admin/project/new.xhtml" 
@@ -44,7 +60,8 @@
                             </h:link>
                         </c:if>
                         <c:if test="#{adminViewContract.contract.projects != null}">
-                            <h3>Contract have project!</h3> <h:link value="View Project" outcome="#"></h:link>
+                            <h3>Contract have project!</h3> 
+                            <h:link value="View Project" outcome="#"></h:link>
                         </c:if>
                     </div>
                 </div>

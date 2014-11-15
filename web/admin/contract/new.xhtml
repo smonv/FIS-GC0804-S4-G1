@@ -11,15 +11,15 @@
         </f:metadata>
         <ui:define name="content">
             <div class="container-fluid">
-                <div class="row">
+               
                     <h1>New Contract for Order: 
                         <h:link value="#{adminNewContract.number}" outcome="/admin/order/view.xhtml">
                             <f:param name="number" value="#{adminNewContract.number}" />
                         </h:link>
                     </h1>
-                </div>
+               
                 <div class="row">
-                    <h:messages />
+                    <h:messages style="color: red;padding-left: 30px"/>
                 </div>
                 <div class="row">
                     <h:form>
