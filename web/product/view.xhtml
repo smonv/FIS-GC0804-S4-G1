@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/templates/client/layout.xhtml">
         <f:metadata>
             <f:viewParam name="pid" value="#{viewProduct.pid}" />
@@ -38,15 +39,22 @@
 
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner">
-                                    <div class="item active">
-                                        <a href=""><h:graphicImage value="#{resource['client/img/products/demo.jpg']}" styleClass="img-responsive"/></a>
-                                    </div>
-                                    <div class="item">
-                                        <a href=""><h:graphicImage value="#{resource['client/img/products/demo.jpg']}" styleClass="img-responsive"/></a>
-                                    </div>
-                                    <div class="item">
-                                        <a href=""><h:graphicImage value="#{resource['client/img/products/demo.jpg']}" styleClass="img-responsive"/></a>
-                                    </div>
+                                    <ui:repeat value="#{viewProduct.product.productImagesList}" var="pi"
+                                               rendered="#{viewProduct.product.productImagesList.size() gt 0}">                               
+                                        <div class="item 
+                                             #{viewProduct.product.productImagesList.indexOf(pi) != 0 ? null:'active'}">
+                                            <a href="#"><h:graphicImage 
+                                                    value="/image/#{pi.imgId.imgPath}" 
+                                                    styleClass="img-responsive"/></a>
+                                        </div>
+
+
+                                    </ui:repeat>
+                                    <c:if test="#{viewProduct.product.productImagesList.size() == 0}">
+                                        <div class="item active">
+                                            <a href=""><h:graphicImage value="#{resource['client/img/products/demo.jpg']}" styleClass="img-responsive"/></a>
+                                        </div>
+                                    </c:if>
                                 </div>
 
                                 <!-- Controls -->

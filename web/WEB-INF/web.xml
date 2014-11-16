@@ -53,4 +53,12 @@
         <filter-name>FilterClient</filter-name>
         <url-pattern>/client/*</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>FilterImageUrlRewrite</filter-name>
+        <filter-class>filters.FilterImageUrlRewrite</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterImageUrlRewrite</filter-name>
+        <url-pattern>/image/*</url-pattern>
+    </filter-mapping>
 </web-app>

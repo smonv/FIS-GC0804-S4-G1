@@ -91,7 +91,15 @@
                                                 <div class="post-thumbnail2">
 
                                                     <h:link class="element-link2" outcome="/product/view.xhtml">
-                                                        <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" style="width: 350px; height: 212px"/>
+
+                                                        <h:graphicImage name="img/products/demo.jpg" library="client" 
+                                                                        alt="#{product.name}" 
+                                                                        style="width: 350px; height: 212px"
+                                                                        rendered="#{product.productImagesList.size() eq 0}"/>
+                                                        <h:graphicImage value="/image/#{product.productImagesList.get(0).imgId.imgPath}"
+                                                                        alt="#{product.name}" 
+                                                                        style="width: 350px; height: 212px"
+                                                                        rendered="#{product.productImagesList.size() gt 0}"/>
                                                         <f:param name="pid" value="#{product.pid}" />
                                                     </h:link>
                                                 </div>

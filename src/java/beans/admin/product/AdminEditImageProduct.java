@@ -53,16 +53,17 @@ public class AdminEditImageProduct {
         FileOutputStream outputStream = null;
         int fileSize = (int) upload_img.getSize();
         String uploadDir = ApplicationHelper.getExternalContext().getInitParameter("uploadDirectory");
-        File fileUploadDir = new File(uploadDir);
+        String uploadImgDir = uploadDir + "/images";
+        File fileUploadDir = new File(uploadImgDir);
 
         if (!fileUploadDir.exists()) {
             fileUploadDir.mkdirs();
         }
         String fileName = getFilename(upload_img);
-        File outputFile = new File(uploadDir + "\\" + fileName);
+        File outputFile = new File(uploadImgDir + "/" + fileName);
         String extension = getFileExtension(outputFile);
         String newFileName = ApplicationHelper.secureRandomString(8) + ApplicationHelper.secureRandomString(8) + "." + extension;
-        outputFile = new File(uploadDir + "\\" + newFileName);
+        outputFile = new File(uploadImgDir + "/" + newFileName);
 
         try {
 

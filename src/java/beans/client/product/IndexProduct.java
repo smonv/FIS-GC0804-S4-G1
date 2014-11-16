@@ -3,6 +3,7 @@ package beans.client.product;
 import entities.Categories;
 import entities.Manufacturers;
 import entities.Nations;
+import entities.ProductImages;
 import entities.Products;
 import helpers.ApplicationHelper;
 import java.util.List;
@@ -83,6 +84,11 @@ public class IndexProduct {
 
     public List<Manufacturers> getAllManufacturers() {
         return nation != null ? manufacturerModel.getAll(nation) : manufacturerModel.getAll();
+    }
+    
+    public boolean hasImg(Products p){
+        List<ProductImages> pis = p.getProductImagesList();
+        return pis.size() > 0;
     }
 
     //SET GET

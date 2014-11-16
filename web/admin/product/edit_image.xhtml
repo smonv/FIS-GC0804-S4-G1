@@ -20,6 +20,10 @@
                             <f:validator validatorId="imageValidator" />
                         </h:inputFile>
                         <h:commandButton value="Upload" action="#{adminEditImageProduct.upload()}" class="btn btn-primary"/>
+                        &nbsp;
+                        <h:link value="Back" outcome="/admin/product/view.xhtml">
+                            <f:param name="pid" value="#{adminEditImageProduct.pid}" />
+                        </h:link>
                     </h:form>
                 </div>
                 <div class="row">
