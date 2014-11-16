@@ -20,12 +20,18 @@
                             <h:form id="registerForm">
                                 <div class="col-sm-3">
                                     <h:outputLabel value="Name: " for="name"/>
-                                    <h:inputText class="form-control" id="name" value="#{registerBean.name}" required="true" requiredMessage="Name is required!">
-                                        <f:validateLength minimum="3" maximum="100" />
+                                    <h:inputText class="form-control" id="name" 
+                                                 value="#{registerBean.name}" required="true" requiredMessage="Name is required!"
+                                                 validatorMessage="Name must be between 6 and 100 chars">
+                                        <f:validateLength minimum="6" maximum="100" />
                                     </h:inputText>
 
                                     <h:outputLabel value="Username: " for="username"/>
-                                    <h:inputText class="form-control" id="username" value="#{registerBean.username}" required="true" requiredMessage="Username is required!">
+                                    <h:inputText class="form-control" id="username" 
+                                                 value="#{registerBean.username}" 
+                                                 required="true" requiredMessage="Username is required!"
+                                                 validatorMessage="Username must be between 6 and 100 chars">
+                                        <f:validateLength minimum="6" maximum="100" />
                                         <f:validator validatorId="uniqueUsername" />
                                     </h:inputText>
 
