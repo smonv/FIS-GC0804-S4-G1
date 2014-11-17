@@ -1,12 +1,169 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="page" value="#{projectStatistic.page}" />
+            <f:viewParam name="aid" value="#{projectStatistic.aid}" />
+            <f:viewParam name="number" value="#{projectStatistic.number}" />
+            <f:viewParam name="status" value="#{projectStatistic.status}" />
+            <f:viewAction action="#{projectStatistic.init()}" />
+        </f:metadata>
+        <ui:define name="title">Project Statistics</ui:define>
+        <ui:define name="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>Project Statistic</h1>
+                </div>
+                <div class="row" >
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <select id="filter_admin" class="form-control">
+                                <option value="0">All Admin</option>
+                                <ui:repeat value="#{projectStatistic.getAllAdmins()}" var="admin">
+                                    <option value="#{admin.aid}">#{admin.name}</option>
+                                </ui:repeat>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <input id="filter_number" class="form-control" placeholder="Order Number" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <select id="filter_status" class="form-control">
+                                <option value="0">All Status</option>
+                                <ui:repeat value="#{projectStatistic.getAllStatus()}" var="status">
+                                    <option value="#{status.lsid}">#{status.name}</option>
+                                </ui:repeat>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <button id="filter_button" class="btn btn-primary">Filter</button>
+                            <button id="filter_clear" class="btn btn-primary">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h:dataTable value="#{projectStatistic.projects}" var="project" class="table table-bordered datatable">
+                        <h:column>
+                            <f:facet name="header">Order</f:facet>
+                            <h:link outcome="/admin/order/view.xhtml">
+                                <f:param name="number" value="#{project.contractId.orderId.number}" />
+                                <h:outputText value="#{project.contractId.orderId.number}" />
+                            </h:link>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Contract</f:facet>
+                            <h:link value="Details" outcome="/admin/contract/view.xhtml" >
+                                <f:param name="cid" value="#{project.contractId.cid}" />
+                            </h:link>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Title</f:facet>
+                            <h:outputText value="#{project.title}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Status</f:facet>
+                            <h:outputText value="#{project.projectStatus.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Start Date</f:facet>
+                            <h:outputText value="#{projectStatistic.formatDate(project.startAt)}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">End Date</f:facet>
+                            <h:outputText value="#{projectStatistic.formatDate(project.endAt)}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Creator</f:facet>
+                            <h:outputText value="#{project.adminId.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Command</f:facet>
+                            <h:link value="Details" outcome="/admin/project/view.xhtml" class="btn btn-primary">
+                                <f:param name="pid" value="#{project.pid}" />
+                            </h:link>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+                <div class="row">
+                    <c:if test="#{projectStatistic.totalPages gt 1}">
+                        <h:link outcome="/admin/statistic/project.xhtml" value="Previous"
+                                class="btn btn-primary"
+                                rendered="#{(projectStatistic.currentPage - 1) gt 0}">
+                            <f:param name="page" value="#{projectStatistic.currentPage - 1}" />
+                        </h:link>
+                        <h:outputText value="Page: #{projectStatistic.currentPage} / #{projectStatistic.totalPages}" />
+                        <h:link outcome="/admin/statistic/project.xhtml" value="Next"
+                                class="btn btn-primary"
+                                rendered="#{(projectStatistic.currentPage + 1) gt projectStatistic.totalPages}">
+                            <f:param name="page" value="#{projectStatistic.currentPage + 1}" />
+                        </h:link> 
+                    </c:if>
+                </div>
+            </div>
+            <h:outputScript name="js/custom.js" library="admin" />
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var url = "#{facesContext.externalContext.requestContextPath}/admin/statistic/project.xhtml";
+                    var filter_item = {};
+
+                    $("#filter_button").click(function (event) {
+                        event.preventDefault();
+                        var filter_admin = $("#filter_admin").val();
+                        if (filter_admin) {
+                            if (filter_admin > 0) {
+                                filter_item["aid"] = filter_admin;
+                            }
+                        }
+                        var filter_number = $("#filter_number").val();
+                        if (filter_number) {
+                            if ($.isNumeric(filter_number)) {
+                                filter_item["number"] = filter_number;
+                            } else {
+                                alert("Order number must be number");
+                                return;
+                            }
+                        }
+                        var filter_status = $("#filter_status").val();
+                        if (filter_status) {
+                            if (filter_status > 0) {
+                                filter_item["status"] = filter_status;
+                            }
+                        }
+
+                        createNewUrlAndRedirect(url, filter_item);
+                    });
+
+                    $("#filter_clear").click(function (event) {
+                        event.preventDefault();
+                    });
+
+                    var input_admin = GetURLParameter("aid");
+                    if (input_admin) {
+                        $("#filter_admin").val(input_admin);
+                    }
+                    var input_number = GetURLParameter("number");
+                    if (input_number) {
+                        $("#filter_number").val(input_number);
+                    }
+                    var input_status = GetURLParameter("status");
+                    if (input_status) {
+                        $("#filter_status").val(input_status);
+                    }
+
+                });
+            </script>
+        </ui:define>
+    </ui:composition>
 </html>
 

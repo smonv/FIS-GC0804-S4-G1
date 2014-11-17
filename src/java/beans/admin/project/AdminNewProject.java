@@ -1,6 +1,5 @@
 package beans.admin.project;
 
-import beans.admin.product.AdminEditImageProduct;
 import entities.Admins;
 import entities.Contracts;
 import entities.Images;

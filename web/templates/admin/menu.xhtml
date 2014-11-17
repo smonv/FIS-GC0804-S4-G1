@@ -41,20 +41,37 @@
             <!-- add class "multiple-expanded" to allow multiple submenus to open -->
             <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
             <!-- Search Bar -->
-<!--            <li id="search">
-                <form method="get" action="">
-                    <input type="text" name="q" class="search-input" placeholder="Search something..."/>
-                    <button type="submit">
-                        <i class="entypo-search"></i>
-                    </button>
-                </form>
-            </li>-->
-          <!-- /user== -->
+            <!--            <li id="search">
+                            <form method="get" action="">
+                                <input type="text" name="q" class="search-input" placeholder="Search something..."/>
+                                <button type="submit">
+                                    <i class="entypo-search"></i>
+                                </button>
+                            </form>
+                        </li>-->
+            <!-- /user== -->
             <li>
                 <h:link outcome="/admin/index.xhtml">
                     <i class="entypo-chart-bar"></i>
-                    <span>Dashboard</span>
+                    <span>Statistic</span>
                 </h:link>
+                <ul>
+                    <li class="active">
+                        <h:link outcome="/admin/statistic/order.xhtml">
+                            <span>Orders</span>
+                        </h:link>
+                    </li>
+                    <li class="active">
+                        <h:link outcome="/admin/statistic/contract.xhtml">
+                            <span>Contracts</span>
+                        </h:link>
+                    </li>
+                    <li class="active">
+                        <h:link outcome="/admin/statistic/project.xhtml">
+                            <span>Project</span>
+                        </h:link>
+                    </li>
+                </ul>
             </li>
             <li>
                 <h:link outcome="/admin/client/list.xhtml">
@@ -62,7 +79,7 @@
                     <span>Users</span>
                 </h:link>
                 <ul>
-            
+
                     <li class="active">
                         <h:link outcome="/admin/client/list.xhtml">
                             <span>Clients</span>
@@ -111,7 +128,7 @@
                             <span>List</span>
                         </h:link>
                     </li>
-                
+
                 </ul>
             </li>
             <!-- /user== -->
@@ -126,7 +143,7 @@
                             <span>Statistic</span>
                         </h:link>
                     </li>
-               
+
                 </ul>
             </li>
             <!-- /user== -->
@@ -141,10 +158,10 @@
                             <span>All</span>
                         </h:link>
                     </li>
-               
+
                 </ul>
             </li>
-  
+
         </ul>
         <!-- /header-wrapper -->
     </ui:composition>
