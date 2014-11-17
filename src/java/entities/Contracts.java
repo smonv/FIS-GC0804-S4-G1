@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -37,6 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Contracts.findByUpdateAt", query = "SELECT c FROM Contracts c WHERE c.updateAt = :updateAt")})
 
 public class Contracts implements Serializable {
+    @OneToOne(mappedBy = "contractId")
+    private Projects projects;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -74,8 +77,9 @@ public class Contracts implements Serializable {
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
-    @OneToOne(mappedBy = "contractId")
-    private Projects projects;
+    @JoinColumn(name = "admin_id", referencedColumnName = "aid")
+    @ManyToOne
+    private Admins adminId;
     @JoinColumn(name = "order_id", referencedColumnName = "oid")
     @OneToOne
     private Orders orderId;
@@ -175,12 +179,12 @@ public class Contracts implements Serializable {
         this.updateAt = updateAt;
     }
 
-    public Projects getProjects() {
-        return projects;
+    public Admins getAdminId() {
+        return adminId;
     }
 
-    public void setProjects(Projects projects) {
-        this.projects = projects;
+    public void setAdminId(Admins adminId) {
+        this.adminId = adminId;
     }
 
     public Orders getOrderId() {
@@ -214,6 +218,14 @@ public class Contracts implements Serializable {
     @Override
     public String toString() {
         return "entities.Contracts[ cid=" + cid + " ]";
+    }
+
+    public Projects getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Projects projects) {
+        this.projects = projects;
     }
     
 }

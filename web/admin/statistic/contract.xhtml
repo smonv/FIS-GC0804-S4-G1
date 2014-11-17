@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="page" value="#{contractStatistic.page}" />
+            <f:viewAction action="#{contractStatistic.init()}" />
+        </f:metadata>
+        <ui:define name="title">Contract Statistic</ui:define>
+        <ui:define name="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>Contract Statistic</h1>
+                </div>
+                <div class="row">
+                    <h:dataTable value="#{contractStatistic.contracts}" var="contract" class="table table-bordered datatable">
+                        <h:column>
+                            <f:facet name="header">Order</f:facet>
+                            <h:link outcome="/admin/order/view.xhtml">
+                                <f:param name="number" value="#{contract.orderId.number}" />
+                                <h:outputText value="#{contract.orderId.number}" />
+                            </h:link>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Client Name</f:facet>
+                            <h:outputText value="#{contract.clientName}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Client Email</f:facet>
+                            <h:outputText value="#{contract.clientEmail}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Client Phone</f:facet>
+                            <h:outputText value="#{contract.clientPhone}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Creator</f:facet>
+                            <h:outputText value="#{contract.adminId.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Create Date</f:facet>
+                            <h:outputText value="#{contractStatistic.formatDate(contract.createAt)}" />
+                        </h:column>
+                        
+                        <h:column></h:column>
+                        <h:column></h:column>
+                    </h:dataTable>
+                </div>
+                <div class="row"></div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

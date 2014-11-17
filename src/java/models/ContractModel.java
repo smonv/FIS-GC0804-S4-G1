@@ -26,5 +26,9 @@ public class ContractModel {
         List<Contracts> contracts = em.createNamedQuery("Contracts.findByCid").setParameter("cid", cid).getResultList();
         return contracts.size() > 0 ? contracts.get(0) : null;
     }
+    
+    public List<Contracts> getAll(){
+        return em.createNamedQuery("Contracts.findAll").getResultList();
+    }
 
 }

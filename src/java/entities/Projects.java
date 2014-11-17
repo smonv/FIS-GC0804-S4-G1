@@ -30,8 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Projects.findByTitle", query = "SELECT p FROM Projects p WHERE p.title = :title"),
     @NamedQuery(name = "Projects.findByStartAt", query = "SELECT p FROM Projects p WHERE p.startAt = :startAt"),
     @NamedQuery(name = "Projects.findByEndAt", query = "SELECT p FROM Projects p WHERE p.endAt = :endAt"),
+    @NamedQuery(name = "Projects.findByIsPublic", query = "SELECT p FROM Projects p WHERE p.isPublic = :isPublic"),
     @NamedQuery(name = "Projects.findByCreateAt", query = "SELECT p FROM Projects p WHERE p.createAt = :createAt"),
     @NamedQuery(name = "Projects.findByUpdateAt", query = "SELECT p FROM Projects p WHERE p.updateAt = :updateAt")})
+
 public class Projects implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,12 +59,17 @@ public class Projects implements Serializable {
     @Column(name = "end_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endAt;
+    @Column(name = "is_public")
+    private Boolean isPublic;
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
     @Column(name = "update_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateAt;
+    @JoinColumn(name = "admin_id", referencedColumnName = "aid")
+    @ManyToOne
+    private Admins adminId;
     @JoinColumn(name = "contract_id", referencedColumnName = "cid")
     @OneToOne
     private Contracts contractId;
@@ -126,6 +133,14 @@ public class Projects implements Serializable {
         this.endAt = endAt;
     }
 
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
     public Date getCreateAt() {
         return createAt;
     }
@@ -140,6 +155,14 @@ public class Projects implements Serializable {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public Admins getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Admins adminId) {
+        this.adminId = adminId;
     }
 
     public Contracts getContractId() {

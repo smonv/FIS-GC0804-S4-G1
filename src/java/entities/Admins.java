@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,12 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "admins")
@@ -33,6 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Admins.findByUpdateAt", query = "SELECT a FROM Admins a WHERE a.updateAt = :updateAt")})
 
 public class Admins implements Serializable {
+    @OneToMany(mappedBy = "adminId")
+    private List<Projects> projectsList;
+    @OneToMany(mappedBy = "adminId")
+    private List<Contracts> contractsList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -182,6 +189,24 @@ public class Admins implements Serializable {
     @Override
     public String toString() {
         return "entities.Admins[ aid=" + aid + " ]";
+    }
+
+    @XmlTransient
+    public List<Contracts> getContractsList() {
+        return contractsList;
+    }
+
+    public void setContractsList(List<Contracts> contractsList) {
+        this.contractsList = contractsList;
+    }
+
+    @XmlTransient
+    public List<Projects> getProjectsList() {
+        return projectsList;
+    }
+
+    public void setProjectsList(List<Projects> projectsList) {
+        this.projectsList = projectsList;
     }
     
 }
