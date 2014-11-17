@@ -1,4 +1,4 @@
-package beans.admin.order;
+package beans.admin.statistic;
 
 import entities.ListStatus;
 import entities.OrderProductDetails;
@@ -7,6 +7,7 @@ import entities.Products;
 import helpers.ApplicationHelper;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.ejb.EJB;
@@ -17,9 +18,9 @@ import models.ListStatusModel;
 import models.OrderModel;
 import models.ProductModel;
 
-@ManagedBean(name = "adminShowOrder")
+@ManagedBean(name = "orderStatistic")
 @RequestScoped
-public class AdminShowOrder {
+public class OrderStatistic {
 
     @EJB
     private ListStatusModel listStatusModel;
@@ -42,7 +43,7 @@ public class AdminShowOrder {
     private String number;
     private String status;
 
-    public AdminShowOrder() {
+    public OrderStatistic() {
     }
 
     public void init() {
@@ -107,6 +108,10 @@ public class AdminShowOrder {
     
     public List<ListStatus> getAllStatus(){
         return listStatusModel.getAll();
+    }
+    
+    public String formatDate(Date date){
+        return ApplicationHelper.formatDate(date, "dd/MM/yyyy");
     }
 
     //////////////////////////////

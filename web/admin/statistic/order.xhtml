@@ -6,24 +6,22 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
-            <f:viewParam name="page" value="#{adminShowOrder.page}" />
-            <f:viewParam name="number" value="#{adminShowOrder.number}" />
-            <f:viewParam name="status" value="#{adminShowOrder.status}" />
-            <f:viewAction action="#{adminShowOrder.init()}" />
+            <f:viewParam name="page" value="#{orderStatistic.page}" />
+            <f:viewParam name="number" value="#{orderStatistic.number}" />
+            <f:viewParam name="status" value="#{orderStatistic.status}" />
+            <f:viewAction action="#{orderStatistic.init()}" />
         </f:metadata>
         <ui:define name="content">
             <h1 class="margin-bottom">Orders</h1>
              <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
                 <li>
-                    <a href="index.html"><i class="entypo-home"></i>Home</a>
+                    <h:link outcome="/admin/index.xhtml"><i class="entypo-home"></i>Home</h:link>
                 </li>
                 <li>
-
-                    <a href="tables-main.html">Order</a>
+                    Statistic
                 </li>
                 <li class="active">
-
-                    <strong>Index</strong>
+                    <strong>Order</strong>
                 </li>
             </ol>
                 <div class="form-group">
@@ -33,7 +31,7 @@
                 <div class="form-group">
                     <select id="input_status" style="width: 250px; height: 28px">
                         <option value="0"> Select Status</option>
-                        <ui:repeat value="#{adminShowOrder.getAllStatus()}" var="status">
+                        <ui:repeat value="#{orderStatistic.getAllStatus()}" var="status">
                             <option value="#{status.lsid}">#{status.name}</option>
                         </ui:repeat>
                     </select>
@@ -45,8 +43,8 @@
                 <h:form>
                     <div class="table-responsive">
                         <h:dataTable class="table table-bordered datatable" id="order_table" 
-                                     value="#{adminShowOrder.orders}" var="order"
-                                     binding="#{adminShowOrder.orders_table}"
+                                     value="#{orderStatistic.orders}" var="order"
+                                     binding="#{orderStatistic.orders_table}"
                                      >
                             <h:column>
                                 <f:facet name="header">Client</f:facet>
@@ -66,11 +64,11 @@
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Total Price</f:facet>
-                                <h:outputText value="$ #{adminShowOrder.getTotalOrderCost(order.orderProductDetailsList)}" />
+                                <h:outputText value="$ #{orderStatistic.getTotalOrderCost(order.orderProductDetailsList)}" />
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Start Date</f:facet>
-                                <h:outputText value="Not Support Yet" />
+                                <f:facet name="header">Create Date</f:facet>
+                                <h:outputText value="#{orderStatistic.formatDate(order.createAt)}" />
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Command</f:facet>
@@ -86,50 +84,64 @@
     
             <div class="row">
                 <h:link value="Previous" 
-                        outcome="/admin/order/index.xhtml"
-                        rendered="#{adminShowOrder.totalOrders gt adminShowOrder.pageSize and adminShowOrder.page gt 1}"
+                        outcome="/admin/statistic/order.xhtml"
+                        rendered="#{orderStatistic.totalOrders gt orderStatistic.pageSize and orderStatistic.page gt 1}"
                         class="btn btn-primary"
                         >
-                    <f:param name="page" value="#{adminShowOrder.current_page - 1}" />
+                    <f:param name="page" value="#{orderStatistic.current_page - 1}" />
                 </h:link>
                 &nbsp;&nbsp;
                 <h:link value="Next"
-                        outcome="/admin/order/index.xhtml"
-                        rendered="#{adminShowOrder.totalOrders gt adminShowOrder.pageSize
-                                    and (adminShowOrder.current_page) * adminShowOrder.pageSize lt adminShowOrder.totalOrders}"
+                        outcome="/admin/statistic/order.xhtml"
+                        rendered="#{orderStatistic.totalOrders gt orderStatistic.pageSize
+                                    and (orderStatistic.current_page) * orderStatistic.pageSize lt orderStatistic.totalOrders}"
                         class="btn btn-primary"
                         >
-                    <f:param name="page" value="#{adminShowOrder.current_page + 1}" />
+                    <f:param name="page" value="#{orderStatistic.current_page + 1}" />
                 </h:link>
                 &nbsp;&nbsp;
-                <h:outputText value="Page: #{adminShowOrder.current_page}/#{adminShowOrder.getTotalPages()}" />
+                <h:outputText value="Page: #{orderStatistic.current_page}/#{orderStatistic.getTotalPages()}" />
             </div>
+            <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function () {
+                    ////set filter value for component;
+                    ////filter number;
+                    var param_number = GetURLParameter("number");
+                    if(param_number){
+                        $("#input_number").val(param_number);
+                    }
+                    //filter status
+                    var param_status = GetURLParameter("status");
+                    if(param_status){
+                        $("#input_status").val(param_status);
+                    }
+                    
+                    ////////
                     $("#filter_number").click(function (event) {
                         event.preventDefault();
                         var input_number = $("#input_number").val();
-                        console.log(input_number);
+                        
                         if (input_number !== "") {
-                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml?number=" + input_number;
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml?number=" + input_number;
                         } else {
-                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml";
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml";
                         }
                     });
                     $("#filter_status").click(function (event) {
                         event.preventDefault();
                         var input_status = $("#input_status").find(":selected").val();
-                        console.log(input_status);
+                        
                         if (input_status == 0) {
                             alert("Please select one status!")
                         } else {
-                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml?status=" + input_status;
+                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml?status=" + input_status;
                         }
                     });
 
                     $("#filter_clear").click(function (event) {
                         event.preventDefault();
-                        window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/order/index.xhtml";
+                        window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml";
                     });
                 });
             </script>

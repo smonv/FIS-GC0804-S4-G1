@@ -12,9 +12,9 @@
 
             <!-- logo -->
             <div class="logo">
-                <a href="index.html">
-                    <img src="../../resources//admin/images/logo@2x.png" width="120" alt="" />
-                </a>
+                <h:link outcome="/admin/index.xhtml">
+                    <h:graphicImage name="images/logo.png" library="admin" />
+                </h:link>
             </div>
 
             <!-- logo collapse icon -->
@@ -41,20 +41,20 @@
             <!-- add class "multiple-expanded" to allow multiple submenus to open -->
             <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
             <!-- Search Bar -->
-            <li id="search">
+<!--            <li id="search">
                 <form method="get" action="">
                     <input type="text" name="q" class="search-input" placeholder="Search something..."/>
                     <button type="submit">
                         <i class="entypo-search"></i>
                     </button>
                 </form>
-            </li>
+            </li>-->
           <!-- /user== -->
             <li>
-                <a href="charts.html">
+                <h:link outcome="/admin/index.xhtml">
                     <i class="entypo-chart-bar"></i>
                     <span>Dashboard</span>
-                </a>
+                </h:link>
             </li>
             <li>
                 <h:link outcome="/admin/client/list.xhtml">
@@ -70,35 +70,40 @@
                     </li>
                     <li>
                         <h:link outcome="/admin/client/list.xhtml">
-                            <span>Employee</span>
+                            <span>Admins</span>
                         </h:link>
                     </li>
                 </ul>
             </li>
             <!-- /user== -->
             <li>
-                <h:link outcome="/admin/client/list.xhtml">
+                <h:link outcome="/admin/statistic/project.xhtml">
                     <i class="entypo-newspaper"></i>
                     <span>Projects</span>
                 </h:link>
                 <ul>
                     <li class="active">
-                        <h:link outcome="/admin/project/index.xhtml">
-                            <span>List</span>
+                        <h:link outcome="/admin/statistic/project.xhtml">
+                            <span>Statistic</span>
                         </h:link>
                     </li>
                 </ul>
             </li>
             <!-- /user== -->
             <li>
-                <h:link outcome="/admin/product/new.xhtml">
+                <h:link outcome="/admin/product/index.xhtml">
                     <i class="entypo-layout"></i>
                     <span>Products</span>
                 </h:link>
                 <ul>
                     <li class="active">
+                        <h:link outcome="/admin/product/index.xhtml">
+                            <span>All Product</span>
+                        </h:link>
+                    </li>
+                    <li>
                         <h:link outcome="/admin/product/new.xhtml">
-                            <span>New</span>
+                            <span>New Product</span>
                         </h:link>
                     </li>
                 
@@ -106,14 +111,14 @@
             </li>
             <!-- /user== -->
             <li>
-                <h:link outcome="/admin/order/index.xhtml">
+                <h:link outcome="/admin/statistic/order.xhtml">
                     <i class="entypo-doc-text"></i>
                     <span>Orders</span>
                 </h:link>
                 <ul>
                     <li class="active">
-                        <h:link outcome="/admin/order/index.xhtml">
-                            <span>All</span>
+                        <h:link outcome="/admin/statistic/order.xhtml">
+                            <span>Statistic</span>
                         </h:link>
                     </li>
                

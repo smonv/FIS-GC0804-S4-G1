@@ -26,12 +26,43 @@ function newProjectDatePicker() {
     }).data('datepicker');
 }
 
-function adminProjectIndexDatePicker(){
+function adminProjectIndexDatePicker() {
     $(".filter_start_at").datepicker({
         format: 'dd/mm/yyyy',
     });
     $(".filter_end_at").datepicker({
         format: 'dd/mm/yyyy',
     });
+}
+
+function createNewUrlAndRedirect(filter_item) {
+    if (Object.keys(filter_item).length > 0) {
+        url += "?";
+        var first_time = true;
+        $.each(filter_item, function (key, value) {
+            if (first_time == true) {
+                url += "" + key + "=" + value;
+                first_time = false;
+            } else {
+                url += "&" + key + "=" + value;
+            }
+        });
+    }
+
+    //alert(url); 
+    window.location.href = url;
+}
+
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        }
+    }
 }
 
