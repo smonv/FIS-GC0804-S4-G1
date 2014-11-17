@@ -18,6 +18,6 @@ public class AdminModel {
 
     public Admins getById(int aid) {
         List<Admins> admins = em.createNamedQuery("Admins.findByAid").setParameter("aid", aid).getResultList();
-        return admins.isEmpty() ? admins.get(0) : null;
+        return !admins.isEmpty() ? admins.get(0) : null;
     }
 }

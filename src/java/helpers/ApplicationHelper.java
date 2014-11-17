@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package helpers;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,10 +11,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-/**
- *
- * @author Cu Beo
- */
 public class ApplicationHelper {
 
     private static final char[] VALID_CHARACTERS = "123456879".toCharArray();
@@ -34,15 +24,14 @@ public class ApplicationHelper {
     }
 
     public static void redirect(String externalPath, boolean keepMessage) {
-        boolean flag = FacesContext.getCurrentInstance().getExternalContext().isResponseCommitted();
-        if (flag) {
-            try {
-                ExternalContext ec = getExternalContext();
-                ec.getFlash().setKeepMessages(keepMessage);
-                ec.redirect(ec.getRequestContextPath() + externalPath);
-            } catch (IOException e) {
-            }
+        ExternalContext ec = getExternalContext();
+        try {
+            ec.getFlash().setKeepMessages(keepMessage);
+            ec.redirect(ec.getRequestContextPath() + externalPath);
+            return;
+        } catch (IOException e) {
         }
+
     }
 
     public static void addMessage(String message) {
