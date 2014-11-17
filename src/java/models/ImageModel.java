@@ -19,4 +19,15 @@ public class ImageModel {
             return false;
         }
     }
+    
+    public Images createAndReturnImage(Images image){
+        try {
+            em.persist(image);
+            em.flush();
+            return image;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

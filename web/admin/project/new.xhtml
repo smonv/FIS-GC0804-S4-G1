@@ -10,6 +10,7 @@
             <f:viewParam name="cid" value="#{adminNewProject.cid}" />
             <f:viewAction action="#{adminNewProject.init()}" />
         </f:metadata>
+        <ui:define name="title">New Project</ui:define>
         <ui:define name="content">
             <div class="container-fluid">
                 <div class="row">
@@ -22,8 +23,9 @@
                     </h1>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <h:form>
+                    <h:form enctype="multipart/form-data">
+                        <div class="col-lg-6 col-md-6">
+
                             <div class="form-group">
                                 <h:outputLabel value="Title" />
                                 <h:inputText value="#{adminNewProject.title}" class="form-control"
@@ -66,8 +68,20 @@
                             <div class="form-group">
                                 <h:commandButton value="Create" action="#{adminNewProject.create()}" class="btn btn-primary" />
                             </div>
-                        </h:form>
-                    </div>
+
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <h:outputLabel value="Project Image" />
+                                <h:inputFile value="#{adminNewProject.uploadImg}" class="form-control"
+                                             required="true" requiredMessage="Project image is require!"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel value="Public this project?&nbsp;" />
+                                <h:selectBooleanCheckbox value="#{adminNewProject.isPublic}" />
+                            </div>
+                        </div>
+                    </h:form>
                 </div>
                 <div class="row"></div>
             </div>

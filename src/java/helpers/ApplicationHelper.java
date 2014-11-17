@@ -13,8 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -36,11 +34,14 @@ public class ApplicationHelper {
     }
 
     public static void redirect(String externalPath, boolean keepMessage) {
-        try {
-            ExternalContext ec = getExternalContext();
-            ec.getFlash().setKeepMessages(keepMessage);
-            ec.redirect(ec.getRequestContextPath() + externalPath);
-        } catch (IOException e) {
+        boolean flag = FacesContext.getCurrentInstance().getExternalContext().isResponseCommitted();
+        if (flag) {
+            try {
+                ExternalContext ec = getExternalContext();
+                ec.getFlash().setKeepMessages(keepMessage);
+                ec.redirect(ec.getRequestContextPath() + externalPath);
+            } catch (IOException e) {
+            }
         }
     }
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans.client.auth;
 
 import entities.Clients;
@@ -10,16 +5,10 @@ import helpers.ApplicationHelper;
 import helpers.SessionHelper;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import models.ClientModel;
 
-/**
- *
- * @author Cu Beo
- */
 @ManagedBean
 @RequestScoped
 public class AuthenticationBean {

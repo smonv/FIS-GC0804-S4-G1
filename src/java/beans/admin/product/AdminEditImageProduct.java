@@ -44,7 +44,6 @@ public class AdminEditImageProduct {
         product = productModel.getById(currentPid);
         if (product == null) {
             ApplicationHelper.redirect("/admin/404.xhtml", true);
-            return;
         }
     }
 
@@ -115,7 +114,7 @@ public class AdminEditImageProduct {
         return;
     }
 
-    private static String getFilename(Part part) {
+    private String getFilename(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
                 String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
@@ -125,7 +124,7 @@ public class AdminEditImageProduct {
         return null;
     }
 
-    private static String getFileExtension(File file) {
+    private String getFileExtension(File file) {
         String fileName = file.getName();
         if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
             return fileName.substring(fileName.lastIndexOf(".") + 1);
