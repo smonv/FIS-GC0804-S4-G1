@@ -145,6 +145,7 @@ create table projects(
 	img_id int foreign key references images(img_id),
 	start_at datetime,
 	end_at datetime,
+	is_public bit,
 	create_at datetime,
 	update_at datetime,
 )

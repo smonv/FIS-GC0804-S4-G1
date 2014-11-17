@@ -35,7 +35,7 @@ function adminProjectIndexDatePicker() {
     });
 }
 
-function createNewUrlAndRedirect(filter_item) {
+function createNewUrlAndRedirect(url, filter_item) {
     if (Object.keys(filter_item).length > 0) {
         url += "?";
         var first_time = true;

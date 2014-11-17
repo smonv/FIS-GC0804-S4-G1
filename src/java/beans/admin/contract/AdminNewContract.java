@@ -1,5 +1,6 @@
 package beans.admin.contract;
 
+import entities.Admins;
 import entities.Contracts;
 import entities.OrderProductDetails;
 import entities.Orders;
@@ -56,6 +57,7 @@ public class AdminNewContract {
     public void create() {
         order = orderModel.getByNumber(number);
         Contracts contract = new Contracts();
+        contract.setAdminId(new Admins(1)); //will fix after have admin login and filter
         contract.setOrderId(order);
         contract.setClientName(clientName);
         contract.setClientEmail(clientEmail);
