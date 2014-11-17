@@ -16,15 +16,127 @@
                 </div>
                 <div class="row">
                     <h1>Product Name: <h:outputText value="#{adminViewProduct.product.name}" /></h1>
+                    <p>Created at: <h:outputText value="#{adminViewProduct.product.createAt}" /></p>
                 </div>
                 <div class="row">
                     <h:link value="Edit" outcome="#" class="btn btn-primary" />
                     &nbsp;
                     <h:link value="Edit Informations" outcome="/admin/product/edit_information.xhtml?pid=#{adminViewProduct.pid}"
-                            class="btn btn-primary" />
+                            class="btn btn-primary" />&nbsp;
                     <h:link value="Edit Images" outcome="/admin/product/edit_image.xhtml?pid=#{adminViewProduct.pid}"
                             class="btn btn-primary" />
                 </div>
+                <div class="row">
+                    <br/>
+                    <ul class="ul-pview" style="border-top:solid 1px #dadada;">
+                        <li style="width: 100%; text-align: center; background: #efefef; font-weight: bold">BASIC</li>
+                    </ul>
+                    <ul class="ul-pview" style="border-top:solid 1px #dadada;">
+                        <li class="li-title">Name</li>
+                        <li class="li-info">#{adminViewProduct.product.name}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Code</li>
+                        <li class="li-info">#{adminViewProduct.product.code}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Category</li>
+                        <li class="li-info">#{adminViewProduct.product.categoryId.name}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Price</li>
+                        <li class="li-info">#{adminViewProduct.product.price}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Construction Price</li>
+                        <li class="li-info">#{adminViewProduct.product.constructionPrice}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Construction Time</li>
+                        <li class="li-info">#{adminViewProduct.product.constructionTime}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li style="width: 100%; text-align: center; background: #efefef; font-weight: bold">INFORMATIONS</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Load</li>
+                        <li class="li-info">#{adminViewProduct.product.productInformations.ELoad}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Size</li>
+                        <li class="li-info">#{adminViewProduct.product.productInformations.size}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Speed</li>
+                        <li class="li-info">#{adminViewProduct.product.productInformations.speed}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Manufacturer</li>
+                        <li class="li-info">#{adminViewProduct.product.productInformations.manufacturerId.name}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Nation</li>
+                        <li class="li-info">#{adminViewProduct.product.productInformations.manufacturerId.nationId.name}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="li-title">Model/NO</li>
+                        <li class="li-info">#{adminViewProduct.product.productInformations.modelNo}</li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li style="width: 100%; text-align: center; background: #efefef; font-weight: bold">
+                            IMAGES
+                        </li>
+                    </ul>
+                    <ul class="ul-pview">
+                        <li class="img-li">
+                            <h:graphicImage/>
+                        </li>
+                        <li class="img-li">
+                            <h:graphicImage/>
+                        </li>
+                        <li class="img-li">
+                            <h:graphicImage/>
+                        </li>
+                        <li class="img-li">
+                            <h:graphicImage/>
+                        </li>
+                        <li class="img-li">
+                            <h:graphicImage/>
+                        </li>
+                    
+                    </ul>
+                </div>
+                <style>
+                    .ul-pview{
+                        margin: 0px;
+                        padding: 0px;
+                        width: 100%;
+
+                    }
+                    .ul-pview>li{
+                        float: left;
+                        list-style: none;
+                        font-size: 14px;
+                        padding: 7px;
+                        border:solid 1px #dadada;
+                        border-top: none;
+                    }
+                    .li-info{
+                        width: 75%;
+                    }
+                    .li-title{
+                        background: #efefef;
+                        width: 25%;
+                    }
+                    ul>.li-info:hover{
+                        background: #efefef;
+                    }
+                    .img-li{
+                        width: 20%;
+                        height: 100px
+                    }
+
+                </style>
             </div>
         </ui:define>
     </ui:composition>
