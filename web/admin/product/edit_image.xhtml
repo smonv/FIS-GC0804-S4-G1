@@ -14,21 +14,25 @@
         <ui:define name="content">
             <div class="container-fluid">
                 <div class="row">
-                    <h:messages style="list-style: none; padding: 0px; color: red"/>
-                    <p>Preview</p>
-                    <img id="uploadPreview" style="width: 400px; height: auto; max-height: 300px;border: solid 2px #cccccc; margin-bottom: 15px" />
-                    <br/>
-                    <h:form enctype="multipart/form-data">
-                        <h:inputFile value="#{adminEditImageProduct.upload_img}" id="uploadImage" class="form-control"  onchange="PreviewImage();" style="width: 400px">
-                            <f:validator validatorId="imageValidator" />
-                        </h:inputFile>
-                        <br/>
-                        <h:commandButton value="Upload"  action="#{adminEditImageProduct.upload()}" class="btn btn-primary"/>
-                        &nbsp;
-                        <h:link value="Back" outcome="/admin/product/view.xhtml">
-                            <f:param name="pid" value="#{adminEditImageProduct.pid}" />
-                        </h:link>
-                    </h:form>
+                    <div class="col-lg-6 col-md-6">
+
+                        <h:messages style="list-style: none; padding: 0px; color: red"/>
+
+                        <h:form enctype="multipart/form-data">
+                            <h:inputFile value="#{adminEditImageProduct.upload_img}" id="uploadImage" class="form-control"  onchange="PreviewImage();">
+                                <f:validator validatorId="imageValidator" />
+                            </h:inputFile>
+                            <br/>
+                            <h:commandButton value="Upload"  action="#{adminEditImageProduct.upload()}" class="btn btn-primary"/>
+                            &nbsp;
+                            <h:link value="Back" outcome="/admin/product/view.xhtml">
+                                <f:param name="pid" value="#{adminEditImageProduct.pid}" />
+                            </h:link>
+                        </h:form>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <img id="uploadPreview" style="height: auto; max-height: 300px;border: solid 2px #cccccc; margin-bottom: 15px" />
+                    </div>
                 </div>
                 <div class="row">
 
