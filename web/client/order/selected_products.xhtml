@@ -17,7 +17,7 @@
                     <h:dataTable class="idCart" value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
                         <h:column>
                             <f:facet name="header">Item</f:facet>
-                            <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{opd.productId.pid}" style="color: black">
+                            <h:link class="element-link" outcome="/product/show.xhtml?pid=#{opd.productId.pid}" style="color: black">
                                 <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}" /></h:link><br />
                             <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
                         </h:column>
