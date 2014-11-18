@@ -37,7 +37,7 @@ public class ProductModel {
         Root<Products> p = q.from(Products.class); // create FROM products
         Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.LEFT); //join with product_infomations table
         Join<ProductInformations, Manufacturers> ma = pi.join("manufacturerId", JoinType.LEFT);
-        
+
         q.select(p); // create SELECT *
 
         List<Predicate> predicates = new ArrayList<>(); // create list of where
@@ -54,8 +54,8 @@ public class ProductModel {
         if (manufacturer != null) {
             predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer)); //create where manufacturer equal with input manufacturer
         }
-        
-        if(nation != null){
+
+        if (nation != null) {
             predicates.add(cb.equal(ma.get("nationId"), nation)); //create where nation equal with input nation
         }
 
@@ -89,8 +89,8 @@ public class ProductModel {
         if (manufacturer != null) {
             predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer)); //create where produced nation equal with input nation
         }
-        
-        if(nation != null){
+
+        if (nation != null) {
             predicates.add(cb.equal(ma.get("nationId"), nation)); //create where nation equal with input nation
         }
 
@@ -151,6 +151,54 @@ public class ProductModel {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    ////get all for admin bean
+    public List<Products> getAllAdmin(int page, int pageSize, String code,
+            Nations nation, Manufacturers manufacturer) {
+        int startIndex = page * pageSize;
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Products> query = cb.createQuery(Products.class);
+        Root<Products> p = query.from(Products.class); /// from products table
+        Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.LEFT); //join with product_infomations table
+        Join<ProductInformations, Manufacturers> ma = pi.join("manufacturerId", JoinType.LEFT);
+        query.select(p); //select * 
+
+        List<Predicate> predicates = new ArrayList<>();
+        if (code != null) {
+            predicates.add(cb.like(p.get("code"), "%" + code + "%"));
+        }
+        if (nation != null) {
+            predicates.add(cb.equal(ma.get("nationId"), nation));
+        }
+        if (manufacturer != null) {
+            predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer));
+        }
+        query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(cb.desc(p.get("createAt")));
+        return em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+    }
+
+    public long countAllAdmin(String code,
+            Nations nation, Manufacturers manufacturer) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Products> p = query.from(Products.class); /// from products table
+        Join<Products, ProductInformations> pi = p.join("productInformations", JoinType.LEFT); //join with product_infomations table
+        Join<ProductInformations, Manufacturers> ma = pi.join("manufacturerId", JoinType.LEFT);
+        query.select(cb.count(p.get("pid")));
+        List<Predicate> predicates = new ArrayList<>();
+        if (code != null) {
+            predicates.add(cb.like(p.get("code"), "%" + code + "%"));
+        }
+        if (nation != null) {
+            predicates.add(cb.equal(ma.get("nationId"), nation));
+        }
+        if (manufacturer != null) {
+            predicates.add(cb.equal(pi.get("manufacturerId"), manufacturer));
+        }
+        query.where(predicates.toArray(new Predicate[]{}));
+        return em.createQuery(query).getSingleResult();
     }
 
 }
