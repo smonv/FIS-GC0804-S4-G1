@@ -9,6 +9,9 @@
     <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
             <f:viewParam name="page" value="#{adminIndexProduct.page}" />
+            <f:viewParam name="code" value="#{adminIndexProduct.productCode}" />
+            <f:viewParam name="nid" value="#{adminIndexProduct.nid}" />
+            <f:viewParam name="mid" value="#{adminIndexProduct.mid}" />
             <f:viewAction action="#{adminIndexProduct.init()}" />
         </f:metadata>
         <ui:define name="title">Product List</ui:define>
@@ -16,6 +19,39 @@
             <div class="container-fluid">
                 <div class="row">
                     <h1>Product List</h1>
+                </div>
+                <div class="row" id="filter">
+                    <div class="col-lg-1 col-md-1">
+                        <div class="form-group">
+                            <input id="filter_code" class="form-control" placeholder="Code"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <select id="filter_nation" class="form-control">
+                                <option value="0">All Nation</option>
+                                <ui:repeat value="#{adminIndexProduct.getAllNations()}" var="nation">
+                                    <option value="#{nation.nid}">#{nation.name}</option>
+                                </ui:repeat>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <select id="filter_manufacturer" class="form-control">
+                                <option value="0">All Manufacturer</option>
+                                <ui:repeat value="#{adminIndexProduct.getAllManufacturers()}" var="ma">
+                                    <option value="#{ma.mid}">#{ma.name}</option>
+                                </ui:repeat>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <button id="filter_button" class="btn btn-primary">Filter</button>
+                            <button id="filter_clear" class="btn btn-primary">Clear</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <h:dataTable value="#{adminIndexProduct.products}" var="product" class="table table-bordered datatable">
@@ -38,6 +74,14 @@
                         <h:column>
                             <f:facet name="header">Contruction Time</f:facet>
                             <h:outputText value="#{product.constructionTime} days" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Manufacturer</f:facet>
+                            <h:outputText value="#{product.productInformations.manufacturerId.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nation</f:facet>
+                            <h:outputText value="#{product.productInformations.manufacturerId.nationId.name}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Command</f:facet>
@@ -65,6 +109,55 @@
                     </c:if>
                 </div>
             </div>
+            <h:outputScript name="js/custom.js" library="admin" />
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    initParam();
+                    var url = "#{facesContext.externalContext.requestContextPath}/admin/product/index.xhtml";
+                    var filter_item = {};
+                    $("#filter_button").click(function (event) {
+                        event.preventDefault();
+                        var filter_code = $("#filter_code").val();
+                        if (filter_code) {
+                            filter_item["code"] = filter_code;
+                        }
+                        var filter_nation = $("#filter_nation").find(":selected").val();
+                        if ($.isNumeric(filter_nation)) {
+                            if (filter_nation > 0) {
+                                filter_item["nid"] = filter_nation;
+                            }
+                        }
+                        var filter_manufacturer = $("#filter_manufacturer").find(":selected").val();
+                        if ($.isNumeric(filter_manufacturer)) {
+                            if (filter_manufacturer > 0) {
+                                filter_item["mid"] = filter_manufacturer;
+                            }
+                        }
+
+                        createNewUrlAndRedirect(url, filter_item);
+                    });
+
+                    $("#filter_clear").click(function (event) {
+                        event.preventDefault();
+                        createNewUrlAndRedirect(url, filter_item);
+                    });
+                });
+
+                function initParam() {
+                    var input_code = GetURLParameter("code");
+                    if (input_code) {
+                        $("#filter_code").val(input_code);
+                    }
+                    var input_nation = GetURLParameter("nid");
+                    if (input_nation) {
+                        $("#filter_nation").val(input_nation);
+                    }
+                    var input_mid = GetURLParameter("mid");
+                    if (input_mid) {
+                        $("#filter_manufacturer").val(input_mid);
+                    }
+                }
+            </script>
         </ui:define>
     </ui:composition>
 </html>
