@@ -1,12 +1,87 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="pid" value="#{adminViewProject.pid}" />
+            <f:viewAction action="#{adminViewProject.init()}" />
+        </f:metadata>
+        <ui:define name="title">Project details</ui:define>
+        <ui:define name="content">
+            <div class="container-fluid">
+                <div class="row" style="padding-left: 0">
+                    <h1>Project Title: <h:outputText value="#{adminViewProject.project.title}" /></h1>
+
+                    <p>Created: #{adminViewProject.project.createAt}</p>
+                    <br/>
+
+                    <div class="col-lg-6 col-md-6" style="padding-left: 0">
+                        <div class="form-group">
+                            <h:outputLabel value="Creator" />
+                            <h:inputText value="#{adminViewProject.project.adminId.name}" class="form-control"
+                                         required="true"  disabled="true"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Order NO" />
+                            <h:inputText value="#{adminViewProject.project.contractId.orderId.number}" class="form-control"
+                                         required="true"  disabled="true"/>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Content" />
+                            <h:inputTextarea value="#{adminViewProject.project.content}" class="form-control"
+                                             required="true" disabled="true" rows="9" />
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                            <h:outputLabel value="Start At" />
+                            <h:inputText value="#{adminViewProject.project.createAt}" class="form-control"
+                                         required="true"  disabled="true"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="End At" />
+                            <h:inputText value="#{adminViewProject.project.endAt}" class="form-control"
+                                         required="true"  disabled="true"/>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Status" />
+                            <h:inputText value="#{adminViewProject.project.projectStatus.name}" class="form-control"
+                                         required="true" disabled="true">
+                            </h:inputText>
+                        </div>
+                        <div class="form-group">
+                            <h:outputText value="Updated At" />
+                            <h:inputText value="#{adminViewProject.project.updateAt}" class="form-control"
+                                         disabled="true">
+
+                            </h:inputText>
+                        </div>
+                        <div class="form-group">
+                            <h:outputText value="Public" />
+                            <h:inputText value="#{adminViewProject.project.isPublic}" class="form-control"
+                                         disabled="true">
+
+                            </h:inputText>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row" style="padding-left: 0">
+                    <p>Images</p>                             
+                        <div class="col-lg-3" style="padding:1px">
+                            <h:graphicImage 
+                                value="/image/#{adminViewProject.project.imgId.imgPath}" 
+                                styleClass="img-responsive" style="width: 100%; height: 100%"/>
+                        </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
 </html>
 

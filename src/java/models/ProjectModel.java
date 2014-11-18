@@ -81,4 +81,11 @@ public class ProjectModel {
         }
         return result;
     }
+      public Projects getById(int pid) {
+        List<Projects> products = em.createNamedQuery("Projects.findByPid").setParameter("pid", pid).getResultList();
+        if (products.size() > 0) {
+            return products.get(0);
+        }
+        return null;
+    }
 }

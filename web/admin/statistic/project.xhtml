@@ -15,11 +15,10 @@
         </f:metadata>
         <ui:define name="title">Project Statistics</ui:define>
         <ui:define name="content">
-            <div class="container-fluid">
-                <div class="row">
+        
                     <h1>Project Statistic</h1>
-                </div>
-                <div class="row" >
+           
+        
                     <div class="col-lg-2 col-md-2">
                         <div class="form-group">
                             <select id="filter_admin" class="form-control">
@@ -51,8 +50,8 @@
                             <button id="filter_clear" class="btn btn-primary">Clear</button>
                         </div>
                     </div>
-                </div>
-                <div class="row">
+       
+              
                     <h:dataTable value="#{projectStatistic.projects}" var="project" class="table table-bordered datatable">
                         <h:column>
                             <f:facet name="header">Order</f:facet>
@@ -94,8 +93,8 @@
                             </h:link>
                         </h:column>
                     </h:dataTable>
-                </div>
-                <div class="row">
+             
+          
                     <c:if test="#{projectStatistic.totalPages gt 1}">
                         <h:link outcome="/admin/statistic/project.xhtml" value="Previous"
                                 class="btn btn-primary"
@@ -109,8 +108,8 @@
                             <f:param name="page" value="#{projectStatistic.currentPage + 1}" />
                         </h:link> 
                     </c:if>
-                </div>
-            </div>
+                    <div style="height: 300px"></div>
+       
             <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function () {

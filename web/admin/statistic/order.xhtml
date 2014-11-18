@@ -11,6 +11,7 @@
             <f:viewParam name="status" value="#{orderStatistic.status}" />
             <f:viewAction action="#{orderStatistic.init()}" />
         </f:metadata>
+        <ui:define name="title">Order Statistics</ui:define>
         <ui:define name="content">
             <h1 class="margin-bottom">Orders</h1>
              <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
@@ -101,7 +102,7 @@
                 </h:link>
                 &nbsp;&nbsp;
                 <h:outputText value="Page: #{orderStatistic.current_page}/#{orderStatistic.getTotalPages()}" />
-            </div>
+            </div> <div style="height: 300px"></div>
             <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function () {
