@@ -20,6 +20,7 @@ import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
 import models.OrderModel;
 import models.OrderProductDetailModel;
@@ -163,6 +164,7 @@ public class OrderCreateBean implements Serializable {
                 o.setHeightOfFloor(opd.getHeightOfFloor());
             }
         }
+        ApplicationHelper.addMessage("Product updated!");
         ApplicationHelper.navigate("/client/order/selected_products.xhtml");
     }
 
@@ -248,6 +250,36 @@ public class OrderCreateBean implements Serializable {
         return totalSelectedProductPrice;
     }
 
+    public void checkCart() {
+        List<String> msg = new ArrayList<>();
+        Map<String, Object> session = SessionHelper.getSessionMap();
+        List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+        if (opds.isEmpty()) {
+            msg.add("Please select product to make order");
+        } else {
+            for (OrderProductDetails opd : opds) {
+                if (opd.getQuantity() < 0 && opd.getQuantity() > 10) {
+                    msg.add("Quantity value must be between 1 and 10!");
+                }
+                if (opd.getFloors() < 0 && opd.getFloors() > 200) {
+                    msg.add("Floor value must be between 1 and 200! ");
+                }
+                if (opd.getHeightOfFloor().compareTo(new BigDecimal(2)) == -1) {
+                    msg.add("Height of floor must be greator than 2!");
+                }
+            }
+
+        }
+        if (msg.isEmpty()) {
+            ApplicationHelper.navigate("/client/order/new.xhtml");
+        } else {
+            for (String s : msg) {
+                ApplicationHelper.addMessage(s);
+            }
+            ApplicationHelper.navigate("/client/order/selected_products.xhtml");
+        }
+    }
+
     public void newOrder() {
 
         //begin add new order
@@ -278,7 +310,7 @@ public class OrderCreateBean implements Serializable {
             order.setOrderProductDetailsList(opds);
             session.remove("order_product_details");
             ApplicationHelper.addMessage("Order created!");
-            ApplicationHelper.navigate("/client/order/new_order_details.xhtml?oid=" + order.getOid());
+            ApplicationHelper.redirect("/client/order/new_order_details.xhtml?oid=" + order.getOid(), true);
         } else {
             orderModel.removeOrder(order);
             ApplicationHelper.addMessage("Failed to create new order!");
