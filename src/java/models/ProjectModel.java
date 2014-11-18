@@ -63,6 +63,8 @@ public class ProjectModel {
         }
         
         query.where(predicates.toArray(new Predicate[]{})); //build where conditions;
+        query.orderBy(cb.desc(p.get("createAt"))); //order by create time desc
+        
         return em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
     }
 

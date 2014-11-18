@@ -57,7 +57,8 @@ public class ContractModel {
         if (endDate != null) {
             predicates.add(cb.lessThanOrEqualTo(contract.<Date>get("createAt"), endDate));
         }
-        q.where(predicates.toArray(new Predicate[]{}));
+        q.where(predicates.toArray(new Predicate[]{})); //build where conditions;
+        q.orderBy(cb.desc(contract.get("createAt"))); //order by create time desc
         return em.createQuery(q).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
     }
 
