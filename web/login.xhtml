@@ -30,7 +30,6 @@
                                     <h:inputText class="form-control" id="username" value="#{authenticationBean.username}" />
                                     <h:outputLabel for="password" value="Password: "/>
                                     <h:inputSecret class="form-control" id="password" value="#{authenticationBean.password}" />
-                                    <h:selectBooleanCheckbox></h:selectBooleanCheckbox><span>Remember me!</span><br />
                                     <h:commandLink >I can't access my account </h:commandLink>
                                     <h:commandButton class="btn btn-primary btn-mega btn-block" action="#{authenticationBean.authenticate}" value="Login" />
                                     <h:messages class="messages"/>

@@ -1,5 +1,6 @@
 package beans.client.auth;
 
+import entities.Admins;
 import entities.Clients;
 import helpers.SessionHelper;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.faces.bean.SessionScoped;
 public class SessionBean {
 
     private Clients currentClient;
+    private Admins currentAdmin;
 
     public SessionBean() {
     }
@@ -28,5 +30,16 @@ public class SessionBean {
 
     public void setCurrentClient(Clients currentClient) {
         this.currentClient = currentClient;
+    }
+
+    //////////admin
+    public boolean isAdminLogged() {
+        return SessionHelper.getSessionMap().get("admin") != null;
+    }
+
+    public Admins getCurrentAdmin() {
+        Map<String, Object> session = SessionHelper.getSessionMap();
+        currentAdmin = session.get("admin") != null ? (Admins) session.get("admin") : null;
+        return currentAdmin;
     }
 }

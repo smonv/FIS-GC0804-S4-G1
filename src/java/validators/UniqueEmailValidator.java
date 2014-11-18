@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package validators;
 
 import helpers.PersistenceHelper;
@@ -15,10 +10,6 @@ import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Cu Beo
- */
 @FacesValidator("uniqueEmail")
 public class UniqueEmailValidator implements Validator {
     @PersistenceContext
@@ -28,7 +19,7 @@ public class UniqueEmailValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String email = value.toString();
         long result = (long) em.createNamedQuery("Clients.uniqueEmail").setParameter("email", email).getSingleResult();
-        if (result == 1) {
+        if (result > 0) {
             FacesMessage msg = new FacesMessage("Email exists! Please choose another!");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);

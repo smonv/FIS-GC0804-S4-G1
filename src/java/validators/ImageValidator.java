@@ -1,4 +1,3 @@
-
 package validators;
 
 import javax.faces.application.FacesMessage;
