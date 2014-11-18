@@ -43,7 +43,7 @@
     </mime-mapping>
     <context-param>
         <param-name>uploadDirectory</param-name>
-        <param-value>D:\uploads</param-value>
+        <param-value>E:\Workspace\uploads</param-value>
     </context-param>
     <filter>
         <filter-name>FilterClient</filter-name>
