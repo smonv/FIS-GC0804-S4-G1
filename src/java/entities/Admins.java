@@ -33,9 +33,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Admins.findByIsSuper", query = "SELECT a FROM Admins a WHERE a.isSuper = :isSuper"),
     @NamedQuery(name = "Admins.findByIsManager", query = "SELECT a FROM Admins a WHERE a.isManager = :isManager"),
     @NamedQuery(name = "Admins.findByCreateAt", query = "SELECT a FROM Admins a WHERE a.createAt = :createAt"),
-    @NamedQuery(name = "Admins.findByUpdateAt", query = "SELECT a FROM Admins a WHERE a.updateAt = :updateAt")})
+    @NamedQuery(name = "Admins.findByUpdateAt", query = "SELECT a FROM Admins a WHERE a.updateAt = :updateAt"),
+    @NamedQuery(name = "Admins.uniqueUsername", query = "SELECT COUNT(a.aid) FROM Admins a WHERE a.username = :username"),
+    @NamedQuery(name = "Admins.uniqueEmail", query = "SELECT COUNT(a.aid) From Admins a WHERE a.email = :email")
+
+})
 
 public class Admins implements Serializable {
+
     @OneToMany(mappedBy = "adminId")
     private List<Projects> projectsList;
     @OneToMany(mappedBy = "adminId")
@@ -208,5 +213,5 @@ public class Admins implements Serializable {
     public void setProjectsList(List<Projects> projectsList) {
         this.projectsList = projectsList;
     }
-    
+
 }

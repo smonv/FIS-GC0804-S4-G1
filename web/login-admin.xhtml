@@ -7,34 +7,44 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <ui:composition template="/templates/admin/layout_login.xhtml">
         <ui:define name="content"> 
-                <div class="form-login-error">
-                    <h3>Invalid login</h3>
-                    <p><h:messages/></p>
+            <div class="form-login-error">
+                <h3>Invalid login</h3>
+                <p><h:messages/></p>
+            </div>
+            <h:form id="loginForm">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="entypo-user"></i>
+                        </div>
+                        <h:inputText class="form-control"
+                                     p:placeholder="Username" 
+                                     value="#{authenticateAdmin.username}" />
+                    </div>
                 </div>
-                <h:form id="loginForm">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="entypo-user"></i>
-                            </div>
-                            <h:inputText class="form-control" p:placeholder="Username" />
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="entypo-key"></i>
                         </div>
+                        <h:inputSecret class="form-control" p:placeholder="Password"
+                                       value="#{authenticateAdmin.password}"/>
                     </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="entypo-key"></i>
-                            </div>
-                            <h:inputText class="form-control" p:placeholder="Password" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <h:commandButton class="btn btn-primary btn-block btn-login">
-                            <i class="entypo-login"></i>
-                            Login In
-                        </h:commandButton>>
-                    </div>
-                </h:form>
+                </div>
+                <div class="form-group">
+                    <h:commandButton class="btn btn-primary btn-block btn-login" action="#{authenticateAdmin.authenticate()}">
+                        <i class="entypo-login"></i>
+                        Login In
+                    </h:commandButton>>
+                </div>
+                <div class="form-group">
+                    <h:messages class="messages"/>
+                    <p class="messages">
+                        <h:outputText value="#{authenticateAdmin.message}" 
+                                      rendered="#{authenticateAdmin.message != null}" />
+                    </p>
+                </div>
+            </h:form>
         </ui:define>
 
     </ui:composition>

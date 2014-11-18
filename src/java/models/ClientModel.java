@@ -18,11 +18,7 @@ public class ClientModel {
             Clients client = em.createNamedQuery("Clients.findByUsername", Clients.class).setParameter("username", username).getSingleResult();
             String salt = client.getPasswordDigest().split("_")[1];
             boolean result = client.getPasswordDigest().equals(PasswordHelper.hashPassword(password, salt));
-            if (result) {
-                return client;
-            } else {
-                return null;
-            }
+            return result ? client : null;
         } catch (Exception e) {
             return null;
         }
