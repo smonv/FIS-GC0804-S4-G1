@@ -31,6 +31,7 @@ public class ProjectStatistic {
     private ProjectModel projectModel;
 
     //bean variables
+    private String parseDatePattern = "dd-MM-yyyy";
     private List<Projects> projects;
     private int pageSize = 10;
     private int currentPage = 1;
@@ -38,11 +39,19 @@ public class ProjectStatistic {
     private long totalPages = 0;
     private int currentAid = 0;
     private int currentStatus = 0;
+    private Date startFromDate;
+    private Date startToDate;
+    private Date endFromDate;
+    private Date endToDate;
     //view param
     private String page;
     private String aid;
     private String status;
     private String number;
+    private String startFrom;
+    private String startTo;
+    private String endFrom;
+    private String endTo;
 
     public ProjectStatistic() {
     }
@@ -58,9 +67,16 @@ public class ProjectStatistic {
         //check status, if status is number, convert to interger and get status;
         currentStatus = ApplicationHelper.isInteger(status) ? Integer.parseInt(status) : 0;
         ListStatus projectStatus = listStatusModel.getById(currentStatus);
-
-        projects = projectModel.getAll(currentPage - 1, pageSize, admin, order, projectStatus);
-        totalProjects = projectModel.countAll(admin, order, projectStatus);
+        //check if value not null, parse it to date to filter
+        startFromDate = startFrom != null ? ApplicationHelper.parseDate(startFrom, parseDatePattern) : null;
+        startToDate = startTo != null ? ApplicationHelper.parseDate(startTo, parseDatePattern) : null;
+        endFromDate = endFrom != null ? ApplicationHelper.parseDate(endFrom, parseDatePattern) : null;
+        endToDate = endTo != null ? ApplicationHelper.parseDate(endTo, parseDatePattern) : null;
+        ///////////////////// get value from database
+        projects = projectModel.getAll(currentPage - 1, pageSize, admin, order, projectStatus,
+                startFromDate,startToDate,endFromDate,endToDate);
+        totalProjects = projectModel.countAll(admin, order, projectStatus,
+                startFromDate,startToDate,endFromDate,endToDate);
         if (totalProjects % pageSize != 0) {
             totalPages = totalProjects / pageSize + 1;
         } else {
@@ -151,6 +167,38 @@ public class ProjectStatistic {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getStartFrom() {
+        return startFrom;
+    }
+
+    public void setStartFrom(String startFrom) {
+        this.startFrom = startFrom;
+    }
+
+    public String getStartTo() {
+        return startTo;
+    }
+
+    public void setStartTo(String startTo) {
+        this.startTo = startTo;
+    }
+
+    public String getEndFrom() {
+        return endFrom;
+    }
+
+    public void setEndFrom(String endFrom) {
+        this.endFrom = endFrom;
+    }
+
+    public String getEndTo() {
+        return endTo;
+    }
+
+    public void setEndTo(String endTo) {
+        this.endTo = endTo;
     }
 
 }

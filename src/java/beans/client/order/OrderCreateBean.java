@@ -20,6 +20,7 @@ import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
 import models.OrderModel;
 import models.OrderProductDetailModel;
@@ -123,7 +124,7 @@ public class OrderCreateBean implements Serializable {
                         int new_quantity = opd.getQuantity() + quantity;
                         if (new_quantity > 10) {
                             ApplicationHelper.addMessage("Max quantity is 10, you had " + opd.getQuantity() + " in cart!");
-                            ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
+                            ApplicationHelper.navigate("/client/order/selected_products.xhtml");
                             return;
                         } else {
                             opd.setQuantity(opd.getQuantity() + quantity);
@@ -149,7 +150,7 @@ public class OrderCreateBean implements Serializable {
         }
 
         ApplicationHelper.addMessage("Product added!");
-        ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
+        ApplicationHelper.navigate("/client/order/selected_products.xhtml");
     }
 
     public void updateSelectdProductQuantity() {
@@ -163,7 +164,8 @@ public class OrderCreateBean implements Serializable {
                 o.setHeightOfFloor(opd.getHeightOfFloor());
             }
         }
-        ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
+        ApplicationHelper.addMessage("Product updated!");
+        ApplicationHelper.navigate("/client/order/selected_products.xhtml");
     }
 
     public void removeSelectedProduct() {
@@ -172,7 +174,7 @@ public class OrderCreateBean implements Serializable {
         List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
         if (opds.size() == 1) {
             ApplicationHelper.addMessage("Order need one or more products!");
-            ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
+            ApplicationHelper.navigate("/client/order/selected_products.xhtml");
             return;
         }
         for (OrderProductDetails o : opds) {
@@ -185,7 +187,7 @@ public class OrderCreateBean implements Serializable {
             opds.remove(index);
             ApplicationHelper.addMessage("Product removed!");
         }
-        ApplicationHelper.redirect("/client/order/selected_products.xhtml", true);
+        ApplicationHelper.navigate("/client/order/selected_products.xhtml");
     }
 
     public int getTotalSelectedProducts() {
@@ -248,6 +250,36 @@ public class OrderCreateBean implements Serializable {
         return totalSelectedProductPrice;
     }
 
+    public void checkCart() {
+        List<String> msg = new ArrayList<>();
+        Map<String, Object> session = SessionHelper.getSessionMap();
+        List<OrderProductDetails> opds = SessionHelper.getSessionOrderProductDetails();
+        if (opds.isEmpty()) {
+            msg.add("Please select product to make order");
+        } else {
+            for (OrderProductDetails opd : opds) {
+                if (opd.getQuantity() < 0 && opd.getQuantity() > 10) {
+                    msg.add("Quantity value must be between 1 and 10!");
+                }
+                if (opd.getFloors() < 0 && opd.getFloors() > 200) {
+                    msg.add("Floor value must be between 1 and 200! ");
+                }
+                if (opd.getHeightOfFloor().compareTo(new BigDecimal(2)) == -1) {
+                    msg.add("Height of floor must be greator than 2!");
+                }
+            }
+
+        }
+        if (msg.isEmpty()) {
+            ApplicationHelper.navigate("/client/order/new.xhtml");
+        } else {
+            for (String s : msg) {
+                ApplicationHelper.addMessage(s);
+            }
+            ApplicationHelper.navigate("/client/order/selected_products.xhtml");
+        }
+    }
+
     public void newOrder() {
 
         //begin add new order
@@ -260,8 +292,7 @@ public class OrderCreateBean implements Serializable {
         }
 
         Orders order = new Orders();
-        //order.setClientId(client); uncomment if enable filter client
-        order.setClientId(new Clients(1));
+        order.setClientId(client); //uncomment if enable filter client
         order.setNumber(ApplicationHelper.secureRandomString(8));
         order.setPaymentType(new PaymentTypes(paymentTypeId));
         order.setLocationName(location_name);
@@ -283,16 +314,17 @@ public class OrderCreateBean implements Serializable {
         } else {
             orderModel.removeOrder(order);
             ApplicationHelper.addMessage("Failed to create new order!");
-            ApplicationHelper.redirect("/client/order/new.xhtml", true);
+            ApplicationHelper.navigate("/client/order/new.xhtml");
         }
     }
 
     public List<Orders> getListOrders() {//phan show list 
-        return orderModel.getListOrder(1);
+        Map<String, Object> session = SessionHelper.getSessionMap();
+        Clients client = (Clients) session.get("client");
+        return orderModel.getListOrder(client.getCid());
     }
 
     //////////////////////////////
-
     public Products getCurrentProduct() {
         return currentProduct;
     }

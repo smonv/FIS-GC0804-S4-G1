@@ -17,7 +17,7 @@
                     <h:dataTable class="idCart" value="#{orderCreateBean.getSelectedProducts()}" var="opd" binding="#{orderCreateBean.selected_products}">
                         <h:column>
                             <f:facet name="header">Item</f:facet>
-                            <h:link class="element-link" outcome="/client/product/show.xhtml?pid=#{opd.productId.pid}" style="color: black">
+                            <h:link class="element-link" outcome="/product/view.xhtml?pid=#{opd.productId.pid}" style="color: black">
                                 <h:outputText value="#{orderCreateBean.getProduct(opd.productId.pid).name}" /></h:link><br />
                             <h:graphicImage value="#{resource['client/img/products.jpg']}" height="50" width="50" />
                         </h:column>
@@ -26,7 +26,7 @@
                             <h:inputText value="#{opd.quantity}" size="3" 
                                          label="Quantity" required="true" 
                                          requiredMessage="Quantity is required!" 
-                                         validatorMessage="Quantity Max 10 and Min 1!" 
+                                         validatorMessage="Quantity must be between 1 and 10!" 
                                          converterMessage="Quantity is number!">
                                 <f:convertNumber integerOnly="true" />
                                 <f:validateLongRange maximum="10" minimum="1" />
@@ -113,7 +113,7 @@
 
                             <h:link value="Select More" outcome="/product/index.xhtml" styleClass="btn btn-primary" style="margin-left: 0px; width: 48%"/>
                             &nbsp;&nbsp;
-                            <h:link value="Order Now" outcome="/client/order/new.xhtml" styleClass="btn btn-primary" style="float: right;width: 48%;margin-right:  0px;"/>
+                            <h:commandButton value="Order Now" action="#{orderCreateBean.checkCart()}" class="btn btn-primary" style="float: right;width: 48%;margin-right:  0px;"/>
 
                         </div>
                     </div> 

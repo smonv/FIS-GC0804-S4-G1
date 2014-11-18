@@ -23,7 +23,7 @@
                     <!-- BREADCRUMBS -->
                     <ul class="breadcrumb">
                         <li><h:link outcome="/index.xhtml">Home</h:link><span class="divider"></span></li>
-                        <li class="active"><h:link value="Products" outcome="/client/product/index.xhml">
+                        <li class="active"><h:link value="Products" outcome="/product/index.xhml">
 
                             </h:link></li>
                         <li class="active">Details</li>
@@ -45,7 +45,7 @@
                                              #{viewProduct.product.productImagesList.indexOf(pi) != 0 ? null:'active'}">
                                             <a href="#"><h:graphicImage 
                                                     value="/image/#{pi.imgId.imgPath}" 
-                                                    styleClass="img-responsive"/></a>
+                                                    styleClass="img-responsive" style="max-height: 336px"/></a>
                                         </div>
 
 
