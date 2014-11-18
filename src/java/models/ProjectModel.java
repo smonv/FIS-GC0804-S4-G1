@@ -6,6 +6,7 @@ import entities.ListStatus;
 import entities.Orders;
 import entities.Projects;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,7 +28,9 @@ public class ProjectModel {
         return em.createNamedQuery("Projects.findAll").getResultList();
     }
 
-    public List<Projects> getAll(int page, int pageSize, Admins admin, Orders order, ListStatus status) {
+    public List<Projects> getAll(int page, int pageSize,
+            Admins admin, Orders order, ListStatus status,
+            Date startFrom, Date startTo, Date endFrom, Date endTo) {
         int startIndex = page * pageSize;
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Projects> query = cb.createQuery(Projects.class); //create new query
@@ -46,11 +49,25 @@ public class ProjectModel {
         if (status != null) {
             predicates.add(cb.equal(p.get("projectStatus"), status));
         }
+        if(startFrom != null){
+            predicates.add(cb.greaterThanOrEqualTo(p.<Date>get("startAt"), startFrom));
+        }
+        if(startTo != null){
+            predicates.add(cb.lessThanOrEqualTo(p.<Date>get("startAt"), startTo));
+        }
+        if(endFrom != null){
+            predicates.add(cb.greaterThanOrEqualTo(p.<Date>get("endAt"), endFrom));
+        }
+        if(endTo != null){
+            predicates.add(cb.lessThanOrEqualTo(p.<Date>get("endAt"), endTo));
+        }
+        
         query.where(predicates.toArray(new Predicate[]{})); //build where conditions;
         return em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
     }
 
-    public long countAll(Admins admin, Orders order, ListStatus status) {
+    public long countAll(Admins admin, Orders order, ListStatus status,
+            Date startFrom, Date startTo, Date endFrom, Date endTo) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> query = cb.createQuery(Long.class); //create new query
         Root<Projects> p = query.from(Projects.class); //add from table project for query
@@ -66,6 +83,18 @@ public class ProjectModel {
         }
         if (status != null) {
             predicates.add(cb.equal(p.get("projectStatus"), status));
+        }
+        if(startFrom != null){
+            predicates.add(cb.greaterThanOrEqualTo(p.<Date>get("startAt"), startFrom));
+        }
+        if(startTo != null){
+            predicates.add(cb.lessThanOrEqualTo(p.<Date>get("startAt"), startTo));
+        }
+        if(endFrom != null){
+            predicates.add(cb.greaterThanOrEqualTo(p.<Date>get("endAt"), endFrom));
+        }
+        if(endTo != null){
+            predicates.add(cb.lessThanOrEqualTo(p.<Date>get("endAt"), endTo));
         }
         query.where(predicates.toArray(new Predicate[]{})); //build where conditions;
         return (long) em.createQuery(query).getSingleResult();

@@ -11,6 +11,10 @@
             <f:viewParam name="aid" value="#{projectStatistic.aid}" />
             <f:viewParam name="number" value="#{projectStatistic.number}" />
             <f:viewParam name="status" value="#{projectStatistic.status}" />
+            <f:viewParam name="startFrom" value="#{projectStatistic.startFrom}" />
+            <f:viewParam name="startTo" value="#{projectStatistic.startTo}" />
+            <f:viewParam name="endFrom" value="#{projectStatistic.endFrom}" />
+            <f:viewParam name="endTo" value="#{projectStatistic.endTo}" />
             <f:viewAction action="#{projectStatistic.init()}" />
         </f:metadata>
         <ui:define name="title">Project Statistics</ui:define>
@@ -49,6 +53,41 @@
                         <div class="form-group">
                             <button id="filter_button" class="btn btn-primary">Filter</button>
                             <button id="filter_clear" class="btn btn-primary">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <input id="filter_start_from" class="form-control filter_start_from" placeholder="Start From" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <input id="filter_start_to" class="form-control filter_start_to" placeholder="Start To" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <input id="filter_end_from" class="form-control filter_end_from" placeholder="End From" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <input id="filter_end_to" class="form-control filter_end_to" placeholder="End To" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-1 col-md-1">
+                        <div class="form-group">
+                            <button id="filter_button_date" class="btn btn-primary">Filter Date</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <button id="filter_clear_date" class="btn btn-primary">Clear Filter Date</button>
                         </div>
                     </div>
                 </div>
@@ -114,6 +153,7 @@
             <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function () {
+                    initDatepicker();
                     var url = "#{facesContext.externalContext.requestContextPath}/admin/statistic/project.xhtml";
                     var filter_item = {};
 
@@ -146,8 +186,54 @@
 
                     $("#filter_clear").click(function (event) {
                         event.preventDefault();
+                        createNewUrlAndRedirect(url, filter_item);
                     });
 
+                    $("#filter_button_date").click(function (event) {
+                        event.preventDefault();
+                        var filter_start_from = $("#filter_start_from").val();
+                        var filter_start_to = $("#filter_start_to").val();
+                        var filter_end_from = $("#filter_end_from").val();
+                        var filter_end_to = $("#filter_end_to").val();
+
+                        if (filter_start_from) {
+                            filter_item["startFrom"] = filter_start_from;
+                        }
+                        if (filter_start_to) {
+                            filter_item["startTo"] = filter_start_to;
+                        }
+                        if (filter_end_from) {
+                            filter_item["endFrom"] = filter_end_from;
+                        }
+                        if (filter_end_to) {
+                            filter_item["endTo"] = filter_end_to;
+                        }
+                        createNewUrlAndRedirect(url, filter_item);
+                    });
+                    $("#filter_clear_date").click(function (event) {
+                        event.preventDefault();
+                        createNewUrlAndRedirect(url, filter_item);
+                    });
+
+
+                    initParams();
+                });
+                function initDatepicker() {
+                    $(".filter_start_from").datepicker({
+                        format: "dd-mm-yyyy",
+                    });
+                    $(".filter_start_to").datepicker({
+                        format: "dd-mm-yyyy",
+                    });
+                    $(".filter_end_from").datepicker({
+                        format: "dd-mm-yyyy",
+                    });
+                    $(".filter_end_to").datepicker({
+                        format: "dd-mm-yyyy",
+                    });
+                }
+
+                function initParams() {
                     var input_admin = GetURLParameter("aid");
                     if (input_admin) {
                         $("#filter_admin").val(input_admin);
@@ -160,8 +246,23 @@
                     if (input_status) {
                         $("#filter_status").val(input_status);
                     }
-
-                });
+                    var input_start_from = GetURLParameter("startFrom");
+                    var input_start_to = GetURLParameter("startTo");
+                    var input_end_from = GetURLParameter("endFrom");
+                    var input_end_to = GetURLParameter("endTo");
+                    if (input_start_from) {
+                        $("#filter_start_from").val(input_start_from);
+                    }
+                    if (input_start_to) {
+                        $("#filter_start_to").val(input_start_to);
+                    }
+                    if (input_end_from) {
+                        $("#filter_end_from").val(input_end_from);
+                    }
+                    if (input_end_to) {
+                        $("#filter_end_to").val(input_end_to);
+                    }
+                }
             </script>
         </ui:define>
     </ui:composition>
