@@ -29,7 +29,7 @@
                 </li>
             </ol>
             <br />
-            
+
             <div class="form-group">
                 <input type="text" id="input_search" style="width: 250px; height: 28px"/>
                 <button id="filter_search" class="btn btn-sm btn-primary">Filter Search</button>
@@ -83,25 +83,26 @@
             </div>
             <br/>
             <div >
-                <h:link outcome="list" value="Previous"  class="btn btn-default btn-sm btn-icon icon-left"
+                <h:link outcome="list" value="Previous"  class="btn btn-primary"
                         rendered="#{adminfeedbackShowBean.totalfeedback gt adminfeedbackShowBean.pageSize and adminfeedbackShowBean.page gt 0}">
                     <f:param name="page" value="#{adminfeedbackShowBean.current_page - 1}"/>
-                    
+
                 </h:link>
-
-
-                <h:link outcome="list" value="Next" class="btn btn-default btn-sm btn-icon icon-left"
+                &nbsp;&nbsp;
+                <h:outputText value="Page: #{adminfeedbackShowBean.current_page}" />
+                &nbsp;&nbsp;
+                <h:link outcome="list" value="Next" class="btn btn-primary"
                         rendered="#{adminfeedbackShowBean.totalfeedback gt adminfeedbackShowBean.pageSize
                                     and (adminfeedbackShowBean.current_page) * adminfeedbackShowBean.pageSize lt adminfeedbackShowBean.totalfeedback}">
                     <f:param name="page" value="#{adminfeedbackShowBean.current_page + 1}"/>
-                    
+
                 </h:link> 
                 <br/>
-                <h:outputText value="Page: #{adminfeedbackShowBean.current_page}" />
+
             </div>
             <script type="text/javascript">
                 $(document).ready(function () {
-                     $("#filter_search").click(function (event) {
+                    $("#filter_search").click(function (event) {
                         event.preventDefault();
                         var input_search = $("#input_search").val();
                         console.log(input_search);

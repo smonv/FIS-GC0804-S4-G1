@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans.admin.feedback;
 
 import entities.FeedbackLevel;
@@ -17,10 +12,6 @@ import javax.faces.component.html.HtmlDataTable;
 import models.FeedbackLevelModel;
 import models.FeedbackModel;
 
-/**
- *
- * @author BUIVUHUECHI
- */
 @ManagedBean
 @RequestScoped
 public class AdminfeedbackShowBean {
@@ -30,10 +21,7 @@ public class AdminfeedbackShowBean {
     @EJB
     private FeedbackModel feedbackModel;
 
-    /**
-     * Creates a new instance of FeedBackShowBean
-     */
-    private int pageSize = 2;
+    private int pageSize = 10;
     private int current_page = 1;
     
     private List<Feedbacks> feedbacks;
