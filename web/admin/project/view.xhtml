@@ -15,7 +15,7 @@
                 <div class="row" style="padding-left: 0">
                     <h1>Project Title: <h:outputText value="#{adminViewProject.project.title}" /></h1>
 
-                    <p>Created: #{adminViewProject.project.createAt}</p>
+                    <p>Created: #{adminViewProject.formatDate(adminViewProject.project.createAt)}</p>
                     <br/>
 
                     <div class="col-lg-6 col-md-6" style="padding-left: 0">

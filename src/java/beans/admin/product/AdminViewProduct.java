@@ -2,6 +2,7 @@ package beans.admin.product;
 
 import entities.Products;
 import helpers.ApplicationHelper;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -33,6 +34,8 @@ public class AdminViewProduct {
             ApplicationHelper.redirect("/404.xhtml", true);
         }
     }
+    
+
 
     //SET GET
     public String getPid() {
