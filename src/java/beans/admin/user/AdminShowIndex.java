@@ -43,9 +43,9 @@ public class AdminShowIndex {
         users=adminModel.getAllForAdmin(currentPage -1, pageSize, name);
         totalUser=adminModel.countAll(name);
          if (totalUser % pageSize != 0) {
-            totalPage = totalUser % pageSize + 1;
+            totalPage = totalUser / pageSize + 1;
         } else {
-            totalPage = totalUser % pageSize;
+            totalPage = totalUser / pageSize;
         }
     }
     
