@@ -16,7 +16,16 @@ public class ProductImageModel {
             em.persist(productImage);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean remove(ProductImages productImages){
+        try {
+            ProductImages remove_pi = em.getReference(ProductImages.class, productImages.getProductImgId());
+            em.remove(remove_pi);
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }

@@ -15,7 +15,6 @@ public class ImageModel {
             em.persist(image);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -26,8 +25,18 @@ public class ImageModel {
             em.flush();
             return image;
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
+        }
+    }
+    
+    public boolean remove(Images image){
+        try {
+            Images remove_image = em.getReference(Images.class, image.getImgId());
+            em.remove(remove_image);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
