@@ -3,7 +3,6 @@
 <sun-web-app error-url="">
   <class-loader delegate="true"/>
   <jsp-config>
-    <property name="alternatedocroot_1" value="from=/images/* dir=E:\Workspace\uploads" />
+    <property name="alternatedocroot_1" value="from=/images/* dir=E:\Workspace\uploads"/>
   </jsp-config>
 </sun-web-app>
-

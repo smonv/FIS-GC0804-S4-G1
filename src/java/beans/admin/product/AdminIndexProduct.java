@@ -31,7 +31,7 @@ public class AdminIndexProduct {
     private int pageSize = 10; //page size for pagination;
     private int currentPage = 1; //current page value for pagination
     private long totalProduct = 0;
-    private long totalPage;
+    private long totalPage = 1;
     private int currentNid;
     private int currentMid;
     //view params
@@ -54,9 +54,9 @@ public class AdminIndexProduct {
         products = productModel.getAllAdmin(currentPage - 1, pageSize, productCode, nation, manufacturer); //get all product for show in datatable;
         totalProduct = productModel.countAllAdmin(productCode, nation, manufacturer); //count all product, set like get all function;
         if (totalProduct % pageSize != 0) {
-            totalPage = totalProduct % pageSize + 1;
+            totalPage = totalProduct / pageSize + 1;
         } else {
-            totalPage = totalProduct % pageSize;
+            totalPage = totalProduct / pageSize;
         }
 
     }
