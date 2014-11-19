@@ -43,11 +43,7 @@
     </mime-mapping>
     <context-param>
         <param-name>uploadDirectory</param-name>
-<<<<<<< HEAD
         <param-value>D:\uploads</param-value>
-=======
-        <param-value>D:\hoc tap\Eproject-FGR-Sem4\Data1</param-value>
->>>>>>> origin/master
     </context-param>
     <filter>
         <filter-name>FilterClient</filter-name>
