@@ -2,10 +2,15 @@ package models;
 
 import entities.Admins;
 import helpers.PasswordHelper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 @Stateless
 public class AdminModel {
@@ -41,5 +46,36 @@ public class AdminModel {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public List<Admins> getAllForAdmin(int page, int pageSize, String name) {
+        int startIndex = page * pageSize;
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Admins> query = cb.createQuery(Admins.class);
+        Root<Admins> p = query.from(Admins.class);
+        query.select(p);
+
+        List<Predicate> predicates = new ArrayList<>();
+        if (name != null) {
+            predicates.add(cb.equal(p.get("name"), name));
+        }
+        query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(cb.desc(p.get("createAt")));
+        return em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+    }
+
+    public long countAll(String name) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Admins> p = query.from(Admins.class);
+        query.select(cb.count(p.get("aid")));
+        List<Predicate> predicates = new ArrayList<>();
+        if (name != null) {
+            predicates.add(cb.equal(p.get("name"), name));
+        }
+        query.where(predicates.toArray(new Predicate[]{}));
+
+        return em.createQuery(query).getSingleResult();
+
     }
 }
