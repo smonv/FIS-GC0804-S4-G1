@@ -5,6 +5,7 @@ import entities.ListStatus;
 import entities.Orders;
 import helpers.ApplicationHelper;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -36,7 +37,7 @@ public class OrderModel {
         return orders;
     }
 
-    public List<Orders> getAll(int page, int pageSize, String number, ListStatus status) {
+    public List<Orders> getAll(int page, int pageSize, String number, ListStatus status, Date from, Date to) {
         int startIndex = page * pageSize;
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Orders> query = cb.createQuery(Orders.class);
@@ -49,11 +50,17 @@ public class OrderModel {
         if (status != null) {
             predicates.add(cb.equal(o.get("orderStatus"), status));
         }
+        if (from != null) {
+            predicates.add(cb.greaterThanOrEqualTo(o.<Date>get("createAt"), from));
+        }
+        if (to != null) {
+            predicates.add(cb.lessThanOrEqualTo(o.<Date>get("createAt"), to));
+        }
         query.where(predicates.toArray(new Predicate[]{}));
         return em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
     }
 
-    public long countAll(String number, ListStatus status) {
+    public long countAll(String number, ListStatus status, Date from, Date to) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
         Root<Orders> o = query.from(Orders.class);
@@ -65,7 +72,14 @@ public class OrderModel {
         if (status != null) {
             predicates.add(cb.equal(o.get("orderStatus"), status));
         }
+        if (from != null) {
+            predicates.add(cb.greaterThanOrEqualTo(o.<Date>get("createAt"), from));
+        }
+        if (to != null) {
+            predicates.add(cb.lessThanOrEqualTo(o.<Date>get("createAt"), to));
+        }
         query.where(predicates.toArray(new Predicate[]{}));
+        query.orderBy(cb.desc(o.get("createAt")));
         return em.createQuery(query).getSingleResult();
     }
 

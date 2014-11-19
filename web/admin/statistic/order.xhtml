@@ -5,11 +5,14 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
     <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
             <f:viewParam name="page" value="#{orderStatistic.page}" />
             <f:viewParam name="number" value="#{orderStatistic.number}" />
             <f:viewParam name="status" value="#{orderStatistic.status}" />
+            <f:viewParam name="from" value="#{orderStatistic.from}" />
+            <f:viewParam name="to" value="#{orderStatistic.to}" />
             <f:viewAction action="#{orderStatistic.init()}" />
         </f:metadata>
         <ui:define name="title">Order Statistics</ui:define>
@@ -43,6 +46,16 @@
                                     <option value="#{status.lsid}">#{status.name}</option>
                                 </ui:repeat>
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <input id="filter_from_date" class="form-control filter_from_date" placeholder="From Date"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <input id="filter_to_date" class="form-control filter_to_date" placeholder="To Date"/>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2">
@@ -96,28 +109,34 @@
                     </h:form>
                 </div>
                 <div class="row">
-                        <h:link value="Previous" 
-                                outcome="/admin/statistic/order.xhtml"
-                                rendered="#{(orderStatistic.current_page - 1) gt 0}"
-                                class="btn btn-primary"
-                                >
-                            <f:param name="page" value="#{orderStatistic.current_page - 1}" />
-                        </h:link>
-                        &nbsp;&nbsp;
-                        <h:outputText value="Page: #{orderStatistic.current_page} / #{orderStatistic.totalPages}" />
-                        &nbsp;&nbsp;
-                        <h:link value="Next"
-                                outcome="/admin/statistic/order.xhtml"
-                                rendered="#{(orderStatistic.current_page + 1) lt (orderStatistic.totalPages + 1)}"
-                                class="btn btn-primary"
-                                >
-                            <f:param name="page" value="#{orderStatistic.current_page + 1}" />
-                        </h:link>
+                    <h:link value="Previous" 
+                            outcome="/admin/statistic/order.xhtml"
+                            rendered="#{(orderStatistic.current_page - 1) gt 0}"
+                            class="btn btn-primary"
+                            >
+                        <f:param name="page" value="#{orderStatistic.current_page - 1}" />
+                    </h:link>
+                    &nbsp;&nbsp;
+                    <h:outputText value="Page: #{orderStatistic.current_page} / #{orderStatistic.totalPages}" />
+                    &nbsp;&nbsp;
+                    <h:link value="Next"
+                            outcome="/admin/statistic/order.xhtml"
+                            rendered="#{(orderStatistic.current_page + 1) lt (orderStatistic.totalPages + 1)}"
+                            class="btn btn-primary"
+                            >
+                        <f:param name="page" value="#{orderStatistic.current_page + 1}" />
+                    </h:link>
                 </div> 
             </div>
             <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function () {
+                    $(".filter_from_date").datepicker({
+                        format: "dd-mm-yyyy"
+                    });
+                    $(".filter_to_date").datepicker({
+                        format: "dd-mm-yyyy"
+                    });
                     ////set filter value for component;
                     ////filter number;
                     var param_number = GetURLParameter("number");
@@ -128,6 +147,14 @@
                     var param_status = GetURLParameter("status");
                     if (param_status) {
                         $("#filter_status").val(param_status);
+                    }
+                    var param_from = GetURLParameter("from");
+                    if (param_from) {
+                        $("#filter_from_date").val(param_from);
+                    }
+                    var param_to = GetURLParameter("to");
+                    if (param_to) {
+                        $("#filter_to_date").val(param_to);
                     }
 
                     var url = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml";
@@ -142,6 +169,14 @@
                         var filter_status = $("#filter_status").find(":selected").val();
                         if (filter_status > 0) {
                             filter_item["status"] = filter_status;
+                        }
+                        var filter_from = $("#filter_from_date").val();
+                        if (filter_from) {
+                            filter_item["from"] = filter_from;
+                        }
+                        var filter_to = $("#filter_to_date").val();
+                        if (filter_to) {
+                            filter_item["to"] = filter_to;
                         }
                         createNewUrlAndRedirect(url, filter_item);
                     });

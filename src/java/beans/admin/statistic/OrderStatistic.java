@@ -38,10 +38,14 @@ public class OrderStatistic {
     private int pageSize = 10;
     private long totalOrders = 0;
     private long totalPages = 0;
+    private Date fromDate;
+    private Date toDate;
     //bean param
     private String page;
     private String number;
     private String status;
+    private String from;
+    private String to;
 
     public OrderStatistic() {
     }
@@ -50,8 +54,12 @@ public class OrderStatistic {
         current_page = ApplicationHelper.isInteger(page) ? Integer.parseInt(page) : 1;
         int currentStatus = ApplicationHelper.isInteger(status) ? Integer.parseInt(status) : 0;
         ListStatus filterStatus = listStatusModel.getById(currentStatus);
-        orders = orderModel.getAll(current_page - 1, pageSize, number, filterStatus);
-        totalOrders = orderModel.countAll(number, filterStatus);
+
+        fromDate = from != null ? ApplicationHelper.parseDate(from, "dd-MM-yyyy") : null;
+        toDate = to != null ? ApplicationHelper.parseDate(to, "dd-MM-yyyy") : null;
+
+        orders = orderModel.getAll(current_page - 1, pageSize, number, filterStatus, fromDate, toDate);
+        totalOrders = orderModel.countAll(number, filterStatus, fromDate, toDate);
         totalPages = (totalOrders % pageSize) != 0 ? totalOrders / pageSize + 1 : totalOrders / pageSize;
     }
 
@@ -82,10 +90,9 @@ public class OrderStatistic {
         return totalCost;
     }
 
-    public List<ListStatus> getAllStatus(){
+    public List<ListStatus> getAllStatus() {
         return listStatusModel.getAll();
     }
-   
 
     public String formatDate(Date date) {
         return ApplicationHelper.formatDate(date, "dd/MM/yyyy");
@@ -154,6 +161,22 @@ public class OrderStatistic {
 
     public void setTotalPages(long totalPages) {
         this.totalPages = totalPages;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
     }
 
 }
