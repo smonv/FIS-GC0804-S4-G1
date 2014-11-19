@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Admins.findByCreateAt", query = "SELECT a FROM Admins a WHERE a.createAt = :createAt"),
     @NamedQuery(name = "Admins.findByUpdateAt", query = "SELECT a FROM Admins a WHERE a.updateAt = :updateAt"),
     @NamedQuery(name = "Admins.uniqueUsername", query = "SELECT COUNT(a.aid) FROM Admins a WHERE a.username = :username"),
-    @NamedQuery(name = "Admins.uniqueEmail", query = "SELECT COUNT(a.aid) From Admins a WHERE a.email = :email")
+    @NamedQuery(name = "Admins.uniqueEmail", query = "SELECT COUNT(a.aid) From Admins a WHERE a.email = :email"),
+    @NamedQuery(name = "Admins.countAll",query = "SELECT COUNT(a.aid) FROM Admins a")
 
 })
 

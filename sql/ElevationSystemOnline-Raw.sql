@@ -169,7 +169,7 @@ create table feedbacks(
 	update_at datetime
 )
 
-insert into admins values('Admin', 'admin123', 'sonndgc00548@fpt.edu.vn', '123456', 1, 1, GETDATE(), null)
+insert into admins values('Admin', 'admintest', 'sonndgc00548@fpt.edu.vn', 'fBz0haBNxMPm1iscRZ171g8ZbPI=_caz3leGlBng=', 1, 1, GETDATE(), null)
 
 insert into nations values('United State')
 insert into nations values('United Kingdom')

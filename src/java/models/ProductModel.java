@@ -200,5 +200,19 @@ public class ProductModel {
         query.where(predicates.toArray(new Predicate[]{}));
         return em.createQuery(query).getSingleResult();
     }
+    
+    public boolean update(Products product){
+        try {
+            if(em.find(Products.class, product.getPid()) != null){
+                em.merge(product);
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

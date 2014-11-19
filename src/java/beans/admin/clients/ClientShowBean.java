@@ -60,7 +60,7 @@ public class ClientShowBean {
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(1) {
+            pagination = new PaginationHelper(10) {
 
                 @Override
                 public int getItemsCount() {
@@ -105,7 +105,7 @@ public class ClientShowBean {
         }
         if (clientModel.getListClientByName(search).isEmpty()) {
             recreateModel();
-            pagination = new PaginationHelper(1) {
+            pagination = new PaginationHelper(5) {
 
                 @Override
                 public int getItemsCount() {

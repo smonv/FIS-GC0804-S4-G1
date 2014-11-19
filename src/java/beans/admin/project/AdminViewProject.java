@@ -3,6 +3,7 @@ package beans.admin.project;
 import entities.Products;
 import entities.Projects;
 import helpers.ApplicationHelper;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -34,6 +35,10 @@ public class AdminViewProject {
         if (project == null) {
             ApplicationHelper.redirect("/404.xhtml", true);
         }
+    }
+    
+        public String formatDate(Date date){
+        return ApplicationHelper.formatDate(date, "dd/MM/yyyy");
     }
 
     //SET GET

@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewParam name="page" value="#{adminShowIndex.page}" />
+            <f:viewParam name="name" value="#{adminShowIndex.name}" />
+            <f:viewAction action="#{adminShowIndex.init()}" />
+        </f:metadata>
+        <ui:define name="title">Admin List</ui:define>
+        <ui:define name="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>Admin List</h1>
+                </div>
+                <div class="row" id="filter">
+                    <div class="col-lg-1 col-md-1">
+                        <div class="form-group">
+                            <input id="filter_name" class="form-control" placeholder="name"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <button id="filter_button" class="btn btn-primary">Filter</button>
+                            <button id="filter_clear" class="btn btn-primary">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h:dataTable value="#{adminShowIndex.users}" var="user" class="table table-bordered datatable">
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{user.name}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Email</f:facet>
+                            <h:outputText value="#{user.email}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Create at</f:facet>
+                            <h:outputText value="#{adminShowIndex.formatDate(user.createAt)}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Command</f:facet>
+                            <h:link value="More Info" outcome="/admin/index.xhtml" class="btn btn-primary">
+                            </h:link>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+                <div class="row">
+                    <c:if test="#{adminShowIndex.totalUser gt adminShowIndex.pageSize}">
+                        <c:if test="#{(adminShowIndex.currentPage - 1) gt 0}">
+                            <h:link value="Previous" outcome="/admin/user/index.xhtml" class="btn btn-primary">
+                                <f:param name="page" value="#{adminShowIndex.currentPage - 1}" />
+                            </h:link>
+                        </c:if>
+                        &nbsp;
+                        <h:outputText value="Page: #{adminShowIndex.currentPage} / #{adminShowIndex.totalPage}" />
+                        &nbsp;
+                        <c:if test="#{(adminShowIndex.currentPage + 1) lt (adminShowIndex.totalPage + 1)}">
+                            <h:link value="Next" outcome="/admin/user/index.xhtml" class="btn btn-primary">
+                                <f:param name="page" value="#{adminShowIndex.currentPage + 1}" />
+                            </h:link>
+                        </c:if>
+                    </c:if>
+                </div>
+            </div>
+            <h:outputScript name="js/custom.js" library="admin" />
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    initParam();
+                    var url = "#{facesContext.externalContext.requestContextPath}/admin/user/index.xhtml";
+                    var filter_item = {};
+                    $("#filter_button").click(function (event) {
+                        event.preventDefault();
+                        var filter_code = $("#filter_name").val();
+                        if (filter_code) {
+                            filter_item["name"] = filter_code;
+                        }
+                        createNewUrlAndRedirect(url, filter_item);
+                    });
+
+                    $("#filter_clear").click(function (event) {
+                        event.preventDefault();
+                        createNewUrlAndRedirect(url, filter_item);
+                    });
+                });
+
+                function initParam() {
+                    var input_code = GetURLParameter("name");
+                    if (input_code) {
+                        $("#filter_name").val(input_code);
+                    }
+                }
+            </script>
+        </ui:define>
+    </ui:composition>
+</html>
+

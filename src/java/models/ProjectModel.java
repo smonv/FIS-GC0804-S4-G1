@@ -49,22 +49,22 @@ public class ProjectModel {
         if (status != null) {
             predicates.add(cb.equal(p.get("projectStatus"), status));
         }
-        if(startFrom != null){
+        if (startFrom != null) {
             predicates.add(cb.greaterThanOrEqualTo(p.<Date>get("startAt"), startFrom));
         }
-        if(startTo != null){
+        if (startTo != null) {
             predicates.add(cb.lessThanOrEqualTo(p.<Date>get("startAt"), startTo));
         }
-        if(endFrom != null){
+        if (endFrom != null) {
             predicates.add(cb.greaterThanOrEqualTo(p.<Date>get("endAt"), endFrom));
         }
-        if(endTo != null){
+        if (endTo != null) {
             predicates.add(cb.lessThanOrEqualTo(p.<Date>get("endAt"), endTo));
         }
-        
+
         query.where(predicates.toArray(new Predicate[]{})); //build where conditions;
         query.orderBy(cb.desc(p.get("createAt"))); //order by create time desc
-        
+
         return em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
     }
 
@@ -86,16 +86,16 @@ public class ProjectModel {
         if (status != null) {
             predicates.add(cb.equal(p.get("projectStatus"), status));
         }
-        if(startFrom != null){
+        if (startFrom != null) {
             predicates.add(cb.greaterThanOrEqualTo(p.<Date>get("startAt"), startFrom));
         }
-        if(startTo != null){
+        if (startTo != null) {
             predicates.add(cb.lessThanOrEqualTo(p.<Date>get("startAt"), startTo));
         }
-        if(endFrom != null){
+        if (endFrom != null) {
             predicates.add(cb.greaterThanOrEqualTo(p.<Date>get("endAt"), endFrom));
         }
-        if(endTo != null){
+        if (endTo != null) {
             predicates.add(cb.lessThanOrEqualTo(p.<Date>get("endAt"), endTo));
         }
         query.where(predicates.toArray(new Predicate[]{})); //build where conditions;
@@ -112,11 +112,26 @@ public class ProjectModel {
         }
         return result;
     }
-      public Projects getById(int pid) {
+
+    public Projects getById(int pid) {
         List<Projects> products = em.createNamedQuery("Projects.findByPid").setParameter("pid", pid).getResultList();
         if (products.size() > 0) {
             return products.get(0);
         }
         return null;
+    }
+
+    public boolean update(Projects project) {
+        try {
+            if (em.find(Projects.class, project.getPid()) != null) {
+                em.merge(project);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

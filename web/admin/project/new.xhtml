@@ -74,7 +74,9 @@
                             <div class="form-group">
                                 <h:outputLabel value="Project Image" />
                                 <h:inputFile value="#{adminNewProject.uploadImg}" class="form-control"
-                                             required="true" requiredMessage="Project image is require!"/>
+                                             required="true" requiredMessage="Project image is require!">
+                                    <f:validator validatorId="imageValidator" />
+                                </h:inputFile>
                             </div>
                             <div class="form-group">
                                 <h:outputLabel value="Public this project?&nbsp;" />
