@@ -28,6 +28,17 @@ public class ProjectModel {
         return em.createNamedQuery("Projects.findAll").getResultList();
     }
 
+    public List<Projects> getAll(boolean isPublic, ListStatus status) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Projects> query = cb.createQuery(Projects.class); //create new query
+        Root<Projects> p = query.from(Projects.class); //add from table project for query
+        query.select(p);
+        query.where(cb.equal(p.get("isPublic"), isPublic));
+        query.where(cb.equal(p.get("projectStatus"), status));
+        query.orderBy(cb.desc(p.get("createAt")));
+        return em.createQuery(query).setMaxResults(10).getResultList();
+    }
+
     public List<Projects> getAll(int page, int pageSize,
             Admins admin, Orders order, ListStatus status,
             Date startFrom, Date startTo, Date endFrom, Date endTo) {
