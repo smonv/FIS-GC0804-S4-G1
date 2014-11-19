@@ -2,11 +2,94 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <ui:composition template="/templates/admin/layout.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{indexStatistic.init()}" />
+        </f:metadata>
         <ui:define name="title">Index</ui:define>
         <ui:define name="content">
-            
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>Overview Statistic</h1>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <h2>Today</h2>
+                        <h4>New Orders: 
+                            <h:link outcome="/admin/statistic/order.xhtml">
+                                <h:outputText value="#{indexStatistic.todayOrder}" />
+                            </h:link>
+                        </h4>
+                        <h4>New Contracts: 
+                            <h:link outcome="/admin/statistic/contract.xhtml">
+                                <h:outputText value="#{indexStatistic.todayContract}" />
+                            </h:link>
+                        </h4>
+                        <h4>New Projects: 
+                            <h:link outcome="/admin/statistic/project.xhtml">
+                                <h:outputText value="#{indexStatistic.todayProject}" />
+                            </h:link>
+                        </h4>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <h2>This month</h2>
+                        <h4>New Orders: 
+                            <h:link outcome="/admin/statistic/order.xhtml">
+                                <h:outputText value="#{indexStatistic.monthOrder}" />
+                            </h:link>
+                        </h4>
+                        <h4>New Contracts: 
+                            <h:link outcome="/admin/statistic/contract.xhtml">
+                                <h:outputText value="#{indexStatistic.monthContract}" />
+                            </h:link>
+                        </h4>
+                        <h4>New Projects: 
+                            <h:link outcome="/admin/statistic/project.xhtml">
+                                <h:outputText value="#{indexStatistic.monthProject}" />
+                            </h:link>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <h2>Upcoming Start Project</h2>
+                        <h:dataTable value="#{indexStatistic.getProjectsStart()}" var="project" 
+                                     class="table table-bordered datatable">
+                            <h:column>
+                                <f:facet name="header">Title</f:facet>
+                                <h:link outcome="/admin/project/view.xhtml">
+                                    <f:param name="pid" value="#{project.pid}" />
+                                    <h:outputText value="#{project.title}" />
+                                </h:link>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Start Date</f:facet>
+                                <h:outputText value="#{indexStatistic.formatDate(project.startAt)}" />
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <h2>Upcoming End Project</h2>
+                        <h:dataTable value="#{indexStatistic.getProjectsEnd()}" var="project" 
+                                     class="table table-bordered datatable">
+                            <h:column>
+                                <f:facet name="header">Title</f:facet>
+                                <h:link outcome="/admin/project/view.xhtml">
+                                    <f:param name="pid" value="#{project.pid}" />
+                                    <h:outputText value="#{project.title}" />
+                                </h:link>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">End Date</f:facet>
+                                <h:outputText value="#{indexStatistic.formatDate(project.endAt)}" />
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
+            </div>
         </ui:define>
     </ui:composition>
 </html>
