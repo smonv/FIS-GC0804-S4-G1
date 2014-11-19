@@ -2,7 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:viewAction action="#{adminIndexProject.init()}" />
+    </f:metadata>
     <ui:composition template="/templates/client/layout.xhtml">
         <ui:define name="title">Index</ui:define>
         <!-- MAIN SLIDER WRAPPER -->
@@ -216,13 +220,13 @@
                 </div>
 
                 <div class="grid-block">
-                    <ui:repeat var="product" value="#{productBean.getTop12Product()}" varStatus="status">
+                    <ui:repeat var="pro" value="#{adminIndexProject.projects}">
                         <figure class="effect-layla">
-                            <h:graphicImage name="img/products/demo.jpg" library="client" alt="#{product.name}" />
+                            <h:graphicImage value="/image/#{pro.imgId.imgPath}" library="client" alt="#{pro.imgId}" />
                             <figcaption>
-                                <h2><h:outputText value="#{product.name}" /></h2>
-                                <p><h:outputText value="#{product.productInformations.informations}"/></p>
-                                <h:link value="Detail" outcome="/product/show.xhtml?pid=#{product.pid}" />
+                                <h2><h:outputText value="#{pro.title}" /></h2>
+                                <p><h:outputText value="View"/></p>
+                                <h:link value="Detail" outcome="/project/view.xhtml?pid=#{pro.pid}" />
                             </figcaption>			
                         </figure>
                     </ui:repeat>
