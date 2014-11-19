@@ -12,25 +12,26 @@
             <f:viewParam name="name" value="#{adminShowIndex.name}" />
             <f:viewAction action="#{adminShowIndex.init()}" />
         </f:metadata>
-        <ui:define name="title">Admin List</ui:define>
+        <ui:define name="title">List Admin</ui:define>
         <ui:define name="content">
             <div class="container-fluid">
                 <div class="row">
-                    <h1>Admin List</h1>
+                    <h1>List Admin</h1>
                 </div>
-                <div class="row" id="filter">
-                    <div class="col-lg-1 col-md-1">
+              
+                    
                         <div class="form-group">
-                            <input id="filter_name" class="form-control" placeholder="name"/>
+                            <input id="filter_name" class="form-control" placeholder="name" style="width: 250px; height: 28px"/>
+                           
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2">
+                    
                         <div class="form-group">
-                            <button id="filter_button" class="btn btn-primary">Filter</button>
-                            <button id="filter_clear" class="btn btn-primary">Clear</button>
+                             <button id="filter_button" class="btn btn-info btn-sm btn-icon icon-left">
+                                 <i class="entypo-search"></i>
+                                 Search</button>
+                             <button id="filter_clear" class="btn btn-info btn-sm btn-icon icon-left">All</button>
                         </div>
-                    </div>
-                </div>
+                    
                 <div class="row">
                     <h:dataTable value="#{adminShowIndex.users}" var="user" class="table table-bordered datatable">
                         <h:column>
@@ -46,9 +47,12 @@
                             <h:outputText value="#{adminShowIndex.formatDate(user.createAt)}" />
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Command</f:facet>
-                            <h:link value="More Info" outcome="/admin/index.xhtml" class="btn btn-primary">
-                            </h:link>
+                           
+                            <h:link value="" outcome="/admin/user/index.xhtml" class="btn btn-info btn-sm btn-icon icon-left">
+
+                                    <i class="entypo-info"></i>
+                                    Profile
+                                </h:link>
                         </h:column>
                     </h:dataTable>
                 </div>
