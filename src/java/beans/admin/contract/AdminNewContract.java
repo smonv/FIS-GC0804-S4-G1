@@ -7,6 +7,7 @@ import entities.Orders;
 import entities.Products;
 import helpers.ApplicationHelper;
 import helpers.PersistenceHelper;
+import helpers.SessionHelper;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -55,9 +56,10 @@ public class AdminNewContract {
     }
 
     public void create() {
+        Admins admin = (Admins) SessionHelper.getSessionMap().get("admin");
         order = orderModel.getByNumber(number);
         Contracts contract = new Contracts();
-        contract.setAdminId(new Admins(1)); //will fix after have admin login and filter
+        contract.setAdminId(admin);
         contract.setOrderId(order);
         contract.setClientName(clientName);
         contract.setClientEmail(clientEmail);

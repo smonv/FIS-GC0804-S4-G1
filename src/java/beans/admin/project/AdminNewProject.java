@@ -7,6 +7,7 @@ import entities.ListStatus;
 import entities.Projects;
 import helpers.ApplicationHelper;
 import helpers.PersistenceHelper;
+import helpers.SessionHelper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -96,9 +97,9 @@ public class AdminNewProject {
                 ApplicationHelper.redirect("/admin/project/new.xhtml?cid=" + cid, valid);
             }
             /////////
-
+            Admins admin = (Admins) SessionHelper.getSessionMap().get("admin");
             Projects project = new Projects();
-            project.setAdminId(new Admins(1)); //will change when finish admin filter
+            project.setAdminId(admin); //will change when finish admin filter
             project.setImgId(uploadImg);
             project.setContractId(contract);
             project.setTitle(title);

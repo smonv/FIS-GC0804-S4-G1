@@ -23,13 +23,12 @@ public class FilterAdmin implements Filter{
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-//        if(session.getAttribute("admin") == null){
-//            session.setAttribute("msg", "Please log in to access that page!");
-//            res.sendRedirect(req.getContextPath() + "/login-admin.xhtml");
-//        }else{
-//            chain.doFilter(request, response);
-//        }
-        chain.doFilter(request, response);
+        if (session.getAttribute("admin") == null) {
+            session.setAttribute("msg", "Please log in to access that page!");
+            res.sendRedirect(req.getContextPath() + "/login-admin.xhtml");
+        } else {
+            chain.doFilter(request, response);
+        }
     }
 
     @Override
