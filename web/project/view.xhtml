@@ -37,22 +37,13 @@
                             <div id="blog-post-carousel" class="carousel slide blog-carousel" data-ride="carousel">
 
                                 <!-- Wrapper for slides -->
-                                <div class="carousel-inner">
-
-                                    <ui:repeat value="#{adminViewProject.project.imgId.productImagesList}" var="pi"
-                                               rendered="#{adminViewProject.project.imgId.productImagesList.size() gt 0}">                               
-                                        <div class="item 
-                                             #{adminViewProject.project.imgId.productImagesList.indexOf(pi) != 0 ? null:'active'}">
+                                <div class="carousel-inner">                           
+                                        <div class="item active">
                                             <a href="#"><h:graphicImage 
-                                                    value="/image/#{pi.imgId.imgPath}" 
+                                                    value="/image/#{adminViewProject.project.imgId.imgPath}" 
                                                     styleClass="img-responsive" style="max-height: 336px"/></a>
                                         </div>
-                                    </ui:repeat>
-                                    <c:if test="#{adminViewProject.project.imgId.productImagesList.size() == 0}">
-                                        <div class="item active">
-                                            <a href=""><h:graphicImage value="#{resource['client/img/products/demo.jpg']}" styleClass="img-responsive"/></a>
-                                        </div>
-                                    </c:if>
+                                
                                 </div>
 
                                 <!-- Controls -->
@@ -105,16 +96,13 @@
                     </div>
                 </div>
                 <div class="row" style="border-bottom:dashed 1px rgb(221, 221, 221); padding-bottom: 10px">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="rich-text cf">
                             <h:outputText value="#{adminViewProject.project.content}" />
                         </div>
 
                     </div>
-                    <div class="col-md-6">
-                        <h:graphicImage value="/image/#{adminViewProject.project.imgId.imgPath}" library="client" alt="" style="width: 100%"/>
-
-                    </div>
+            
                 </div>
 
                 <style>
