@@ -41,14 +41,21 @@
 
                     <p style="margin-top: 0px; width: 100%; height: 25px; border-bottom:solid 1px #ebebeb; padding-left: 10px">
                         Images 
-                    </p>
-                    <ui:repeat value="#{adminEditImageProduct.product.productImagesList}" var="pi"
-                               rendered="#{adminEditImageProduct.product.productImagesList.size() gt 0}">                               
-
-                        <h:form>
-                            <h:commandButton value="Remove" action="#{adminEditImageProduct.upload()}" class="btn btn-primary remove-btn-box"/>
+                    </p> 
+                    <h:form>
+                    <h:dataTable class="table table-bordered datatable" binding="#{adminEditImageProduct.dataTable}"
+                                 value="#{adminEditImageProduct.product.productImagesList}" var="img">
+                        <h:column>
+                            <f:facet name="header">Image</f:facet>
+                            <h:graphicImage value="/image/#{img.imgId.imgPath}" style="width: 300px; height: 300px"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Command</f:facet>
+                            <h:commandButton value="Remove" action="#{adminEditImageProduct.remove()}"
+                                             class="btn btn-primary" />
+                        </h:column>
+                    </h:dataTable>
                         </h:form>
-                    </ui:repeat>
                 </div>
 
             </div>             

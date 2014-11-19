@@ -12,6 +12,7 @@ import java.io.InputStream;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlDataTable;
 import javax.servlet.http.Part;
 import models.ImageModel;
 import models.ProductImageModel;
@@ -33,6 +34,7 @@ public class AdminEditImageProduct {
     private int currentPid;
     private Products product;
     private Part upload_img;
+    private HtmlDataTable dataTable;
     //view params
     private String pid;
 
@@ -111,7 +113,32 @@ public class AdminEditImageProduct {
             }
         }
         ApplicationHelper.redirect("/admin/product/edit_image.xhtml?pid=" + product.getPid(), true);
-        return;
+    }
+
+    public void remove() {
+        ProductImages pi = (ProductImages) dataTable.getRowData();
+        Images img = pi.getImgId();
+        String fileName = img.getImgPath();
+        String uploadDir = ApplicationHelper.getExternalContext().getInitParameter("uploadDirectory");
+        String uploadImgDir = uploadDir + "/images";
+        File uploadedImg = new File(uploadImgDir + "/" + fileName);
+
+        boolean removePi = productImageModel.remove(pi);
+        if (removePi) {
+            boolean removeImg = imageModel.remove(img);
+            if (removeImg) {
+                if (uploadedImg.exists()) {
+                    uploadedImg.delete();
+                    ApplicationHelper.addMessage("Image removed!");
+                }
+            } else {
+                ApplicationHelper.addMessage("Failed to remove image!");
+            }
+        } else {
+            ApplicationHelper.addMessage("Failed to remove image!");
+        }
+        
+        ApplicationHelper.redirect("/admin/product/edit_image.xhtml?pid=" + pid, true);
     }
 
     private String getFilename(Part part) {
@@ -163,5 +190,13 @@ public class AdminEditImageProduct {
 
     public void setUpload_img(Part upload_img) {
         this.upload_img = upload_img;
+    }
+
+    public HtmlDataTable getDataTable() {
+        return dataTable;
+    }
+
+    public void setDataTable(HtmlDataTable dataTable) {
+        this.dataTable = dataTable;
     }
 }
