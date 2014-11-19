@@ -84,7 +84,7 @@
             <br/>
             <div >
                 <h:link outcome="list" value="Previous"  class="btn btn-default btn-sm btn-icon icon-left"
-                        rendered="#{adminfeedbackShowBean.totalfeedback gt adminfeedbackShowBean.pageSize and adminfeedbackShowBean.page gt 0}">
+                        rendered="#{(adminfeedbackShowBean.current_page - 1) gt 0}">
                     <f:param name="page" value="#{adminfeedbackShowBean.current_page - 1}"/>
                     
                 </h:link>

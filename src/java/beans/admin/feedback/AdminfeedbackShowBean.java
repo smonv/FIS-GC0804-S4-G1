@@ -34,7 +34,7 @@ public class AdminfeedbackShowBean {
      * Creates a new instance of FeedBackShowBean
      */
     private int pageSize = 2;
-    private int current_page = 1;
+    private int current_page = 0;
     
     private List<Feedbacks> feedbacks;
     private HtmlDataTable feedbackTable;
