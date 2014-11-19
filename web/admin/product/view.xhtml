@@ -19,7 +19,9 @@
                     <p>Created at: <h:outputText value="#{adminViewProduct.product.createAt}" /></p>
                 </div>
                 <div class="row">
-                    <h:link value="Edit" outcome="#" class="btn btn-primary" />
+                    <h:link value="Edit" outcome="/admin/product/edit.xhtml" class="btn btn-primary">
+                        <f:param name="pid" value="#{adminViewProduct.pid}" />
+                    </h:link>
                     &nbsp;
                     <h:link value="Edit Informations" outcome="/admin/product/edit_information.xhtml?pid=#{adminViewProduct.pid}"
                             class="btn btn-primary" />&nbsp;
