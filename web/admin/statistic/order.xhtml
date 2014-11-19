@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
             <f:viewParam name="page" value="#{orderStatistic.page}" />
@@ -13,136 +14,141 @@
         </f:metadata>
         <ui:define name="title">Order Statistics</ui:define>
         <ui:define name="content">
-            <h1 class="margin-bottom">Orders</h1>
-             <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
-                <li>
-                    <h:link outcome="/admin/index.xhtml"><i class="entypo-home"></i>Home</h:link>
-                </li>
-                <li>
-                    Statistic
-                </li>
-                <li class="active">
-                    <strong>Order</strong>
-                </li>
-            </ol>
-                <div class="form-group">
-                    <input type="text" id="input_number" style="width: 250px; height: 28px"/>
-                    <button id="filter_number" class="btn btn-sm btn-primary">Filter Number</button>
+            <div class="container-fluid">
+                <div class="row">
+                    <h1 class="margin-bottom">Orders</h1>
+                    <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
+                        <li>
+                            <h:link outcome="/admin/index.xhtml"><i class="entypo-home"></i>Home</h:link>
+                        </li>
+                        <li>
+                            Statistic
+                        </li>
+                        <li class="active">
+                            <strong>Order</strong>
+                        </li>
+                    </ol>
                 </div>
-                <div class="form-group">
-                    <select id="input_status" style="width: 250px; height: 28px">
-                        <option value="0"> Select Status</option>
-                        <ui:repeat value="#{orderStatistic.getAllStatus()}" var="status">
-                            <option value="#{status.lsid}">#{status.name}</option>
-                        </ui:repeat>
-                    </select>
-                    <button id="filter_status" class="btn btn-sm btn-primary" style="width: 88px;">Filter Status</button>
-                </div>
-                <div class="form-group">
-                    <button id="filter_clear" class="btn btn-sm btn-primary">Clear Filter</button>
-                </div>
-                <h:form>
-                    <div class="table-responsive">
-                        <h:dataTable class="table table-bordered datatable" id="order_table" 
-                                     value="#{orderStatistic.orders}" var="order"
-                                     binding="#{orderStatistic.orders_table}"
-                                     >
-                            <h:column>
-                                <f:facet name="header">Client</f:facet>
-                                <h:outputText value="#{order.clientId.name}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Order Number</f:facet>
-                                <h:outputText value="#{order.number}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Status</f:facet>
-                                <h:outputText value="#{order.orderStatus.name}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Products</f:facet>
-                                <h:outputText value="#{order.orderProductDetailsList.size()}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Total Price</f:facet>
-                                <h:outputText value="$ #{orderStatistic.getTotalOrderCost(order.orderProductDetailsList)}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Create Date</f:facet>
-                                <h:outputText value="#{orderStatistic.formatDate(order.createAt)}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Command</f:facet>
-                                <h:link value="Detail" 
-                                        outcome="/admin/order/view.xhtml?number=#{order.number}" 
-                                        class="btn btn-primary"/> 
-                                &nbsp;
-
-                            </h:column>
-                        </h:dataTable>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <input id="filter_number" class="form-control" placeholder="Order Number" />
+                        </div>
                     </div>
-                </h:form>
-    
-            <div class="row">
-                <h:link value="Previous" 
-                        outcome="/admin/statistic/order.xhtml"
-                        rendered="#{orderStatistic.totalOrders gt orderStatistic.pageSize and orderStatistic.page gt 1}"
-                        class="btn btn-primary"
-                        >
-                    <f:param name="page" value="#{orderStatistic.current_page - 1}" />
-                </h:link>
-                &nbsp;&nbsp;
-                <h:link value="Next"
-                        outcome="/admin/statistic/order.xhtml"
-                        rendered="#{orderStatistic.totalOrders gt orderStatistic.pageSize
-                                    and (orderStatistic.current_page) * orderStatistic.pageSize lt orderStatistic.totalOrders}"
-                        class="btn btn-primary"
-                        >
-                    <f:param name="page" value="#{orderStatistic.current_page + 1}" />
-                </h:link>
-                &nbsp;&nbsp;
-                <h:outputText value="Page: #{orderStatistic.current_page}/#{orderStatistic.getTotalPages()}" />
-            </div> <div style="height: 300px"></div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <select id="filter_status" class="form-control">
+                                <option value="0">All Status</option>
+                                <ui:repeat value="#{orderStatistic.getAllStatus()}" var="status">
+                                    <option value="#{status.lsid}">#{status.name}</option>
+                                </ui:repeat>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <button id="filter_button" class="btn btn-primary">Filter</button>
+                            <button id="filter_clear" class="btn btn-primary">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h:form>
+                        <div class="table-responsive">
+                            <h:dataTable class="table table-bordered datatable" id="order_table" 
+                                         value="#{orderStatistic.orders}" var="order"
+                                         binding="#{orderStatistic.orders_table}"
+                                         >
+                                <h:column>
+                                    <f:facet name="header">Client</f:facet>
+                                    <h:outputText value="#{order.clientId.name}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Order Number</f:facet>
+                                    <h:outputText value="#{order.number}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Status</f:facet>
+                                    <h:outputText value="#{order.orderStatus.name}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Products</f:facet>
+                                    <h:outputText value="#{order.orderProductDetailsList.size()}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Total Price</f:facet>
+                                    <h:outputText value="$ #{orderStatistic.getTotalOrderCost(order.orderProductDetailsList)}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Create Date</f:facet>
+                                    <h:outputText value="#{orderStatistic.formatDate(order.createAt)}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Command</f:facet>
+                                    <h:link value="Detail" 
+                                            outcome="/admin/order/view.xhtml?number=#{order.number}" 
+                                            class="btn btn-primary"/> 
+                                    &nbsp;
+
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                    </h:form>
+                </div>
+                <div class="row">
+                        <h:link value="Previous" 
+                                outcome="/admin/statistic/order.xhtml"
+                                rendered="#{(orderStatistic.current_page - 1) gt 0}"
+                                class="btn btn-primary"
+                                >
+                            <f:param name="page" value="#{orderStatistic.current_page - 1}" />
+                        </h:link>
+                        &nbsp;&nbsp;
+                        <h:outputText value="Page: #{orderStatistic.current_page} / #{orderStatistic.totalPages}" />
+                        &nbsp;&nbsp;
+                        <h:link value="Next"
+                                outcome="/admin/statistic/order.xhtml"
+                                rendered="#{(orderStatistic.current_page + 1) lt (orderStatistic.totalPages + 1)}"
+                                class="btn btn-primary"
+                                >
+                            <f:param name="page" value="#{orderStatistic.current_page + 1}" />
+                        </h:link>
+                </div> 
+            </div>
             <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function () {
                     ////set filter value for component;
                     ////filter number;
                     var param_number = GetURLParameter("number");
-                    if(param_number){
-                        $("#input_number").val(param_number);
+                    if (param_number) {
+                        $("#filter_number").val(param_number);
                     }
                     //filter status
                     var param_status = GetURLParameter("status");
-                    if(param_status){
-                        $("#input_status").val(param_status);
+                    if (param_status) {
+                        $("#filter_status").val(param_status);
                     }
-                    
-                    ////////
-                    $("#filter_number").click(function (event) {
+
+                    var url = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml";
+                    var filter_item = {};
+                    $("#filter_button").click(function (event) {
                         event.preventDefault();
-                        var input_number = $("#input_number").val();
-                        
-                        if (input_number !== "") {
-                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml?number=" + input_number;
-                        } else {
-                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml";
+
+                        var filter_number = $("#filter_number").val();
+                        if (filter_number) {
+                            filter_item["number"] = filter_number;
                         }
-                    });
-                    $("#filter_status").click(function (event) {
-                        event.preventDefault();
-                        var input_status = $("#input_status").find(":selected").val();
-                        
-                        if (input_status == 0) {
-                            alert("Please select one status!")
-                        } else {
-                            window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml?status=" + input_status;
+                        var filter_status = $("#filter_status").find(":selected").val();
+                        if (filter_status > 0) {
+                            filter_item["status"] = filter_status;
                         }
+                        createNewUrlAndRedirect(url, filter_item);
                     });
 
                     $("#filter_clear").click(function (event) {
                         event.preventDefault();
-                        window.location.href = "#{facesContext.externalContext.requestContextPath}/admin/statistic/order.xhtml";
+                        createNewUrlAndRedirect(url, filter_item);
                     });
                 });
             </script>

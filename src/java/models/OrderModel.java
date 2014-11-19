@@ -1,18 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package models;
 
 import entities.Clients;
 import entities.ListStatus;
 import entities.Orders;
 import helpers.ApplicationHelper;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 @Stateless
 public class OrderModel {
@@ -35,10 +36,37 @@ public class OrderModel {
         return orders;
     }
 
-    public List<Orders> getAll(int page, int pageSize) {
+    public List<Orders> getAll(int page, int pageSize, String number, ListStatus status) {
         int startIndex = page * pageSize;
-        List<Orders> orders = em.createNamedQuery("Orders.findAll").setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
-        return orders;
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Orders> query = cb.createQuery(Orders.class);
+        Root<Orders> o = query.from(Orders.class);
+        query.select(o);
+        List<Predicate> predicates = new ArrayList<>();
+        if (number != null) {
+            predicates.add(cb.like(o.get("number"), "%" + number + "%"));
+        }
+        if (status != null) {
+            predicates.add(cb.equal(o.get("orderStatus"), status));
+        }
+        query.where(predicates.toArray(new Predicate[]{}));
+        return em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+    }
+
+    public long countAll(String number, ListStatus status) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Orders> o = query.from(Orders.class);
+        query.select(cb.count(o.get("oid")));
+        List<Predicate> predicates = new ArrayList<>();
+        if (number != null) {
+            predicates.add(cb.like(o.get("number"), "%" + number + "%"));
+        }
+        if (status != null) {
+            predicates.add(cb.equal(o.get("orderStatus"), status));
+        }
+        query.where(predicates.toArray(new Predicate[]{}));
+        return em.createQuery(query).getSingleResult();
     }
 
     public long getTotalOrder() {

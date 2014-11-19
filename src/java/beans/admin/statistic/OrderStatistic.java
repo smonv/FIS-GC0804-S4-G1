@@ -36,8 +36,8 @@ public class OrderStatistic {
     private List<Orders> orders;
     private int current_page = 1;
     private int pageSize = 10;
-    private long totalOrders;
-
+    private long totalOrders = 0;
+    private long totalPages = 0;
     //bean param
     private String page;
     private String number;
@@ -47,28 +47,12 @@ public class OrderStatistic {
     }
 
     public void init() {
-        current_page = ApplicationHelper.getCurrentPage(page);
-        if (number == null && status == null) {
-            orders = orderModel.getAll(current_page - 1, pageSize);
-            totalOrders = orderModel.getTotalOrder();
-        } else if (number != null && status == null) {
-            orders = orderModel.getListByNumber(number, current_page - 1, pageSize);
-            totalOrders = orders.size();
-        } else if (status != null && number == null) {
-
-            int sid = 0;
-            if (!ApplicationHelper.isInteger(status)) {
-                ApplicationHelper.redirect("/404.xhtml", true);
-                return;
-            }
-            sid = Integer.parseInt(status);
-            ListStatus status = listStatusModel.getById(sid);
-            if (status == null) {
-                ApplicationHelper.redirect("/404.xhtml", true);
-            }
-            orders = orderModel.getListByStatus(status, current_page - 1, pageSize);
-            totalOrders = orderModel.getCountByStatus(status);
-        }
+        current_page = ApplicationHelper.isInteger(page) ? Integer.parseInt(page) : 1;
+        int currentStatus = ApplicationHelper.isInteger(status) ? Integer.parseInt(status) : 0;
+        ListStatus filterStatus = listStatusModel.getById(currentStatus);
+        orders = orderModel.getAll(current_page - 1, pageSize, number, filterStatus);
+        totalOrders = orderModel.countAll(number, filterStatus);
+        totalPages = (totalOrders % pageSize) != 0 ? totalOrders / pageSize + 1 : totalOrders / pageSize;
     }
 
     public String getStatus() {
@@ -98,19 +82,12 @@ public class OrderStatistic {
         return totalCost;
     }
 
-    public int getTotalPages() {
-        int pages = 0;
-        long totalPages = totalOrders / pageSize;
-        pages = totalPages > (int) totalPages ? ((int) totalPages) + 1 : (int) totalPages;
-        pages = pages == 0 ? 1 : pages;
-        return pages;
-    }
-    
     public List<ListStatus> getAllStatus(){
         return listStatusModel.getAll();
     }
-    
-    public String formatDate(Date date){
+   
+
+    public String formatDate(Date date) {
         return ApplicationHelper.formatDate(date, "dd/MM/yyyy");
     }
 
@@ -169,6 +146,14 @@ public class OrderStatistic {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public long getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(long totalPages) {
+        this.totalPages = totalPages;
     }
 
 }
