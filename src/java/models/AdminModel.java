@@ -76,6 +76,18 @@ public class AdminModel {
         query.where(predicates.toArray(new Predicate[]{}));
 
         return em.createQuery(query).getSingleResult();
+    }
 
+    public boolean update(Admins admin) {
+        try {
+            if (em.find(Admins.class, admin.getAid()) != null) {
+                em.merge(admin);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
