@@ -7,7 +7,7 @@
     <ui:composition template="/templates/admin/layout.xhtml">
         <f:metadata>
             <f:viewParam name="pid" value="#{adminViewProject.pid}" />
-            <f:viewAction action="#{adminViewProject.init()}" />
+            <f:viewAction action="#{adminViewProject.init()}" onPostback="true"/>
         </f:metadata>
         <ui:define name="title">Project details</ui:define>
         <ui:define name="content">
@@ -43,7 +43,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <h:outputLabel value="Start At" />
-                                <h:inputText value="#{adminViewProject.formatDate(adminViewProject.project.createAt)}" class="form-control"
+                                <h:inputText value="#{adminViewProject.formatDate(adminViewProject.project.startAt)}" class="form-control"
                                              required="true"  disabled="true"/>
                             </div>
 
@@ -56,13 +56,6 @@
                                 <h:outputLabel value="Status" />
                                 <h:inputText value="#{adminViewProject.project.projectStatus.name}" class="form-control"
                                              required="true" disabled="true">
-                                </h:inputText>
-                            </div>
-                            <div class="form-group">
-                                <h:outputText value="Updated At" />
-                                <h:inputText value="#{adminViewProject.project.updateAt}" class="form-control"
-                                             disabled="true">
-
                                 </h:inputText>
                             </div>
                             <div class="form-group">

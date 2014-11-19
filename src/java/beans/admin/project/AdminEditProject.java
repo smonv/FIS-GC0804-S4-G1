@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
@@ -22,7 +21,7 @@ import models.ListStatusModel;
 import models.ProjectModel;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class AdminEditProject {
 
     @EJB
@@ -72,14 +71,7 @@ public class AdminEditProject {
         startDate = ApplicationHelper.parseDate(startAt, "dd-MM-yyyy");
         endDate = ApplicationHelper.parseDate(endAt, "dd-MM-yyyy");
         Date currentDate = PersistenceHelper.getCurrentTime();
-        if (startDate.compareTo(currentDate) < 0) {
-            ApplicationHelper.addMessage("Start date must be after current time!");
-            valid = false;
-        }
-        if (endDate.compareTo(currentDate) < 0) {
-            ApplicationHelper.addMessage("End date must be after current time!");
-            valid = false;
-        }
+
         if (startDate.compareTo(endDate) > 0) {
             ApplicationHelper.addMessage("Start date must be before end date!");
             valid = false;
