@@ -84,6 +84,7 @@ public class AdminEditProject {
             project.setTitle(title);
             project.setContent(content);
             project.setIsPublic(isPublic);
+            project.setProjectStatus(new ListStatus(statusId));
             if (uploadImage != null) {
                 project.setImgId(uploadImage);
             }

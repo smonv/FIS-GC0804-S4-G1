@@ -14,6 +14,7 @@ import models.ProjectModel;
 @ManagedBean
 @RequestScoped
 public class AdminIndexProject {
+
     @EJB
     private ListStatusModel listStatusModel;
 
@@ -28,10 +29,11 @@ public class AdminIndexProject {
     }
 
     public void init() {
-        projects = projectModel.getAll();
+        ListStatus status = new ListStatus(3);
+        projects = projectModel.getAll(true, status);
     }
-    
-    public List<ListStatus> getListStatus(){
+
+    public List<ListStatus> getListStatus() {
         return listStatusModel.getAll();
     }
 

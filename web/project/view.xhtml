@@ -66,20 +66,13 @@
                                 <h:outputText value="#{adminViewProject.project.title}" style="font-weight: 900;font-size: 24px;" />
                             </li>
 
-
-                            <li>
-                                <p>Created:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <h:outputText value="#{adminViewProject.project.createAt}" /></p> 
-
-                            </li>
-
                             <li>
                                 <p>Start At :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <h:outputText value="#{adminViewProject.project.startAt}" /></p>
+                                    <h:outputText value="#{adminViewProject.formatDate(adminViewProject.project.startAt)}" /></p>
                             </li>
                             <li>
                                 <p>End At :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <h:outputText value="#{adminViewProject.project.endAt}" /></p>
+                                    <h:outputText value="#{adminViewProject.formatDate(adminViewProject.project.endAt)}" /></p>
                             </li>
 
                             <li>
