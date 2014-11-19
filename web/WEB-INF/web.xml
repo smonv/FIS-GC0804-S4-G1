@@ -43,7 +43,7 @@
     </mime-mapping>
     <context-param>
         <param-name>uploadDirectory</param-name>
-        <param-value>E:\Workspace\uploads</param-value>
+        <param-value>D:\hoc tap\Eproject-FGR-Sem4\Data1</param-value>
     </context-param>
     <filter>
         <filter-name>FilterClient</filter-name>
