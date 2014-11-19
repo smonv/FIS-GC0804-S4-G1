@@ -14,32 +14,21 @@
         <ui:define name="content">
             <div class="container-fluid">
                 <div class="row">
-<<<<<<< HEAD
-                    <h:messages style="list-style: none; padding: 0px; color: red"/>
-                    <p>Preview</p>
-                    <img id="uploadPreview" style="width: 555px; height: auto; max-height: 336px;border: solid 1px #cccccc; margin-bottom: 15px" />
-                    <br/>
-                    <h:form enctype="multipart/form-data">
-                        <h:inputFile value="#{adminEditImageProduct.upload_img}" id="uploadImage" class="form-control"  onchange="PreviewImage();" style="width: 555px; background: #ebebeb; border: none">
-                            <f:validator validatorId="imageValidator" />
-                        </h:inputFile>
-                        <br/>
-                        <h:commandButton value="Upload"  action="#{adminEditImageProduct.upload()}" class="btn btn-primary"/>
-                        &nbsp;
-                        <h:link value="Back" outcome="/admin/product/view.xhtml">
-                            <f:param name="pid" value="#{adminEditImageProduct.pid}" />
-                        </h:link>
-                    </h:form>
-=======
-                    <div class="col-lg-6 col-md-6">
+                    <h1>Products Image</h1>
+                    <div class="col-lg-6 col-md-6"  style="border: solid 1px #ebebeb; padding: 10px 0 10px 0; margin-top: 20px; padding-left:0px;text-align: center">
 
-                        <h:messages style="list-style: none; padding: 0px; color: red"/>
+                        <p style="margin-top: 0px; width: 100%; height: 25px; border-bottom:solid 1px #ebebeb; padding-left: 10px;text-align: left">
+                            Preview
+                        </p>
+                        <img id="uploadPreview" style="width: 98%;min-height: 270px;max-height: 300px;border: solid 2px #cccccc; margin-bottom: 15px; background: #697277; border-color: rgb(244,244,244); " />
 
-                        <h:form enctype="multipart/form-data">
-                            <h:inputFile value="#{adminEditImageProduct.upload_img}" id="uploadImage" class="form-control"  onchange="PreviewImage();">
+                        <h:form enctype="multipart/form-data" style="text-align: left">
+                            <h:inputFile value="#{adminEditImageProduct.upload_img}" id="uploadImage" class="form-control"  onchange="PreviewImage();" style="border-radius:0px">
                                 <f:validator validatorId="imageValidator" />
                             </h:inputFile>
                             <br/>
+                            <h:messages style="list-style: none; padding-left: 15px;color: red"/>
+                            &nbsp;&nbsp;&nbsp;
                             <h:commandButton value="Upload"  action="#{adminEditImageProduct.upload()}" class="btn btn-primary"/>
                             &nbsp;
                             <h:link value="Back" outcome="/admin/product/view.xhtml">
@@ -47,35 +36,31 @@
                             </h:link>
                         </h:form>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <img id="uploadPreview" style="height: auto; max-height: 300px;border: solid 2px #cccccc; margin-bottom: 15px" />
-                    </div>
->>>>>>> origin/master
                 </div>
-                <div class="row" style="border: solid 1px #ebebeb; padding: 10px 0 10px 0; margin-top: 20px">
-                    <p style="margin-top: 0px; width: 100%; height: 25px; border-bottom:solid 1px #ebebeb; padding-left: 10px">
-                        Images 
-                    </p>
-                    <ui:repeat value="#{adminEditImageProduct.product.productImagesList}" var="pi"
-                               rendered="#{adminEditImageProduct.product.productImagesList.size() gt 0}">                               
-                        <div class="col-md-2
-                             #{adminEditImageProduct.product.productImagesList.indexOf(pi) != 0 ? null:'active'}" style="padding:1px; min-height: 170px">
-                            <h:graphicImage 
-                                value="/image/#{pi.imgId.imgPath}" 
-                                styleClass="img-responsive" style="width: 100%; height: 100%; position: absolute"/>
+                <div class="row" style="border: solid 1px #ebebeb; padding: 10px 0 10px 0;padding-left:0px;margin-top:20px">
+                     
+                  <p style="margin-top: 0px; width: 100%; height: 25px; border-bottom:solid 1px #ebebeb; padding-left: 10px">
+                            Images 
+                        </p>
+                        <ui:repeat value="#{adminEditImageProduct.product.productImagesList}" var="pi"
+                                   rendered="#{adminEditImageProduct.product.productImagesList.size() gt 0}">                               
+                            <div class="col-md-3
+                                 #{adminEditImageProduct.product.productImagesList.indexOf(pi) != 0 ? null:'active'}" style="padding: 0;min-height: 150px">
+                                <h:graphicImage 
+                                    value="/image/#{pi.imgId.imgPath}" 
+                                    styleClass="img-responsive" style="width: 100%; height: 100%; position: absolute;"/>
 
-                            <h:form>
-                                <h:commandButton value="Remove" action="#{adminEditImageProduct.upload()}" class="btn btn-primary remove-btn-box"/>
-                            </h:form>
-                        </div>
-                    </ui:repeat>
-
+                                <h:form>
+                                    <h:commandButton value="Remove" action="#{adminEditImageProduct.upload()}" class="btn btn-primary remove-btn-box"/>
+                                </h:form>
+                            </div>
+                        </ui:repeat>
                 </div>
             </div>                
             <script type="text/javascript">
                 function PreviewImage() {
                     var oFReader = new FileReader();
-                    oFReader.readAsDataURL(document.getElementById("j_idt80:uploadImage").files[0]);
+                    oFReader.readAsDataURL(document.getElementById("j_idt84:uploadImage").files[0]);
 
                     oFReader.onload = function (oFREvent) {
                         document.getElementById("uploadPreview").src = oFREvent.target.result;
@@ -84,10 +69,10 @@
             </script>
             <style>
                 .col-md-2:hover{
-                   
+
                 }
                 .remove-btn-box{
-                    bottom: 0px;
+                    bottom: -1px;
                     width: 100%;
                     height: 30px;
                     background: black;
@@ -98,8 +83,9 @@
                     left: 0;
                     display: none;
                     border-radius: 0px;
+
                 }
-                .col-md-2:hover > form> .remove-btn-box{
+                .col-md-3:hover > form> .remove-btn-box{
                     display: block;
                 }
             </style>
