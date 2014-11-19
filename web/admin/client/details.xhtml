@@ -10,35 +10,102 @@
             <f:viewParam name="cid" value="#{clientShowBean.cid}" />
             <f:viewAction action="#{clientShowBean.init()}" />
         </f:metadata>
+        <ui:define name="title">Client detail</ui:define>
         <ui:define name="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>Client: <h:outputText value="#{clientShowBean.acc.username}" /></h1>
+                    <br/>
+                    <h:messages class="messages"/>
+                </div>
+                <div class="row">
+                    <h:form>
+                        <div class="col-lg-6" >
 
-            <div class="page-title">
-                <h1>Client: <h:outputText value="#{clientShowBean.cid}" /></h1>
-                <br/>
-                <span><strong>UserName: </strong><h:outputText value="#{clientShowBean.acc.username}" style="color: red"/></span>
-                <h:messages class="messages"/>
-            </div>
-            <div class="row">
+                            <strong>Name:</strong><br />
+                            <h:inputText value=" #{clientShowBean.acc.name}" class="form-control"
+                                         required="true"  disabled="true"/>
+                            <br />
+                            <strong>User Name:</strong><br />
+                            <h:inputText value=" #{clientShowBean.acc.username}" class="form-control"
+                                         required="true"  disabled="true"/>
+                            <br />
+                            <strong>Email:</strong><br />
+                            <h:inputText value=" #{clientShowBean.acc.email}" class="form-control"
+                                         required="true"  disabled="true"/>
+                            <br />
+                            <strong>Address: </strong><br />
+                            <h:inputTextarea value="#{clientShowBean.acc.clientAddress}" class="form-control"
+                                             required="true"  disabled="true" rows="2"/>
 
-                <div class="container">
-                    <div class="col-lg-6" style="border: solid 1px #E7E7E7; width: 100%">
-                        <span style="position: absolute; background: white; top: -15px">Information</span>
-                        <br/>
-                        <strong>Contact Details: </strong> <h:outputText value="#{clientShowBean.acc.contactDetails}" />
-                        <br />
-                        <strong>Company : </strong><h:outputText value="#{clientShowBean.acc.companyName}" />
-                        <br />
-                        <strong>Address: </strong><h:outputText value="#{clientShowBean.acc.clientAddress}" />
-                        <br />
-                        <strong>Email:</strong><h:outputText value=" #{clientShowBean.acc.email}" />
-                        <br />
-                        
-                    </div>
 
-                    
+
+                        </div>
+                        <div class="col-lg-6" >
+
+                            <strong>Contact Details: </strong><br />
+                            <h:inputTextarea value="#{clientShowBean.acc.contactDetails}" class="form-control"
+                                             required="true"  disabled="true" rows="5"/>
+                            <br />
+                            <strong>Company : </strong><br />
+                            <h:inputTextarea value="#{clientShowBean.acc.companyName}" class="form-control"
+                                             required="true"  disabled="true" rows="5"/>
+                            <br />
+                        </div>
+                        <div class="col-lg-12" >
+
+                            <strong>List Ordered: </strong><br />
+                            <ul class="ul-pview">
+                                <li class="li-title">Order Number</li>
+                                <li class="li-title">Created At</li>
+                                <li class="li-title">Status</li>
+                                <li class="li-title">Command</li>
+                            </ul>
+
+
+                            <ui:repeat value="#{clientShowBean.acc.ordersList}" var="pi"
+                                       rendered="#{clientShowBean.acc.ordersList.size() gt 0}">  
+                                <ul class="ul-pview">
+                                    <li class="li-info">#{pi.number}</li>
+                                    <li class="li-info">#{pi.createAt}</li>
+                                    <li class="li-info">#{pi.orderStatus.name}</li>
+                                    <li class="li-info" style="padding-top: 0; padding-bottom: 1px;"><h:link value="View" 
+                                        outcome="/admin/order/view.xhtml?number=#{pi.number}" 
+                                        class="btn btn-primary"/> 
+                                    </li>
+                                </ul>
+                            </ui:repeat>
+
+
+                        </div>
+                    </h:form>
                 </div>
             </div>
             <div style="height: 50px"></div>
+            <style>
+                .ul-pview{
+                    margin: 0px;
+                    padding: 0px;
+                    width: 100%;
+
+                }
+                .ul-pview>li{
+                    float: left;
+                    list-style: none;
+                    font-size: 13px;
+                    padding: 7px;
+                    border:solid 1px #dadada;
+                }
+                .li-info{
+                    width: 25%;
+                }
+                .li-title{
+                    background: #efefef;
+                    width: 25%;
+                }
+
+
+            </style>
         </ui:define>
     </ui:composition>
 </html>
