@@ -7,6 +7,7 @@ package beans.admin.user;
 
 import entities.Admins;
 import helpers.ApplicationHelper;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -46,6 +47,10 @@ public class AdminShowIndex {
         } else {
             totalPage = totalUser % pageSize;
         }
+    }
+    
+    public String formatDate(Date date) {
+        return ApplicationHelper.formatDate(date, "dd/MM/yyyy");
     }
     
     ///SET GET

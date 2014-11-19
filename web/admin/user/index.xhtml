@@ -16,7 +16,7 @@
         <ui:define name="content">
             <div class="container-fluid">
                 <div class="row">
-                    <h1>Product List</h1>
+                    <h1>Admin List</h1>
                 </div>
                 <div class="row" id="filter">
                     <div class="col-lg-1 col-md-1">
@@ -43,7 +43,7 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Create at</f:facet>
-                            <h:outputText value="$ #{user.createAt}" />
+                            <h:outputText value="#{adminShowIndex.formatDate(user.createAt)}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">Command</f:facet>
