@@ -88,6 +88,8 @@ public class AdminEditProject {
             if (uploadImage != null) {
                 project.setImgId(uploadImage);
             }
+            project.setStartAt(startDate);
+            project.setEndAt(endDate);
             project.setUpdateAt(PersistenceHelper.getCurrentTime());
             boolean result = projectModel.update(project);
             if (result) {
