@@ -26,16 +26,21 @@
                                 </div></div>
                             <!-- tp-banner --><div class="col-sm-3">
                                 <h:form id="loginForm">
-                                    <h:outputLabel for="username" value="Username: "/>
-                                    <h:inputText class="form-control" id="username" value="#{authenticationBean.username}" />
-                                    <h:outputLabel for="password" value="Password: "/>
-                                    <h:inputSecret class="form-control" id="password" value="#{authenticationBean.password}" />
-                                    <h:commandLink >I can't access my account </h:commandLink>
-                                    <h:commandButton class="btn btn-primary btn-mega btn-block" action="#{authenticationBean.authenticate}" value="Login" />
-                                    <h:messages class="messages"/>
-                                    <c:if test="#{authenticationBean.message != null}">
-                                        <p class="messages"><h:outputText value="#{authenticationBean.message}" /></p>
-                                    </c:if>
+                                    <div class="form-group">
+                                        <h:outputLabel for="username" value="Username: "/>
+                                        <h:inputText class="form-control" id="username" value="#{authenticationBean.username}" />
+                                    </div>
+                                    <div class="form-group">
+                                        <h:outputLabel for="password" value="Password: "/>
+                                        <h:inputSecret class="form-control" id="password" value="#{authenticationBean.password}" />
+                                    </div>
+                                    <div class="form-group">
+                                        <h:commandButton class="btn btn-primary btn-mega btn-block" action="#{authenticationBean.authenticate}" value="Login" />
+                                        <h:messages class="messages"/>
+                                        <c:if test="#{authenticationBean.message != null}">
+                                            <p class="messages"><h:outputText value="#{authenticationBean.message}" /></p>
+                                        </c:if>
+                                    </div>
                                 </h:form>
 
                             </div>
