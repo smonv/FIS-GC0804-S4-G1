@@ -56,12 +56,12 @@
                             <f:facet name="header">Height of Floor</f:facet>
                             <h:inputText value="#{opd.heightOfFloor}" size="5" label="Height of Floor" 
                                          required="true" requiredMessage="Height of Floor is required"
-                                         validatorMessage="Height of Floor minimun value must be 3!"
+                                         validatorMessage="Height of Floor value must be between 2 and 10!"
                                          converter="javax.faces.BigDecimal"
-                                         
+                                         converterMessage="Height of Floor must be number!"
                                          >
-                                <f:convertNumber maxFractionDigits="2" maxIntegerDigits="2" />
-                                <f:validateLongRange minimum="3" />
+                                <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
+                                <f:validateLongRange minimum="2" maximum="10" />
                             </h:inputText>
                         </h:column>
                         <h:column>

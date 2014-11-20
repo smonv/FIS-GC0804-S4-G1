@@ -186,10 +186,11 @@
                                                              rendered="#{viewProduct.mode == null}"
                                                              required="true"
                                                              requiredMessage="Height of floor is required!"
-                                                             validatorMessage="Height of floor min is 3!"
+                                                             validatorMessage="Height of Floor value must be between 2 and 10!"
                                                              converter="javax.faces.BigDecimal"
+                                                             converterMessage="Height of Floor must be number!"
                                                              >
-                                                    <f:validateLongRange minimum="3" />
+                                                    <f:validateLongRange minimum="2" maximum="10" />
                                                     <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
                                                 </h:inputText>
                                                 <h:inputText value="#{orderEditBean.heightOfFloor}" 
@@ -197,10 +198,11 @@
                                                              rendered="#{viewProduct.mode != null and not viewProduct.isAdminMode()}"
                                                              required="true"
                                                              requiredMessage="Height of floor is required!"
-                                                             validatorMessage="Height of floor min is 3!"
+                                                             validatorMessage="Height of Floor value must be between 2 and 10!"
                                                              converter="javax.faces.BigDecimal"
+                                                             converterMessage="Height of Floor must be number!"
                                                              >
-                                                    <f:validateLongRange minimum="3" />
+                                                    <f:validateLongRange minimum="2" maximum="10" />
                                                     <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
                                                 </h:inputText>
                                                 <h:inputText value="#{adminEditProductOrder.heightOfFloor}" 
@@ -208,10 +210,11 @@
                                                              rendered="#{viewProduct.mode != null and viewProduct.isAdminMode()}"
                                                              required="true"
                                                              requiredMessage="Height of floor is required!"
-                                                             validatorMessage="Height of floor min is 3!"
+                                                            validatorMessage="Height of Floor value must be between 2 and 10!"
                                                              converter="javax.faces.BigDecimal"
+                                                             converterMessage="Height of Floor must be number!"
                                                              >
-                                                    <f:validateLongRange minimum="3" />
+                                                    <f:validateLongRange minimum="2" maximum="10" />
                                                     <f:convertNumber maxFractionDigits="2" maxIntegerDigits="16" />
                                                 </h:inputText>
                                             </div>
