@@ -89,15 +89,18 @@
                                 rendered="#{(contractStatistic.currentPage - 1) gt 0}">
                             <f:param value="#{contractStatistic.currentPage - 1}" name="page"/>
                         </h:link>
+                        &nbsp;&nbsp;
+                        <h:outputText value="Page: #{contractStatistic.currentPage} / #{contractStatistic.totalPages}" />
+                        &nbsp;&nbsp;
                         <h:link value="Next" class="btn btn-primary"
                                 outcome="/admin/statistic/contract.xhtml"
-                                rendered="#{(contractStatistic.currentPage + 1) lt contractStatistic.totalPages}">
+                                rendered="#{(contractStatistic.currentPage + 1) lt (contractStatistic.totalPages+1)}">
                             <f:param value="#{contractStatistic.currentPage + 1}" name="page" />
                         </h:link>
                     </c:if>
-                    <h:outputText value="Page: #{contractStatistic.currentPage} / #{contractStatistic.totalPages}" />
+
                 </div>
-            </div> <div style="height: 300px"></div>
+            </div>
             <h:outputScript name="js/custom.js" library="admin" />
             <script type="text/javascript">
                 $(document).ready(function () {
