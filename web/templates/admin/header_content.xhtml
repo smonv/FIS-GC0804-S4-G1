@@ -23,7 +23,10 @@
 
 
                 <li>
-                    <h:outputText value="#{sessionBean.currentAdmin.name}" />
+                    <h:link outcome="/admin/profile/edit.xhtml">
+                        <f:param name="id" value="#{sessionBean.currentAdmin.aid}" />
+                        <h:outputText value="#{sessionBean.currentAdmin.name}" />
+                    </h:link>
                 </li>
 
                 <li class="sep"></li>
