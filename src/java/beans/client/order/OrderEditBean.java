@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans.client.order;
 
 import entities.OrderProductDetails;
@@ -29,10 +24,6 @@ import models.OrderProductDetailModel;
 import models.PaymentTypeModel;
 import models.ProductModel;
 
-/**
- *
- * @author Cu Beo
- */
 @ManagedBean
 @RequestScoped
 public class OrderEditBean {

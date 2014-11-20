@@ -76,7 +76,7 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Contruction Time</f:facet>
-                            <h:outputText value="#{orderCreateBean.getTotalContructionTime(opd)} weeks" style="font-weight: normal;"/>
+                            <h:outputText value="#{orderCreateBean.getTotalContructionTime(opd)} days" style="font-weight: normal;"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">Total</f:facet>
@@ -92,7 +92,7 @@
                         </h:column>
 
                     </h:dataTable>
-                    <h:link value="Add Product " outcome="/client/product/index.xhtml?mode=update" styleClass="btn btn-primary"/>
+                    <h:link value="Add Product " outcome="/product/index.xhtml?mode=update" styleClass="btn btn-primary"/>
                     <br />
 
 
