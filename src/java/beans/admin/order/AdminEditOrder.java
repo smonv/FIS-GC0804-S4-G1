@@ -47,10 +47,6 @@ public class AdminEditOrder {
         if (order == null) {
             ApplicationHelper.redirect("/admin/404.xhtml", true);
         }
-        if (order.getContracts() != null) {
-            ApplicationHelper.addMessage("Order has contract, can't edit now!");
-            ApplicationHelper.redirect("/admin/order/view.xhtml?number=" + order.getNumber(), true);
-        }
         if (!FacesContext.getCurrentInstance().isPostback()) {
             locationName = order.getLocationName();
             locationAddress = order.getLocationAddress();

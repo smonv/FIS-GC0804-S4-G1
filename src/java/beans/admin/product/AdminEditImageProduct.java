@@ -50,69 +50,73 @@ public class AdminEditImageProduct {
     }
 
     public void upload() throws IOException {
-        InputStream inputStream = null;
-        FileOutputStream outputStream = null;
-        int fileSize = (int) upload_img.getSize();
-        String uploadDir = ApplicationHelper.getExternalContext().getInitParameter("uploadDirectory");
-        String uploadImgDir = uploadDir + "/images";
-        File fileUploadDir = new File(uploadImgDir);
+        if (upload_img != null) {
+            InputStream inputStream = null;
+            FileOutputStream outputStream = null;
+            int fileSize = (int) upload_img.getSize();
+            String uploadDir = ApplicationHelper.getExternalContext().getInitParameter("uploadDirectory");
+            String uploadImgDir = uploadDir + "/images";
+            File fileUploadDir = new File(uploadImgDir);
 
-        if (!fileUploadDir.exists()) {
-            fileUploadDir.mkdirs();
-        }
-        String fileName = getFilename(upload_img);
-        File outputFile = new File(uploadImgDir + "/" + fileName);
-        String extension = getFileExtension(outputFile);
-        String newFileName = ApplicationHelper.secureRandomString(8) + ApplicationHelper.secureRandomString(8) + "." + extension;
-        outputFile = new File(uploadImgDir + "/" + newFileName);
+            if (!fileUploadDir.exists()) {
+                fileUploadDir.mkdirs();
+            }
+            String fileName = getFilename(upload_img);
+            File outputFile = new File(uploadImgDir + "/" + fileName);
+            String extension = getFileExtension(outputFile);
+            String newFileName = ApplicationHelper.secureRandomString(8) + ApplicationHelper.secureRandomString(8) + "." + extension;
+            outputFile = new File(uploadImgDir + "/" + newFileName);
 
-        try {
+            try {
 
-            inputStream = upload_img.getInputStream();
-            outputStream = new FileOutputStream(outputFile);
-            byte[] buffer = new byte[fileSize];
-            int bytesRead = 0;
-            while (true) {
-                bytesRead = inputStream.read(buffer);
-                if (bytesRead > 0) {
-                    outputStream.write(buffer, 0, bytesRead);
-                } else {
-                    break;
+                inputStream = upload_img.getInputStream();
+                outputStream = new FileOutputStream(outputFile);
+                byte[] buffer = new byte[fileSize];
+                int bytesRead = 0;
+                while (true) {
+                    bytesRead = inputStream.read(buffer);
+                    if (bytesRead > 0) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    } else {
+                        break;
+                    }
+                }
+            } catch (IOException ex) {
+
+            } finally {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+                if (inputStream != null) {
+                    inputStream.close();
                 }
             }
-        } catch (IOException ex) {
 
-        } finally {
-            if (outputStream != null) {
-                outputStream.close();
-            }
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        }
+            if (outputFile.exists()) {
+                Images image = new Images();
+                image.setImgPath(newFileName);
+                image.setImgSize(fileSize);
+                image.setCreateAt(PersistenceHelper.getCurrentTime());
 
-        if (outputFile.exists()) {
-            Images image = new Images();
-            image.setImgPath(newFileName);
-            image.setImgSize(fileSize);
-            image.setCreateAt(PersistenceHelper.getCurrentTime());
-
-            boolean result = imageModel.create(image);
-            if (result) {
-                ProductImages pi = new ProductImages();
-                pi.setImgId(image);
-                pi.setProductId(product);
-                boolean insertPiResult = productImageModel.create(pi);
-                if (insertPiResult) {
-                    ApplicationHelper.addMessage("Image uploaded!");
+                boolean result = imageModel.create(image);
+                if (result) {
+                    ProductImages pi = new ProductImages();
+                    pi.setImgId(image);
+                    pi.setProductId(product);
+                    boolean insertPiResult = productImageModel.create(pi);
+                    if (insertPiResult) {
+                        ApplicationHelper.addMessage("Image uploaded!");
+                    } else {
+                        ApplicationHelper.addMessage("Failed to save image data!");
+                    }
                 } else {
-                    ApplicationHelper.addMessage("Failed to save image data!");
+                    outputFile.delete();
                 }
-            } else {
-                outputFile.delete();
             }
+            ApplicationHelper.redirect("/admin/product/edit_image.xhtml?pid=" + product.getPid(), true);
+        } else {
+            ApplicationHelper.redirect("/admin/product/edit_image.xhtml?pid=" + product.getPid(), true);
         }
-        ApplicationHelper.redirect("/admin/product/edit_image.xhtml?pid=" + product.getPid(), true);
     }
 
     public void remove() {
@@ -137,7 +141,7 @@ public class AdminEditImageProduct {
         } else {
             ApplicationHelper.addMessage("Failed to remove image!");
         }
-        
+
         ApplicationHelper.redirect("/admin/product/edit_image.xhtml?pid=" + pid, true);
     }
 

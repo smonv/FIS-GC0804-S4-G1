@@ -14,7 +14,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        
+
                         <h1>Order: <h:outputText value="#{adminViewOrder.order.number}" />
                             &nbsp;&nbsp;
                             <h:link value="Create Contract" 
@@ -34,69 +34,67 @@
                         <h3>Order Informations 
                             <h:link value="Edit" 
                                     outcome="/admin/order/edit.xhtml" 
-                                    class="btn btn-sm btn-primary"
-                                    rendered="#{adminViewOrder.order.contracts == null}">
+                                    class="btn btn-sm btn-primary">
                                 <f:param name="number" value="#{adminViewOrder.order.number}" />
-                        </h:link>
-                    </h3>
-                    <h5>Client Name: <h:outputText value="#{adminViewOrder.order.clientId.name}" /></h5>
-                    <p>Location Name: <h:outputText value="#{adminViewOrder.order.locationName}" /></p>
-                    <p>Location Address: <h:outputText value="#{adminViewOrder.order.locationAddress}" /></p>
-                    <p>Status: <h:outputText value="#{adminViewOrder.order.orderStatus.name}" /></p>
-                    <p>Payment: <h:outputText value="#{adminViewOrder.order.paymentType.name}" /></p>
+                            </h:link>
+                        </h3>
+                        <h5>Client Name: <h:outputText value="#{adminViewOrder.order.clientId.name}" /></h5>
+                        <p>Location Name: <h:outputText value="#{adminViewOrder.order.locationName}" /></p>
+                        <p>Location Address: <h:outputText value="#{adminViewOrder.order.locationAddress}" /></p>
+                        <p>Status: <h:outputText value="#{adminViewOrder.order.orderStatus.name}" /></p>
+                        <p>Payment: <h:outputText value="#{adminViewOrder.order.paymentType.name}" /></p>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>Order Products <h:link value="Edit" 
-                                               outcome="/admin/order/edit_products.xhtml?number=#{adminViewOrder.order.number}" 
-                                               class="btn btn-sm btn-primary"
-                                               rendered="#{adminViewOrder.order.contracts == null}"/>
-                    </h3>
-                    <div class="table-responsive">
-                        <h:dataTable class="table table-bordered datatable"
-                                     value="#{adminViewOrder.order.orderProductDetailsList}"
-                                     var="opd">
-                            <h:column>
-                                <f:facet name="header">Name</f:facet>
-                                <h:outputText value="#{opd.productId.name}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Price</f:facet>
-                                <h:outputText value="$ #{opd.productId.price}" converter="javax.faces.BigDecimal" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Quantity</f:facet>
-                                <h:outputText value="#{opd.quantity}" converter="javax.faces.Integer" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Total Price</f:facet>
-                                <h:outputText 
-                                    value="$ #{adminViewOrder.getTotalPrice(opd.quantity, opd.productId.price)}" 
-                                    converter="javax.faces.BigDecimal"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Contruction Price</f:facet>
-                                <h:outputText 
-                                    value="$ #{adminViewOrder.getContructionPrice(opd.floors, opd.heightOfFloor, opd.productId.constructionPrice)}" 
-                                    converter="javax.faces.BigDecimal"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Contruction Time</f:facet>
-                                <h:outputText 
-                                    value="#{adminViewOrder.getContructionTime(opd.floors, opd.heightOfFloor, opd.productId.constructionTime)} days" 
-                                    converter="javax.faces.BigDecimal"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Total Cost</f:facet>
-                                <h:outputText value="$ #{adminViewOrder.getTotalCost(opd, opd.productId)}" converter="javax.faces.BigDecimal"/>
-                            </h:column>
-                        </h:dataTable>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Order Products <h:link value="Edit" 
+                                                   outcome="/admin/order/edit_products.xhtml?number=#{adminViewOrder.order.number}" 
+                                                   class="btn btn-sm btn-primary"/>
+                        </h3>
+                        <div class="table-responsive">
+                            <h:dataTable class="table table-bordered datatable"
+                                         value="#{adminViewOrder.order.orderProductDetailsList}"
+                                         var="opd">
+                                <h:column>
+                                    <f:facet name="header">Name</f:facet>
+                                    <h:outputText value="#{opd.productId.name}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Price</f:facet>
+                                    <h:outputText value="$ #{opd.productId.price}" converter="javax.faces.BigDecimal" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Quantity</f:facet>
+                                    <h:outputText value="#{opd.quantity}" converter="javax.faces.Integer" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Total Price</f:facet>
+                                    <h:outputText 
+                                        value="$ #{adminViewOrder.getTotalPrice(opd.quantity, opd.productId.price)}" 
+                                        converter="javax.faces.BigDecimal"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Contruction Price</f:facet>
+                                    <h:outputText 
+                                        value="$ #{adminViewOrder.getContructionPrice(opd.floors, opd.heightOfFloor, opd.productId.constructionPrice)}" 
+                                        converter="javax.faces.BigDecimal"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Contruction Time</f:facet>
+                                    <h:outputText 
+                                        value="#{adminViewOrder.getContructionTime(opd.floors, opd.heightOfFloor, opd.productId.constructionTime)} days" 
+                                        converter="javax.faces.BigDecimal"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Total Cost</f:facet>
+                                    <h:outputText value="$ #{adminViewOrder.getTotalCost(opd, opd.productId)}" converter="javax.faces.BigDecimal"/>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </ui:define>
-</ui:composition>
+        </ui:define>
+    </ui:composition>
 </html>
 
