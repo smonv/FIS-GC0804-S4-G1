@@ -10,6 +10,7 @@
             <f:viewParam name="cid" value="#{adminViewContract.cid}" />
             <f:viewAction action="#{adminViewContract.init()}" />
         </f:metadata>
+        <ui:define name="title">View Contract</ui:define>
         <ui:define name="content">
             <div class="container-fluid">
                 <ol class="breadcrumb bc-2" style="background-color: #f5f5f5">
@@ -35,9 +36,7 @@
 
                 <div class="row">
                     <div class="col-lg-6 col-md-6" style="border-top: solid 1px #f5f5f5;">
-                        <h3>Contract Informations 
-                            <h:link value="Edit" outcome="#" class="btn btn-primary"/>
-                        </h3>
+                        <h3>Contract Informations</h3>
                         <h4>Client Name : &nbsp;&nbsp;&nbsp;&nbsp;
                             <h:outputText value="#{adminViewContract.contract.clientName}" /></h4>
                         <h4>Client Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -61,7 +60,9 @@
                         </c:if>
                         <c:if test="#{adminViewContract.contract.projects != null}">
                             <h3>Contract have project!</h3> 
-                            <h:link value="View Project" outcome="#"></h:link>
+                            <h:link value="View Project" outcome="/admin/project/view.xhtml" class="btn btn-primary">
+                                <f:param name="pid" value="#{adminViewContract.contract.projects.pid}" />
+                            </h:link>
                         </c:if>
                     </div>
                 </div>
