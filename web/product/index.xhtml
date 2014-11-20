@@ -101,6 +101,9 @@
                                                                         style="width: 350px; height: 212px"
                                                                         rendered="#{product.productImagesList.size() gt 0}"/>
                                                         <f:param name="pid" value="#{product.pid}" />
+                                                        <c:if test="#{indexProduct.mode != null}">
+                                                            <f:param name="mode" value="#{indexProduct.mode}" />
+                                                        </c:if>
                                                     </h:link>
                                                 </div>
 
