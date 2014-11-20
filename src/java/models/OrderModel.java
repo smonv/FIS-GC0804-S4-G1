@@ -79,7 +79,6 @@ public class OrderModel {
             predicates.add(cb.lessThanOrEqualTo(o.<Date>get("createAt"), to));
         }
         query.where(predicates.toArray(new Predicate[]{}));
-        query.orderBy(cb.desc(o.get("createAt")));
         return em.createQuery(query).getSingleResult();
     }
 
