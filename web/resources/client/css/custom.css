@@ -249,7 +249,7 @@
     text-align: right;
 }
 .idCart > tbody>tr>td>.btn--primary, .idCart2 > input[type="submit"]{
-    
+
     text-align: center; 
     width: 40%; 
     min-width: 50px; 
@@ -263,7 +263,7 @@
 .idCart > tbody>tr{
     display: block;
     width: 100%;
-    height: 182px;
+    height: 60px;
     border-bottom: 1px solid #999;
 }
 .idCart2 > tbody>tr{
