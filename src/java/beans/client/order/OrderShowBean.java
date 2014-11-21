@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans.client.order;
 
-import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import entities.Clients;
 import entities.OrderProductDetails;
 import entities.Orders;
@@ -24,10 +18,6 @@ import javax.faces.context.FacesContext;
 import models.OrderModel;
 import models.ProductModel;
 
-/**
- *
- * @author Cu Beo
- */
 @ManagedBean
 @RequestScoped
 public class OrderShowBean {
@@ -56,11 +46,15 @@ public class OrderShowBean {
     }
 
     public void init() {
+        Clients currentClient = SessionHelper.getCurrentClient();
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!orderModel.orderExists(number)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
             }
             order = orderModel.getByNumber(number);
+            if(!Objects.equals(order.getClientId().getCid(), currentClient.getCid())){
+                ApplicationHelper.redirect("/403.xhtml", true);
+            }
         }
     }
 

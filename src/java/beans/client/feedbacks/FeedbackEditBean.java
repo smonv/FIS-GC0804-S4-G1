@@ -1,9 +1,12 @@
 package beans.client.feedbacks;
 
+import entities.Clients;
 import entities.FeedbackLevel;
 import entities.Feedbacks;
 import helpers.ApplicationHelper;
 import helpers.PersistenceHelper;
+import helpers.SessionHelper;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -13,10 +16,10 @@ import models.FeedbackModel;
 @ManagedBean
 @RequestScoped
 public class FeedbackEditBean {
-
+    
     @EJB
     private FeedbackModel feedbackModel;
-
+    
     private String fid;
     private Feedbacks current_feedback;
     private String name;
@@ -25,16 +28,21 @@ public class FeedbackEditBean {
     private int levelId;
     private String problem;
     private String improvement;
-
+    
     public FeedbackEditBean() {
     }
-
+    
     public void init() {
+        Clients client = SessionHelper.getCurrentClient();
+        
         if (!ApplicationHelper.isInteger(fid)) {
             ApplicationHelper.redirect("/404.xhtml", true);
         }
         int fbid = Integer.parseInt(fid);
         Feedbacks feedback = feedbackModel.getById(fbid);
+        if (!Objects.equals(feedback.getClientId().getCid(), client.getCid())) {
+            ApplicationHelper.redirect("/403.xhtml", true);
+        }
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (feedback != null) {
                 current_feedback = feedback;
@@ -45,13 +53,13 @@ public class FeedbackEditBean {
                 levelId = current_feedback.getFeedbackLevel().getFlid();
                 problem = current_feedback.getProblem();
                 improvement = current_feedback.getImprovement();
-
+                
             } else {
                 ApplicationHelper.redirect("/404.xhtml", true);
             }
         }
     }
-
+    
     public void update() {
         Feedbacks update_feedbacks = feedbackModel.getById(Integer.parseInt(fid));
         update_feedbacks.setName(name);
@@ -61,7 +69,7 @@ public class FeedbackEditBean {
         update_feedbacks.setProblem(problem);
         update_feedbacks.setImprovement(improvement);
         update_feedbacks.setUpdateAt(PersistenceHelper.getCurrentTime());
-
+        
         boolean result = feedbackModel.update(update_feedbacks);
         if (result) {
             ApplicationHelper.addMessage("Feedback updated!");
@@ -76,65 +84,65 @@ public class FeedbackEditBean {
     public String getFid() {
         return fid;
     }
-
+    
     public void setFid(String fid) {
         this.fid = fid;
     }
-
+    
     public Feedbacks getCurrent_feedback() {
         return current_feedback;
     }
-
+    
     public void setCurrent_feedback(Feedbacks current_feedback) {
         this.current_feedback = current_feedback;
     }
-
+    
     public String getName() {
         return name;
     }
-
+    
     public void setName(String name) {
         this.name = name;
     }
-
+    
     public String getEmail() {
         return email;
     }
-
+    
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
     public String getDescription() {
         return description;
     }
-
+    
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public int getLevelId() {
         return levelId;
     }
-
+    
     public void setLevelId(int levelId) {
         this.levelId = levelId;
     }
-
+    
     public String getProblem() {
         return problem;
     }
-
+    
     public void setProblem(String problem) {
         this.problem = problem;
     }
-
+    
     public String getImprovement() {
         return improvement;
     }
-
+    
     public void setImprovement(String improvement) {
         this.improvement = improvement;
     }
-
+    
 }

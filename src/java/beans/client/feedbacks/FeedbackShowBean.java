@@ -6,6 +6,7 @@ import helpers.ApplicationHelper;
 import helpers.SessionHelper;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -27,11 +28,15 @@ public class FeedbackShowBean {
     }
 
     public void init() {
+        Clients client = SessionHelper.getCurrentClient();
         if (!ApplicationHelper.isInteger(fid)) {
             ApplicationHelper.redirect("/404.xhtml", true);
         }
         int fbid = Integer.parseInt(fid);
         Feedbacks feedback = feedbackModel.getById(fbid);
+        if(!Objects.equals(feedback.getClientId().getCid(), client.getCid())){
+            ApplicationHelper.redirect("/403.xhtml", true);
+        }
         if (feedback != null) {
             current_feedback = feedback;
         } else {

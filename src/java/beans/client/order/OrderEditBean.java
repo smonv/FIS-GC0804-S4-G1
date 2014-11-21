@@ -1,6 +1,6 @@
 package beans.client.order;
 
-import entities.Images;
+import entities.Clients;
 import entities.OrderProductDetails;
 import entities.Orders;
 import entities.PaymentTypes;
@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
@@ -54,6 +53,7 @@ public class OrderEditBean {
     }
 
     public void init() {
+        Clients client = SessionHelper.getCurrentClient();
         if (!FacesContext.getCurrentInstance().isPostback()) {
             if (!orderModel.orderExists(number)) {
                 ApplicationHelper.redirect("/404.xhtml", false);
@@ -61,6 +61,9 @@ public class OrderEditBean {
 
             //get order
             order = orderModel.getByNumber(number);
+            if(!Objects.equals(order.getClientId().getCid(), client.getCid())){
+                ApplicationHelper.redirect("/403.xhtml", true);
+            }
             if (order.getOrderStatus().getLsid() > 1) {
                 ApplicationHelper.addMessage("Order not in pending status! You can't edit now!");
                 ApplicationHelper.redirect("/client/order/details.xhtml?number=" + number, true);
